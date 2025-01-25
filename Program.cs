@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace Gedcom;
 
@@ -9,6 +10,19 @@ public class Program
         var gedcomFile = File.ReadAllLines("***REMOVED***");
         var gedcomLines = gedcomFile.Select(gl => ParseLine(gl)).ToList();
         var gedcom = new Gedcom(gedcomLines);
+
+        var jed = gedcom.GetINDI("@***REMOVED***@");
+        var jlr = gedcom.GetINDI("@***REMOVED***@");
+
+        var jlr_jed = gedcom.GetFAM("@F3@");
+
+        foreach (var partner in jlr_jed.Partners)
+        {
+            var person = gedcom.GetINDI(partner.Value);
+            Console.WriteLine(person);
+        }
+     
+        Console.ReadLine();
     }
 
     private static GedcomLine ParseLine(string line)

@@ -2,8 +2,8 @@
 
 public class Gedcom
 {
-    private readonly List<List<GedcomLine>> Level0Records = [];
-    private readonly List<Record> Records = [];
+    private List<List<GedcomLine>> Level0Records { get; } = [];
+    public List<Record> Records { get; } = [];
     public Gedcom(List<GedcomLine> gedcomLines)
     {
         Level0Records = GetGedcomLinesForLevel(0, gedcomLines);
@@ -12,9 +12,10 @@ public class Gedcom
         {
             Records.Add(new Record(level0Record));
         }
-
-        // foreach level record
     }
+
+    public INDI GetINDI(string extId) => new INDI(Records.First(r => r.Tag.Equals(Tag.INDI) && r.Value.Equals(extId)));
+    public FAM GetFAM(string famId) => new FAM(Records.First(r => r.Tag.Equals(Tag.FAM) && r.Value.Equals(famId)));
 
     public static List<List<GedcomLine>> GetGedcomLinesForLevel(int level, List<GedcomLine> gedcomLines)
     {
@@ -36,8 +37,7 @@ public class Gedcom
             }
         }
 
-        var lastGedcomLine = gedcomLines[gedcomLines.Count - 1];
-        gedcomLinesAtThisLevel.Add([lastGedcomLine]);
+        gedcomLinesAtThisLevel.Add(currentGedcomLines);
 
         return gedcomLinesAtThisLevel.Skip(1).ToList();
     }
