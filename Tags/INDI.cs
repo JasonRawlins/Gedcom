@@ -1,27 +1,24 @@
 ﻿namespace Gedcom.Tags;
 
-public class INDI
+public class INDI : TagBase
 {
-    private Record Record { get; }
-    public INDI(Record record)
-    {
-        Record = record;
-    }
+    public INDI(Record record) : base(record) { }
 
-    private Record? BIRTRecord => Record.Records.Single(r => r.Tag.Equals(Tag.BIRT));
-    public string Birthdate => BIRTRecord?.Records.Single(r => r.Tag.Equals(Tag.DATE)).Value ?? "";
-    public string Birthplace => BIRTRecord?.Records.Single(r => r.Tag.Equals(Tag.PLAC)).Value ?? "";
+    private Record? BIRTRecord => SingleOrDefault(Tag.BIRT);
+    public string Birthdate => RecordValue(BIRTRecord, Tag.DATE);
+    public string Birthplace => RecordValue(BIRTRecord, Tag.PLAC);
 
-    private Record? DEATRecord => Record.Records.SingleOrDefault(r => r.Tag.Equals(Tag.DEAT));
-    public string Deathdate => DEATRecord?.Records.Single(r => r.Tag.Equals(Tag.DATE)).Value ?? "";
-    public string Deathplace => DEATRecord?.Records.Single(r => r.Tag.Equals(Tag.PLAC)).Value ?? "";
+    private Record? DEATRecord => SingleOrDefault(Tag.DEAT);
+    public string Deathdate => RecordValue(DEATRecord, Tag.DATE);
+
+    public string Deathplace => RecordValue(DEATRecord, Tag.PLAC);
     public string EXTID => Record.Value;
-    public List<Record> FAMSs => Record.Records.Where(r => r.Tag.Equals(Tag.FAMS)).ToList();
-    public string GIVN => NAMERecord?.Records.Single(r => r.Tag.Equals(Tag.GIVN)).Value ?? "";
-    private Record? NAMERecord => Record.Records.Single(r => r.Tag.Equals(Tag.NAME));
+    public List<Record> FAMSs => GetList(Tag.FAMS);
+    public string GIVN => RecordValue(NAMERecord, Tag.GIVN);
+    private Record? NAMERecord => SingleOrDefault(Tag.NAME);
     public string NAME => NAMERecord?.Value ?? "";
-    public string SEX => Record.Records.Single(r => r.Tag.Equals(Tag.SEX)).Value;
-    public string SURN => NAMERecord?.Records.Single(r => r.Tag == Tag.SURN).Value ?? "";
+    public string SEX => SingleValue(Tag.SEX);
+    public string SURN => SingleValue(Tag.SURN);
 
     public override string ToString()
     {

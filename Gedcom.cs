@@ -1,6 +1,5 @@
-﻿using Gedcom.Tags;
-
-namespace Gedcom;
+﻿namespace Gedcom;
+using Tags;
 
 public class Gedcom
 {
@@ -17,7 +16,8 @@ public class Gedcom
     public List<INDI> GetINDIs() => Records.Where(r => r.Tag.Equals(Tag.INDI)).Select(r => new INDI(r)).ToList();
     public FAM GetFAM(string famId) => new FAM(Records.First(r => r.Tag.Equals(Tag.FAM) && r.Value.Equals(famId)));
     public List<FAM> GetFAMs() => Records.Where(r => r.Tag.Equals(Tag.FAM)).Select(r => new FAM(r)).ToList();
-    public SOUR GetSOUR(string extId) => Records.Where(r => r.Tag.Equals(Tag.SOUR)).Select(r => new SOUR(r)).ToList();
+    public SOUR GetSOUR(string extId) => new SOUR(Records.First(r => r.Tag.Equals(Tag.SOUR)));
+    public List<SOUR> GetSOURs(string extId) => Records.Where(r => r.Tag.Equals(Tag.SOUR)).Select(r => new SOUR(r)).ToList();
     public static List<List<GedcomLine>> GetGedcomLinesForLevel(int level, List<GedcomLine> gedcomLines)
     {
         var gedcomLinesAtThisLevel = new List<List<GedcomLine>>();

@@ -1,17 +1,13 @@
 ﻿namespace Gedcom.Tags;
 
-public class SOUR
+public class SOUR : TagBase
 {
-    private Record Record { get; }
-    public SOUR(Record record)
-    {
-        Record = record;
-    }
+    public SOUR(Record record) : base(record) { }
 
-    public string TITL => Record.Records.Single(r => r.Tag.Equals(Tag.TITL)).Value;
+    public string TITL => this.SingleValue(Tag.TITL);
 
     public override string ToString()
     {
-        return base.ToString();
+        return TITL;
     }
 }

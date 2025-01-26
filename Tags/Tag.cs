@@ -1,7 +1,7 @@
-﻿namespace Gedcom;
+﻿namespace Gedcom.Tags;
 
 // https://gedcom.io/specifications/ged551.pdf
-public static class Tag
+public class Tag
 {
     public const string _ENV = "_ENV";
     public const string _TREE = "_TREE";

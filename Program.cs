@@ -17,17 +17,17 @@ public class Program
         //var jlr = gedcom.GetINDI("@***REMOVED***@");
         //var jlr_jed = gedcom.GetFAM("@F3@");
 
-        //foreach (var indi in gedcom.GetINDIs())
-        //{
-        //    Console.WriteLine($"{indi}");
-        //    var fams = gedcom.GetFAMs().Where(f => f.Partners.Contains(indi.EXTID)).ToList();
-        //    foreach (var partner in fams.Partners)
-        //    {
-        //        var indiPartner = gedcom.GetINDI(partner.Value);
-        //        Console.WriteLine($"\t{indiPartner}");
-        //    }
-        //}
-     
+        foreach (var indi in gedcom.GetINDIs())
+        {
+            Console.WriteLine($"{indi}");
+            //var fams = gedcom.GetFAMs().Where(f => f.Partners.Contains(indi.EXTID)).ToList();
+            //foreach (var partner in fams.Partners)
+            //{
+            //    var indiPartner = gedcom.GetINDI(partner.Value);
+            //    Console.WriteLine($"\t{indiPartner}");
+            //}
+        }
+
         Console.ReadLine();
     }
 
