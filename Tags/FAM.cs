@@ -1,4 +1,4 @@
-﻿namespace Gedcom;
+﻿namespace Gedcom.Tags;
 
 public class FAM
 {
