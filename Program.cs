@@ -7,19 +7,14 @@ public class Program
 {
     static void Main(string[] args)
     {
-        //var gedcomFileName = "***REMOVED***";
         var gedcomFileName = "***REMOVED***";
         var gedcomFile = File.ReadAllLines(gedcomFileName);
         var gedcomLines = gedcomFile.Select(ParseLine).ToList();
         var gedcom = new Gedcom(gedcomLines);
 
-        //var jed = gedcom.GetINDI("@***REMOVED***@");
-        //var jlr = gedcom.GetINDI("@***REMOVED***@");
-        //var jlr_jed = gedcom.GetFAM("@F3@");
-
-        foreach (var indi in gedcom.GetINDIs())
+        foreach (var sour in gedcom.GetSOURs())
         {
-            Console.WriteLine($"{indi}");
+            Console.WriteLine($"{sour}");
             //var fams = gedcom.GetFAMs().Where(f => f.Partners.Contains(indi.EXTID)).ToList();
             //foreach (var partner in fams.Partners)
             //{

@@ -1,5 +1,6 @@
 ﻿namespace Gedcom.Tags;
 
+// Gedcom 5.5.1 speciication.
 // https://gedcom.io/specifications/ged551.pdf
 public class Tag
 {

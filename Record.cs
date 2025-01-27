@@ -21,13 +21,9 @@ public class Record
             foreach (var nextLevelGedcomLine in nextLevelGedcomLines)
             {
                 Records.Add(new Record(nextLevelGedcomLine));
-            }
-            
+            }            
         }
     }
 
-    public override string ToString()
-    {
-        return $"{Level} {Tag} {Value}";
-    }
+    public override string ToString() => $"{Level} {Tag} {Value}";
 }

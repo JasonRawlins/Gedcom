@@ -4,21 +4,21 @@ public class INDI : TagBase
 {
     public INDI(Record record) : base(record) { }
 
-    private Record? BIRTRecord => FirstOrDefault(Tag.BIRT);
-    public string Birthdate => RecordValue(BIRTRecord, Tag.DATE);
-    public string Birthplace => RecordValue(BIRTRecord, Tag.PLAC);
+    private Record? BIRTRecord => FirstOrDefault(Tags.Tag.BIRT);
+    public string Birthdate => RecordValue(BIRTRecord, Tags.Tag.DATE);
+    public string Birthplace => RecordValue(BIRTRecord, Tags.Tag.PLAC);
 
-    private Record? DEATRecord => FirstOrDefault(Tag.DEAT);
-    public string Deathdate => RecordValue(DEATRecord, Tag.DATE);
+    private Record? DEATRecord => FirstOrDefault(Tags.Tag.DEAT);
+    public string Deathdate => RecordValue(DEATRecord, Tags.Tag.DATE);
 
-    public string Deathplace => RecordValue(DEATRecord, Tag.PLAC);
+    public string Deathplace => RecordValue(DEATRecord, Tags.Tag.PLAC);
     public string EXTID => Record.Value;
-    public List<Record> FAMSs => GetList(Tag.FAMS);
-    public string GIVN => RecordValue(NAMERecord, Tag.GIVN);
-    private Record? NAMERecord => FirstOrDefault(Tag.NAME);
+    public List<Record> FAMSs => List(Tags.Tag.FAMS);
+    public string GIVN => RecordValue(NAMERecord, Tags.Tag.GIVN);
+    private Record? NAMERecord => FirstOrDefault(Tags.Tag.NAME);
     public string NAME => NAMERecord?.Value ?? "";
-    public string SEX => SingleValue(Tag.SEX);
-    public string SURN => SingleValue(Tag.SURN);
+    public string SEX => Value(Tags.Tag.SEX);
+    public string SURN => Value(Tags.Tag.SURN);
 
     public override string ToString()
     {

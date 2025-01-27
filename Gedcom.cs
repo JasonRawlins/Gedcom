@@ -12,21 +12,19 @@ public class Gedcom
         }
     }
 
-    public INDI GetINDI(string extId) => new INDI(Records.First(r => r.Tag.Equals(Tag.INDI) && r.Value.Equals(extId)));
-    public List<INDI> GetINDIs() => Records.Where(r => r.Tag.Equals(Tag.INDI)).Select(r => new INDI(r)).ToList();
-    public FAM GetFAM(string famId) => new FAM(Records.First(r => r.Tag.Equals(Tag.FAM) && r.Value.Equals(famId)));
+    public FAM GetFAM(string xrefFAM) => new FAM(Records.First(r => r.Tag.Equals(Tag.FAM) && r.Value.Equals(xrefFAM)));
     public List<FAM> GetFAMs() => Records.Where(r => r.Tag.Equals(Tag.FAM)).Select(r => new FAM(r)).ToList();
-    public SOUR GetSOUR(string extId) => new SOUR(Records.First(r => r.Tag.Equals(Tag.SOUR)));
-    public List<SOUR> GetSOURs(string extId) => Records.Where(r => r.Tag.Equals(Tag.SOUR)).Select(r => new SOUR(r)).ToList();
+    public INDI GetINDI(string xrefINDI) => new INDI(Records.First(r => r.Tag.Equals(Tag.INDI) && r.Value.Equals(xrefINDI)));
+    public List<INDI> GetINDIs() => Records.Where(r => r.Tag.Equals(Tag.INDI)).Select(r => new INDI(r)).ToList();
+    public SOUR GetSOUR(string xrefSOUR) => new SOUR(Records.First(r => r.Tag.Equals(Tag.SOUR) && r.Value.Equals(xrefSOUR)));
+    public List<SOUR> GetSOURs() => Records.Where(r => r.Tag.Equals(Tag.SOUR)).Select(r => new SOUR(r)).ToList();
     public static List<List<GedcomLine>> GetGedcomLinesForLevel(int level, List<GedcomLine> gedcomLines)
     {
         var gedcomLinesAtThisLevel = new List<List<GedcomLine>>();
         var currentGedcomLines = new List<GedcomLine>();
 
-        for (int i = 0; i < gedcomLines.Count; i++)
+        foreach (var gedcomLine in gedcomLines)
         {
-            var gedcomLine = gedcomLines[i];
-
             if (gedcomLine.Level == level)
             {
                 gedcomLinesAtThisLevel.Add(currentGedcomLines);
