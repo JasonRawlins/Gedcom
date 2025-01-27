@@ -42,10 +42,9 @@ public class INDI : TagBase
 #region The Gedcom Standard INDIVIDUAL_RECORD (INDI)
 /* 
 https://gedcom.io/specifications/ged551.pdf
-
 The Gedcom Standard 
 Release 5.5.1
-pg. 25
+p. 25
 
 INDIVIDUAL_RECORD:=
 
