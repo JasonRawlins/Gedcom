@@ -4,21 +4,21 @@ public class INDI : TagBase
 {
     public INDI(Record record) : base(record) { }
 
-    private Record? BIRTRecord => FirstOrDefault(Tags.Tag.BIRT);
-    public string Birthdate => RecordValue(BIRTRecord, Tags.Tag.DATE);
-    public string Birthplace => RecordValue(BIRTRecord, Tags.Tag.PLAC);
+    private Record? BIRTRecord => FirstOrDefault(T.BIRT);
+    public string Birthdate => RecordValue(BIRTRecord, T.DATE);
+    public string Birthplace => RecordValue(BIRTRecord, T.PLAC);
 
-    private Record? DEATRecord => FirstOrDefault(Tags.Tag.DEAT);
-    public string Deathdate => RecordValue(DEATRecord, Tags.Tag.DATE);
+    private Record? DEATRecord => FirstOrDefault(T.DEAT);
+    public string Deathdate => RecordValue(DEATRecord, T.DATE);
 
-    public string Deathplace => RecordValue(DEATRecord, Tags.Tag.PLAC);
+    public string Deathplace => RecordValue(DEATRecord, T.PLAC);
     public string EXTID => Record.Value;
-    public List<Record> FAMSs => List(Tags.Tag.FAMS);
-    public string GIVN => RecordValue(NAMERecord, Tags.Tag.GIVN);
-    private Record? NAMERecord => FirstOrDefault(Tags.Tag.NAME);
+    public List<Record> FAMSs => List(T.FAMS);
+    public string GIVN => RecordValue(NAMERecord, T.GIVN);
+    private Record? NAMERecord => FirstOrDefault(T.NAME);
     public string NAME => NAMERecord?.Value ?? "";
-    public string SEX => Value(Tags.Tag.SEX);
-    public string SURN => Value(Tags.Tag.SURN);
+    public string SEX => Value(T.SEX);
+    public string SURN => Value(T.SURN);
 
     public override string ToString()
     {
@@ -37,3 +37,65 @@ public class INDI : TagBase
         return $"{NAME} ({birthdateText} - {deathdateText}) {SEX} {EXTID}";
     }
 }
+
+
+#region The Gedcom Standard INDIVIDUAL_RECORD (INDI)
+/* 
+https://gedcom.io/specifications/ged551.pdf
+
+The Gedcom Standard 
+Release 5.5.1
+pg. 25
+
+INDIVIDUAL_RECORD:=
+
+n @XREF:INDI@ INDI {1:1}
+    +1 RESN <RESTRICTION_NOTICE> {0:1} p.60
+    +1 <<PERSONAL_NAME_STRUCTURE>> {0:M} p.38
+    +1 SEX <SEX_VALUE> {0:1} p.61
+    +1 <<INDIVIDUAL_EVENT_STRUCTURE>> {0:M} p.34
+    +1 <<INDIVIDUAL_ATTRIBUTE_STRUCTURE>> {0:M} p.33
+    +1 <<LDS_INDIVIDUAL_ORDINANCE>> {0:M} p.35, 36
+    +1 <<CHILD_TO_FAMILY_LINK>> {0:M} p.31
+    +1 <<SPOUSE_TO_FAMILY_LINK>> {0:M} p.40
+    +1 SUBM @<XREF:SUBM>@ {0:M} p.28
+    +1 <<ASSOCIATION_STRUCTURE>> {0:M} p.31
+    +1 ALIA @<XREF:INDI>@ {0:M} p.25
+    +1 ANCI @<XREF:SUBM>@ {0:M} p.28
+    +1 DESI @<XREF:SUBM>@ {0:M} p.28
+    +1 RFN <PERMANENT_RECORD_FILE_NUMBER> {0:1} p.57
+    +1 AFN <ANCESTRAL_FILE_NUMBER> {0:1} p.42
+    +1 REFN <USER_REFERENCE_NUMBER> {0:M} p.63, 64
+        +2 TYPE <USER_REFERENCE_TYPE> {0:1} p.64
+    +1 RIN <AUTOMATED_RECORD_ID> {0:1} p.43
+    +1 <<CHANGE_DATE>> {0:1} p.31
+    +1 <<NOTE_STRUCTURE>> {0:M} p.37
+    +1 <<SOURCE_CITATION>> {0:M} p.39
+    +1 <<MULTIMEDIA_LINK>> {0:M} p.37, 26
+
+The individual record is a compilation of facts, known or discovered, about an individual. Sometimes
+these facts are from different sources. This form allows documentation of the source where each of 
+the facts were discovered.
+
+The normal lineage links are shown through the use of pointers from the individual to a family
+through either the FAMC tag or the FAMS tag. The FAMC tag provides a pointer to a family where
+this person is a child. The FAMS tag provides a pointer to a family where this person is a spouse or
+parent. The <<CHILD_TO_FAMILY_LINK>> (see page 31) structure contains a FAMC pointer
+which is required to show any child to parent linkage for pedigree navigation. The
+<<CHILD_TO_FAMILY_LINK>> structure also indicates whether the pedigree link represents a
+birth lineage, an adoption lineage, or a sealing lineage.
+
+Linkage between a child and the family they belonged to at the time of an event can also be shown
+by a FAMC pointer subordinate to the appropriate event. For example, a FAMC pointer subordinate
+to an adoption event indicates a relationship to family by adoption. Biological parents can be shown
+by a FAMC pointer subordinate to the birth event(optional).
+
+Other associations or relationships are represented by the ASSOciation tag. The person's relation
+or association is the person being pointed to. The association or relationship is stated by the value
+on the subordinate RELA line. For example:
+0 @I1@ INDI
+    1 NAME Fred/Jones/
+    1 ASSO @I2@
+        2 RELA Godfather
+*/
+#endregion

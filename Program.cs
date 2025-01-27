@@ -12,17 +12,9 @@ public class Program
         var gedcomLines = gedcomFile.Select(ParseLine).ToList();
         var gedcom = new Gedcom(gedcomLines);
 
-        foreach (var sour in gedcom.GetSOURs())
-        {
-            Console.WriteLine($"{sour}");
-            //var fams = gedcom.GetFAMs().Where(f => f.Partners.Contains(indi.EXTID)).ToList();
-            //foreach (var partner in fams.Partners)
-            //{
-            //    var indiPartner = gedcom.GetINDI(partner.Value);
-            //    Console.WriteLine($"\t{indiPartner}");
-            //}
-        }
-
+        //gedcom.GetSOURs().ForEach(s => Console.WriteLine($"{s}"));
+        Console.WriteLine(gedcom.ToGed());
+        
         // Just for fun, print the gedcom to json.
 
         Console.ReadLine();

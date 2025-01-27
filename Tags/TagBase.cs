@@ -13,7 +13,7 @@ public class TagBase
 
     // Gedcom 5.5.1 speciication.
     // https://gedcom.io/specifications/ged551.pdf
-    protected class Tag
+    public class T
     {
         public const string _ENV = "_ENV";
         public const string _TREE = "_TREE";
