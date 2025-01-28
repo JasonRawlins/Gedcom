@@ -1,6 +1,7 @@
 ﻿namespace Gedcom;
 
 using System.Text;
+using System.Text.Json;
 using System.Xml.Linq;
 using Tags;
 
@@ -51,10 +52,10 @@ public class Gedcom
 
     public override string ToString()
     {
-        var _TREE = Records.First(r => r.
-            Tag.Equals(TagBase.T.HEAD)).Records.First(r => r.
-                Tag.Equals(TagBase.T.SOUR)).Records.First(r => r.
-                    Tag.Equals(TagBase.T._TREE));
+        var _TREE = Records.First(r => r.Tag.Equals(TagBase.T.
+            HEAD)).Records.First(r => r.Tag.Equals(TagBase.T.
+                SOUR)).Records.First(r => r.Tag.Equals(TagBase.T.
+                    _TREE));
 
         var RIN = _TREE.Records.First(r => r.Tag.Equals(TagBase.T.RIN));
 
@@ -69,10 +70,9 @@ public class Gedcom
     public string ToGed() 
     {
         var gedStringBuilder = new StringBuilder();
-
         foreach (var record in Records)
         {
-            gedStringBuilder.AppendLine($"{ record.Level} {record.Tag} {record.Value}");
+            gedStringBuilder.Append(GetGedcomLinesText(record));
         }
 
         return gedStringBuilder.ToString();
@@ -80,6 +80,23 @@ public class Gedcom
 
     public string ToJson()
     {
-        return "Not Implemented";
+        return JsonSerializer.Serialize(Records.Select(r => r).ToList(), new JsonSerializerOptions()
+        {
+            IgnoreReadOnlyFields = true,
+            WriteIndented = true
+        });
+    }
+
+    private string GetGedcomLinesText(Record record)
+    {
+        var gedcomLinesStringBuilder = new StringBuilder();
+        gedcomLinesStringBuilder.AppendLine(new String(' ', record.Level * 1) + record);
+
+        foreach (var recursiveRecord in record.Records)
+        {
+            gedcomLinesStringBuilder.Append(GetGedcomLinesText(recursiveRecord));
+        }
+
+        return gedcomLinesStringBuilder.ToString();
     }
 }

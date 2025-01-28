@@ -152,30 +152,33 @@ public class TagBase
         public const string WIFE = "WIFE"; // @<XREF:INDI>@, <blank>
         public const string WILL = "WILL"; // <blank>
         public const string WWW = "WWW"; // <ADDRESS_WEB_PAGE>
+
+        #region Record Structures ("Tags")
+
+        /*
+        https://gedcom.io/specifications/ged551.pdf
+        The Gedcom Standard 
+        Release 5.5.1
+        p. 23
+
+        LINEAGE_LINKED_GEDCOM:=
+
+            0 <<HEADER>> {1:1} p.23
+            0 <<SUBMISSION_RECORD>> {0:1} p.28
+            0 <<RECORD>> {1:M} p.24
+            0 TRLR {1:1}
+
+        This is a model of the lineage-linked GEDCOM structure for submitting data to other lineage-linked
+        GEDCOM processing systems. A header and a trailer record are required, and they can enclose any
+        number of data records. Tags from Appendix A (see page 83) must be used in the same context as
+        shown in the following form. User defined tags (see <NEW_TAG> on page 56) are discouraged but
+        when used must begin with an under-score. Tags that are required within a desired context have been
+        bolded. Note that some contexts are not required but if they are used then the bolded tags are
+        required.
+        */
+
+        #endregion
     }
 }
 
-#region Record Structures ("Tags")
-/*
-https://gedcom.io/specifications/ged551.pdf
-The Gedcom Standard 
-Release 5.5.1
-p. 23 Record Structures of the Lineage-Linked Form
 
-LINEAGE_LINKED_GEDCOM:=
-
-    0 <<HEADER>> {1:1} p.23
-    0 <<SUBMISSION_RECORD>> {0:1} p.28
-    0 <<RECORD>> {1:M} p.24
-    0 TRLR {1:1}
-
-This is a model of the lineage-linked GEDCOM structure for submitting data to other lineage-linked
-GEDCOM processing systems. A header and a trailer record are required, and they can enclose any
-number of data records. Tags from Appendix A (see page 83) must be used in the same context as
-shown in the following form. User defined tags (see <NEW_TAG> on page 56) are discouraged but
-when used must begin with an under-score. Tags that are required within a desired context have been
-bolded. Note that some contexts are not required but if they are used then the bolded tags are
-required.
-*/
-
-#endregion

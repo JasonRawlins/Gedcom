@@ -12,7 +12,7 @@ public class INDI : TagBase
     public string Deathdate => RecordValue(DEATRecord, T.DATE);
 
     public string Deathplace => RecordValue(DEATRecord, T.PLAC);
-    public string EXTID => Record.Value;
+    public string ExtIndi => Record.Value;
     public List<Record> FAMSs => List(T.FAMS);
     public string GIVN => RecordValue(NAMERecord, T.GIVN);
     private Record? NAMERecord => FirstOrDefault(T.NAME);
@@ -34,7 +34,7 @@ public class INDI : TagBase
             deathdateText = deathdate.Year.ToString();
         }
 
-        return $"{NAME} ({birthdateText} - {deathdateText}) {SEX} {EXTID}";
+        return $"{NAME} ({birthdateText} - {deathdateText}) {SEX} {ExtIndi}";
     }
 }
 

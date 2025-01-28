@@ -1,10 +1,13 @@
-﻿namespace Gedcom;
+﻿using System.Text.Json.Serialization;
+
+namespace Gedcom;
 
 public class Record
 {
     public int Level { get; }
     public string Tag { get; } = "";
     public string Value { get; } = "";
+    [JsonIgnore]
     public List<GedcomLine> GedcomLines { get; } = [];
     public List<Record> Records { get; } = [];
 

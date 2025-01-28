@@ -13,7 +13,8 @@ public class Program
         var gedcom = new Gedcom(gedcomLines);
 
         //gedcom.GetSOURs().ForEach(s => Console.WriteLine($"{s}"));
-        Console.WriteLine(gedcom.ToGed());
+        //Console.WriteLine(gedcom.ToGed());
+        Console.WriteLine(gedcom.ToJson());
         
         // Just for fun, print the gedcom to json.
 

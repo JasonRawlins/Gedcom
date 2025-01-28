@@ -11,20 +11,26 @@ public class GedcomLine
 
     public override string ToString()
     {
-        var displayLine = new StringBuilder(Level.ToString());
+        return ToString(0);
+    }
 
-        if (!String.IsNullOrEmpty(XrefId))
+    public string ToString(int indentLevel)
+    {
+        var displayLine = new StringBuilder();
+        displayLine.Append(Level);
+
+        if (!string.IsNullOrEmpty(XrefId))
         {
             displayLine.Append(" " + XrefId);
         }
 
         displayLine.Append(" " + Tag);
 
-        if (!String.IsNullOrEmpty(Value))
+        if (!string.IsNullOrEmpty(Value))
         {
             displayLine.Append(" " + Value);
         }
 
-        return displayLine.ToString();
+        return new string(' ', Level * indentLevel) + displayLine.ToString();
     }
 }
