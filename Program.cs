@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace Gedcom;
@@ -12,13 +14,15 @@ public class Program
         var gedcomLines = gedcomFile.Select(ParseLine).ToList();
         var gedcom = new Gedcom(gedcomLines);
 
-        //gedcom.GetSOURs().ForEach(s => Console.WriteLine($"{s}"));
         //Console.WriteLine(gedcom.ToGed());
-        Console.WriteLine(gedcom.ToJson());
-        
-        // Just for fun, print the gedcom to json.
+        var jsonText = JsonSerializer.Serialize(
+            gedcom, new JsonSerializerOptions() 
+            { 
+                WriteIndented = true,
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            });
 
-        Console.ReadLine();
+        Console.WriteLine(jsonText);
     }
 
     private static GedcomLine ParseLine(string line)

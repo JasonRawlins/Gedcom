@@ -1,15 +1,27 @@
-﻿using System.Text.Json.Serialization;
+﻿using Gedcom.Tags;
+using System.Text.Json.Serialization;
 
 namespace Gedcom;
 
 public class Record
 {
+    //[JsonIgnore]
     public int Level { get; }
     public string Tag { get; } = "";
     public string Value { get; } = "";
     [JsonIgnore]
     public List<GedcomLine> GedcomLines { get; } = [];
     public List<Record> Records { get; } = [];
+
+    public Record? this[string tag]
+    {
+        get => Records.FirstOrDefault(r => r.Tag.Equals(tag));
+    }
+
+    public string R(string tag)
+    {
+        return Records.FirstOrDefault(r => r.Tag.Equals(tag))?.Value ?? "";
+    }
 
     public Record(List<GedcomLine> gedcomLines)
     {

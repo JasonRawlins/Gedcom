@@ -1,5 +1,10 @@
-﻿namespace Gedcom.Tags;
+﻿using System.Security.Cryptography.X509Certificates;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
+namespace Gedcom.Tags;
+
+[JsonConverter(typeof(INDIJsonConverter))]
 public class INDI : TagBase
 {
     public INDI(Record record) : base(record) { }
@@ -35,6 +40,27 @@ public class INDI : TagBase
         }
 
         return $"{NAME} ({birthdateText} - {deathdateText}) {SEX} {ExtIndi}";
+    }
+
+    internal static INDI? ParseJson(string json)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class INDIJsonConverter : JsonConverter<INDI>
+{
+    public override INDI? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => INDI.ParseJson(reader.GetString());
+    public override void Write(Utf8JsonWriter writer, INDI value, JsonSerializerOptions options)
+    {
+        var indiJsonObject = new
+        {
+
+        };
+
+        var jsonText = JsonSerializer.Serialize(indiJsonObject,
+            new JsonSerializerOptions() { WriteIndented = true });
+        writer.WriteStringValue(jsonText);
     }
 }
 
