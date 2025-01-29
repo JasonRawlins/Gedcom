@@ -18,11 +18,6 @@ public class Record
         get => Records.FirstOrDefault(r => r.Tag.Equals(tag));
     }
 
-    public string R(string tag)
-    {
-        return Records.FirstOrDefault(r => r.Tag.Equals(tag))?.Value ?? "";
-    }
-
     public Record(List<GedcomLine> gedcomLines)
     {
         GedcomLines = gedcomLines;

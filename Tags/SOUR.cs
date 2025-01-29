@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Gedcom.Tags;
 
+
 [JsonConverter(typeof(SOURJsonConverter))]
 public class SOUR : TagBase
 {
@@ -44,12 +45,9 @@ public class SOURJsonConverter : JsonConverter<SOUR>
     }
 }
 
-#region The Gedcom Standard SOURCE_RECORD (SOUR)
+#region SOURCE_RECORD (SOUR) p. 27
 /*
 https://gedcom.io/specifications/ged551.pdf
-The Gedcom Standard 
-Release 5.5.1
-p. 27
 
 SOURCE_RECORD:=
 

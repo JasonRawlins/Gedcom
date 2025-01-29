@@ -66,13 +66,9 @@ public class INDIJsonConverter : JsonConverter<INDI>
     }
 }
 
-
-#region The Gedcom Standard INDIVIDUAL_RECORD (INDI)
+#region The Gedcom Standard INDIVIDUAL_RECORD (INDI) p. 25
 /* 
 https://gedcom.io/specifications/ged551.pdf
-The Gedcom Standard 
-Release 5.5.1
-p. 25
 
 INDIVIDUAL_RECORD:=
 
