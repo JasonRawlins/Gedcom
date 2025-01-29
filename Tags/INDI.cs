@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Gedcom.Tags;
@@ -22,6 +21,7 @@ public class INDI : TagBase
     public string GIVN => RecordValue(NAMERecord, T.GIVN);
     private Record? NAMERecord => FirstOrDefault(T.NAME);
     public string NAME => NAMERecord?.Value ?? "";
+    public string RIN => Value(T.RIN);
     public string SEX => Value(T.SEX);
     public string SURN => Value(T.SURN);
 
@@ -51,16 +51,18 @@ public class INDI : TagBase
 public class INDIJsonConverter : JsonConverter<INDI>
 {
     public override INDI? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => INDI.ParseJson(reader.GetString());
-    public override void Write(Utf8JsonWriter writer, INDI value, JsonSerializerOptions options)
+    
+    public override void Write(Utf8JsonWriter writer, INDI indi, JsonSerializerOptions options)
     {
         var indiJsonObject = new
         {
-
+            Id = indi.ExtIndi,
+            Name = indi.NAME,
+            Rin = indi.RIN,
+            Sex = indi.SEX,
         };
 
-        var jsonText = JsonSerializer.Serialize(indiJsonObject,
-            new JsonSerializerOptions() { WriteIndented = true });
-        writer.WriteStringValue(jsonText);
+        JsonSerializer.Serialize(writer, indiJsonObject, options);
     }
 }
 

@@ -18,10 +18,12 @@ public class Program
         var jsonText = JsonSerializer.Serialize(
             gedcom, new JsonSerializerOptions() 
             { 
-                WriteIndented = true,
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
             });
 
+        File.WriteAllText(@"c:\temp\gedcom.json", jsonText);
         Console.WriteLine(jsonText);
     }
 

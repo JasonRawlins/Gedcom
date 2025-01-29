@@ -1,9 +1,9 @@
-﻿namespace Gedcom;
-
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Tags;
+using Gedcom.Tags;
+
+namespace Gedcom;
 
 [JsonConverter(typeof(GedcomJsonConverter))]
 public class Gedcom
@@ -95,34 +95,33 @@ public class GedcomJsonConverter : JsonConverter<Gedcom>
             Head = new
             {
                 Subm = Value(gedcom.HEAD[T.SUBM]),
-                Sour = new
+                Source = new
                 {
                     Name = Value(gedcom.HEAD[T.SOUR]?[T.NAME]),
-                    Vers = Value(gedcom.HEAD[T.VERS]),
+                    Version = Value(gedcom.HEAD[T.VERS]),
                     _Tree = new
                     {
                         rin = Value(gedcom.HEAD[T.RIN]),
                         _env = Value(gedcom.HEAD[T._ENV]),
                     },
-                    Corp = new
+                    Corporation = new
                     {
-                        Value = gedcom.CORP.Value,
-                        Phon = Value(gedcom.CORP[T.PHON]),
+                        gedcom.CORP.Value,
+                        Phone = Value(gedcom.CORP[T.PHON]),
                         Www = Value(gedcom.CORP[T.WWW]),
-                        Addr = Value(gedcom.CORP[T.ADDR])
+                        Address = Value(gedcom.CORP[T.ADDR])
                     }
                 },
                 Date = Value(gedcom.HEAD[T.DATE]),
                 Gedc = Value(gedcom.HEAD[T.GEDC]),
                 Char_ = Value(gedcom.HEAD[T.CHAR])
-            }
+            },
+            Individuals = gedcom.GetINDIs(),
+            Sources = gedcom.GetSOURs(),
+            Families = gedcom.GetFAMs()
         };
 
-        var jsonText = JsonSerializer.Serialize(gedcomJsonObject,
-            new JsonSerializerOptions() { WriteIndented = true });
-        writer.WriteStringValue(jsonText);
-
-        File.WriteAllText(@"c:\temp\gedcom.json", jsonText);
+        JsonSerializer.Serialize(writer, gedcomJsonObject, gedcomJsonObject.GetType(), options);
     }
 
     private string Value(Record? record) => record?.Value ?? "";
