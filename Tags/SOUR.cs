@@ -1,35 +1,28 @@
-﻿using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Gedcom.Tags;
-
 
 [JsonConverter(typeof(SOURJsonConverter))]
 public class SOUR : TagBase
 {
     public SOUR(Record record) : base(record) { }
 
-    public string ABBR => Value(T.ABBR);
-    public string AUTH => Value(T.AUTH);
-    public string PUBL => Value(T.PUBL);
-    public string REFN => Value(T.REFN);
-    public string RIN => Value(T.RIN);
-    public string TEXT => Value(T.TEXT);
-    public string TITL => Value(T.TITL);
+    public string ABBR => Val(C.ABBR);
+    public string AUTH => Val(C.AUTH);
+    public string PUBL => Val(C.PUBL);
+    public string REFN => Val(C.REFN);
+    public string RIN => Val(C.RIN);
+    public string TEXT => Val(C.TEXT);
+    public string TITL => Val(C.TITL);
     public string XrefSour => Record.Value;
-    public static SOUR? ParseJson(string json)
-    {
-        throw new NotImplementedException();
-    }
 
     public override string ToString() => $"{TITL} ({AUTH})";
 }
 
 public class SOURJsonConverter : JsonConverter<SOUR>
 {
-    public override SOUR? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => SOUR.ParseJson(reader.GetString());
+    public override SOUR? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
     
     public override void Write(Utf8JsonWriter writer, SOUR sour, JsonSerializerOptions options)
     {

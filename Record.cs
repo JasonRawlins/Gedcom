@@ -5,7 +5,6 @@ namespace Gedcom;
 
 public class Record
 {
-    //[JsonIgnore]
     public int Level { get; }
     public string Tag { get; } = "";
     public string Value { get; } = "";

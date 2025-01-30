@@ -8,7 +8,7 @@ public class FAM : TagBase
 {
     public FAM(Record record) : base(record) { }
 
-    public List<Record> Partners => List(r => r.Tag.Equals(T.WIFE) || r.Tag.Equals(T.HUSB));
+    public List<Record> Partners => List(r => r.Tag.Equals(C.WIFE) || r.Tag.Equals(C.HUSB));
 
     public override string ToString() => $"({string.Join(',', Partners)})";
 }
@@ -19,12 +19,12 @@ public class FAMJsonConverter : JsonConverter<FAM>
 
     public override void Write(Utf8JsonWriter writer, FAM fam, JsonSerializerOptions options)
     {
-        var famJsonObject = new
+        var jsonObject = new
         {
             fam.Partners
         };
 
-        JsonSerializer.Serialize(writer, famJsonObject, options);
+        JsonSerializer.Serialize(writer, jsonObject, options);
     }
 }
 

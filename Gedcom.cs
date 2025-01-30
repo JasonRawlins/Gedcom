@@ -17,12 +17,12 @@ public class Gedcom
         }
     }
 
-    public FAM GetFAM(string xrefFAM) => new(Records.First(r => r.Tag.Equals(T.FAM) && r.Value.Equals(xrefFAM)));
-    public List<FAM> GetFAMs() => Records.Where(r => r.Tag.Equals(T.FAM)).Select(r => new FAM(r)).ToList();
-    public INDI GetINDI(string xrefINDI) => new(Records.First(r => r.Tag.Equals(T.INDI) && r.Value.Equals(xrefINDI)));
-    public List<INDI> GetINDIs() => Records.Where(r => r.Tag.Equals(T.INDI)).Select(r => new INDI(r)).ToList();
-    public SOUR GetSOUR(string xrefSOUR) => new(Records.First(r => r.Tag.Equals(T.SOUR) && r.Value.Equals(xrefSOUR)));
-    public List<SOUR> GetSOURs() => Records.Where(r => r.Tag.Equals(T.SOUR)).Select(r => new SOUR(r)).ToList();
+    public FAM GetFAM(string xrefFAM) => new(Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
+    public List<FAM> GetFAMs() => Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FAM(r)).ToList();
+    public INDI GetINDI(string xrefINDI) => new(Records.First(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI)));
+    public List<INDI> GetINDIs() => Records.Where(r => r.Tag.Equals(C.INDI)).Select(r => new INDI(r)).ToList();
+    public SOUR GetSOUR(string xrefSOUR) => new(Records.First(r => r.Tag.Equals(C.SOUR) && r.Value.Equals(xrefSOUR)));
+    public List<SOUR> GetSOURs() => Records.Where(r => r.Tag.Equals(C.SOUR)).Select(r => new SOUR(r)).ToList();
     public static List<List<GedcomLine>> GetGedcomLinesForLevel(int level, List<GedcomLine> gedcomLines)
     {
         var gedcomLinesAtThisLevel = new List<List<GedcomLine>>();
@@ -47,10 +47,10 @@ public class Gedcom
     }
     public string Value(Record? record) => record?.Value ?? "";
 
-    public Record CORP => SOUR.Records.First(r => r.Tag.Equals(T.CORP));
-    public Record HEAD => Records.First(r => r.Tag.Equals(T.HEAD));
-    public Record RIN => _TREE.Records.First(r => r.Tag.Equals(T.RIN));
-    public Record SOUR => HEAD.Records.First(r => r.Tag.Equals(T.SOUR));
+    public Record CORP => SOUR.Records.First(r => r.Tag.Equals(C.CORP));
+    public Record HEAD => Records.First(r => r.Tag.Equals(C.HEAD));
+    public Record RIN => _TREE.Records.First(r => r.Tag.Equals(C.RIN));
+    public Record SOUR => HEAD.Records.First(r => r.Tag.Equals(C.SOUR));
     public Record _TREE => SOUR.Records.First(r => r.Tag.Equals(_TREE.Tag));
 
     public override string ToString() => $"{_TREE.Value} ({RIN.Value})";
@@ -78,57 +78,51 @@ public class Gedcom
 
         return gedcomLinesStringBuilder.ToString();
     }
-
-    public static Gedcom ParseJson(string json)
-    {
-        return new Gedcom(new List<GedcomLine>());
-    }
 }
 
 public class GedcomJsonConverter : JsonConverter<Gedcom>
 {
-    public override Gedcom? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => Gedcom.ParseJson(reader.GetString());
+    public override Gedcom? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
     public override void Write(Utf8JsonWriter writer, Gedcom gedcom, JsonSerializerOptions options)
     {
-        var gedcomJsonObject = new
+        var jsonObject = new
         {
             Head = new
             {
-                Subm = Value(gedcom.HEAD[T.SUBM]),
+                Subm = Value(gedcom.HEAD[C.SUBM]),
                 Source = new
                 {
-                    Name = Value(gedcom.HEAD[T.SOUR]?[T.NAME]),
-                    Version = Value(gedcom.HEAD[T.VERS]),
+                    Name = Value(gedcom.HEAD[C.SOUR]?[C.NAME]),
+                    Version = Value(gedcom.HEAD[C.VERS]),
                     _Tree = new
                     {
-                        rin = Value(gedcom.HEAD[T.RIN]),
-                        _env = Value(gedcom.HEAD[T._ENV]),
+                        rin = Value(gedcom.HEAD[C.RIN]),
+                        _env = Value(gedcom.HEAD[C._ENV]),
                     },
                     Corporation = new
                     {
                         gedcom.CORP.Value,
-                        Phone = Value(gedcom.CORP[T.PHON]),
-                        Www = Value(gedcom.CORP[T.WWW]),
-                        Address = Value(gedcom.CORP[T.ADDR])
+                        Phone = Value(gedcom.CORP[C.PHON]),
+                        Www = Value(gedcom.CORP[C.WWW]),
+                        Address = Value(gedcom.CORP[C.ADDR])
                     }
                 },
-                Date = Value(gedcom.HEAD[T.DATE]),
-                Gedc = Value(gedcom.HEAD[T.GEDC]),
-                Char_ = Value(gedcom.HEAD[T.CHAR])
+                Date = Value(gedcom.HEAD[C.DATE]),
+                Gedc = Value(gedcom.HEAD[C.GEDC]),
+                Char_ = Value(gedcom.HEAD[C.CHAR])
             },
             Individuals = gedcom.GetINDIs(),
             Sources = gedcom.GetSOURs(),
             Families = gedcom.GetFAMs()
         };
 
-        JsonSerializer.Serialize(writer, gedcomJsonObject, gedcomJsonObject.GetType(), options);
+        JsonSerializer.Serialize(writer, jsonObject, jsonObject.GetType(), options);
     }
 
     private string Value(Record? record) => record?.Value ?? "";
 }
 
-#region The Gedcom Standard LINEAGE_LINKED_GEDCOM (Structures) p. 23
-
+#region LINEAGE_LINKED_GEDCOM (Structures) p. 23
 /*
 https://gedcom.io/specifications/ged551.pdf
 
@@ -147,5 +141,4 @@ when used must begin with an under-score. Tags that are required within a desire
 bolded. Note that some contexts are not required but if they are used then the bolded tags are
 required.
 */
-
 #endregion

@@ -1,23 +1,65 @@
-﻿using Gedcom.Tags;
+﻿using Gedcom;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Gedcom;
+namespace Gedcom.Tags;
 
 [JsonConverter(typeof(NAMEJsonConverter))]
-public class NAME : TagBase
+public class NAME : TagBase, IPersonalNamePieces
 {
     public NAME(Record record) : base(record) { }
 
-    public string Name => Value(T.NAME);
+    public FONE? FONE
+    {
+        get
+        {
+            var foneRecord = FirstOrDefault(C.FONE);
+            if (foneRecord != null)
+            {
+                return new FONE(foneRecord);
+            }
+
+            return null;
+        }
+    }
+    public string Name => Record.Value;
+    public string TYPE => Val(C.TYPE);
+
+    #region IPersonalNamePeices
+
+    public string GIVN => Val(C.GIVN);
+
+    public string NICK => Val(C.NICK);
+
+    public string NPFX => Val(C.NPFX);
+
+    public string NSFX => Val(C.NSFX);
+
+    public string SPFX => Val(C.SPFX);
+
+    public string SURN => Val(C.SURN);
+
+    #endregion
 }
 
 public class NAMEJsonConverter: JsonConverter<NAME>
 {
     public override NAME? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, NAME value, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, NAME name, JsonSerializerOptions options)
     {
-        throw new NotImplementedException();
+        var jsonObject = new
+        {
+            Given = name.GIVN,
+            name.Name,
+            Nickname = name.NICK,
+            NamePrefix = name.NPFX,
+            NameSufix = name.NSFX,
+            SurnamePrefix = name.SPFX,
+            Surname = name.SURN,
+            Type = name.TYPE
+        };
+
+        JsonSerializer.Serialize(writer, jsonObject, options);
     }
 }
 

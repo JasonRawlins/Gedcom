@@ -8,22 +8,30 @@ public class INDI : TagBase
 {
     public INDI(Record record) : base(record) { }
 
-    private Record? BIRTRecord => FirstOrDefault(T.BIRT);
-    public string Birthdate => RecordValue(BIRTRecord, T.DATE);
-    public string Birthplace => RecordValue(BIRTRecord, T.PLAC);
-
-    private Record? DEATRecord => FirstOrDefault(T.DEAT);
-    public string Deathdate => RecordValue(DEATRecord, T.DATE);
-
-    public string Deathplace => RecordValue(DEATRecord, T.PLAC);
+    private Record? BIRTRecord => FirstOrDefault(C.BIRT);
+    public string Birthdate => RecordValue(BIRTRecord, C.DATE);
+    public string Birthplace => RecordValue(BIRTRecord, C.PLAC);
+    private Record? DEATRecord => FirstOrDefault(C.DEAT);
+    public string Deathdate => RecordValue(DEATRecord, C.DATE);
+    public string Deathplace => RecordValue(DEATRecord, C.PLAC);
     public string ExtIndi => Record.Value;
-    public List<Record> FAMSs => List(T.FAMS);
-    public string GIVN => RecordValue(NAMERecord, T.GIVN);
-    private Record? NAMERecord => FirstOrDefault(T.NAME);
-    public string NAME => NAMERecord?.Value ?? "";
-    public string RIN => Value(T.RIN);
-    public string SEX => Value(T.SEX);
-    public string SURN => Value(T.SURN);
+    public List<Record> FAMSs => List(C.FAMS);
+    public NAME? NAME
+    {
+        get
+        {
+            var nameRecord = FirstOrDefault(C.NAME);
+            if (nameRecord != null)
+            {
+                return new NAME(nameRecord);
+            }
+
+            return null;
+        }
+    }
+    public string RESN => Val(C.RESN);
+    public string RIN => Val(C.RIN);
+    public string SEX => Val(C.SEX);
 
     public override string ToString()
     {
@@ -39,34 +47,33 @@ public class INDI : TagBase
             deathdateText = deathdate.Year.ToString();
         }
 
-        return $"{NAME} ({birthdateText} - {deathdateText}) {SEX} {ExtIndi}";
-    }
-
-    internal static INDI? ParseJson(string json)
-    {
-        throw new NotImplementedException();
+        return $"{NAME} ({birthdateText} - {deathdateText}) {SEX} ({ExtIndi})";
     }
 }
 
 public class INDIJsonConverter : JsonConverter<INDI>
 {
-    public override INDI? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => INDI.ParseJson(reader.GetString());
+    public override INDI? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
     
     public override void Write(Utf8JsonWriter writer, INDI indi, JsonSerializerOptions options)
     {
-        var indiJsonObject = new
+        var jsonObject = new
         {
             Id = indi.ExtIndi,
             Name = indi.NAME,
+            Given = indi.NAME?.GIVN ?? "",
+            Surname = indi.NAME?.SURN ?? "",
+            indi.Birthdate,
+            indi.Deathdate,
             Rin = indi.RIN,
             Sex = indi.SEX,
         };
 
-        JsonSerializer.Serialize(writer, indiJsonObject, options);
+        JsonSerializer.Serialize(writer, jsonObject, options);
     }
 }
 
-#region The Gedcom Standard INDIVIDUAL_RECORD (INDI) p. 25
+#region INDIVIDUAL_RECORD (INDI) p. 25
 /* 
 https://gedcom.io/specifications/ged551.pdf
 
