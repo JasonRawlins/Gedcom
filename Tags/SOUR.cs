@@ -6,16 +6,56 @@ namespace Gedcom.Tags;
 [JsonConverter(typeof(SOURJsonConverter))]
 public class SOUR : TagBase
 {
+    public SOUR() { }
     public SOUR(Record record) : base(record) { }
 
-    public string ABBR => Val(C.ABBR);
-    public string AUTH => Val(C.AUTH);
-    public string PUBL => Val(C.PUBL);
-    public string REFN => Val(C.REFN);
-    public string RIN => Val(C.RIN);
-    public string TEXT => Val(C.TEXT);
-    public string TITL => Val(C.TITL);
-    public string XrefSour => Record.Value;
+    public string ABBR => V(C.ABBR);
+    public string AUTH => V(C.AUTH);
+    public string PUBL => V(C.PUBL);
+    public REFN? REFN
+    {
+        get
+        {
+            var refnRecord = FirstOrDefault(C.REFN);
+            if (refnRecord != null)
+            {
+                return new REFN(refnRecord);
+            }
+
+            return null;
+        }
+    }
+    public string RIN => V(C.RIN);
+    public string TEXT => V(C.TEXT);
+    public string TITL => V(C.TITL);
+    public string XRef => Record.Value;
+
+    public string DATE
+    {
+        get
+        {
+            return V(C.DATE);
+        }
+    }
+
+    public CHAN? CHAN => GetSubrecord<CHAN>(this, C.CHAN);
+
+    // DATA
+    // SOURCE_REPOSITORY_CITATION
+
+    /*
+     * n @<XREF:SOUR>@ SOUR {1:1}
++2 EVEN <EVENTS_RECORDED> {0:M} p.50
++3 DATE <DATE_PERIOD> {0:1} p.46
++3 PLAC <SOURCE_JURISDICTION_PLACE> {0:1} p.62
++2 AGNC <RESPONSIBLE_AGENCY> {0:1} p.60
++2 <<NOTE_STRUCTURE>> {0:M} p.37
++1 <<SOURCE_REPOSITORY_CITATION>> {0:M} p.40
++1 <<NOTE_STRUCTURE>> {0:M} p.37
++1 <<MULTIMEDIA_LINK>> {0:M} p.37, 26
+    */
+
+
 
     public override string ToString() => $"{TITL} ({AUTH})";
 }
@@ -28,7 +68,7 @@ public class SOURJsonConverter : JsonConverter<SOUR>
     {
         var sourJsonObject = new
         {
-            Id = sour.XrefSour,
+            Id = sour.XRef,
             Publisher = sour.PUBL,
             Rin = sour.RIN,
             Title = sour.TITL

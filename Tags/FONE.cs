@@ -3,46 +3,41 @@ using System.Text.Json.Serialization;
 
 namespace Gedcom.Tags;
 
-[JsonConverter(typeof(FONEJsonConverter))]
-public class FONE : TagBase, IPersonalNamePieces
+[JsonConverter(typeof(FONE_ROMNJsonConverter))]
+public class FONE_ROMN : TagBase, IPersonalNamePieces
 {
-    public FONE(Record record) : base(record) { }
+    public FONE_ROMN(Record record) : base(record) { }
 
-    public string TYPE => Val(C.TYPE);
+    public string TYPE => V(C.TYPE);
 
     #region IPersonalNamePieces
 
-    public string GIVN => Val(C.GIVN);
-
-    public string NICK => Val(C.NICK);
-
-    public string NPFX => Val(C.NPFX);
-
-    public string NSFX => Val(C.NSFX);
-
-    public string SPFX => Val(C.SPFX);
-
-    public string SURN => Val(C.SURN);
+    public string GIVN => V(C.GIVN);
+    public string NICK => V(C.NICK);
+    public string NPFX => V(C.NPFX);
+    public string NSFX => V(C.NSFX);
+    public string SPFX => V(C.SPFX);
+    public string SURN => V(C.SURN);
 
     #endregion
 }
 
-public class FONEJsonConverter : JsonConverter<FONE>
+public class FONE_ROMNJsonConverter : JsonConverter<FONE_ROMN>
 {
-    public override FONE? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override FONE_ROMN? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
     
-    public override void Write(Utf8JsonWriter writer, FONE fone, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, FONE_ROMN fone_romn, JsonSerializerOptions options)
     {
         var jsonObject = new
         {
-            fone.Value,
-            Given = fone.GIVN,
-            Nickname = fone.NICK,
-            NamePrefix = fone.NPFX,
-            NameSuffix = fone.NSFX,
-            SurnamePrefix = fone.SPFX,
-            Surname = fone.SURN,
-            Type = fone.TYPE
+            fone_romn.Value,
+            Given = fone_romn.GIVN,
+            Nickname = fone_romn.NICK,
+            NamePrefix = fone_romn.NPFX,
+            NameSuffix = fone_romn.NSFX,
+            SurnamePrefix = fone_romn.SPFX,
+            Surname = fone_romn.SURN,
+            Type = fone_romn.TYPE
         };
 
         JsonSerializer.Serialize(writer, jsonObject, options);
@@ -53,9 +48,13 @@ public class FONEJsonConverter : JsonConverter<FONE>
 /* 
 https://gedcom.io/specifications/ged551.pdf
 
-+1 FONE <NAME_PHONETIC_VARIATION> {0:M} p.55
-    +2 TYPE <PHONETIC_TYPE> {1:1} p.57
-    +2 <<PERSONAL_NAME_PIECES>> {0:1} p.37
+n NAME
+    +1 FONE <NAME_PHONETIC_VARIATION> {0:M} p.55
+        +2 TYPE <PHONETIC_TYPE> {1:1} p.57
+        +2 <<PERSONAL_NAME_PIECES>> {0:1} p.37
+    +1 ROMN <NAME_ROMANIZED_VARIATION> {0:M} p.56
+        +2 TYPE <ROMANIZED_TYPE> {1:1} p.61
+        +2 <<PERSONAL_NAME_PIECES>> {0:1} p.37
 
 */
 #endregion

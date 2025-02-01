@@ -29,9 +29,81 @@ public class INDI : TagBase
             return null;
         }
     }
-    public string RESN => Val(C.RESN);
-    public string RIN => Val(C.RIN);
-    public string SEX => Val(C.SEX);
+    public string RESN => V(C.RESN);
+    public string RIN => V(C.RIN);
+    public string SEX => V(C.SEX);
+    // SUBM
+    public string XRef => Record.Value;
+
+    // ASSOCIATION_STRUCTURE
+    // INDIVIDUAL_EVENT_STRUCTURE
+    // INDIVIDUAL_ATTRIBUTE_STRUCTURE
+    // LDS_INDIVIDUAL_ORDINANCE
+    // CHILD_TO_FAMILY_LINK
+    // SPOUSE_TO_FAMILY_LINK
+    public string SUBM => V(C.SUBM);
+    public string ALIA => V(C.ALIA);
+    public string ANCI => V(C.ANCI);
+    public string DESI => V(C.DESI);
+    public string RFN => V(C.RFN);
+    public string AFN => V(C.AFN);
+    public REFN? REFN
+    {
+        get
+        {
+            var refnRecord = FirstOrDefault(C.REFN);
+            if (refnRecord != null)
+            {
+                return new REFN(refnRecord);
+            }
+
+            return null;
+        }
+    }
+    public CHAN? CHAN
+    {
+        get
+        {
+            var chanRecord = FirstOrDefault(C.CHAN);
+            if (chanRecord != null)
+            {
+                return new CHAN(chanRecord);
+            }
+
+            return null;
+        }
+    }
+
+    public NOTE_STRUCTURE? NOTE
+    {
+        get
+        {
+            var noteRecord = FirstOrDefault(C.NOTE);
+            if (noteRecord != null)
+            {
+                return new NOTE_STRUCTURE(noteRecord);
+            }
+
+            return null;
+        }
+    }
+
+    // SOURCE_CITATION
+    public SOUR? SOUR => GetSubrecord<SOUR>(this, C.SOUR);
+
+    public OBJE? OBJE
+    {
+        get
+        {
+            var objeRecord = FirstOrDefault(C.OBJE);
+            if (objeRecord != null)
+            {
+                return new OBJE(objeRecord);
+            }
+
+            return null;
+        }
+    }
 
     public override string ToString()
     {

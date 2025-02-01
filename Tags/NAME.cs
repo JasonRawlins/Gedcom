@@ -9,35 +9,50 @@ public class NAME : TagBase, IPersonalNamePieces
 {
     public NAME(Record record) : base(record) { }
 
-    public FONE? FONE
+    public FONE_ROMN? FONE
     {
         get
         {
             var foneRecord = FirstOrDefault(C.FONE);
             if (foneRecord != null)
             {
-                return new FONE(foneRecord);
+                return new FONE_ROMN(foneRecord);
             }
 
             return null;
         }
     }
+
+    public FONE_ROMN? ROMN
+    {
+        get
+        {
+            var romnRecord = FirstOrDefault(C.ROMN);
+            if (romnRecord != null)
+            {
+                return new FONE_ROMN(romnRecord);
+            }
+
+            return null;
+        }
+    }
+
     public string Name => Record.Value;
-    public string TYPE => Val(C.TYPE);
+    public string TYPE => V(C.TYPE);
 
     #region IPersonalNamePeices
 
-    public string GIVN => Val(C.GIVN);
+    public string GIVN => V(C.GIVN);
 
-    public string NICK => Val(C.NICK);
+    public string NICK => V(C.NICK);
 
-    public string NPFX => Val(C.NPFX);
+    public string NPFX => V(C.NPFX);
 
-    public string NSFX => Val(C.NSFX);
+    public string NSFX => V(C.NSFX);
 
-    public string SPFX => Val(C.SPFX);
+    public string SPFX => V(C.SPFX);
 
-    public string SURN => Val(C.SURN);
+    public string SURN => V(C.SURN);
 
     #endregion
 }

@@ -8,6 +8,7 @@ namespace Gedcom;
 [JsonConverter(typeof(GedcomJsonConverter))]
 public class Gedcom
 {
+    [JsonIgnore]
     public List<Record> Records { get; } = [];
     public Gedcom(List<GedcomLine> gedcomLines)
     {
@@ -89,27 +90,27 @@ public class GedcomJsonConverter : JsonConverter<Gedcom>
         {
             Head = new
             {
-                Subm = Value(gedcom.HEAD[C.SUBM]),
+                Subm = V(gedcom.HEAD[C.SUBM]),
                 Source = new
                 {
-                    Name = Value(gedcom.HEAD[C.SOUR]?[C.NAME]),
-                    Version = Value(gedcom.HEAD[C.VERS]),
+                    Name = V(gedcom.HEAD[C.SOUR]?[C.NAME]),
+                    Version = V(gedcom.HEAD[C.VERS]),
                     _Tree = new
                     {
-                        rin = Value(gedcom.HEAD[C.RIN]),
-                        _env = Value(gedcom.HEAD[C._ENV]),
+                        rin = V(gedcom.HEAD[C.RIN]),
+                        _env = V(gedcom.HEAD[C._ENV]),
                     },
                     Corporation = new
                     {
                         gedcom.CORP.Value,
-                        Phone = Value(gedcom.CORP[C.PHON]),
-                        Www = Value(gedcom.CORP[C.WWW]),
-                        Address = Value(gedcom.CORP[C.ADDR])
+                        Phone = V(gedcom.CORP[C.PHON]),
+                        Www = V(gedcom.CORP[C.WWW]),
+                        Address = V(gedcom.CORP[C.ADDR])
                     }
                 },
-                Date = Value(gedcom.HEAD[C.DATE]),
-                Gedc = Value(gedcom.HEAD[C.GEDC]),
-                Char_ = Value(gedcom.HEAD[C.CHAR])
+                Date = V(gedcom.HEAD[C.DATE]),
+                Gedc = V(gedcom.HEAD[C.GEDC]),
+                Char_ = V(gedcom.HEAD[C.CHAR])
             },
             Individuals = gedcom.GetINDIs(),
             Sources = gedcom.GetSOURs(),
@@ -119,7 +120,7 @@ public class GedcomJsonConverter : JsonConverter<Gedcom>
         JsonSerializer.Serialize(writer, jsonObject, jsonObject.GetType(), options);
     }
 
-    private string Value(Record? record) => record?.Value ?? "";
+    private static string V(Record? record) => record?.Value ?? "";
 }
 
 #region LINEAGE_LINKED_GEDCOM (Structures) p. 23
