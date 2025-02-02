@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Gedcom.Tags;
+using Gedcom.RecordStructure;
 
 namespace Gedcom;
 
@@ -18,12 +18,12 @@ public class Gedcom
         }
     }
 
-    public FAM GetFAM(string xrefFAM) => new(Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
-    public List<FAM> GetFAMs() => Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FAM(r)).ToList();
-    public INDI GetINDI(string xrefINDI) => new(Records.First(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI)));
-    public List<INDI> GetINDIs() => Records.Where(r => r.Tag.Equals(C.INDI)).Select(r => new INDI(r)).ToList();
-    public SOUR GetSOUR(string xrefSOUR) => new(Records.First(r => r.Tag.Equals(C.SOUR) && r.Value.Equals(xrefSOUR)));
-    public List<SOUR> GetSOURs() => Records.Where(r => r.Tag.Equals(C.SOUR)).Select(r => new SOUR(r)).ToList();
+    public FamilyRecord GetFAM(string xrefFAM) => new(Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
+    public List<FamilyRecord> GetFAMs() => Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FamilyRecord(r)).ToList();
+    public IndividualRecord GetINDI(string xrefINDI) => new(Records.First(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI)));
+    public List<IndividualRecord> GetINDIs() => Records.Where(r => r.Tag.Equals(C.INDI)).Select(r => new IndividualRecord(r)).ToList();
+    public SourceCitation GetSOUR(string xrefSOUR) => new(Records.First(r => r.Tag.Equals(C.SOUR) && r.Value.Equals(xrefSOUR)));
+    public List<SourceCitation> GetSOURs() => Records.Where(r => r.Tag.Equals(C.SOUR)).Select(r => new SourceCitation(r)).ToList();
     public static List<List<GedcomLine>> GetGedcomLinesForLevel(int level, List<GedcomLine> gedcomLines)
     {
         var gedcomLinesAtThisLevel = new List<List<GedcomLine>>();

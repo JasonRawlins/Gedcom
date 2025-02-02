@@ -1,18 +1,18 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Gedcom.Tags;
+namespace Gedcom.RecordStructure;
 
-[JsonConverter(typeof(CHANJsonConverter))]
-public class CHAN : TagBase
+[JsonConverter(typeof(ChangeDateJsonConverter))]
+public class ChangeDate : RecordStructureBase
 {
-    public CHAN() { }
-    public CHAN(Record record) : base(record) { }
+    public ChangeDate() { }
+    public ChangeDate(Record record) : base(record) { }
 
-    public string DATE => V(C.DATE);
-    public string TIME => V(C.TIME);
+    public string Date => V(C.DATE);
+    public string Time => V(C.TIME);
 
-    public NOTE_STRUCTURE? NOTE
+    public NoteStructure? Note
     {
         get
         {
@@ -20,7 +20,7 @@ public class CHAN : TagBase
 
             if (timeRecord != null) 
             {
-                return new NOTE_STRUCTURE(timeRecord);
+                return new NoteStructure(timeRecord);
             }
 
             return null;
@@ -28,21 +28,24 @@ public class CHAN : TagBase
     }
 }
 
-public class CHANJsonConverter : JsonConverter<CHAN>
+public class ChangeDateJsonConverter : JsonConverter<ChangeDate>
 {
-    public override CHAN? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override ChangeDate? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
     
-    public override void Write(Utf8JsonWriter writer, CHAN chan, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, ChangeDate changeDate, JsonSerializerOptions options)
     {
         var jsonObject = new
         {
+            changeDate.Date,
+            changeDate.Time,
+            changeDate.Note
         };
 
         JsonSerializer.Serialize(writer, jsonObject, options);
     }
 }
 
-#region CHANGE_DATE (CHAN) p. 
+#region CHANGE_DATE (CHAN) p. 31
 /* 
 https://gedcom.io/specifications/ged551.pdf
 

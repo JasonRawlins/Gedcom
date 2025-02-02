@@ -1,23 +1,23 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Gedcom.Tags;
+namespace Gedcom.RecordStructure;
 
-[JsonConverter(typeof(FAMJsonConverter))]
-public class FAM : TagBase
+[JsonConverter(typeof(FamilyRecordJsonConverter))]
+public class FamilyRecord : RecordStructureBase
 {
-    public FAM(Record record) : base(record) { }
+    public FamilyRecord(Record record) : base(record) { }
 
     public List<Record> Partners => List(r => r.Tag.Equals(C.WIFE) || r.Tag.Equals(C.HUSB));
 
     public override string ToString() => $"({string.Join(',', Partners)})";
 }
 
-public class FAMJsonConverter : JsonConverter<FAM>
+public class FamilyRecordJsonConverter : JsonConverter<FamilyRecord>
 {
-    public override FAM? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override FamilyRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void Write(Utf8JsonWriter writer, FAM fam, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, FamilyRecord fam, JsonSerializerOptions options)
     {
         var jsonObject = new
         {

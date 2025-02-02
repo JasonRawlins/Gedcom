@@ -1,9 +1,9 @@
 ﻿public interface IPersonalNamePieces
 {
-    string GIVN { get; }
-    string NICK { get; }
-    string NPFX { get; }
-    string NSFX { get; }
-    string SPFX { get; }
-    string SURN { get; }
+    string Given { get; }
+    string Nickname { get; }
+    string NamePrefix { get; }
+    string NameSuffix { get; }
+    string SurnamePrefix { get; }
+    string Surname { get; }
 }

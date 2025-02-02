@@ -1,36 +1,35 @@
-﻿using Gedcom;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Gedcom.Tags;
+namespace Gedcom.RecordStructure;
 
-[JsonConverter(typeof(NAMEJsonConverter))]
-public class NAME : TagBase, IPersonalNamePieces
+[JsonConverter(typeof(PersonalNameStructureJsonConverter))]
+public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
 {
-    public NAME(Record record) : base(record) { }
+    public PersonalNameStructure(Record record) : base(record) { }
 
-    public FONE_ROMN? FONE
+    public NameVariation? Phonetic
     {
         get
         {
             var foneRecord = FirstOrDefault(C.FONE);
             if (foneRecord != null)
             {
-                return new FONE_ROMN(foneRecord);
+                return new NameVariation(foneRecord);
             }
 
             return null;
         }
     }
 
-    public FONE_ROMN? ROMN
+    public NameVariation? Romanized
     {
         get
         {
             var romnRecord = FirstOrDefault(C.ROMN);
             if (romnRecord != null)
             {
-                return new FONE_ROMN(romnRecord);
+                return new NameVariation(romnRecord);
             }
 
             return null;
@@ -38,47 +37,47 @@ public class NAME : TagBase, IPersonalNamePieces
     }
 
     public string Name => Record.Value;
-    public string TYPE => V(C.TYPE);
+    public string Type => V(C.TYPE);
 
     #region IPersonalNamePeices
 
-    public string GIVN => V(C.GIVN);
+    public string Given => V(C.GIVN);
 
-    public string NICK => V(C.NICK);
+    public string Nickname => V(C.NICK);
 
-    public string NPFX => V(C.NPFX);
+    public string NamePrefix => V(C.NPFX);
 
-    public string NSFX => V(C.NSFX);
+    public string NameSuffix => V(C.NSFX);
 
-    public string SPFX => V(C.SPFX);
+    public string SurnamePrefix => V(C.SPFX);
 
-    public string SURN => V(C.SURN);
+    public string Surname => V(C.SURN);
 
     #endregion
 }
 
-public class NAMEJsonConverter: JsonConverter<NAME>
+public class PersonalNameStructureJsonConverter: JsonConverter<PersonalNameStructure>
 {
-    public override NAME? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, NAME name, JsonSerializerOptions options)
+    public override PersonalNameStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, PersonalNameStructure name, JsonSerializerOptions options)
     {
         var jsonObject = new
         {
-            Given = name.GIVN,
+            name.Given,
             name.Name,
-            Nickname = name.NICK,
-            NamePrefix = name.NPFX,
-            NameSufix = name.NSFX,
-            SurnamePrefix = name.SPFX,
-            Surname = name.SURN,
-            Type = name.TYPE
+            name.Nickname,
+            name.NamePrefix,
+            NameSufix = name.NameSuffix,
+            name.SurnamePrefix,
+            name.Surname,
+            name.Type
         };
 
         JsonSerializer.Serialize(writer, jsonObject, options);
     }
 }
 
-#region PERSONAL_NAME_STRUCTURE (NAME) p. 38
+#region PERSONAL_NAME_STRUCTURE p. 38
 /*
 https://gedcom.io/specifications/ged551.pdf
 
