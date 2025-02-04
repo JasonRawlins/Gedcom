@@ -1,4 +1,5 @@
-﻿namespace Gedcom.RecordStructure;
+﻿
+namespace Gedcom.RecordStructure;
 
 public class IndividualEventStructure : RecordStructureBase
 {
@@ -6,8 +7,6 @@ public class IndividualEventStructure : RecordStructureBase
     public IndividualEventStructure(Record record) : base(record) { }
     public IndividualEventDetail? IndividualEventDetail => List<IndividualEventDetail>(Record.Tag).First();
     public ChildToFamilyLink? ChildToFamilyLink => new ChildToFamilyLink(FirstOrDefault(C.FAMC));
-
-
 
 //    n ADOP {1:1}
 //    +1 <<INDIVIDUAL_EVENT_DETAIL>> {0:1}* p.34
@@ -23,7 +22,6 @@ public class IndividualEventStructure : RecordStructureBase
 
 #region INDIVIDUAL_EVENT_STRUCTURE p. 34
 /* 
-https://gedcom.io/specifications/ged551.pdf
 
 INDIVIDUAL_EVENT_STRUCTURE:=
 

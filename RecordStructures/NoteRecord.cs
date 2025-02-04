@@ -10,7 +10,6 @@ public class NoteRecord : RecordStructureBase
 
 #region STRUCTURE_NAME (NOTE) p. 27
 /* 
-https://gedcom.io/specifications/ged551.pdf
 
 NOTE_RECORD:=
 
@@ -20,7 +19,6 @@ n @<XREF:NOTE>@ NOTE <SUBMITTER_TEXT> {1:1} p.63
     +1 RIN <AUTOMATED_RECORD_ID> {0:1} p.43
     +1 <<SOURCE_CITATION>> {0:M} p.39
     +1 <<CHANGE_DATE>> {0:1} p.31
-
 
 */
 #endregion

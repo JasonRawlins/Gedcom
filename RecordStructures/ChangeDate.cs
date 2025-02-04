@@ -8,25 +8,11 @@ public class ChangeDate : RecordStructureBase
     public string Date => V(C.DATE);
     public string Time => V(C.TIME);
 
-    public NoteStructure? Note
-    {
-        get
-        {
-            var timeRecord = Record.Records.FirstOrDefault(r => r.Tag.Equals(C.NOTE));
-
-            if (timeRecord != null) 
-            {
-                return new NoteStructure(timeRecord);
-            }
-
-            return null;
-        }
-    }
+    public NoteStructure? Note => new NoteStructure(FirstOrDefault(C.NOTE));
 }
 
 #region CHANGE_DATE (CHAN) p. 31
 /* 
-https://gedcom.io/specifications/ged551.pdf
 
 CHANGE_DATE:=
 
