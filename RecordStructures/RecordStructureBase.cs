@@ -7,7 +7,12 @@ public class RecordStructureBase
     public RecordStructureBase() => Record = new Record([]);
     public RecordStructureBase(Record record) => Record = record;
 
-    public List<T> CreateRecordStructures<T>(string tag) where T : RecordStructureBase, new()
+    
+    protected Record? FirstOrDefault(string tag) => Record.Records.FirstOrDefault(r => r.Tag.Equals(tag));
+    protected List<Record> List(string tag) => Record.Records.Where(r => r.Tag.Equals(tag)).ToList();
+    protected List<Record> List(Func<Record, bool> predicate) => Record.Records.Where(predicate).ToList();
+    protected List<T> List<T>(string tag) where T : RecordStructureBase, new () => CreateRecordStructures<T>(tag);
+    private List<T> CreateRecordStructures<T>(string tag) where T : RecordStructureBase, new()
     {
         var records = Record.Records.Where(r => r.Tag.Equals(tag));
         if (records.Any())
@@ -22,10 +27,6 @@ public class RecordStructureBase
 
         return [];
     }
-    protected Record? FirstOrDefault(string tag) => Record.Records.FirstOrDefault(r => r.Tag.Equals(tag));
-    protected List<Record> List(string tag) => Record.Records.Where(r => r.Tag.Equals(tag)).ToList();
-    protected List<Record> List(Func<Record, bool> predicate) => Record.Records.Where(predicate).ToList();
-    protected List<T> List<T>(string tag) where T : RecordStructureBase, new () => CreateRecordStructures<T>(tag);
     protected string RecordValue(Record? record, string tag) => record?.Records.SingleOrDefault(r => r.Tag.Equals(tag))?.Value ?? "";
     internal void SetRecord(Record record) => Record = record;
     protected string Text

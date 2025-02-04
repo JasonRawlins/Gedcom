@@ -6,7 +6,6 @@ public class IndividualRecord : RecordStructureBase
 
     public string RestrictionNotice => V(C.RESN);
     public List<PersonalNameStructure> PersonalNameStructures => List(C.NAME).Select(r => new PersonalNameStructure(r)).ToList();
-            
     public string Sex => V(C.SEX);
     public List<IndividualEventStructure> IndividualEventStructures => List<IndividualEventStructure>(Record.Tag);
     public List<IndividualAttributeStructure> IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
@@ -59,9 +58,9 @@ public class IndividualRecord : RecordStructureBase
     public List<UserReferenceNumber> UserReferenceNumbers => List(C.REFN).Select(r => new UserReferenceNumber(r)).ToList();
     public string Rin => V(C.RIN);
     public ChangeDate? ChangeDate => new ChangeDate(FirstOrDefault(C.CHAN));
-    public List<NoteStructure> NoteStructure => noteRecords.Select(r => new NoteStructure(r)).ToList()
-    public List<SourceCitation> SourceCitation => CreateRecordStructures<SourceCitation>(C.SOUR);
-    public List<MultiMediaLink> MultiMediaLink => CreateRecordStructures<MultiMediaLink>(C.OBJE);
+    public List<NoteStructure> NoteStructure => List<NoteStructure>(C.NOTE);
+    public List<SourceCitation> SourceCitation => List<SourceCitation>(C.SOUR);
+    public List<MultiMediaLink> MultiMediaLink => List<MultiMediaLink>(C.OBJE);
 
     public override string ToString() => $"{PersonalNameStructures.First().Name} {Sex} ({Xref})";
 }
