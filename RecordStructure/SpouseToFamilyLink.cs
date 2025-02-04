@@ -1,7 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructure;
 
 //[JsonConverter(typeof(SpouseToFamilyLinkJsonConverter))]
 public class SpouseToFamilyLink : RecordStructureBase
@@ -13,7 +10,7 @@ public class SpouseToFamilyLink : RecordStructureBase
     {
         get
         {
-            var noteStructures = List(C.FAMS);
+            var noteStructures = List(C.NOTE);
             if (noteStructures != null)
             {
                 return noteStructures.Select(r => new NoteStructure(r)).ToList();

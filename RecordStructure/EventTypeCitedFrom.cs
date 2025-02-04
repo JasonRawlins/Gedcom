@@ -1,9 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿namespace Gedcom.RecordStructure;
 
-namespace Gedcom.RecordStructure;
-
-[JsonConverter(typeof(EventTypeCitedFromJsonConverter))]
+//[JsonConverter(typeof(EventTypeCitedFromJsonConverter))]
 public class EventTypeCitedFrom : RecordStructureBase
 {
     public EventTypeCitedFrom() : base() { }
@@ -12,21 +9,21 @@ public class EventTypeCitedFrom : RecordStructureBase
     public string Role => V(C.ROLE);
 }
 
-public class EventTypeCitedFromJsonConverter : JsonConverter<EventTypeCitedFrom>
-{
-    public override EventTypeCitedFrom? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+//public class EventTypeCitedFromJsonConverter : JsonConverter<EventTypeCitedFrom>
+//{
+//    public override EventTypeCitedFrom? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void Write(Utf8JsonWriter writer, EventTypeCitedFrom eventTypeCitedFrom, JsonSerializerOptions options)
-    {
-        var jsonObject = new
-        {
-            eventTypeCitedFrom.Role,
-            eventTypeCitedFrom.Value
-        };
+//    public override void Write(Utf8JsonWriter writer, EventTypeCitedFrom eventTypeCitedFrom, JsonSerializerOptions options)
+//    {
+//        var jsonObject = new
+//        {
+//            eventTypeCitedFrom.Role,
+//            eventTypeCitedFrom.Value
+//        };
         
-        JsonSerializer.Serialize(writer, jsonObject, options);
-    }
-}
+//        JsonSerializer.Serialize(writer, jsonObject, options);
+//    }
+//}
 
 #region EVENT_TYPE_CITED_FROM p. 49
 /* 

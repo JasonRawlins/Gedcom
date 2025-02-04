@@ -1,15 +1,11 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructure;
 
 //[JsonConverter(typeof(NoteRecordJsonConverter))]
 public class NoteRecord : RecordStructureBase
 {
-    public NoteRecord() : base(new Record([])) { }
     public NoteRecord(Record record) : base(record) { }
 
-    public ChangeDate? ChangeDate => CreateRecordStructure<ChangeDate>(this, C.CHAN);
+    public ChangeDate ChangeDate => CreateRecordStructures<ChangeDate>(C.CHAN).First();
 
     public string XRef => Record.Value;
 }

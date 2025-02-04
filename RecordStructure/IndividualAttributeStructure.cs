@@ -2,7 +2,7 @@
 
 public class IndividualAttributeStructure : RecordStructureBase
 {
-    public IndividualAttributeStructure() : base() { }
+    internal IndividualAttributeStructure() : base() { }
     public IndividualAttributeStructure(Record record) : base(record) { }
 
     public IndividualEventDetail? IndividualEventDetail { get; set; }

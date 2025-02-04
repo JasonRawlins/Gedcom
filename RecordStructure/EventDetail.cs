@@ -1,8 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructure;
 
 public class EventDetail : RecordStructureBase
 {

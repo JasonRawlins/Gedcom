@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructure;
 
-[JsonConverter(typeof(ReferenceJsonConverter))]
+//[JsonConverter(typeof(ReferenceJsonConverter))]
 public class UserReferenceNumber : RecordStructureBase
 {
     public UserReferenceNumber(Record record) : base(record) { }
@@ -11,21 +11,21 @@ public class UserReferenceNumber : RecordStructureBase
     public string Type => V(C.TYPE);
 }
 
-public class ReferenceJsonConverter : JsonConverter<UserReferenceNumber>
-{
-    public override UserReferenceNumber? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+//public class ReferenceJsonConverter : JsonConverter<UserReferenceNumber>
+//{
+//    public override UserReferenceNumber? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
     
-    public override void Write(Utf8JsonWriter writer, UserReferenceNumber reference, JsonSerializerOptions options)
-    {
-        var jsonObject = new
-        {
-            Id = reference.Value,
-            reference.Type
-        };
+//    public override void Write(Utf8JsonWriter writer, UserReferenceNumber reference, JsonSerializerOptions options)
+//    {
+//        var jsonObject = new
+//        {
+//            Id = reference.Value,
+//            reference.Type
+//        };
 
-        JsonSerializer.Serialize(writer, jsonObject, options);
-    }
-}
+//        JsonSerializer.Serialize(writer, jsonObject, options);
+//    }
+//}
 
 #region USER_REFERENCE_TYPE (REFN) p. 27
 /* 

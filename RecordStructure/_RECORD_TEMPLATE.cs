@@ -2,7 +2,6 @@
 
 public class _TAGNAME_ : RecordStructureBase
 {
-    public _TAGNAME_() : base() { }
     public _TAGNAME_(Record record) : base(record) { }
 }
 

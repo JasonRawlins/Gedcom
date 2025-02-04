@@ -1,32 +1,28 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿namespace Gedcom.RecordStructure;
 
-namespace Gedcom.RecordStructure;
-
-[JsonConverter(typeof(FamilyRecordJsonConverter))]
+//[JsonConverter(typeof(FamilyRecordJsonConverter))]
 public class FamilyRecord : RecordStructureBase
 {
     public FamilyRecord(Record record) : base(record) { }
 
     public List<Record> Partners => List(r => r.Tag.Equals(C.WIFE) || r.Tag.Equals(C.HUSB));
-
     public override string ToString() => $"({string.Join(',', Partners)})";
 }
 
-public class FamilyRecordJsonConverter : JsonConverter<FamilyRecord>
-{
-    public override FamilyRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+//public class FamilyRecordJsonConverter : JsonConverter<FamilyRecord>
+//{
+//    public override FamilyRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void Write(Utf8JsonWriter writer, FamilyRecord fam, JsonSerializerOptions options)
-    {
-        var jsonObject = new
-        {
-            fam.Partners
-        };
+//    public override void Write(Utf8JsonWriter writer, FamilyRecord fam, JsonSerializerOptions options)
+//    {
+//        var jsonObject = new
+//        {
+//            fam.Partners
+//        };
 
-        JsonSerializer.Serialize(writer, jsonObject, options);
-    }
-}
+//        JsonSerializer.Serialize(writer, jsonObject, options);
+//    }
+//}
 
 #region FAM_RECORD (FAM) p. 24
 /*

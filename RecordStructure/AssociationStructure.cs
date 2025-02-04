@@ -1,7 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructure;
 
 //[JsonConverter(typeof(AssociationStructureJsonConverter))]
 public class AssociationStructure : RecordStructureBase
@@ -10,7 +7,6 @@ public class AssociationStructure : RecordStructureBase
     public AssociationStructure(Record record) : base(record) { }
 
     public string RelationIsDescriptor => V(C.ASSO);
-
     public SourceCitation? SourceCitation { get; }
     public NoteStructure? NoteStructure { get; }
 }

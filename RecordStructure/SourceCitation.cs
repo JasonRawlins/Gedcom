@@ -1,41 +1,38 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿namespace Gedcom.RecordStructure;
 
-namespace Gedcom.RecordStructure;
-
-[JsonConverter(typeof(SourceCitationJsonConverter))]
+//[JsonConverter(typeof(SourceCitationJsonConverter))]
 public class SourceCitation : RecordStructureBase
 {
     public SourceCitation() : base() { }
     public SourceCitation(Record record) : base(record) { }
 
-    public Data? Data => CreateRecordStructure<Data>(this, C.DATA);
+    public Data? Data => CreateRecordStructures<Data>(C.DATA).First();
     public string Event => V(C.EVEN);
-    public NoteStructure? NoteStructure => CreateRecordStructure<NoteStructure>(this, C.NOTE);
-    public MultiMediaLink? Object => CreateRecordStructure<MultiMediaLink>(this, C.OBJE);
+    public NoteStructure? NoteStructure => CreateRecordStructures<NoteStructure>(C.NOTE).First();
+    public MultiMediaLink? Object => CreateRecordStructures<MultiMediaLink>(C.OBJE).First();
     public string Page => V(C.PAGE);
     public string Quay => V(C.QUAY);
 }
 
-public class SourceCitationJsonConverter : JsonConverter<SourceCitation>
-{
-    public override SourceCitation? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+//public class SourceCitationJsonConverter : JsonConverter<SourceCitation>
+//{
+//    public override SourceCitation? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
     
-    public override void Write(Utf8JsonWriter writer, SourceCitation sourceCitation, JsonSerializerOptions options)
-    {
-        var jsonObject = new
-        {
-            sourceCitation.Data,
-            sourceCitation.Event,
-            sourceCitation.NoteStructure,
-            sourceCitation.Object,
-            sourceCitation.Page,
-            sourceCitation.Quay
-        };
+//    public override void Write(Utf8JsonWriter writer, SourceCitation sourceCitation, JsonSerializerOptions options)
+//    {
+//        var jsonObject = new
+//        {
+//            sourceCitation.Data,
+//            sourceCitation.Event,
+//            sourceCitation.NoteStructure,
+//            sourceCitation.Object,
+//            sourceCitation.Page,
+//            sourceCitation.Quay
+//        };
 
-        JsonSerializer.Serialize(writer, jsonObject, options);
-    }
-}
+//        JsonSerializer.Serialize(writer, jsonObject, options);
+//    }
+//}
 
 #region SOURCE_CITATION p. 39
 /* 

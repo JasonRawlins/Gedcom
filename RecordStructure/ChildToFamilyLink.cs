@@ -1,6 +1,4 @@
-﻿using Gedcom.RecordStructure;
-
-namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructure;
 
 public class ChildToFamilyLink : RecordStructureBase
 {
@@ -9,19 +7,7 @@ public class ChildToFamilyLink : RecordStructureBase
 
     public string ChildLinkageStatus => V(C.STAT);
     public string PedigreeLinkageType => V(C.PEDI);
-    public List<NoteStructure>? NoteStructure
-    {
-        get
-        {
-            var noteStructures = List(C.NOTE);
-            if (noteStructures != null)
-            {
-                return noteStructures.Select(r => new NoteStructure(r)).ToList();
-            }
-
-            return null;
-        }
-    }
+    public List<NoteStructure>? NoteStructure => List<NoteStructure>(C.NOTE);
 }
 
 #region CHILD_TO_FAMILY_LINK p. 31-32

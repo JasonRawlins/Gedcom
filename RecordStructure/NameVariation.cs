@@ -1,9 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿namespace Gedcom.RecordStructure;
 
-namespace Gedcom.RecordStructure;
-
-[JsonConverter(typeof(NameVariationJsonConverter))]
+//[JsonConverter(typeof(NameVariationJsonConverter))]
 public class NameVariation : RecordStructureBase, IPersonalNamePieces
 {
     public NameVariation(Record record) : base(record) { }
@@ -22,27 +19,27 @@ public class NameVariation : RecordStructureBase, IPersonalNamePieces
     #endregion
 }
 
-public class NameVariationJsonConverter : JsonConverter<NameVariation>
-{
-    public override NameVariation? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+//public class NameVariationJsonConverter : JsonConverter<NameVariation>
+//{
+//    public override NameVariation? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
     
-    public override void Write(Utf8JsonWriter writer, NameVariation fone_romn, JsonSerializerOptions options)
-    {
-        var jsonObject = new
-        {
-            fone_romn.Value,
-            fone_romn.Given,
-            fone_romn.Nickname,
-            fone_romn.NamePrefix,
-            fone_romn.NameSuffix,
-            fone_romn.SurnamePrefix,
-            fone_romn.Surname,
-            fone_romn.Type
-        };
+//    public override void Write(Utf8JsonWriter writer, NameVariation fone_romn, JsonSerializerOptions options)
+//    {
+//        var jsonObject = new
+//        {
+//            fone_romn.Value,
+//            fone_romn.Given,
+//            fone_romn.Nickname,
+//            fone_romn.NamePrefix,
+//            fone_romn.NameSuffix,
+//            fone_romn.SurnamePrefix,
+//            fone_romn.Surname,
+//            fone_romn.Type
+//        };
 
-        JsonSerializer.Serialize(writer, jsonObject, options);
-    }
-}
+//        JsonSerializer.Serialize(writer, jsonObject, options);
+//    }
+//}
 
 #region NAME_PHONETIC_VARIATION (FONE) and NAME_ROMANIZED_VARIATION (ROMN) p. 38
 /* 

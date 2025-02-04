@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructure;
 
-[JsonConverter(typeof(PersonalNameStructureJsonConverter))]
+//[JsonConverter(typeof(PersonalNameStructureJsonConverter))]
 public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
 {
     public PersonalNameStructure(Record record) : base(record) { }
@@ -56,26 +56,26 @@ public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
     #endregion
 }
 
-public class PersonalNameStructureJsonConverter: JsonConverter<PersonalNameStructure>
-{
-    public override PersonalNameStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, PersonalNameStructure name, JsonSerializerOptions options)
-    {
-        var jsonObject = new
-        {
-            name.Given,
-            name.Name,
-            name.Nickname,
-            name.NamePrefix,
-            NameSufix = name.NameSuffix,
-            name.SurnamePrefix,
-            name.Surname,
-            name.Type
-        };
+//public class PersonalNameStructureJsonConverter: JsonConverter<PersonalNameStructure>
+//{
+//    public override PersonalNameStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+//    public override void Write(Utf8JsonWriter writer, PersonalNameStructure name, JsonSerializerOptions options)
+//    {
+//        var jsonObject = new
+//        {
+//            name.Given,
+//            name.Name,
+//            name.Nickname,
+//            name.NamePrefix,
+//            NameSufix = name.NameSuffix,
+//            name.SurnamePrefix,
+//            name.Surname,
+//            name.Type
+//        };
 
-        JsonSerializer.Serialize(writer, jsonObject, options);
-    }
-}
+//        JsonSerializer.Serialize(writer, jsonObject, options);
+//    }
+//}
 
 #region PERSONAL_NAME_STRUCTURE p. 38
 /*

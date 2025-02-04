@@ -7,7 +7,6 @@ namespace Gedcom.RecordStructure;
 [JsonConverter(typeof(IndividualRecordJsonConverter))]
 public class IndividualRecord : RecordStructureBase
 {
-    public IndividualRecord() { } 
     public IndividualRecord(Record record) : base(record) { }
 
     public string RestrictionNotice => V(C.RESN);
@@ -15,8 +14,8 @@ public class IndividualRecord : RecordStructureBase
             
     public string Sex => V(C.SEX);
     // INDIVIDUAL_EVENT_STRUCTURE
-    
-    public List<IndividualAttributeStructure> GetIndividualAttribute(string tag) => List<IndividualAttributeStructure>(tag);
+
+    //public List<IndividualAttributeStructure> IndividualAttributeStructure = GetIndividualAttribute(string tag);
 
     // LDS_INDIVIDUAL_ORDINANCE
     public List<ChildToFamilyLink> ChildToFamilyLinks
@@ -64,7 +63,7 @@ public class IndividualRecord : RecordStructureBase
     public List<string> DescendantInterests => List(C.DESI).Select(r => r.Value).ToList();
     public string PermanentRecordFileNumber => V(C.RFN);
     public string AncestralFileNumber => V(C.AFN);
-    public List<UserReferenceNumber>? UserReferenceNumbers => List(C.REFN).Select(r => new UserReferenceNumber(r)).ToList();
+    public List<UserReferenceNumber> UserReferenceNumbers => List(C.REFN).Select(r => new UserReferenceNumber(r)).ToList();
     public string Rin => V(C.RIN);
     public ChangeDate? ChangeDate
     {
@@ -79,7 +78,7 @@ public class IndividualRecord : RecordStructureBase
             return null;
         }
     }
-    public List<NoteStructure>? NoteStructure
+    public List<NoteStructure> NoteStructure
     {
         get
         {
@@ -92,8 +91,8 @@ public class IndividualRecord : RecordStructureBase
             return null;
         }
     }
-    public List<SourceCitation>? SourceCitation => CreateRecordStructures<SourceCitation>(this, C.SOUR);
-    public List<MultiMediaLink>? MultiMediaLink => CreateRecordStructures<MultiMediaLink>(this, C.OBJE);
+    public List<SourceCitation> SourceCitation => CreateRecordStructures<SourceCitation>(C.SOUR);
+    public List<MultiMediaLink> MultiMediaLink => CreateRecordStructures<MultiMediaLink>(C.OBJE);
 
     public override string ToString() => $"{PersonalNameStructures.First().Name} {Sex} ({Xref})";
 }

@@ -1,7 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructure;
 
 //[JsonConverter(typeof(DATAJsonConverter))]
 public class Data : RecordStructureBase
