@@ -1,4 +1,4 @@
-﻿namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructures;
 
 public class _RECORD_STRUCTURE_NAME : RecordStructureBase
 {
@@ -7,7 +7,6 @@ public class _RECORD_STRUCTURE_NAME : RecordStructureBase
 
 #region STRUCTURE_NAME (_TAGNAME_) p. 
 /* 
-https://gedcom.io/specifications/ged551.pdf
 
 
 */

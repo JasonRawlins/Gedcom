@@ -1,4 +1,4 @@
-﻿namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructures;
 
 public class IndividualEventDetail : RecordStructureBase
 {
@@ -11,7 +11,6 @@ public class IndividualEventDetail : RecordStructureBase
 
 #region INDIVIDUAL_EVENT_DETAIL p. 34
 /* 
-https://gedcom.io/specifications/ged551.pdf
 
 INDIVIDUAL_EVENT_DETAIL:=
 

@@ -1,21 +1,20 @@
-﻿namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructures;
 
 public class SourceCitation : RecordStructureBase
 {
     public SourceCitation() : base() { }
     public SourceCitation(Record record) : base(record) { }
 
-    public Data? Data => CreateRecordStructures<Data>(C.DATA).First();
+    public Data? Data => List<Data>(C.DATA).First();
     public string Event => V(C.EVEN);
-    public NoteStructure? NoteStructure => CreateRecordStructures<NoteStructure>(C.NOTE).First();
-    public MultiMediaLink? Object => CreateRecordStructures<MultiMediaLink>(C.OBJE).First();
+    public NoteStructure? NoteStructure => List<NoteStructure>(C.NOTE).First();
+    public MultiMediaLink? Object => List<MultiMediaLink>(C.OBJE).First();
     public string Page => V(C.PAGE);
     public string Quay => V(C.QUAY);
 }
 
 #region SOURCE_CITATION p. 39
 /* 
-https://gedcom.io/specifications/ged551.pdf
 
 SOURCE_CITATION:=
 

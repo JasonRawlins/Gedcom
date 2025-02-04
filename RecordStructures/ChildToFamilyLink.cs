@@ -1,4 +1,4 @@
-﻿namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructures;
 
 public class ChildToFamilyLink : RecordStructureBase
 {
@@ -12,7 +12,6 @@ public class ChildToFamilyLink : RecordStructureBase
 
 #region CHILD_TO_FAMILY_LINK p. 31-32
 /* 
-https://gedcom.io/specifications/ged551.pdf
 
 CHILD_TO_FAMILY_LINK:=
 

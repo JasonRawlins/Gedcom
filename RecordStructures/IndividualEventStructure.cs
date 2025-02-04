@@ -1,5 +1,5 @@
 ﻿
-namespace Gedcom.RecordStructure;
+namespace Gedcom.RecordStructures;
 
 public class IndividualEventStructure : RecordStructureBase
 {

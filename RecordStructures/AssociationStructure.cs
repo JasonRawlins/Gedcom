@@ -1,4 +1,4 @@
-﻿namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructures;
 
 public class AssociationStructure : RecordStructureBase
 {
@@ -12,7 +12,6 @@ public class AssociationStructure : RecordStructureBase
 
 #region STRUCTURE_NAME (AssociationStructure) p. 31 
 /* 
-https://gedcom.io/specifications/ged551.pdf
 
 ASSOCIATION_STRUCTURE:=
 

@@ -1,4 +1,4 @@
-﻿namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructures;
 
 public class MultiMediaLink : RecordStructureBase
 {
@@ -13,7 +13,6 @@ public class MultiMediaLink : RecordStructureBase
 
 #region MULTIMEDIA_LINK (OBJE) p. 37
 /* 
-https://gedcom.io/specifications/ged551.pdf
 
 MULTIMEDIA_LINK: =
 

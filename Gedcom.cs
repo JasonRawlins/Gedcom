@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Gedcom.RecordStructure;
+using Gedcom.RecordStructures;
 
 namespace Gedcom;
 
@@ -124,7 +124,6 @@ public class GedcomJsonConverter : JsonConverter<Gedcom>
 
 #region LINEAGE_LINKED_GEDCOM (Structures) p. 23
 /*
-https://gedcom.io/specifications/ged551.pdf
 
 LINEAGE_LINKED_GEDCOM:=
 
@@ -140,5 +139,6 @@ shown in the following form. User defined tags (see <NEW_TAG> on page 56) are di
 when used must begin with an under-score. Tags that are required within a desired context have been
 bolded. Note that some contexts are not required but if they are used then the bolded tags are
 required.
+
 */
 #endregion

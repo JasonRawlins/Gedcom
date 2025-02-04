@@ -1,4 +1,4 @@
-﻿namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructures;
 
 public class IndividualAttribute : RecordStructureBase
 {
@@ -9,7 +9,6 @@ public class IndividualAttribute : RecordStructureBase
 
 #region INDIVIDUAL_ATTRIBUTE p. 33
 /* 
-https://gedcom.io/specifications/ged551.pdf
 
 n TAG <Value_Description> {1:1} p.58
     +1 [CONC | CONT ] <PHYSICAL_DESCRIPTION> {0:M} p.58

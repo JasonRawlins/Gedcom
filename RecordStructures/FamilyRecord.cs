@@ -1,4 +1,4 @@
-﻿namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructures;
 
 public class FamilyRecord : RecordStructureBase
 {
@@ -26,7 +26,6 @@ public class FamilyRecord : RecordStructureBase
 
 #region FAM_RECORD (FAM) p. 24
 /*
-https://gedcom.io/specifications/ged551.pdf
 
 FAM_RECORD:=
 

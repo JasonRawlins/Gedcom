@@ -1,4 +1,4 @@
-﻿namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructures;
 
 public class NameVariation : RecordStructureBase, IPersonalNamePieces
 {
@@ -20,7 +20,6 @@ public class NameVariation : RecordStructureBase, IPersonalNamePieces
 
 #region NAME_PHONETIC_VARIATION (FONE) and NAME_ROMANIZED_VARIATION (ROMN) p. 38
 /* 
-https://gedcom.io/specifications/ged551.pdf
 
 n NAME
     +1 FONE <NAME_PHONETIC_VARIATION> {0:M} p.55

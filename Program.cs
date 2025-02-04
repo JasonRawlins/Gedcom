@@ -9,7 +9,6 @@ public class Program
 {
     static void Main(string[] args)
     {
-        //var gedcomFileName = "***REMOVED***";
         var gedcomFileName = @"c:\temp\gedcom551.ged";
         var gedcomFile = File.ReadAllLines(gedcomFileName);
         var gedcomLines = gedcomFile.Select(ParseLine).ToList();

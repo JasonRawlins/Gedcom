@@ -1,4 +1,4 @@
-﻿namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructures;
 
 public class Data : RecordStructureBase
 {
@@ -10,7 +10,6 @@ public class Data : RecordStructureBase
 
 #region STRUCTURE_NAME (DATA) p. 39
 /* 
-https://gedcom.io/specifications/ged551.pdf
 
 n SOUR @<XREF:SOUR>@ {1:1} p.27
     +1 DATA {0:1}

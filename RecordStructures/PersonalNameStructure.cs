@@ -1,4 +1,4 @@
-﻿namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructures;
 
 public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
 {
@@ -25,7 +25,6 @@ public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
 
 #region PERSONAL_NAME_STRUCTURE p. 38
 /*
-https://gedcom.io/specifications/ged551.pdf
 
 PERSONAL_NAME_STRUCTURE:=
 

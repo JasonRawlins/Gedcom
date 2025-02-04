@@ -1,4 +1,4 @@
-﻿namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructures;
 
 public class NoteStructure : RecordStructureBase
 {
@@ -8,7 +8,6 @@ public class NoteStructure : RecordStructureBase
 
 #region STRUCTURE_NAME (NOTE) p. 37
 /* 
-https://gedcom.io/specifications/ged551.pdf
 
 NOTE_STRUCTURE:=
 [

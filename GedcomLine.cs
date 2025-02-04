@@ -7,7 +7,7 @@ public class GedcomLine
     public int Level { get; set; } = -1;
     public string Tag { get; set; } = "";
     public string Value { get; set; } = "";
-    public string XrefId { get; set; } = "";
+    public string Xref { get; set; } = "";
 
     public override string ToString()
     {
@@ -19,9 +19,9 @@ public class GedcomLine
         var displayLine = new StringBuilder();
         displayLine.Append(Level);
 
-        if (!string.IsNullOrEmpty(XrefId))
+        if (!string.IsNullOrEmpty(Xref))
         {
-            displayLine.Append(" " + XrefId);
+            displayLine.Append(" " + Xref);
         }
 
         displayLine.Append(" " + Tag);
@@ -37,7 +37,6 @@ public class GedcomLine
 
 #region Data Representation Grammar (GedcomLine) p. 10
 /* 
-https://gedcom.io/specifications/ged551.pdf
 
 A GEDCOM transmission consists of a sequence of logical records, each of which consists of a
 sequence of gedcom_lines, all contained in a sequential file or stream of characters. The following

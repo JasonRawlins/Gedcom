@@ -1,4 +1,4 @@
-﻿namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructures;
 
 public class UserReferenceNumber : RecordStructureBase
 {
@@ -10,7 +10,6 @@ public class UserReferenceNumber : RecordStructureBase
 
 #region USER_REFERENCE_TYPE (REFN) p. 27
 /* 
-https://gedcom.io/specifications/ged551.pdf
 
 n @
     +1 REFN <USER_REFERENCE_NUMBER> {0:M} p.63, 64

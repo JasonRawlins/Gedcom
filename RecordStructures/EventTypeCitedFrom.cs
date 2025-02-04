@@ -1,4 +1,4 @@
-﻿namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructures;
 
 public class EventTypeCitedFrom : RecordStructureBase
 {
@@ -10,7 +10,6 @@ public class EventTypeCitedFrom : RecordStructureBase
 
 #region EVENT_TYPE_CITED_FROM p. 49
 /* 
-https://gedcom.io/specifications/ged551.pdf
 
 EVENT_TYPE_CITED_FROM:= {SIZE=1:15}
 [ <EVENT_ATTRIBUTE_TYPE> ]

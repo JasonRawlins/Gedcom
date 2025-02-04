@@ -1,4 +1,4 @@
-﻿namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructures;
 
 public class IndividualRecord : RecordStructureBase
 {
@@ -67,7 +67,6 @@ public class IndividualRecord : RecordStructureBase
 
 #region INDIVIDUAL_RECORD (INDI) p. 25
 /* 
-https://gedcom.io/specifications/ged551.pdf
 
 INDIVIDUAL_RECORD:=
 

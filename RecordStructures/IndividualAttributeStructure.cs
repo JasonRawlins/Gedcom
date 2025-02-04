@@ -1,4 +1,4 @@
-﻿namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructures;
 
 public class IndividualAttributeStructure : RecordStructureBase
 {
@@ -9,7 +9,6 @@ public class IndividualAttributeStructure : RecordStructureBase
 
 #region INDIVIDUAL_ATTRIBUTE_STRUCTURE p. 33-34
 /* 
-https://gedcom.io/specifications/ged551.pdf
 
 INDIVIDUAL_ATTRIBUTE_STRUCTURE:=
 

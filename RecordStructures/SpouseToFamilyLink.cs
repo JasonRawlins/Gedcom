@@ -1,4 +1,4 @@
-﻿namespace Gedcom.RecordStructure;
+﻿namespace Gedcom.RecordStructures;
 
 public class SpouseToFamilyLink : RecordStructureBase
 {
@@ -10,7 +10,6 @@ public class SpouseToFamilyLink : RecordStructureBase
 
 #region SPOUSE_TO_FAMILY_LINK p. 40
 /* 
-https://gedcom.io/specifications/ged551.pdf
 
 SPOUSE_TO_FAMILY_LINK:=
 
