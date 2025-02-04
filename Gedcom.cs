@@ -46,7 +46,6 @@ public class Gedcom
 
         return gedcomLinesAtThisLevel.Skip(1).ToList();
     }
-    public string Value(Record? record) => record?.Value ?? "";
 
     public Record CORP => SOUR.Records.First(r => r.Tag.Equals(C.CORP));
     public Record HEAD => Records.First(r => r.Tag.Equals(C.HEAD));
@@ -67,10 +66,10 @@ public class Gedcom
         return gedStringBuilder.ToString();
     }
 
-    private string GetGedcomLinesText(Record record)
+    private static string GetGedcomLinesText(Record record)
     {
         var gedcomLinesStringBuilder = new StringBuilder();
-        gedcomLinesStringBuilder.AppendLine(new String(' ', record.Level * 1) + record);
+        gedcomLinesStringBuilder.AppendLine(new string(' ', record.Level * 1) + record);
 
         foreach (var recursiveRecord in record.Records)
         {
@@ -112,9 +111,9 @@ public class GedcomJsonConverter : JsonConverter<Gedcom>
                 Gedc = V(gedcom.HEAD[C.GEDC]),
                 Char_ = V(gedcom.HEAD[C.CHAR])
             },
-            Individuals = gedcom.GetINDIs(),
-            Sources = gedcom.GetSOURs(),
-            Families = gedcom.GetFAMs()
+            Individuals = gedcom.GetINDIs()
+            //Sources = gedcom.GetSOURs(),
+            //Families = gedcom.GetFAMs()
         };
 
         JsonSerializer.Serialize(writer, jsonObject, jsonObject.GetType(), options);
