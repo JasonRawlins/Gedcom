@@ -1,0 +1,21 @@
+﻿namespace Gedcom.RecordStructure;
+
+public class SpouseToFamilyLink : RecordStructureBase
+{
+    public SpouseToFamilyLink() : base() { }
+    public SpouseToFamilyLink(Record record) : base(record) { }
+
+    public List<NoteStructure>? NoteStructure => List<NoteStructure>(C.NOTE);
+}
+
+#region SPOUSE_TO_FAMILY_LINK p. 40
+/* 
+https://gedcom.io/specifications/ged551.pdf
+
+SPOUSE_TO_FAMILY_LINK:=
+
+n FAMS @<XREF:FAM>@ {1:1} p.24
+    +1 <<NOTE_STRUCTURE>> {0:M} p.37
+
+*/
+#endregion
