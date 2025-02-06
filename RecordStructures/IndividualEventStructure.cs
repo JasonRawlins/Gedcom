@@ -1,5 +1,4 @@
-﻿
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 public class IndividualEventStructure : RecordStructureBase
 {
@@ -8,16 +7,10 @@ public class IndividualEventStructure : RecordStructureBase
     public IndividualEventDetail? IndividualEventDetail => List<IndividualEventDetail>(Record.Tag).First();
     public ChildToFamilyLink? ChildToFamilyLink => new ChildToFamilyLink(FirstOrDefault(C.FAMC));
 
-//    n ADOP {1:1}
-//    +1 <<INDIVIDUAL_EVENT_DETAIL>> {0:1}* p.34
-//    +1 FAMC @<XREF:FAM>@ {0:1} p.24
-//        +2 ADOP<ADOPTED_BY_WHICH_PARENT> {0:1}
 
-//n[BIRT | CHR][Y |< NULL >] {1:1}
-//    +1 << INDIVIDUAL_EVENT_DETAIL >> { 0:1}
-//*p.34
-//    + 1 FAMC @<XREF:FAM >@ { 0:1}
-//p.24
+//n[BIRT | CHR][Y |<NULL>] {1:1}
+//    + 1 <<INDIVIDUAL_EVENT_DETAIL>> { 0:1} *p.34
+//    + 1 FAMC @<XREF:FAM >@ { 0:1} p.24
 }
 
 #region INDIVIDUAL_EVENT_STRUCTURE p. 34

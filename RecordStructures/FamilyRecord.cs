@@ -5,15 +5,13 @@ public class FamilyRecord : RecordStructureBase
     public FamilyRecord(Record record) : base(record) { }
 
     public string RestrictionNotice => V(C.RESN);
-    //public string FamilyEventStructure =>
-    //public List<FamilyEventStructure> FamilyEventStructure => List<FamilyEventStructure>(C.NOTE);
-    //    +1 <<FAMILY_EVENT_STRUCTURE>> {0:M
+    public List<FamilyEventStructure> FamilyEventStructures => List<FamilyEventStructure>(C.FAM);
     public string Husband => V(C.HUSB);
     public string Wife => V(C.WIFE);
     public List<string> Children => List(C.CHIL).Select(c => c.Value).ToList();
     public string NumberOfChildren => V(C.NCHI);
     public string Submitter => V(C.SUBM);
-    //    +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
+    // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
     public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordNumber => V(C.RIN);
     public ChangeDate ChangeDate => new ChangeDate(FirstOrDefault(C.CHAN));

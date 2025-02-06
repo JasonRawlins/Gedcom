@@ -5,10 +5,10 @@ public class ChangeDate : RecordStructureBase
     public ChangeDate() { }
     public ChangeDate(Record record) : base(record) { }
 
-    public string Date => V(C.DATE);
+    public string Date =>  V(C.DATE);
     public string Time => V(C.TIME);
 
-    public NoteStructure? Note => new NoteStructure(FirstOrDefault(C.NOTE));
+    public List<NoteStructure>? NoteStructures => List<NoteStructure>(C.NOTE);
 }
 
 #region CHANGE_DATE (CHAN) p. 31
@@ -24,5 +24,6 @@ n CHAN {1:1}
     The change date is intended to only record the last change to a record. Some systems may want to
     manage the change process with more detail, but it is sufficient for GEDCOM purposes to indicate
     the last time that a record was modified.
-*/
+
+ */
 #endregion

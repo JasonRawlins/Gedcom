@@ -6,7 +6,6 @@ public class RecordStructureBase
 
     public RecordStructureBase() => Record = new Record([]);
     public RecordStructureBase(Record record) => Record = record;
-
     
     protected Record? FirstOrDefault(string tag) => Record.Records.FirstOrDefault(r => r.Tag.Equals(tag));
     protected List<Record> List(string tag) => Record.Records.Where(r => r.Tag.Equals(tag)).ToList();

@@ -2,6 +2,7 @@
 
 public class NameVariation : RecordStructureBase, IPersonalNamePieces
 {
+    public NameVariation() { }
     public NameVariation(Record record) : base(record) { }
 
     public string Type => V(C.TYPE);

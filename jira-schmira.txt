@@ -1,0 +1,15 @@
+Do IndividualEventStructure
+
+
+C.TAG // comment next to each property in C
+
+
+
+
+
+
+
+
+
+Coding standards
+All properties in same order as they appear in the standard, then alphabetical
