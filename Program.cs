@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Encodings.Web;
+﻿using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
@@ -18,7 +17,7 @@ public class Program
         var jsonText = JsonSerializer.Serialize(
             gedcom, new JsonSerializerOptions() 
             { 
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                //Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 WriteIndented = true
             });

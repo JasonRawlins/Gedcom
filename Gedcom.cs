@@ -18,6 +18,11 @@ public class Gedcom
         }
     }
 
+    public Record CORP => SOUR.Records.First(r => r.Tag.Equals(C.CORP));
+    public Header Header => new Header(Records.FirstOrDefault(r => r.Tag.Equals(C.HEAD)));
+    public Record RIN => _TREE.Records.First(r => r.Tag.Equals(C.RIN));
+    public Record SOUR => Records.First(r => r.Tag.Equals(C.SOUR));
+    public Record _TREE => Records.First(r => r.Tag.Equals(_TREE.Tag));
     public FamilyRecord GetFAM(string xrefFAM) => new(Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
     public List<FamilyRecord> GetFAMs() => Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FamilyRecord(r)).ToList();
     public IndividualRecord GetINDI(string xrefINDI) => new(Records.First(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI)));
@@ -46,26 +51,6 @@ public class Gedcom
 
         return gedcomLinesAtThisLevel.Skip(1).ToList();
     }
-
-    public Record CORP => SOUR.Records.First(r => r.Tag.Equals(C.CORP));
-    public Record HEAD => Records.First(r => r.Tag.Equals(C.HEAD));
-    public Record RIN => _TREE.Records.First(r => r.Tag.Equals(C.RIN));
-    public Record SOUR => HEAD.Records.First(r => r.Tag.Equals(C.SOUR));
-    public Record _TREE => SOUR.Records.First(r => r.Tag.Equals(_TREE.Tag));
-
-    public override string ToString() => $"{_TREE.Value} ({RIN.Value})";
-
-    public string ToGed() 
-    {
-        var gedStringBuilder = new StringBuilder();
-        foreach (var record in Records)
-        {
-            gedStringBuilder.Append(GetGedcomLinesText(record));
-        }
-
-        return gedStringBuilder.ToString();
-    }
-
     private static string GetGedcomLinesText(Record record)
     {
         var gedcomLinesStringBuilder = new StringBuilder();
@@ -78,6 +63,19 @@ public class Gedcom
 
         return gedcomLinesStringBuilder.ToString();
     }
+
+    public string ToGed()
+    {
+        var gedStringBuilder = new StringBuilder();
+        foreach (var record in Records)
+        {
+            gedStringBuilder.Append(GetGedcomLinesText(record));
+        }
+
+        return gedStringBuilder.ToString();
+    }
+
+    public override string ToString() => $"{_TREE.Value} ({RIN.Value})";
 }
 
 public class GedcomJsonConverter : JsonConverter<Gedcom>
@@ -87,33 +85,8 @@ public class GedcomJsonConverter : JsonConverter<Gedcom>
     {
         var jsonObject = new
         {
-            Head = new
-            {
-                Subm = V(gedcom.HEAD[C.SUBM]),
-                Source = new
-                {
-                    Name = V(gedcom.HEAD[C.SOUR]?[C.NAME]),
-                    Version = V(gedcom.HEAD[C.VERS]),
-                    _Tree = new
-                    {
-                        rin = V(gedcom.HEAD[C.RIN]),
-                        _env = V(gedcom.HEAD[C._ENV]),
-                    },
-                    Corporation = new
-                    {
-                        gedcom.CORP.Value,
-                        Phone = V(gedcom.CORP[C.PHON]),
-                        Www = V(gedcom.CORP[C.WWW]),
-                        Address = V(gedcom.CORP[C.ADDR])
-                    }
-                },
-                Date = V(gedcom.HEAD[C.DATE]),
-                Gedc = V(gedcom.HEAD[C.GEDC]),
-                Char_ = V(gedcom.HEAD[C.CHAR])
-            },
+            Header = gedcom.Header,
             Individuals = gedcom.GetINDIs()
-            //Sources = gedcom.GetSOURs(),
-            //Families = gedcom.GetFAMs()
         };
 
         JsonSerializer.Serialize(writer, jsonObject, jsonObject.GetType(), options);
@@ -122,15 +95,15 @@ public class GedcomJsonConverter : JsonConverter<Gedcom>
     private static string V(Record? record) => record?.Value ?? "";
 }
 
-#region LINEAGE_LINKED_GEDCOM (Structures) p. 23
+#region LINEAGE_LINKED_GEDCOM p. 23
 /*
 
 LINEAGE_LINKED_GEDCOM:=
 
-    0 <<HEADER>> {1:1} p.23
-    0 <<SUBMISSION_RECORD>> {0:1} p.28
-    0 <<RECORD>> {1:M} p.24
-    0 TRLR {1:1}
+0 <<HEADER>> {1:1} p.23
+0 <<SUBMISSION_RECORD>> {0:1} p.28
+0 <<RECORD>> {1:M} p.24
+0 TRLR {1:1}
 
 This is a model of the lineage-linked GEDCOM structure for submitting data to other lineage-linked
 GEDCOM processing systems. A header and a trailer record are required, and they can enclose any
