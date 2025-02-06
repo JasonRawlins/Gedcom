@@ -4,7 +4,7 @@ public class IndividualAttribute : RecordStructureBase
 {
     public IndividualAttribute() : base() { }
     public IndividualAttribute(Record record) : base(record) { }
-    public EventDetail EventDetail => new EventDetail(FirstOrDefault(C.EVEN));
+    public IndividualEventDetail IndividualEventDetail => new IndividualEventDetail(FirstOrDefault(C.EVEN));
 }
 
 #region INDIVIDUAL_ATTRIBUTE p. 33

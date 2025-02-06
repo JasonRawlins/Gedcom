@@ -4,9 +4,11 @@ public class NoteStructure : RecordStructureBase
 {
     public NoteStructure() : base() { }
     public NoteStructure(Record record) : base(record) { }
+
+    public string Note => Record.Level == 0 ? V(C.XREF) : Text;
 }
 
-#region STRUCTURE_NAME (NOTE) p. 37
+#region NOTE_STRUCTURE p. 37
 /* 
 
 NOTE_STRUCTURE:=
@@ -23,5 +25,6 @@ wrapping according to its display window size. The requirement for usage is to e
 line in the middle of a word, or if at the end of a word, to add a space to the first of the next CONC
 line. Otherwise most operating systems will strip off the trailing space and the space is lost in the
 reconstitution of the note. 
+
 */
 #endregion

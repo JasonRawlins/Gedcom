@@ -5,12 +5,12 @@ public class AssociationStructure : RecordStructureBase
     public AssociationStructure() : base() { }
     public AssociationStructure(Record record) : base(record) { }
 
-    public string RelationIsDescriptor => V(C.ASSO);
+    public string RelationIsDescriptor => V(C.RELA);
     public SourceCitation? SourceCitation { get; }
     public NoteStructure? NoteStructure { get; }
 }
 
-#region STRUCTURE_NAME (AssociationStructure) p. 31 
+#region ASSOCIATION_STRUCTURE p. 31 
 /* 
 
 ASSOCIATION_STRUCTURE:=

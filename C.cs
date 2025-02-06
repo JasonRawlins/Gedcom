@@ -141,4 +141,5 @@ public static class C // Constants
     public const string WIFE = "WIFE"; // @<XREF:INDI>@, <blank>
     public const string WILL = "WILL"; // <blank>
     public const string WWW = "WWW"; // <ADDRESS_WEB_PAGE>
+    public const string XREF = "Xref";
 }
