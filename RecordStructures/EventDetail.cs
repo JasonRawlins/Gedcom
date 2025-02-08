@@ -5,8 +5,8 @@ public class EventDetail : RecordStructureBase
     public EventDetail() : base() { }
     public EventDetail(Record record) : base(record) { }
 
-    public string Type => V(C.TYPE);
-    public string Date => V(C.DATE);
+    public string EventOrFactClassification => V(C.TYPE);
+    public string DateValue => V(C.DATE);
     public PlaceStructure PlaceStructure => new PlaceStructure(FirstOrDefault(C.PLAC));
     public AddressStructure AddressStructure => new AddressStructure(FirstOrDefault(C.ADDR));
     public string ResponsibleAgency => V(C.AGNC);

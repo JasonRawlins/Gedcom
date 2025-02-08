@@ -5,7 +5,7 @@ public class SpouseToFamilyLink : RecordStructureBase
     public SpouseToFamilyLink() : base() { }
     public SpouseToFamilyLink(Record record) : base(record) { }
 
-    public List<NoteStructure>? NoteStructure => List<NoteStructure>(C.NOTE);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
 }
 
 #region SPOUSE_TO_FAMILY_LINK p. 40

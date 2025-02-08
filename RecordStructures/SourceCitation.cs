@@ -5,12 +5,12 @@ public class SourceCitation : RecordStructureBase
     public SourceCitation() : base() { }
     public SourceCitation(Record record) : base(record) { }
 
-    public Data? Data => List<Data>(C.DATA).First();
-    public string Event => V(C.EVEN);
-    public NoteStructure? NoteStructure => List<NoteStructure>(C.NOTE).First();
-    public MultiMediaLink? Object => List<MultiMediaLink>(C.OBJE).First();
-    public string Page => V(C.PAGE);
-    public string Quay => V(C.QUAY);
+    public string WhereWithinSource => V(C.PAGE);
+    public EventTypeCitedFrom EventTypeCitedFrom => new(FirstOrDefault(C.EVEN));
+    public Data Data => List<Data>(C.DATA).First();
+    public List<MultiMediaLink> MultiMediaLinks => List<MultiMediaLink>(C.OBJE);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+    public string CertaintyAssessment => V(C.QUAY);
 }
 
 #region SOURCE_CITATION p. 39

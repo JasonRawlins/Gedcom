@@ -5,8 +5,7 @@ public class ChangeDate : RecordStructureBase
     public ChangeDate() { }
     public ChangeDate(Record record) : base(record) { }
 
-    public string Date =>  V(C.DATE);
-    public string Time => V(C.TIME);
+    public Date ChangeDate_ =>  new(FirstOrDefault(C.DATE));
 
     public List<NoteStructure>? NoteStructures => List<NoteStructure>(C.NOTE);
 }

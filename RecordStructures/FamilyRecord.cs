@@ -9,7 +9,7 @@ public class FamilyRecord : RecordStructureBase
     public string Husband => V(C.HUSB);
     public string Wife => V(C.WIFE);
     public List<string> Children => List(C.CHIL).Select(c => c.Value).ToList();
-    public string NumberOfChildren => V(C.NCHI);
+    public string CountOfChildren => V(C.NCHI);
     public string Submitter => V(C.SUBM);
     // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
     public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);

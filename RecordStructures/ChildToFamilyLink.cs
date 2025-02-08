@@ -7,7 +7,7 @@ public class ChildToFamilyLink : RecordStructureBase
 
     public string PedigreeLinkageType => V(C.PEDI);
     public string ChildLinkageStatus => V(C.STAT);
-    public List<NoteStructure> NoteStructure => List<NoteStructure>(C.NOTE);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public string AdoptedByWhichParent => FirstOrDefault(C.ADOP)?.Value;
 }
 
@@ -22,7 +22,7 @@ n FAMC @<XREF:FAM>@ {1:1} p.24
     +1 <<NOTE_STRUCTURE>> {0:M} p.37
 
 [Editor] Possible errata in The Gedcom Standard 5.1.1 The ADOP tag on page 34 
-has an structure that look like this: 
+has an structure that looks like this: 
 
     n ADOP {1:1}
     +1 <<INDIVIDUAL_EVENT_DETAIL>> {0:1}* p.34
@@ -32,5 +32,5 @@ has an structure that look like this:
 However,the ADOP line is missing from FAMC structure on page 32. I'm guessing 
 that may have been a minor ommission. I'm adding ADOP to this class.
 
- */
+*/
 #endregion

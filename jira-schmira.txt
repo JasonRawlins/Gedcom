@@ -1,15 +1,7 @@
-Do IndividualEventStructure
 
-
-C.TAG // comment next to each property in C
-
+Find all properties named after a tag and change it to the friendly name.
 
 
 
 
 
-
-
-
-Coding standards
-All properties in same order as they appear in the standard, then alphabetical

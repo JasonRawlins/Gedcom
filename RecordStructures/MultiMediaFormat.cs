@@ -1,0 +1,19 @@
+﻿namespace Gedcom.RecordStructures;
+
+public class MultiMediaFormat : RecordStructureBase
+{
+    public MultiMediaFormat(Record record) : base(record) { }
+
+    public string SourceMediaType => V(C.MEDI);
+}
+
+#region MULTIMEDIA_FORMAT p. 54
+/* 
+
+n OBJE
+    +1 FILE <MULTIMEDIA_FILE_REFN> {1:M} p.54
+        +2 FORM <MULTIMEDIA_FORMAT> {1:1} p.54
+            +3 MEDI <SOURCE_MEDIA_TYPE> {0:1} p.62
+
+*/
+#endregion

@@ -4,13 +4,8 @@ public class IndividualEventStructure : RecordStructureBase
 {
     public IndividualEventStructure() { }
     public IndividualEventStructure(Record record) : base(record) { }
-    public IndividualEventDetail? IndividualEventDetail => List<IndividualEventDetail>(Record.Tag).First();
-    public ChildToFamilyLink? ChildToFamilyLink => new ChildToFamilyLink(FirstOrDefault(C.FAMC));
-
-
-//n[BIRT | CHR][Y |<NULL>] {1:1}
-//    + 1 <<INDIVIDUAL_EVENT_DETAIL>> { 0:1} *p.34
-//    + 1 FAMC @<XREF:FAM >@ { 0:1} p.24
+    public IndividualEventDetail? IndividualEventDetail => new IndividualEventDetail(FirstOrDefault(Record.Tag));
+    public ChildToFamilyLink ChildToFamilyLink => new ChildToFamilyLink(FirstOrDefault(C.FAMC));
 }
 
 #region INDIVIDUAL_EVENT_STRUCTURE p. 34

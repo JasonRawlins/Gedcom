@@ -6,8 +6,8 @@ public class AssociationStructure : RecordStructureBase
     public AssociationStructure(Record record) : base(record) { }
 
     public string RelationIsDescriptor => V(C.RELA);
-    public SourceCitation? SourceCitation { get; }
-    public NoteStructure? NoteStructure { get; }
+    public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
 }
 
 #region ASSOCIATION_STRUCTURE p. 31 

@@ -10,7 +10,7 @@ public class RecordStructureBase
     protected Record? FirstOrDefault(string tag) => Record.Records.FirstOrDefault(r => r.Tag.Equals(tag));
     protected List<Record> List(string tag) => Record.Records.Where(r => r.Tag.Equals(tag)).ToList();
     protected List<Record> List(Func<Record, bool> predicate) => Record.Records.Where(predicate).ToList();
-    protected List<T> List<T>(string tag) where T : RecordStructureBase, new () => CreateRecordStructures<T>(tag);
+    protected List<T> List<T>(string tag) where T : RecordStructureBase, new() => CreateRecordStructures<T>(tag);
     private List<T> CreateRecordStructures<T>(string tag) where T : RecordStructureBase, new()
     {
         var records = Record.Records.Where(r => r.Tag.Equals(tag));
@@ -48,7 +48,7 @@ public class RecordStructureBase
         }
     }
     // The method name "V" stands for Value. It's used so often that I shortened it to make the code easier to read.
-    protected string V(string tag) => Record.Records.SingleOrDefault(r => r.Tag.Equals(tag))?.Value ?? "";
+    protected string V(string tag) => Record?.Records.SingleOrDefault(r => r.Tag.Equals(tag))?.Value ?? "";
     public string Xref => Record.Level == 0 ? Record.Value : "";
     public override string ToString() => $"{Record.Level} {Record.Tag} {Record.Value.Substring(0, 10)}";
 }

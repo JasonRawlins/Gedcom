@@ -5,13 +5,12 @@ public class MultiMediaLink : RecordStructureBase
     public MultiMediaLink() : base() { }
     public MultiMediaLink(Record record) : base(record) { }
 
-    public string File => V(C.FILE);
-    public string Form => V(C.FORM);
+    public List<MultimediaFileReferenceNumber> MultimediaFileReferenceNumbers => List<MultimediaFileReferenceNumber>(C.FILE);
     public string SourceMediaType => V(C.MEDI);
-    public string Title => V(C.TITL);
+    public string DiscriptiveTitle => V(C.TITL);
 }
 
-#region MULTIMEDIA_LINK (OBJE) p. 37
+#region MULTIMEDIA_LINK p. 37
 /* 
 
 MULTIMEDIA_LINK: =

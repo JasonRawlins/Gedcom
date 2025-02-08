@@ -6,7 +6,7 @@ public class IndividualRecord : RecordStructureBase
 
     public string RestrictionNotice => V(C.RESN);
     public List<PersonalNameStructure> PersonalNameStructures => List(C.NAME).Select(r => new PersonalNameStructure(r)).ToList();
-    public string Sex => V(C.SEX);
+    public string SexValue => V(C.SEX);
     public List<IndividualEventStructure> IndividualEventStructures => List<IndividualEventStructure>(Record.Tag);
     public List<IndividualAttributeStructure> IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
     // TODO: LDS_INDIVIDUAL_ORDINANCE
@@ -37,7 +37,7 @@ public class IndividualRecord : RecordStructureBase
         }
     }
     public string Submitter => V(C.SUBM);
-    public List<AssociationStructure>? AssociationStructures
+    public List<AssociationStructure> AssociationStructures
     {
         get
         {
@@ -55,14 +55,14 @@ public class IndividualRecord : RecordStructureBase
     public List<string> DescendantInterests => List(C.DESI).Select(r => r.Value).ToList();
     public string PermanentRecordFileNumber => V(C.RFN);
     public string AncestralFileNumber => V(C.AFN);
-    public List<UserReferenceNumber> UserReferenceNumbers => List(C.REFN).Select(r => new UserReferenceNumber(r)).ToList();
-    public string Rin => V(C.RIN);
+    public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
+    public string AutomatedRecordId => V(C.RIN);
     public ChangeDate? ChangeDate => new ChangeDate(FirstOrDefault(C.CHAN));
-    public List<NoteStructure> NoteStructure => List<NoteStructure>(C.NOTE);
-    public List<SourceCitation> SourceCitation => List<SourceCitation>(C.SOUR);
-    public List<MultiMediaLink> MultiMediaLink => List<MultiMediaLink>(C.OBJE);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+    public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
+    public List<MultiMediaLink> MultiMediaLinks => List<MultiMediaLink>(C.OBJE);
 
-    public override string ToString() => $"{PersonalNameStructures.First().Name} {Sex} ({Xref})";
+    public override string ToString() => $"{PersonalNameStructures.First().NamePersonal} {SexValue} ({Xref})";
 }
 
 #region INDIVIDUAL_RECORD (INDI) p. 25

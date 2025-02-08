@@ -1,7 +1,8 @@
 ﻿namespace Gedcom.RecordStructures;
 
-public class PlaceStructure(Record record) : RecordStructureBase(record)
+public class PlaceStructure : RecordStructureBase
 {
+    public PlaceStructure(Record record) : base(record) { }
     public string PlaceName => V(C.PLAC);
     public string PlaceHierarchy => V(C.FORM);
     public List<NameVariation> PlacePhoneticVariations => List<NameVariation>(C.FONE);
@@ -26,8 +27,7 @@ n PLAC <PLACE_NAME> {1:1} p.58
         +2 LONG <PLACE_LONGITUDE> {1:1} p.58
     +1 <<NOTE_STRUCTURE>> {0:M} p.37
 
-
-PLACE_HIERARCHY:= {Size=1:120}
+PLACE_HIERARCHY:=
 
 This shows the jurisdictional entities that are named in a sequence from the lowest to the highest
 jurisdiction. The jurisdictions are separated by commas, and any jurisdiction's name that is missing is
