@@ -24,8 +24,8 @@ public class Header : RecordStructureBase
     //+1 CHAR <CHARACTER_SET> {1:1} p.44
     //    +2 VERS <VERSION_NUMBER> {0:1} p.64
     public string LanguageOfText => V(C.LANG);
-    public PlaceStructure PlaceStructure => new PlaceStructure(FirstOrDefault(C.PLAC));
-    public NoteStructure GedcomContentDescription => new NoteStructure(FirstOrDefault(C.NOTE));
+    public PlaceStructure? PlaceStructure => FirstOrDefault<PlaceStructure>(C.PLAC);
+    public NoteStructure? GedcomContentDescription => FirstOrDefault<NoteStructure>(C.NOTE);
 }
 
 #region HEADER p. 23

@@ -1,4 +1,6 @@
-﻿namespace Gedcom;
+﻿using Gedcom.RecordStructures;
+
+namespace Gedcom;
 
 public class RecordStructureBase
 {
@@ -8,9 +10,22 @@ public class RecordStructureBase
     public RecordStructureBase(Record record) => Record = record;
     
     protected Record? FirstOrDefault(string tag) => Record.Records.FirstOrDefault(r => r.Tag.Equals(tag));
+    protected T? FirstOrDefault<T>(string tag) where T : RecordStructureBase, new() => CreateRecordStructure<T>(tag);
     protected List<Record> List(string tag) => Record.Records.Where(r => r.Tag.Equals(tag)).ToList();
     protected List<Record> List(Func<Record, bool> predicate) => Record.Records.Where(predicate).ToList();
     protected List<T> List<T>(string tag) where T : RecordStructureBase, new() => CreateRecordStructures<T>(tag);
+    private T? CreateRecordStructure<T>(string tag) where T: RecordStructureBase, new()
+    {
+        var record = Record.Records.First(r => r.Tag.Equals(tag));
+        if (record != null)
+        {
+            dynamic dynamicRecord = new T();
+            dynamicRecord.SetRecord(record);
+            return (T)dynamicRecord;
+        }
+
+        return null;
+    }
     private List<T> CreateRecordStructures<T>(string tag) where T : RecordStructureBase, new()
     {
         var records = Record.Records.Where(r => r.Tag.Equals(tag));

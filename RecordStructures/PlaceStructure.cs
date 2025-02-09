@@ -2,6 +2,7 @@
 
 public class PlaceStructure : RecordStructureBase
 {
+    public PlaceStructure() : base() { }
     public PlaceStructure(Record record) : base(record) { }
     public string PlaceName => V(C.PLAC);
     public string PlaceHierarchy => V(C.FORM);

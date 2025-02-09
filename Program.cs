@@ -1,4 +1,4 @@
-﻿using System.Text.Encodings.Web;
+﻿using System.Reflection;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
@@ -8,7 +8,7 @@ public class Program
 {
     static void Main(string[] args)
     {
-        var gedcomFileName = @"c:\temp\gedcom551.ged";
+        var gedcomFileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "***REMOVED***");
         var gedcomFile = File.ReadAllLines(gedcomFileName);
         var gedcomLines = gedcomFile.Select(ParseLine).ToList();
         var gedcom = new Gedcom(gedcomLines);

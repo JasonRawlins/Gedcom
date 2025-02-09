@@ -7,7 +7,7 @@ public class EventDetail : RecordStructureBase
 
     public string EventOrFactClassification => V(C.TYPE);
     public string DateValue => V(C.DATE);
-    public PlaceStructure PlaceStructure => new PlaceStructure(FirstOrDefault(C.PLAC));
+    public PlaceStructure? PlaceStructure => new PlaceStructure(FirstOrDefault(C.PLAC));
     public AddressStructure AddressStructure => new AddressStructure(FirstOrDefault(C.ADDR));
     public string ResponsibleAgency => V(C.AGNC);
     public string ReligiousAffiliation => V(C.RELI);
@@ -34,5 +34,6 @@ n RESN <RESTRICTION_NOTICE> {0:1} p.60
 n <<NOTE_STRUCTURE>> {0:M} p.37
 n <<SOURCE_CITATION>> {0:M} p.39
 n <<MULTIMEDIA_LINK>> {0:M} p.37, 26
+
 */
 #endregion

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Gedcom;
+namespace Gedcom.RecordStructures;
 
 public class Record
 {
@@ -11,10 +11,7 @@ public class Record
     public List<GedcomLine> GedcomLines { get; } = [];
     public List<Record> Records { get; } = [];
 
-    public Record? this[string tag]
-    {
-        get => Records.FirstOrDefault(r => r.Tag.Equals(tag));
-    }
+    public Record? this[string tag] => Records.FirstOrDefault(r => r.Tag.Equals(tag));
 
     public Record(List<GedcomLine> gedcomLines)
     {
@@ -29,7 +26,7 @@ public class Record
             foreach (var nextLevelGedcomLine in nextLevelGedcomLines)
             {
                 Records.Add(new Record(nextLevelGedcomLine));
-            }            
+            }
         }
     }
 
