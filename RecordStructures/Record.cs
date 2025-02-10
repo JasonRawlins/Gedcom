@@ -30,5 +30,23 @@ public class Record
         }
     }
 
+    public static Record Default
+    {
+        get
+        {
+            var gedcomLines = new List<GedcomLine>
+            {
+                new GedcomLine
+                {
+                    Level = -1,
+                    Tag = C.EMPTY,
+                    Value = ""
+                }
+            };
+
+           return new Record(gedcomLines);
+        }
+    }
+
     public override string ToString() => $"{Level} {Tag} {Value}";
 }

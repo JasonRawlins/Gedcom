@@ -2,17 +2,20 @@
 
 public class FamilyEventDetail : RecordStructureBase
 {
+    public FamilyEventDetail() : base() { }
     public FamilyEventDetail(Record record) : base(record) { }
 
-    public FamilyPartner Husband => new FamilyPartner(FirstOrDefault(C.HUSB));
-    public FamilyPartner Wife => new FamilyPartner(FirstOrDefault(C.WIFE));
-    public EventDetail EventDetail => new EventDetail(FirstOrDefault(C.EVEN));
+    public FamilyPartner Husband => FirstOrDefault<FamilyPartner>(C.HUSB);
+    public FamilyPartner Wife => FirstOrDefault<FamilyPartner>(C.WIFE);
+    public EventDetail EventDetail => FirstOrDefault<EventDetail>(C.EVEN);
 }
 
-public class FamilyPartner(Record record)
+public class FamilyPartner : RecordStructureBase
 {
-    public string Name => record.Value;
-    public string AgeAtEvent => record.Records.FirstOrDefault(r => r.Tag.Equals(C.AGE))?.Value ?? "";
+    public FamilyPartner() { }
+    public FamilyPartner(Record record) { }
+    public string Name => Record.Value;
+    public string AgeAtEvent => Record.Records.FirstOrDefault(r => r.Tag.Equals(C.AGE))?.Value ?? "";
 }
 
 #region FAMILY_EVENT_DETAIL p. 32

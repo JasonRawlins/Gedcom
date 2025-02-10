@@ -5,7 +5,7 @@ public class FamilyEventStructure : RecordStructureBase
     public FamilyEventStructure() { }
     public FamilyEventStructure(Record record) : base(record) { }
 
-    public FamilyEventDetail FamilyEventDetail => new FamilyEventDetail(FirstOrDefault(Record.Tag));
+    public FamilyEventDetail FamilyEventDetail => FirstOrDefault<FamilyEventDetail>(Record.Tag);
 }
 
 #region FAMILY_EVENT_STRUCTURE p. 32

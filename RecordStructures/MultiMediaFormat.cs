@@ -2,6 +2,7 @@
 
 public class MultiMediaFormat : RecordStructureBase
 {
+    public MultiMediaFormat() : base() { }
     public MultiMediaFormat(Record record) : base(record) { }
 
     public string SourceMediaType => V(C.MEDI);

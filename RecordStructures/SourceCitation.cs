@@ -6,8 +6,8 @@ public class SourceCitation : RecordStructureBase
     public SourceCitation(Record record) : base(record) { }
 
     public string WhereWithinSource => V(C.PAGE);
-    public EventTypeCitedFrom EventTypeCitedFrom => new(FirstOrDefault(C.EVEN));
-    public Data Data => List<Data>(C.DATA).First();
+    public EventTypeCitedFrom EventTypeCitedFrom => FirstOrDefault<EventTypeCitedFrom>(C.EVEN);
+    public Data Data => FirstOrDefault<Data>(C.DATA);
     public List<MultiMediaLink> MultiMediaLinks => List<MultiMediaLink>(C.OBJE);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public string CertaintyAssessment => V(C.QUAY);

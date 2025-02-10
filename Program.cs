@@ -8,8 +8,18 @@ public class Program
 {
     static void Main(string[] args)
     {
-        var gedcomFileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "***REMOVED***");
-        var gedcomFile = File.ReadAllLines(gedcomFileName);
+        var assembly = Assembly.GetExecutingAssembly();
+        var assemblyDirectoryName = Path.GetDirectoryName(assembly.Location) ?? "";
+        var gedFileName = "***REMOVED***";
+        var gedFullName = Path.Combine(assemblyDirectoryName, gedFileName); ;
+
+        if (!File.Exists(gedFullName))
+        {
+            Console.WriteLine(@"Could not find the file '{gedFileName}'");
+            return;
+        }
+
+        var gedcomFile = File.ReadAllLines(gedFullName);
         var gedcomLines = gedcomFile.Select(ParseLine).ToList();
         var gedcom = new Gedcom(gedcomLines);
 
@@ -22,7 +32,7 @@ public class Program
                 WriteIndented = true
             });
 
-        File.WriteAllText(@"c:\temp\gedcom.json", jsonText);
+        File.WriteAllText(Path.Combine(Path.GetDirectoryName(assembly.Location), "The Welsh Saints.json"), jsonText);
         Console.WriteLine(jsonText);
     }
 

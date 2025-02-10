@@ -2,12 +2,13 @@
 
 public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
 {
+    public PersonalNameStructure() : base() { }
     public PersonalNameStructure(Record record) : base(record) { }
 
     public string NamePersonal => Record.Value;
     public string NameType => V(C.TYPE);
-    public NameVariation? NamePhoneticVariation => new NameVariation(FirstOrDefault(C.FONE));
-    public NameVariation? NameRomanizedVariation => new NameVariation(FirstOrDefault(C.ROMN));
+    public NameVariation NamePhoneticVariation => FirstOrDefault<NameVariation>(C.FONE);
+    public NameVariation NameRomanizedVariation => FirstOrDefault<NameVariation>(C.ROMN);
 
     #region IPersonalNamePeices
 

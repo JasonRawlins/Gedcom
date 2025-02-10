@@ -2,6 +2,7 @@
 
 public class Date : RecordStructureBase
 {
+    public Date() : base() { }
     public Date(Record record) : base(record) { }
 
     public string TimeValue => V(C.TIME);

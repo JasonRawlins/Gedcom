@@ -2,6 +2,7 @@
 
 public class Map : RecordStructureBase
 {
+    public Map() : base() { }
     public Map(Record record) : base(record) { }
     public string PlaceLatitude => V(C.LATI);
     public string PlaceLongitude => V(C.LONG);

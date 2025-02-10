@@ -2,9 +2,10 @@
 
 public class NoteRecord : RecordStructureBase
 {
+    public NoteRecord() : base() { }
     public NoteRecord(Record record) : base(record) { }
 
-    public UserReferenceNumber UserReferenceNumber => new UserReferenceNumber(FirstOrDefault(C.REFN));
+    public UserReferenceNumber UserReferenceNumber => FirstOrDefault<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordId => V(C.RIN);
     public ChangeDate ChangeDate => List<ChangeDate>(C.CHAN).First();
 }

@@ -5,59 +5,23 @@ public class IndividualRecord : RecordStructureBase
     public IndividualRecord(Record record) : base(record) { }
 
     public string RestrictionNotice => V(C.RESN);
-    public List<PersonalNameStructure> PersonalNameStructures => List(C.NAME).Select(r => new PersonalNameStructure(r)).ToList();
+    public List<PersonalNameStructure> PersonalNameStructures => List<PersonalNameStructure>(C.NAME);
     public string SexValue => V(C.SEX);
     public List<IndividualEventStructure> IndividualEventStructures => List<IndividualEventStructure>(Record.Tag);
     public List<IndividualAttributeStructure> IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
     // TODO: LDS_INDIVIDUAL_ORDINANCE
-    public List<ChildToFamilyLink> ChildToFamilyLinks
-    {
-        get
-        {
-            var childToFamilyLinks = List(C.FAMC);
-            if (childToFamilyLinks != null)
-            {
-                return childToFamilyLinks.Select(r => new ChildToFamilyLink(r)).ToList();
-            }
-
-            return new List<ChildToFamilyLink>();
-        }
-    }
-    public List<SpouseToFamilyLink>? SpouseToFamilyLinks
-    {
-        get
-        {
-            var spouseToFamilyLinks = List(C.ASSO);
-            if (spouseToFamilyLinks != null)
-            {
-                return spouseToFamilyLinks.Select(r => new SpouseToFamilyLink(r)).ToList();
-            }
-
-            return null;
-        }
-    }
+    public List<ChildToFamilyLink> ChildToFamilyLinks => List<ChildToFamilyLink>(C.FAMC);
+    public List<SpouseToFamilyLink>? SpouseToFamilyLinks => List<SpouseToFamilyLink>(C.ASSO);
     public string Submitter => V(C.SUBM);
-    public List<AssociationStructure> AssociationStructures
-    {
-        get
-        {
-            var associationStructures = List(C.ASSO);
-            if (associationStructures != null)
-            {
-                return associationStructures.Select(r => new AssociationStructure(r)).ToList();
-            }
-
-            return null;
-        }
-    }
-    public List<string> Aliases => List(C.ALIA).Select(r => r.Value).ToList();
-    public List<string> AncestorInterests => List(C.ANCI).Select(r => r.Value).ToList();
-    public List<string> DescendantInterests => List(C.DESI).Select(r => r.Value).ToList();
+    public List<AssociationStructure> AssociationStructures => List<AssociationStructure>(C.ASSO);
+    public List<string> Aliases => List(r => r.Tag.Equals(C.ALIA)).Select(r => r.Value).ToList();
+    public List<string> AncestorInterests => List(r => r.Tag.Equals(C.ANCI)).Select(r => r.Value).ToList();
+    public List<string> DescendantInterests => List(r => r.Tag.Equals(C.DESI)).Select(r => r.Value).ToList();
     public string PermanentRecordFileNumber => V(C.RFN);
     public string AncestralFileNumber => V(C.AFN);
     public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordId => V(C.RIN);
-    public ChangeDate? ChangeDate => new ChangeDate(FirstOrDefault(C.CHAN));
+    public ChangeDate? ChangeDate => FirstOrDefault<ChangeDate>(C.CHAN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
     public List<MultiMediaLink> MultiMediaLinks => List<MultiMediaLink>(C.OBJE);

@@ -8,13 +8,13 @@ public class FamilyRecord : RecordStructureBase
     public List<FamilyEventStructure> FamilyEventStructures => List<FamilyEventStructure>(C.FAM);
     public string Husband => V(C.HUSB);
     public string Wife => V(C.WIFE);
-    public List<string> Children => List(C.CHIL).Select(c => c.Value).ToList();
+    public List<string> Children => List(r => r.Tag.Equals(C.CHIL)).Select(r => r.Value).ToList();
     public string CountOfChildren => V(C.NCHI);
     public string Submitter => V(C.SUBM);
     // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
     public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordNumber => V(C.RIN);
-    public ChangeDate ChangeDate => new ChangeDate(FirstOrDefault(C.CHAN));
+    public ChangeDate ChangeDate => FirstOrDefault<ChangeDate>(C.CHAN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
     public List<MultiMediaLink> MultiMediaLinks => List<MultiMediaLink>(C.OBJE);
