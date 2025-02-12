@@ -10,12 +10,13 @@ public class Program
     {
         var assembly = Assembly.GetExecutingAssembly();
         var assemblyDirectoryName = Path.GetDirectoryName(assembly.Location) ?? "";
-        var gedFileName = "***REMOVED***";
-        var gedFullName = Path.Combine(assemblyDirectoryName, gedFileName); ;
+        var treeName = "Developer Tree";
+        var gedFullName = Path.Combine(assemblyDirectoryName, $"{treeName}.ged");
+        var jsonFullName = Path.Combine(assemblyDirectoryName, $"{treeName}.json");
 
         if (!File.Exists(gedFullName))
         {
-            Console.WriteLine(@"Could not find the file '{gedFileName}'");
+            Console.WriteLine($"Could not find the file '{treeName}.ged'");
             return;
         }
 
@@ -23,16 +24,14 @@ public class Program
         var gedcomLines = gedcomFile.Select(ParseLine).ToList();
         var gedcom = new Gedcom(gedcomLines);
 
-        //Console.WriteLine(gedcom.ToGed());
         var jsonText = JsonSerializer.Serialize(
             gedcom, new JsonSerializerOptions() 
             { 
-                //Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 WriteIndented = true
             });
 
-        File.WriteAllText(Path.Combine(Path.GetDirectoryName(assembly.Location), "The Welsh Saints.json"), jsonText);
+        File.WriteAllText(Path.Combine(assemblyDirectoryName, jsonFullName), jsonText);
         Console.WriteLine(jsonText);
     }
 

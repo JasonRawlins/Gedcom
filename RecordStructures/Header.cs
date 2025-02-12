@@ -2,6 +2,7 @@
 
 public class Header : RecordStructureBase
 {
+    public Header() : base() { }
     public Header(Record record) : base(record) { }
 
     //+1 SOUR <APPROVED_SYSTEM_ID> {1:1} p.42

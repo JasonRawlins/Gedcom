@@ -1,7 +1,0 @@
-
-Find all properties named after a tag and change it to the friendly name.
-
-
-
-
-

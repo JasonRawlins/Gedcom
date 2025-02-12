@@ -6,7 +6,7 @@ using Gedcom.RecordStructures;
 namespace Gedcom;
 
 [JsonConverter(typeof(GedcomJsonConverter))]
-public class Gedcom
+public class Gedcom : RecordStructureBase
 {
     [JsonIgnore]
     public List<Record> Records { get; } = [];
@@ -18,11 +18,7 @@ public class Gedcom
         }
     }
 
-    public Record CORP => SOUR.Records.First(r => r.Tag.Equals(C.CORP));
     public Header Header => new Header(Records.FirstOrDefault(r => r.Tag.Equals(C.HEAD)));
-    public Record RIN => _TREE.Records.First(r => r.Tag.Equals(C.RIN));
-    public Record SOUR => Records.First(r => r.Tag.Equals(C.SOUR));
-    public Record _TREE => Records.First(r => r.Tag.Equals(_TREE.Tag));
     public FamilyRecord GetFAM(string xrefFAM) => new(Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
     public List<FamilyRecord> GetFAMs() => Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FamilyRecord(r)).ToList();
     public IndividualRecord GetINDI(string xrefINDI) => new(Records.First(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI)));
@@ -75,7 +71,7 @@ public class Gedcom
         return gedStringBuilder.ToString();
     }
 
-    public override string ToString() => $"{_TREE.Value} ({RIN.Value})";
+    public override string ToString() => "Gedcome.ToString()"; // $"{_TREE.Value} ({RIN.Value})";
 }
 
 public class GedcomJsonConverter : JsonConverter<Gedcom>
@@ -85,14 +81,12 @@ public class GedcomJsonConverter : JsonConverter<Gedcom>
     {
         var jsonObject = new
         {
-            Header = gedcom.Header,
-            Individuals = gedcom.GetINDIs()
+            //gedcom.Header,
+            DanJones = gedcom.GetINDI("@I***REMOVED***@")
         };
 
         JsonSerializer.Serialize(writer, jsonObject, jsonObject.GetType(), options);
     }
-
-    private static string V(Record? record) => record?.Value ?? "";
 }
 
 #region LINEAGE_LINKED_GEDCOM p. 23
