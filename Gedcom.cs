@@ -8,23 +8,21 @@ namespace Gedcom;
 [JsonConverter(typeof(GedcomJsonConverter))]
 public class Gedcom : RecordStructureBase
 {
-    [JsonIgnore]
-    public List<Record> Records { get; } = [];
     public Gedcom(List<GedcomLine> gedcomLines)
     {
         foreach (var level0Record in GetGedcomLinesForLevel(0, gedcomLines))
         {
-            Records.Add(new Record(level0Record));
+            Record.Records.Add(new Record(level0Record));
         }
     }
 
-    public Header Header => new Header(Records.FirstOrDefault(r => r.Tag.Equals(C.HEAD)));
-    public FamilyRecord GetFAM(string xrefFAM) => new(Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
-    public List<FamilyRecord> GetFAMs() => Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FamilyRecord(r)).ToList();
-    public IndividualRecord GetINDI(string xrefINDI) => new(Records.First(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI)));
-    public List<IndividualRecord> GetINDIs() => Records.Where(r => r.Tag.Equals(C.INDI)).Select(r => new IndividualRecord(r)).ToList();
-    public SourceCitation GetSOUR(string xrefSOUR) => new(Records.First(r => r.Tag.Equals(C.SOUR) && r.Value.Equals(xrefSOUR)));
-    public List<SourceCitation> GetSOURs() => Records.Where(r => r.Tag.Equals(C.SOUR)).Select(r => new SourceCitation(r)).ToList();
+    public Header Header => FirstOrDefault<Header>(C.HEAD);
+    public FamilyRecord GetFAM(string xrefFAM) => new(Record.Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
+    public List<FamilyRecord> GetFAMs() => Record.Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FamilyRecord(r)).ToList();
+    public IndividualRecord GetINDI(string xrefINDI) => new(Record.Records.First(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI)));
+    public List<IndividualRecord> GetINDIs() => Record.Records.Where(r => r.Tag.Equals(C.INDI)).Select(r => new IndividualRecord(r)).ToList();
+    public SourceCitation GetSOUR(string xrefSOUR) => new(Record.Records.First(r => r.Tag.Equals(C.SOUR) && r.Value.Equals(xrefSOUR)));
+    public List<SourceCitation> GetSOURs() => Record.Records.Where(r => r.Tag.Equals(C.SOUR)).Select(r => new SourceCitation(r)).ToList();
     public static List<List<GedcomLine>> GetGedcomLinesForLevel(int level, List<GedcomLine> gedcomLines)
     {
         var gedcomLinesAtThisLevel = new List<List<GedcomLine>>();
@@ -63,7 +61,7 @@ public class Gedcom : RecordStructureBase
     public string ToGed()
     {
         var gedStringBuilder = new StringBuilder();
-        foreach (var record in Records)
+        foreach (var record in Record.Records)
         {
             gedStringBuilder.Append(GetGedcomLinesText(record));
         }
@@ -82,7 +80,7 @@ public class GedcomJsonConverter : JsonConverter<Gedcom>
         var jsonObject = new
         {
             //gedcom.Header,
-            DanJones = gedcom.GetINDI("@I***REMOVED***@")
+            Person1 = gedcom.GetINDI("@I***REMOVED***@")
         };
 
         JsonSerializer.Serialize(writer, jsonObject, jsonObject.GetType(), options);

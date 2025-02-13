@@ -67,7 +67,7 @@ public class RecordStructureBase
         }
     }
     // The method name "V" stands for Value. It's used so often that I shortened it to make the code easier to read.
-    protected string V(string tag) => Record?.Records.SingleOrDefault(r => r.Tag.Equals(tag))?.Value ?? "";
+    protected string V(string tag) => Record.Records.SingleOrDefault(r => r.Tag.Equals(tag))?.Value ?? "";
     public string Xref => Record.Level == 0 ? Record.Value : "";
     public override string ToString() => $"{Record.Level} {Record.Tag} {Record.Value.Substring(0, 10)}";
 }

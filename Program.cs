@@ -16,12 +16,12 @@ public class Program
 
         if (!File.Exists(gedFullName))
         {
-            Console.WriteLine($"Could not find the file '{treeName}.ged'");
+            Console.WriteLine($"Could not find the file '{gedFullName}'");
             return;
         }
 
-        var gedcomFile = File.ReadAllLines(gedFullName);
-        var gedcomLines = gedcomFile.Select(ParseLine).ToList();
+        var gedFileLines = File.ReadAllLines(gedFullName);
+        var gedcomLines = gedFileLines.Select(ParseLine).ToList();
         var gedcom = new Gedcom(gedcomLines);
 
         var jsonText = JsonSerializer.Serialize(
@@ -31,7 +31,7 @@ public class Program
                 WriteIndented = true
             });
 
-        File.WriteAllText(Path.Combine(assemblyDirectoryName, jsonFullName), jsonText);
+        File.WriteAllText(jsonFullName, jsonText);
         Console.WriteLine(jsonText);
     }
 

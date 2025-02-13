@@ -16,7 +16,7 @@ public class Header : RecordStructureBase
     //            +4 [CONT|CONC]<COPYRIGHT_SOURCE_DATA> {0:M} p.44
     public string ReceivingSystemName => V(C.DEST);
     public Date TransmissionDate => FirstOrDefault<Date>(C.DATE);
-    public string Submitter => V(C.SUBN);
+    public string Submitter => V(C.SUBM);
     public string FileName => V(C.FILE);
     public string CopyrightGedcomFile => V(C.COPR);
     //+1 GEDC {1:1}
