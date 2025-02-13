@@ -5,6 +5,7 @@
 2 VERS 2024.12
 2 _TREE Developer Tree
 3 RIN 202583818
+3 NOTE Developer Tree
 3 _ENV prd
 2 CORP Ancestry.com
 3 PHON 801-705-7000
@@ -24,18 +25,47 @@
 1 NAME Person 1 /Surname/ Suffix
 2 GIVN Person 1
 2 SURN Surname
+2 SOUR @S1117337263@
+3 PAGE Year: 1870 li
+4 CONC brary
+3 _APID 1,7163::11069157
 2 NSFX Suffix
 1 NAME Person 1 other name /Surname/ Suffix
 2 GIVN Person 1 other name
 2 SURN Surname
 2 NSFX Suffix
 1 SEX F
+2 SOUR @S1117337263@
 1 FAMC @F3@
 1 FAMS @F1@
 1 BIRT
 2 DATE 01 Jan 1971
 2 PLAC Salt Lake City, Salt Lake, Utah, USA
 2 NOTE Person 1 was born.
+2 SOUR @S1117337263@
+1 UID 0000000B0F0000D8B05500045A6FEF2F
+1 AFN 1A8B-VM
+1 SOUR @S1117337263@
+2 DATA
+3 TEXT 1876 Dec 8 barn
+4 CONC ard, in the presence of parents of the couple.
+1 SOUR @S914715036@
+2 _APID 1,7545::300081309
+1 OBJE @S1117337263@
+2 _PRIM Y
+2 _CROP
+3 _LEFT 100
+3 _TOP 100
+3 _WDTH 100
+3 _HGHT 100
+3 _TYPE primary
+2 SOUR @S1117337263@
+3 PAGE Year: 1880
+3 DATA
+4 WWW https://www.ancestry.com
+3 _APID 1,6742::15513095
+1 OBJE @S1117337263@
+2 _PRIM Y
 1 BIRT
 2 DATE 01 Jan 1971
 2 PLAC Salt Lake City, Salt Lake, Utah, USA
@@ -45,6 +75,7 @@
 1 CHR
 2 DATE 03 Mar 1991
 2 PLAC Salt Lake City, Salt Lake, Utah, USA
+2 SOUR @S1117337263@
 1 ADDR
 2 DATE 01 Jan 1990
 2 PLAC Salt Lake City, Salt Lake, Utah, USA
@@ -80,6 +111,10 @@
 2 TYPE Arrival
 2 DATE 06 Jun 1990
 2 PLAC Salt Lake City, Salt Lake, Utah, USA
+2 SOUR @S1117337263@
+3 DATA
+4 WWW https://www.ancestry.com
+3 _APID 1,62414::506
 1 BARM
 2 DATE 09 Sep 1990
 2 PLAC Salt Lake City, Salt Lake, Utah, USA
@@ -160,6 +195,15 @@
 2 DATE 01 Jan 1995
 1 RESI
 2 DATE 02 Feb 1995
+2 PLAC Salt Lake City, Salt Lake, Utah, USA
+2 SOUR @S1117337263@
+3 PAGE Year: 1880
+3 DATA
+4 WWW https://www.ancestry.com
+3 _APID 1,8054::1096267
+2 NOTE Occupation: At Home
+3 CONT A long line
+3 CONC n 
 1 RETI
 2 DATE 03 Mar 1995
 1 TITL
@@ -167,6 +211,9 @@
 1 EVEN
 2 TYPE Web Address
 2 DATE 09 Sep 1995
+2 PLAC Johnston, North Carolina
+2 SOUR @S1117337263@
+3 PAGE p. 121
 1 _WEIG
 2 DATE 10 Oct 1995
 1 WILL
@@ -189,6 +236,9 @@
 1 BURI
 2 DATE 11 Nov 1990
 2 PLAC Salt Lake City, Salt Lake, Utah, USA
+2 SOUR @S1117337263@
+3 PAGE Utah Division of State History
+3 _APID 1,5232::237515
 1 CREM
 2 DATE 07 Jul 1991
 2 PLAC Salt Lake City, Salt Lake, Utah, USA
@@ -213,7 +263,8 @@
 2 PAGE Developer Citation 1
 2 DATA
 3 DATE 31 Dec 1999
-3 TEXT Transcription
+3 TEXT Transcription Ma
+4 CONC rch 19, 1816.
 3 WWW https://www.ancestry.com
 2 NOTE Other information
 1 SOUR @S1117337263@
@@ -236,6 +287,11 @@
 1 DEAT
 2 DATE 06 Jun 2016
 2 PLAC Salt Lake City, Salt Lake, Utah, USA
+2 SOUR @S1117337263@
+3 DATA
+4 WWW https://www.ancestry.com
+3 PAGE Acme Research Company
+3 _APID 1,1064::9026
 0 @I302641265759@ INDI
 1 NAME Mother /Maiden/ Suffix
 2 GIVN Mother
