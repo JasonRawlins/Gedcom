@@ -11,8 +11,8 @@ public class Program
         var assembly = Assembly.GetExecutingAssembly();
         var assemblyDirectoryName = Path.GetDirectoryName(assembly.Location) ?? "";
         var treeName = "Developer Tree";
-        var gedFullName = Path.Combine(assemblyDirectoryName, $"{treeName}.ged");
-        var jsonFullName = Path.Combine(assemblyDirectoryName, $"{treeName}.json");
+        var gedFullName = Path.Combine(assemblyDirectoryName, "Resources", $"{treeName}.ged");
+        var jsonFullName = Path.Combine(assemblyDirectoryName, "Resources", $"{treeName}.json");
 
         if (!File.Exists(gedFullName))
         {

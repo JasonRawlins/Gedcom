@@ -1,431 +1,55 @@
 0 HEAD
-  1 SUBM @SUBM1@
-  1 SOUR Ancestry.com Family Trees
-    2 NAME Ancestry.com Member Trees
-    2 VERS 2024.12
-    2 _TREE Developer Tree
-      3 RIN 202583818
-      3 NOTE Developer Tree
-      3 _ENV prd
-    2 CORP Ancestry.com
-      3 PHON 801-705-7000
-      3 WWW www.ancestry.com
-      3 ADDR 1300 West Traverse Parkway
-        4 CONT Lehi, UT 84043
-        4 CONT USA
-  1 DATE 12 Feb 2025
-    2 TIME 04:21:39
-  1 GEDC
-    2 VERS 5.5.1
-    2 FORM LINEAGE-LINKED
-  1 CHAR UTF-8
-0 @SUBM1@ SUBM
-  1 NAME Ancestry.com Member Trees Submitter
-0 @I***REMOVED***@ INDI
-  1 NAME Person 1 /Surname/ Suffix
-    2 GIVN Person 1
-    2 SURN Surname
-    2 SOUR @S1117337263@
-      3 PAGE Year: 1870 li
-        4 CONC brary
-      3 _APID 1,7163::11069157
-    2 NSFX Suffix
-  1 NAME Person 1 other name /Surname/ Suffix
-    2 GIVN Person 1 other name
-    2 SURN Surname
-    2 NSFX Suffix
-  1 SEX F
-    2 SOUR @S1117337263@
-  1 FAMC @F3@
-  1 FAMS @F1@
-  1 BIRT
-    2 DATE 01 Jan 1971
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-    2 NOTE Person 1 was born.
-    2 SOUR @S1117337263@
-  1 UID 0000000B0F0000D8B05500045A6FEF2F
-  1 AFN 1A8B-VM
-  1 SOUR @S1117337263@
-    2 DATA
-      3 TEXT 1876 Dec 8 barn
-        4 CONC ard, in the presence of parents of the couple.
-  1 SOUR @S914715036@
-    2 _APID 1,7545::300081309
-  1 OBJE @S1117337263@
-    2 _PRIM Y
-    2 _CROP
-      3 _LEFT 100
-      3 _TOP 100
-      3 _WDTH 100
-      3 _HGHT 100
-      3 _TYPE primary
-    2 SOUR @S1117337263@
-      3 PAGE Year: 1880
-      3 DATA
-        4 WWW https://www.ancestry.com
-      3 _APID 1,6742::15513095
-  1 OBJE @S1117337263@
-    2 _PRIM Y
-  1 BIRT
-    2 DATE 01 Jan 1971
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 BAPM
-    2 DATE 07 Jul 1990
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 CHR
-    2 DATE 03 Mar 1991
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-    2 SOUR @S1117337263@
-  1 ADDR
-    2 DATE 01 Jan 1990
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-    2 SOUR @S1117337263@
-      3 PAGE Developer Citation 1
-      3 DATA
-        4 DATE 31 Dec 1999
-        4 TEXT Transcription
-        4 WWW https://www.ancestry.com
-      3 NOTE Other information
-    2 NOTE 50 W North Temple St, Salt Lake City, UT 84150-970
-  1 ADOP
-    2 DATE 02 Feb 1990
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-    2 SOUR @S1117337263@
-      3 PAGE Developer Citation 1
-      3 DATA
-        4 DATE 31 Dec 1999
-        4 TEXT Transcription
-        4 WWW https://www.ancestry.com
-      3 NOTE Other information
-  1 CHRA
-    2 DATE 03 Mar 1990
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-    2 SOUR @S1117337263@
-      3 PAGE Developer Citation 1
-      3 DATA
-        4 DATE 31 Dec 1999
-        4 TEXT Transcription
-        4 WWW https://www.ancestry.com
-      3 NOTE Other information
-  1 EVEN
-    2 TYPE Arrival
-    2 DATE 06 Jun 1990
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-    2 SOUR @S1117337263@
-      3 DATA
-        4 WWW https://www.ancestry.com
-      3 _APID 1,62414::506
-  1 BARM
-    2 DATE 09 Sep 1990
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 BLES
-    2 DATE 10 Oct 1990
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 CAST
-    2 DATE 12 Dec 1990
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 CENS
-    2 DATE 02 Feb 1991
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 _CIRC
-    2 DATE 04 Apr 1991
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 CONF
-    2 DATE 05 May 1991
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 _DEG
-    2 DATE 08 Aug 1991
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 EVEN
-    2 TYPE Departure
-    2 DATE 09 Sep 1991
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 DSCR
-    2 DATE 10 Oct 1991
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 _DEST
-    2 DATE 11 Nov 1991
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 EDUC
-    2 DATE 03 Mar 1992
-  1 _ELEC
-    2 DATE 04 Apr 1992
-  1 EMAIL
-    2 DATE 05 May 1992
-  1 EMIG
-    2 DATE 06 Jun 1992
-  1 _EMPLOY
-    2 DATE 07 Jul 1992
-  1 _EXCM
-    2 DATE 10 Oct 1992
-  1 FCOM
-    2 DATE 11 Nov 1992
-  1 GRAD
-    2 DATE 02 Feb 1993
-  1 _HEIG
-    2 DATE 03 Mar 1993
-  1 IMMI
-    2 DATE 04 Apr 1993
-  1 _MDCL
-    2 DATE 10 Oct 1993
-  1 _MILT
-    2 DATE 11 Nov 1993
-  1 _MILTID
-    2 DATE 12 Dec 1993
-  1 _MISN
-    2 DATE 01 Jan 1994
-  1 NATI
-    2 DATE 04 Apr 1994
-  1 NATU
-    2 DATE 05 May 1994
-  1 OCCU
-    2 DATE 06 Jun 1994
-  1 _ORDI
-    2 DATE 07 Jul 1994
-  1 ORDN
-    2 DATE 08 Aug 1994
-  1 _ORIG
-    2 DATE 09 Sep 1994
-  1 PHON
-    2 TYPE Phone
-    2 DATE 10 Oct 1994
-  1 PROP
-    2 DATE 12 Dec 1994
-  1 RELI
-    2 DATE 01 Jan 1995
-  1 RESI
-    2 DATE 02 Feb 1995
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-    2 SOUR @S1117337263@
-      3 PAGE Year: 1880
-      3 DATA
-        4 WWW https://www.ancestry.com
-      3 _APID 1,8054::1096267
-    2 NOTE Occupation: At Home
-        3 CONT A long line
-        3 CONC n 
-  1 RETI
-    2 DATE 03 Mar 1995
-  1 TITL
-    2 DATE 08 Aug 1995
-  1 EVEN
-    2 TYPE Web Address
-    2 DATE 09 Sep 1995
-    2 PLAC Johnston, North Carolina
-    2 SOUR @S1117337263@
-      3 PAGE p. 121
-  1 _WEIG
-    2 DATE 10 Oct 1995
-  1 WILL
-    2 DATE 11 Nov 1995
-  1 EVEN
-    2 TYPE Developer Event
-    2 DATE 12 Dec 1995
-  1 FACT
-    2 TYPE AKA
-    2 NOTE Person 1 AKA
-  1 _DCAUSE
-    2 NOTE Cause of death
-  1 _NAMS Namesake
-  1 SSN Social Security Number
-  1 _WLNK
-    2 TITL Developer link
-    2 NOTE https://www.ancestry.com
-  1 _FUN
-    2 DATE 12 Dec 1992
-  1 BURI
-    2 DATE 11 Nov 1990
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-    2 SOUR @S1117337263@
-      3 PAGE Utah Division of State History
-      3 _APID 1,5232::237515
-  1 CREM
-    2 DATE 07 Jul 1991
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 PROB
-    2 DATE 11 Nov 1994
-  1 BAPL
-    2 DATE 08 Aug 1990
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 CONL
-    2 DATE 06 Jun 1991
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 _INIT
-    2 DATE 05 May 1993
-  1 ENDL
-    2 DATE 08 Aug 1992
-  1 SLGC
-    2 DATE 04 Apr 1995
-  1 SOUR @S1117333081@
-    2 PAGE Ancestry Family Tree
-    2 _APID 252642986533:1030:201382831
-  1 SOUR @S1117337263@
-    2 PAGE Developer Citation 1
-    2 DATA
-      3 DATE 31 Dec 1999
-      3 TEXT Transcription Ma
-        4 CONC rch 19, 1816.
-      3 WWW https://www.ancestry.com
-    2 NOTE Other information
-  1 SOUR @S1117337263@
-    2 PAGE Developer Citation 2
-    2 DATA
-      3 DATE 31 Dec 1999
-      3 TEXT Transcription
-      3 WWW https://www.ancestry.com
-    2 NOTE Other information
-0 @I302641265566@ INDI
-  1 NAME Father /Surname/ Suffix
-    2 GIVN Father
-    2 SURN Surname
-    2 NSFX Suffix
-  1 SEX M
-  1 FAMS @F3@
-  1 BIRT
-    2 DATE 06 Jun 1946
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 DEAT
-    2 DATE 06 Jun 2016
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-    2 SOUR @S1117337263@
-      3 DATA
-        4 WWW https://www.ancestry.com
-      3 PAGE Acme Research Company
-      3 _APID 1,1064::9026
-0 @I302641265759@ INDI
-  1 NAME Mother /Maiden/ Suffix
-    2 GIVN Mother
-    2 SURN Maiden
-    2 NSFX Suffix
-  1 SEX F
-  1 FAMC @F2@
-  1 FAMS @F3@
-  1 BIRT
-    2 DATE 05 May 1945
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 DEAT
-    2 DATE 05 May 2015
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-0 @I302641265857@ INDI
-  1 NAME Person 2 /Jones/ Suffix
-    2 GIVN Person 2
-    2 SURN Jones
-    2 NSFX Suffix
-  1 SEX M
-  1 FAMS @F1@
-  1 BIRT
-    2 DATE 02 Feb 1972
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-0 @I302641266059@ INDI
-  1 NAME Child 1 /Jones/ Suffix
-    2 GIVN Child 1
-    2 SURN Jones
-    2 NSFX Suffix
-  1 SEX F
-  1 FAMC @F1@
-  1 FAMS @F4@
-  1 BIRT
-    2 DATE 03 Mar 1993
-0 @I302641266234@ INDI
-  1 NAME Grandchild /Jones/ Suffix
-    2 GIVN Grandchild
-    2 SURN Jones
-    2 NSFX Suffix
-  1 SEX M
-  1 FAMC @F4@
-  1 BIRT
-    2 DATE 04 Apr 2014
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-0 @I302641266385@ INDI
-  1 NAME Grandfather /Maiden/ Suffix
-    2 GIVN Grandfather
-    2 SURN Maiden
-    2 NSFX Suffix
-  1 SEX M
-  1 FAMS @F2@
-  1 BIRT
-    2 DATE 07 Jul 1917
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 DEAT
-    2 DATE 07 Jul 1987
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-0 @I302641266496@ INDI
-  1 NAME Grandmother /Eve/ Suffix
-    2 GIVN Grandmother
-    2 SURN Eve
-    2 NSFX Suffix
-  1 SEX F
-  1 FAMS @F2@
-  1 BIRT
-    2 DATE 08 Aug 1918
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 DEAT
-    2 DATE 08 Aug 1988
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-0 @F1@ FAM
-  1 HUSB @I302641265857@
-  1 WIFE @I***REMOVED***@
-  1 CHIL @I302641266059@
-  1 ENGA
-    2 DATE 09 Sep 1992
-  1 MARB
-    2 DATE 06 Jun 1993
-  1 MARC
-    2 DATE 07 Jul 1993
-  1 MARL
-    2 DATE 08 Aug 1993
-  1 MARR
-    2 DATE 15 Jun 1989
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 ANUL
-    2 DATE 05 May 1990
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 DIV
-    2 DATE 12 Dec 1991
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 DIVF
-    2 DATE 01 Jan 1992
-    2 PLAC Salt Lake City, Salt Lake, Utah, USA
-  1 MARS
-    2 DATE 09 Sep 1993
-  1 _SEPR
-    2 DATE 06 Jun 1995
-  1 SLGS
-    2 DATE 05 May 1995
-0 @F2@ FAM
-  1 HUSB @I302641266385@
-  1 WIFE @I302641266496@
-  1 CHIL @I302641265759@
-0 @F3@ FAM
-  1 HUSB @I302641265566@
-  1 WIFE @I302641265759@
-  1 CHIL @I***REMOVED***@
-0 @F4@ FAM
-  1 WIFE @I302641266059@
-  1 CHIL @I302641266234@
-0 @S1117333081@ SOUR
-  1 TITL Ancestry Family Trees
-  1 PUBL Online publication - Provo, UT, USA: Ancestry.com. Original data: Family Tree files submitted by Ancestry members.
-  1 _APID 1,1030::0
-  1 REPO @R1005835125@
-0 @S1117337263@ SOUR
-  1 TITL Developer Source
-  1 AUTH Author 1
-  1 PUBL Publisher 1
-    2 DATE 31 Dec 1999
-    2 PLAC Publisher location
-  1 CALN Call number
-  1 REFN REFN
-  1 REPO @R1005835233@
-  1 NOTE Notes
-0 @R1005835125@ REPO
-  1 NAME Ancestry.com
-0 @R1005835233@ REPO
-  1 NAME Developer Repository
-  1 ADDR <line>1300 West Traverse Parkway, Lehi, UT 84043 USA</line>
-  1 PHON 801-705-7000
-  1 EMAIL developer@@gedcom.net
-  1 CALN Call number
-  1 REFN REFN
-  1 NOTE Some notes
+    1 SOUR Ancestry.com Family Trees
+        2 VERS 2024.12
+        2 NAME Ancestry.com Member Trees
+        2 CORP Ancestry.com
+            3 PHON 801-705-7000
+            3 WWW www.ancestry.com
+            3 ADDR 1300 West Traverse Parkway
+                4 CONT Lehi, UT 84043
+                4 CONT USA
+        2 _TREE Developer Tree
+            3 RIN 202583818
+            3 NOTE Developer Tree
+            3 _ENV prd
+    1 DEST Recieving system name
+    1 DATE 12 Feb 2025
+        2 TIME 04:21:39
+    1 SUBM @SUBM1@
+    1 SUBN Subn
+    1 FILE Filename
+    1 COPR Copyright gedcom file
+    1 GEDC
+        2 VERS 5.5.1
+        2 FORM LINEAGE-LINKED
+    1 CHAR UTF-8
+        2 VERS Version number
+    1 LANG Language of text
+    1 PLAC Place name
+        2 FORM Place hierarchy
+        2 FONE Name phonetic variation
+            3 TYPE Phonetic type
+            3 GIVN Given
+            3 NPFX Name prefix
+            3 NSFX Name suffix
+            3 NICK Nickname
+            3 SURN Surname
+            3 SPFX Surname prefix
+        2 ROMN Name romanized variation
+            3 TYPE Romanized type
+            3 GIVN Given
+            3 NPFX Name prefix
+            3 NSFX Name suffix
+            3 NICK Nickname
+            3 SURN Surname
+            3 SPFX Surname prefix
+        2 MAP
+            3 LATI Place latitude
+            3 LONG Place longitude
+        2 NOTE Gedcom content description
+            3 CONT more desription that is long enough to trigger a line br
+            3 CONC and more
+    1 NOTE Gedcom content description
+        2 CONT more desription
+        2 CONC and more
 0 TRLR

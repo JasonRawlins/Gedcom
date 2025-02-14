@@ -4,7 +4,7 @@ public class PlaceStructure : RecordStructureBase
 {
     public PlaceStructure() : base() { }
     public PlaceStructure(Record record) : base(record) { }
-    public string PlaceName => V(C.PLAC);
+    public string PlaceName => Record.Value;
     public string PlaceHierarchy => V(C.FORM);
     public List<NameVariation> PlacePhoneticVariations => List<NameVariation>(C.FONE);
     public List<NameVariation> PlaceRomanizedVariations => List<NameVariation>(C.ROMN);

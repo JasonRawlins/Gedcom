@@ -1,5 +1,6 @@
 ﻿using Gedcom.RecordStructures;
 using System.Reflection.Metadata.Ecma335;
+using System.Text;
 
 namespace Gedcom;
 
@@ -46,24 +47,33 @@ public class RecordStructureBase
 
         return [];
     }
-    protected string RecordValue(Record? record, string tag) => record?.Records.SingleOrDefault(r => r.Tag.Equals(tag))?.Value ?? "";
     protected string Text
     {
         get
         {
-            var textRecord = FirstOrDefault<NoteRecord>(C.TEXT);
-            var text = "";
+            var textRecord = FirstOrDefault<NoteRecord>(C.NOTE);
+            var text = new StringBuilder();
             if (textRecord != null)
             {
+                text.Append(Record.Value);
+
                 var contAndConc = Record.Records.Where(r => r.Tag.Equals(C.CONT) || r.Tag.Equals(C.CONC));
 
                 foreach (var contOrConc in contAndConc)
                 {
-                    text += contOrConc.Value;
+                    if (contOrConc.Tag.Equals(C.CONT))
+                    {
+                        text.AppendLine(contOrConc.Value);
+                    }
+
+                    if (contOrConc.Tag.Equals(C.CONC))
+                    {
+                        text.Append(contOrConc);
+                    }
                 }
             }
 
-            return text;
+            return text.ToString();
         }
     }
     // The method name "V" stands for Value. It's used so often that I shortened it to make the code easier to read.

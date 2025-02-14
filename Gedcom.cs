@@ -79,8 +79,8 @@ public class GedcomJsonConverter : JsonConverter<Gedcom>
     {
         var jsonObject = new
         {
-            //gedcom.Header,
-            Person1 = gedcom.GetINDI("@I***REMOVED***@")
+            gedcom.Header,
+            //Person1 = gedcom.GetINDI("@I***REMOVED***@")
         };
 
         JsonSerializer.Serialize(writer, jsonObject, jsonObject.GetType(), options);

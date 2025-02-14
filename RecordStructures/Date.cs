@@ -6,6 +6,7 @@ public class Date : RecordStructureBase
     public Date(Record record) : base(record) { }
 
     public string TimeValue => V(C.TIME);
+    public string DateValue => Record.Value;
 }
 
 #region DATE p. 45
