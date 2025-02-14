@@ -6,17 +6,17 @@ public class AddressStructure : RecordStructureBase
     public AddressStructure(Record record) : base(record) { }
 
     public string AddressLine => Record.Value;
-    public string AddressLine1 => V(C.ADR1);
-    public string AddressLine2 => V(C.ADR2);
-    public string AddressLine3 => V(C.ADR3);
-    public string AddressCity => V(C.CITY);
-    public string AddressState => V(C.STAE);
-    public string AddressPostCode => V(C.POST);
-    public string AddressCountry => V(C.CTRY);
-    public string PhoneNumber => V(C.PHON);
-    public string AddressEmail => V(C.EMAIL);
-    public string AddressFax => V(C.FAX);
-    public string AddressWebPage => V(C.WWW);
+    public string AddressLine1 => _(C.ADR1);
+    public string AddressLine2 => _(C.ADR2);
+    public string AddressLine3 => _(C.ADR3);
+    public string AddressCity => _(C.CITY);
+    public string AddressState => _(C.STAE);
+    public string AddressPostCode => _(C.POST);
+    public string AddressCountry => _(C.CTRY);
+    public string PhoneNumber => _(C.PHON);
+    public string AddressEmail => _(C.EMAIL);
+    public string AddressFax => _(C.FAX);
+    public string AddressWebPage => _(C.WWW);
 }
 
 #region ADDRESS_STRUCTURE p. 31

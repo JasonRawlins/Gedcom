@@ -5,12 +5,12 @@ public class SubmitterRecord : RecordStructureBase
     public SubmitterRecord() : base() { }
     public SubmitterRecord(Record record) : base(record) { }
 
-    public string SubmitterName => V(C.NAME);
+    public string SubmitterName => _(C.NAME);
     public AddressStructure AddressStructure => FirstOrDefault<AddressStructure>(C.ADDR);
     public List<MultiMediaLink> MultimediaLink => List<MultiMediaLink>(C.MEDI);
     public List<string> LanguagePreferences => List(r => r.Tag.Equals(C.LANG)).Select(r => r.Value).ToList();
-    public string SubmitterRegisteredRfn => V(C.RFN);
-    public string AutomatedRecordId => V(C.RIN);
+    public string SubmitterRegisteredRfn => _(C.RFN);
+    public string AutomatedRecordId => _(C.RIN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public Date ChangeDate => FirstOrDefault<Date>(C.CHAN);
 }

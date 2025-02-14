@@ -4,8 +4,8 @@ public class Map : RecordStructureBase
 {
     public Map() : base() { }
     public Map(Record record) : base(record) { }
-    public string PlaceLatitude => V(C.LATI);
-    public string PlaceLongitude => V(C.LONG);
+    public string PlaceLatitude => _(C.LATI);
+    public string PlaceLongitude => _(C.LONG);
 }
 
 #region MAP p. 39

@@ -14,18 +14,16 @@ public class Header : RecordStructureBase
     //        +3 DATE <PUBLICATION_DATE> {0:1) p.59
     //        +3 COPR <COPYRIGHT_SOURCE_DATA> {0:1) p.44
     //            +4 [CONT|CONC]<COPYRIGHT_SOURCE_DATA> {0:M} p.44
-    public string ReceivingSystemName => V(C.DEST);
+    public string ReceivingSystemName => _(C.DEST);
     public Date TransmissionDate => FirstOrDefault<Date>(C.DATE);
-    public string Submitter => V(C.SUBM);
-    public string FileName => V(C.FILE);
-    public string CopyrightGedcomFile => V(C.COPR);
-    //+1 GEDC {1:1}
-    //    +2 VERS <VERSION_NUMBER> {1:1} p.64
-    //    +2 FORM <GEDCOM_FORM> {1:1} p.50
-    //+1 CHAR <CHARACTER_SET> {1:1} p.44
-    //    +2 VERS <VERSION_NUMBER> {0:1} p.64
-    public string LanguageOfText => V(C.LANG);
-    public PlaceStructure? PlaceStructure => FirstOrDefault<PlaceStructure>(C.PLAC);
+    public string Submitter => _(C.SUBM);
+    // +1 SUBN @<XREF:SUBN>@ {0:1} p.28
+    public string FileName => _(C.FILE);
+    public string CopyrightGedcomFile => _(C.COPR);
+    public GEDC Gedcom => FirstOrDefault<GEDC>(C.GEDC);
+    public CharacterSet CharacterSet => FirstOrDefault<CharacterSet>(C.CHAR);
+    public string LanguageOfText => _(C.LANG);
+    public string PlaceHierarchy => Record.Records.FirstOrDefault(r => r.Tag.Equals(C.PLAC))?.Records.First(r => r.Tag.Equals(C.FORM)).Value ?? "";
     public NoteStructure? GedcomContentDescription => FirstOrDefault<NoteStructure>(C.NOTE);
 }
 

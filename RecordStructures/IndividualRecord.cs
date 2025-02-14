@@ -4,29 +4,29 @@ public class IndividualRecord : RecordStructureBase
 {
     public IndividualRecord(Record record) : base(record) { }
 
-    public string RestrictionNotice => V(C.RESN);
+    public string RestrictionNotice => _(C.RESN);
     public List<PersonalNameStructure> PersonalNameStructures => List<PersonalNameStructure>(C.NAME);
-    public string SexValue => V(C.SEX);
+    public string SexValue => _(C.SEX);
     public List<IndividualEventStructure> IndividualEventStructures => List<IndividualEventStructure>(Record.Tag);
     public List<IndividualAttributeStructure> IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
     // TODO: LDS_INDIVIDUAL_ORDINANCE
     public List<ChildToFamilyLink> ChildToFamilyLinks => List<ChildToFamilyLink>(C.FAMC);
     public List<SpouseToFamilyLink>? SpouseToFamilyLinks => List<SpouseToFamilyLink>(C.ASSO);
-    public string Submitter => V(C.SUBM);
+    public string Submitter => _(C.SUBM);
     public List<AssociationStructure> AssociationStructures => List<AssociationStructure>(C.ASSO);
     public List<string> Aliases => List(r => r.Tag.Equals(C.ALIA)).Select(r => r.Value).ToList();
     public List<string> AncestorInterests => List(r => r.Tag.Equals(C.ANCI)).Select(r => r.Value).ToList();
     public List<string> DescendantInterests => List(r => r.Tag.Equals(C.DESI)).Select(r => r.Value).ToList();
-    public string PermanentRecordFileNumber => V(C.RFN);
-    public string AncestralFileNumber => V(C.AFN);
+    public string PermanentRecordFileNumber => _(C.RFN);
+    public string AncestralFileNumber => _(C.AFN);
     public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
-    public string AutomatedRecordId => V(C.RIN);
+    public string AutomatedRecordId => _(C.RIN);
     public ChangeDate? ChangeDate => FirstOrDefault<ChangeDate>(C.CHAN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
     public List<MultiMediaLink> MultiMediaLinks => List<MultiMediaLink>(C.OBJE);
 
-    public override string ToString() => $"{PersonalNameStructures.First().NamePersonal} {SexValue} ({Xref})";
+    public override string ToString() => $"{PersonalNameStructures.First().NamePersonal} {SexValue} ({Record.Value})";
 }
 
 #region INDIVIDUAL_RECORD (INDI) p. 25

@@ -5,14 +5,14 @@ public class EventDetail : RecordStructureBase
     public EventDetail() : base() { }
     public EventDetail(Record record) : base(record) { }
 
-    public string EventOrFactClassification => V(C.TYPE);
-    public string DateValue => V(C.DATE);
+    public string EventOrFactClassification => _(C.TYPE);
+    public string DateValue => _(C.DATE);
     public PlaceStructure PlaceStructure => FirstOrDefault<PlaceStructure>(C.PLAC);
     public AddressStructure AddressStructure => FirstOrDefault<AddressStructure>(C.ADDR);
-    public string ResponsibleAgency => V(C.AGNC);
-    public string ReligiousAffiliation => V(C.RELI);
-    public string CauseOfEvent => V(C.CAUS);
-    public string RestrictionNotice => V(C.RESN);
+    public string ResponsibleAgency => _(C.AGNC);
+    public string ReligiousAffiliation => _(C.RELI);
+    public string CauseOfEvent => _(C.CAUS);
+    public string RestrictionNotice => _(C.RESN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
     public List<MultiMediaLink> MultiMediaLinks => List<MultiMediaLink>(C.OBJE);

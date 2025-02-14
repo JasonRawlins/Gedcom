@@ -5,7 +5,7 @@ public class NoteStructure : RecordStructureBase
     public NoteStructure() : base() { }
     public NoteStructure(Record record) : base(record) { }
 
-    public string SubmitterText => Record.Level == 0 ? V(C.NOTE) : Text;
+    public string SubmitterText => Record.Level == 0 ? _(C.NOTE) : Text;
 }
 
 #region NOTE_STRUCTURE p. 37

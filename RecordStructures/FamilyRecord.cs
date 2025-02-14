@@ -4,21 +4,21 @@ public class FamilyRecord : RecordStructureBase
 {
     public FamilyRecord(Record record) : base(record) { }
 
-    public string RestrictionNotice => V(C.RESN);
+    public string RestrictionNotice => _(C.RESN);
     public List<FamilyEventStructure> FamilyEventStructures => List<FamilyEventStructure>(C.FAM);
-    public string Husband => V(C.HUSB);
-    public string Wife => V(C.WIFE);
+    public string Husband => _(C.HUSB);
+    public string Wife => _(C.WIFE);
     public List<string> Children => List(r => r.Tag.Equals(C.CHIL)).Select(r => r.Value).ToList();
-    public string CountOfChildren => V(C.NCHI);
-    public string Submitter => V(C.SUBM);
+    public string CountOfChildren => _(C.NCHI);
+    public string Submitter => _(C.SUBM);
     // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
     public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
-    public string AutomatedRecordNumber => V(C.RIN);
+    public string AutomatedRecordNumber => _(C.RIN);
     public ChangeDate ChangeDate => FirstOrDefault<ChangeDate>(C.CHAN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
     public List<MultiMediaLink> MultiMediaLinks => List<MultiMediaLink>(C.OBJE);
-    public string AdoptedByWhichParent => V(C.ADOP);
+    public string AdoptedByWhichParent => _(C.ADOP);
     public override string ToString() => $"'{Husband}' and '{Wife}' with children {string.Join(',', Children)})";
 }
 

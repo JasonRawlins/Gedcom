@@ -5,7 +5,7 @@ public class UserReferenceNumber : RecordStructureBase
     public UserReferenceNumber() { }
     public UserReferenceNumber(Record record) : base(record) { }
 
-    public string UserReferenceType => V(C.TYPE);
+    public string UserReferenceType => _(C.TYPE);
 }
 
 #region USER_REFERENCE_TYPE (REFN) p. 27

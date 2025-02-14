@@ -5,16 +5,16 @@ public class NameVariation : RecordStructureBase, IPersonalNamePieces
     public NameVariation() { }
     public NameVariation(Record record) : base(record) { }
 
-    public string Type => V(C.TYPE); // PHONETIC_TYPE or ROMANIZED_TYPE
+    public string Type => _(C.TYPE); // PHONETIC_TYPE or ROMANIZED_TYPE
 
     #region IPersonalNamePieces
 
-    public string Given => V(C.GIVN);
-    public string NamePrefix => V(C.NPFX);
-    public string NameSuffix => V(C.NSFX);
-    public string Nickname => V(C.NICK);
-    public string Surname => V(C.SURN);
-    public string SurnamePrefix => V(C.SPFX);
+    public string Given => _(C.GIVN);
+    public string NamePrefix => _(C.NPFX);
+    public string NameSuffix => _(C.NSFX);
+    public string Nickname => _(C.NICK);
+    public string Surname => _(C.SURN);
+    public string SurnamePrefix => _(C.SPFX);
 
     #endregion
 }

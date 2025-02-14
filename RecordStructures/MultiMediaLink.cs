@@ -6,8 +6,8 @@ public class MultiMediaLink : RecordStructureBase
     public MultiMediaLink(Record record) : base(record) { }
 
     public List<MultimediaFileReferenceNumber> MultimediaFileReferenceNumbers => List<MultimediaFileReferenceNumber>(C.FILE);
-    public string SourceMediaType => V(C.MEDI);
-    public string DiscriptiveTitle => V(C.TITL);
+    public string SourceMediaType => _(C.MEDI);
+    public string DiscriptiveTitle => _(C.TITL);
 }
 
 #region MULTIMEDIA_LINK p. 37

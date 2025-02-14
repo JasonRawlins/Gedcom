@@ -12,11 +12,10 @@
 3 RIN 202583818
 3 NOTE Developer Tree
 3 _ENV prd
-1 DEST Recieving system name
+1 DEST Receiving system name
 1 DATE 12 Feb 2025
 2 TIME 04:21:39
 1 SUBM @SUBM1@
-1 SUBN Subn
 1 FILE Filename
 1 COPR Copyright gedcom file
 1 GEDC
@@ -25,31 +24,9 @@
 1 CHAR UTF-8
 2 VERS Version number
 1 LANG Language of text
-1 PLAC Place name
+1 PLAC
 2 FORM Place hierarchy
-2 FONE Name phonetic variation
-3 TYPE Phonetic type
-3 GIVN Given
-3 NPFX Name prefix
-3 NSFX Name suffix
-3 NICK Nickname
-3 SURN Surname
-3 SPFX Surname prefix
-2 ROMN Name romanized variation
-3 TYPE Romanized type
-3 GIVN Given
-3 NPFX Name prefix
-3 NSFX Name suffix
-3 NICK Nickname
-3 SURN Surname
-3 SPFX Surname prefix
-2 MAP
-3 LATI Place latitude
-3 LONG Place longitude
-2 NOTE Gedcom content description
-3 CONT more desription
-3 CONC and more
-1 NOTE Gedcom content description
+1 NOTE Gedcom note
 2 CONT more desription
-2 CONC and more
+2 CONC    and more
 0 TRLR

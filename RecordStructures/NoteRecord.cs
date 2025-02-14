@@ -6,7 +6,7 @@ public class NoteRecord : RecordStructureBase
     public NoteRecord(Record record) : base(record) { }
 
     public UserReferenceNumber UserReferenceNumber => FirstOrDefault<UserReferenceNumber>(C.REFN);
-    public string AutomatedRecordId => V(C.RIN);
+    public string AutomatedRecordId => _(C.RIN);
     public ChangeDate ChangeDate => List<ChangeDate>(C.CHAN).First();
 }
 

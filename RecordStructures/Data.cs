@@ -5,7 +5,7 @@ public class Data : RecordStructureBase
     public Data() : base() { }
     public Data(Record record) : base(record) { }
 
-    public string EntryRecordingDate => V(C.DATE);
+    public string EntryRecordingDate => _(C.DATE);
 }
 
 #region STRUCTURE_NAME (DATA) p. 39

@@ -5,7 +5,7 @@ public class MultiMediaFormat : RecordStructureBase
     public MultiMediaFormat() : base() { }
     public MultiMediaFormat(Record record) : base(record) { }
 
-    public string SourceMediaType => V(C.MEDI);
+    public string SourceMediaType => _(C.MEDI);
 }
 
 #region MULTIMEDIA_FORMAT p. 54

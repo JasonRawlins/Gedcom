@@ -5,7 +5,7 @@ public class EventTypeCitedFrom : RecordStructureBase
     public EventTypeCitedFrom() : base() { }
     public EventTypeCitedFrom(Record record) : base(record) { }
 
-    public string RoleInEvent => V(C.ROLE);
+    public string RoleInEvent => _(C.ROLE);
 }
 
 #region EVENT_TYPE_CITED_FROM p. 49

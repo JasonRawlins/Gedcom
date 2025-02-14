@@ -5,8 +5,8 @@ public class ChildToFamilyLink : RecordStructureBase
     public ChildToFamilyLink() : base() { }
     public ChildToFamilyLink(Record record) : base(record) { }
 
-    public string PedigreeLinkageType => V(C.PEDI);
-    public string ChildLinkageStatus => V(C.STAT);
+    public string PedigreeLinkageType => _(C.PEDI);
+    public string ChildLinkageStatus => _(C.STAT);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public string AdoptedByWhichParent => First(C.ADOP).Value;
 }
