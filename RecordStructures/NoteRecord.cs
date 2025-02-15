@@ -5,9 +5,9 @@ public class NoteRecord : RecordStructureBase
     public NoteRecord() : base() { }
     public NoteRecord(Record record) : base(record) { }
 
-    public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(C.REFN);
+    public UserReferenceNumber UserReferenceNumber => FirstOrDefault<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordId => _(C.RIN);
-    public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
+    public ChangeDate ChangeDate => FirstOrDefault<ChangeDate>(C.CHAN);
 }
 
 #region NOTE_RECORD (NOTE) p. 27

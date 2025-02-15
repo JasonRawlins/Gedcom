@@ -7,8 +7,8 @@ public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
 
     public string NamePersonal => Record.Value;
     public string NameType => _(C.TYPE);
-    public NameVariation NamePhoneticVariation => First<NameVariation>(C.FONE);
-    public NameVariation NameRomanizedVariation => First<NameVariation>(C.ROMN);
+    public NameVariation NamePhoneticVariation => FirstOrDefault<NameVariation>(C.FONE);
+    public NameVariation NameRomanizedVariation => FirstOrDefault<NameVariation>(C.ROMN);
 
     #region IPersonalNamePeices
 

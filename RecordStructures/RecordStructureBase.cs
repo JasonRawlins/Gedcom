@@ -15,7 +15,7 @@ public class RecordStructureBase
     protected string _(string tag) => Record.Records.FirstOrDefault(r => r.Tag.Equals(tag))?.Value ?? "";
     protected Record First(string tag) => Record.Records.FirstOrDefault(r => r.Tag.Equals(tag)) ?? Record.Default;
     protected List<Record> List(Func<Record, bool> predicate) => Record.Records.Where(predicate).ToList();
-    protected T First<T>(string tag) where T : RecordStructureBase, new() => CreateRecordStructureList<T>(tag, Record).FirstOrDefault() ?? Default<T>();
+    protected T FirstOrDefault<T>(string tag) where T : RecordStructureBase, new() => CreateRecordStructureList<T>(tag, Record).FirstOrDefault() ?? Default<T>();
     protected List<T> List<T>(string tag) where T : RecordStructureBase, new() => CreateRecordStructureList<T>(tag, Record);
     public static T Default<T>() where T : RecordStructureBase, new() => CreateRecordStructure<T>(Record.Default);
     private static List<T> CreateRecordStructureList<T>(string tag, Record record) where T : RecordStructureBase, new()

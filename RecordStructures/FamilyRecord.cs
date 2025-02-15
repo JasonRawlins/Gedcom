@@ -14,7 +14,7 @@ public class FamilyRecord : RecordStructureBase
     // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
     public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordNumber => _(C.RIN);
-    public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
+    public ChangeDate ChangeDate => FirstOrDefault<ChangeDate>(C.CHAN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
     public List<MultiMediaLink> MultiMediaLinks => List<MultiMediaLink>(C.OBJE);

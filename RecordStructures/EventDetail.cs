@@ -7,8 +7,8 @@ public class EventDetail : RecordStructureBase
 
     public string EventOrFactClassification => _(C.TYPE);
     public string DateValue => _(C.DATE);
-    public PlaceStructure PlaceStructure => First<PlaceStructure>(C.PLAC);
-    public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
+    public PlaceStructure PlaceStructure => FirstOrDefault<PlaceStructure>(C.PLAC);
+    public AddressStructure AddressStructure => FirstOrDefault<AddressStructure>(C.ADDR);
     public string ResponsibleAgency => _(C.AGNC);
     public string ReligiousAffiliation => _(C.RELI);
     public string CauseOfEvent => _(C.CAUS);

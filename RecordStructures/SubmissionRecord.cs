@@ -14,7 +14,7 @@ public class SubmissionRecord : RecordStructureBase
     public string OrdinanceProcessFlag => _(C.ORDI);
     public string AutomatedRecordId => _(C.RIN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
+    public ChangeDate ChangeDate => FirstOrDefault<ChangeDate>(C.CHAN);
 }
 
 #region SUBMISSION_RECORD p. 28

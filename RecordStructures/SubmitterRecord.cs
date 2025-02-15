@@ -6,13 +6,13 @@ public class SubmitterRecord : RecordStructureBase
     public SubmitterRecord(Record record) : base(record) { }
 
     public string SubmitterName => _(C.NAME);
-    public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
+    public AddressStructure AddressStructure => FirstOrDefault<AddressStructure>(C.ADDR);
     public List<MultiMediaLink> MultimediaLink => List<MultiMediaLink>(C.MEDI);
     public List<string> LanguagePreferences => List(r => r.Tag.Equals(C.LANG)).Select(r => r.Value).ToList();
     public string SubmitterRegisteredRfn => _(C.RFN);
     public string AutomatedRecordId => _(C.RIN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public Date ChangeDate => First<Date>(C.CHAN);
+    public Date ChangeDate => FirstOrDefault<Date>(C.CHAN);
 }
 
 #region SUBMITTER_RECORD p. 28-29

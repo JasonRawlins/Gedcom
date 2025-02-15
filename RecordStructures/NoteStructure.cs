@@ -7,7 +7,7 @@ public class NoteStructure : RecordStructureBase
     public NoteStructure() : base() { }
     public NoteStructure(Record record) : base(record) { }
 
-    protected string Text
+    public string Text
     {
         get
         {

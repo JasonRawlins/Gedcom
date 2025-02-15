@@ -5,6 +5,7 @@ public class Date : RecordStructureBase
     public Date() : base() { }
     public Date(Record record) : base(record) { }
 
+    public string DateValue => Record.Value;
     public string TimeValue => _(C.TIME);
 }
 
