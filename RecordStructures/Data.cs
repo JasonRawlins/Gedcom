@@ -8,7 +8,7 @@ public class Data : RecordStructureBase
     public string EntryRecordingDate => _(C.DATE);
 }
 
-#region STRUCTURE_NAME (DATA) p. 39
+#region SOUR.DATA p. 39
 /* 
 
 n SOUR @<XREF:SOUR>@ {1:1} p.27

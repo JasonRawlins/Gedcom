@@ -7,10 +7,10 @@ public class NoteRecord : RecordStructureBase
 
     public UserReferenceNumber UserReferenceNumber => FirstOrDefault<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordId => _(C.RIN);
-    public ChangeDate ChangeDate => List<ChangeDate>(C.CHAN).First();
+    public ChangeDate ChangeDate => FirstOrDefault<ChangeDate>(C.CHAN);
 }
 
-#region STRUCTURE_NAME (NOTE) p. 27
+#region NOTE_RECORD (NOTE) p. 27
 /* 
 
 NOTE_RECORD:=

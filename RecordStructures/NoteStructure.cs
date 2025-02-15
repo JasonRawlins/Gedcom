@@ -1,11 +1,24 @@
-﻿namespace Gedcom.RecordStructures;
+﻿using System.Text;
+
+namespace Gedcom.RecordStructures;
 
 public class NoteStructure : RecordStructureBase
 {
     public NoteStructure() : base() { }
     public NoteStructure(Record record) : base(record) { }
 
-    public string SubmitterText => Record.Level == 0 ? _(C.NOTE) : Text;
+    protected string Text
+    {
+        get
+        {
+            var text = new StringBuilder();
+            text.Append(Record.Value);
+            var contAndConc = Record.Records.Where(r => r.Tag.Equals(C.CONT) || r.Tag.Equals(C.CONC)).ToList();
+            contAndConc.ForEach(r => text.Append(r.Value));
+
+            return text.ToString();
+        }
+    }
 }
 
 #region NOTE_STRUCTURE p. 37

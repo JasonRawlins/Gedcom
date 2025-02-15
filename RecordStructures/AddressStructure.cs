@@ -5,6 +5,7 @@ public class AddressStructure : RecordStructureBase
     public AddressStructure() { }
     public AddressStructure(Record record) : base(record) { }
 
+    //public Address Address => FirstOrDefault<Address>(C.ADDR);
     public string AddressLine => Record.Value;
     public string AddressLine1 => _(C.ADR1);
     public string AddressLine2 => _(C.ADR2);
@@ -13,10 +14,26 @@ public class AddressStructure : RecordStructureBase
     public string AddressState => _(C.STAE);
     public string AddressPostCode => _(C.POST);
     public string AddressCountry => _(C.CTRY);
-    public string PhoneNumber => _(C.PHON);
-    public string AddressEmail => _(C.EMAIL);
-    public string AddressFax => _(C.FAX);
-    public string AddressWebPage => _(C.WWW);
+}
+
+//public class Address : RecordStructureBase
+//{
+//    public string AddressLine => Record.Value;
+//    public string AddressLine1 => _(C.ADR1);
+//    public string AddressLine2 => _(C.ADR2);
+//    public string AddressLine3 => _(C.ADR3);
+//    public string AddressCity => _(C.CITY);
+//    public string AddressState => _(C.STAE);
+//    public string AddressPostCode => _(C.POST);
+//    public string AddressCountry => _(C.CTRY);
+//}
+
+public interface IAddressStructure
+{
+    string PhoneNumber { get; }
+    string AddressEmail { get; }
+    string AddressFax { get; }
+    string AddressWebPage { get; }
 }
 
 #region ADDRESS_STRUCTURE p. 31

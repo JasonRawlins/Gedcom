@@ -3,11 +3,24 @@
         2 VERS 2024.12
         2 NAME Ancestry.com Member Trees
         2 CORP Ancestry.com
-            3 PHON 801-705-7000
-            3 WWW www.ancestry.com
-            3 ADDR 1300 West Traverse Parkway
-                4 CONT Lehi, UT 84043
-                4 CONT USA
+            3 ADDR ADDRESS_STRUCTURE {0:1} p.54
+                4 CONT ADDRESS_LINE {0:3} p.41
+                4 ADR1 ADDRESS_LINE1 {0:1} p.41
+                4 ADR2 ADDRESS_LINE2 {0:1} p.41
+                4 ADR3 ADDRESS_LINE3 {0:1} p.41
+                4 CITY ADDRESS_CITY {0:1} p.41
+                4 STAE ADDRESS_STATE {0:1} p.42
+                4 POST ADDRESS_POSTAL_CODE {0:1} p.41
+                4 CTRY ADDRESS_COUNTRY {0:1} p.41
+            3 PHON 801-705-7000 PHONE_NUMBER {0:3} p.57
+            3 EMAIL ADDRESS_EMAIL {0:3} p.41
+            3 FAX ADDRESS_FAX {0:3} p.41
+            3 WWW www.ancestry.com ADDRESS_WEB_PAGE {0:3} p.42
+        2 DATA NAME_OF_SOURCE_DATA {0:1} p.54
+            +3 DATE PUBLICATION_DATE {0:1) p.59
+            +3 COPR COPYRIGHT_SOURCE_DATA {0:1) p.44
+                +4 CONT COPYRIGHT_SOURCE_DATA {0:M} p.44
+                +4 CONC COPYRIGHT_SOURCE_DATA {0:M} p.44
         2 _TREE Developer Tree
             3 RIN 202583818
             3 NOTE Developer Tree

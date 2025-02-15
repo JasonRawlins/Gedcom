@@ -15,6 +15,7 @@ public class Header : RecordStructureBase
     //        +3 COPR <COPYRIGHT_SOURCE_DATA> {0:1) p.44
     //            +4 [CONT|CONC]<COPYRIGHT_SOURCE_DATA> {0:M} p.44
 
+    public HeaderSOUR HeaderSOUR => FirstOrDefault<HeaderSOUR>(C.SOUR);
     public string ReceivingSystemName => _(C.DEST);
     public Date TransmissionDate => FirstOrDefault<Date>(C.DATE);
     public string Submitter => _(C.SUBM);
