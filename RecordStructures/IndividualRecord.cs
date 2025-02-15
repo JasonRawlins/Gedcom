@@ -21,7 +21,7 @@ public class IndividualRecord : RecordStructureBase
     public string AncestralFileNumber => _(C.AFN);
     public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordId => _(C.RIN);
-    public ChangeDate? ChangeDate => FirstOrDefault<ChangeDate>(C.CHAN);
+    public ChangeDate? ChangeDate => First<ChangeDate>(C.CHAN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
     public List<MultiMediaLink> MultiMediaLinks => List<MultiMediaLink>(C.OBJE);

@@ -10,6 +10,7 @@ public class Record
     [JsonIgnore]
     public List<GedcomLine> GedcomLines { get; } = [];
     public List<Record> Records { get; } = [];
+    public bool IsEmpty => Level == -1 && Tag.Equals(C.Empty);
 
     public Record? this[string tag] => Records.FirstOrDefault(r => r.Tag.Equals(tag));
 
@@ -39,7 +40,7 @@ public class Record
                 new GedcomLine
                 {
                     Level = -1,
-                    Tag = C.EMPTY,
+                    Tag = C.Empty,
                     Value = ""
                 }
             };

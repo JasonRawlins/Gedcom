@@ -5,7 +5,7 @@ public class ChangeDate : RecordStructureBase
     public ChangeDate() { }
     public ChangeDate(Record record) : base(record) { }
 
-    public Date ChangeDate_ => FirstOrDefault<Date>(C.DATE);
+    public Date ChangeDate_ => First<Date>(C.DATE);
 
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
 }

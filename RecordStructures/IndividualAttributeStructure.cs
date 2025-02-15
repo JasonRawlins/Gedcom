@@ -4,7 +4,7 @@ public class IndividualAttributeStructure : RecordStructureBase
 {
     public IndividualAttributeStructure() : base() { }
     public IndividualAttributeStructure(Record record) : base(record) { }
-    public IndividualEventDetail IndividualEventDetail => FirstOrDefault<IndividualEventDetail>(Record.Tag);
+    public IndividualEventDetail IndividualEventDetail => First<IndividualEventDetail>(Record.Tag);
 }
 
 #region INDIVIDUAL_ATTRIBUTE_STRUCTURE p. 33-34

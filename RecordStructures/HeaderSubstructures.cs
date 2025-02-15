@@ -11,8 +11,8 @@ public class HeaderSOUR : RecordStructureBase
     public string Xref => Record.Value;
     public string Version => _(C.VERS);
     public string NameOfProduct => _(C.NAME);
-    public HeaderCORP HeaderCORP => FirstOrDefault<HeaderCORP>(C.CORP);
-    public HeaderDATA HeaderDATA => FirstOrDefault<HeaderDATA>(C.DATA);
+    public HeaderCORP HeaderCORP => First<HeaderCORP>(C.CORP);
+    public HeaderDATA HeaderDATA => First<HeaderDATA>(C.DATA);
 }
 
 public class HeaderCORP : RecordStructureBase, IAddressStructure
@@ -20,7 +20,7 @@ public class HeaderCORP : RecordStructureBase, IAddressStructure
     public HeaderCORP() : base() { }
     public HeaderCORP(Record record) : base(record) { }
 
-    public AddressStructure AddressStructure => FirstOrDefault<AddressStructure>(C.ADDR);
+    public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
 
     #region IAddressStructure
     public string PhoneNumber => _(C.PHON);

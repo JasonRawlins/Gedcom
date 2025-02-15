@@ -6,7 +6,7 @@ public class IndividualEventDetail : RecordStructureBase
     public IndividualEventDetail(Record record) : base(record) { }
 
     public string AgeAtEvent => _(C.AGE);
-    public EventDetail EventDetail => FirstOrDefault<EventDetail>(C.EVEN);
+    public EventDetail EventDetail => First<EventDetail>(C.EVEN);
 }
 
 #region INDIVIDUAL_EVENT_DETAIL p. 34

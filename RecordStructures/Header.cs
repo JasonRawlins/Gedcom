@@ -15,18 +15,18 @@ public class Header : RecordStructureBase
     //        +3 COPR <COPYRIGHT_SOURCE_DATA> {0:1) p.44
     //            +4 [CONT|CONC]<COPYRIGHT_SOURCE_DATA> {0:M} p.44
 
-    public HeaderSOUR HeaderSOUR => FirstOrDefault<HeaderSOUR>(C.SOUR);
+    public HeaderSOUR HeaderSOUR => First<HeaderSOUR>(C.SOUR);
     public string ReceivingSystemName => _(C.DEST);
-    public Date TransmissionDate => FirstOrDefault<Date>(C.DATE);
+    public Date TransmissionDate => First<Date>(C.DATE);
     public string Submitter => _(C.SUBM);
-    public SubmissionRecord SubmissionRecord => FirstOrDefault<SubmissionRecord>(C.SUBN);
+    public SubmissionRecord SubmissionRecord => First<SubmissionRecord>(C.SUBN);
     public string FileName => _(C.FILE);
     public string CopyrightGedcomFile => _(C.COPR);
-    public GEDC Gedcom => FirstOrDefault<GEDC>(C.GEDC);
-    public CharacterSet CharacterSet => FirstOrDefault<CharacterSet>(C.CHAR);
+    public GEDC Gedcom => First<GEDC>(C.GEDC);
+    public CharacterSet CharacterSet => First<CharacterSet>(C.CHAR);
     public string LanguageOfText => _(C.LANG);
     public string PlaceHierarchy => Record.Records.FirstOrDefault(r => r.Tag.Equals(C.PLAC))?.Records.First(r => r.Tag.Equals(C.FORM)).Value ?? "";
-    public NoteStructure GedcomContentDescription => FirstOrDefault<NoteStructure>(C.NOTE);
+    public NoteStructure GedcomContentDescription => First<NoteStructure>(C.NOTE);
 }
 
 #region HEADER p. 23
