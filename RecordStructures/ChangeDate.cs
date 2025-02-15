@@ -7,7 +7,7 @@ public class ChangeDate : RecordStructureBase
 
     public Date ChangeDate_ => FirstOrDefault<Date>(C.DATE);
 
-    public List<NoteStructure>? NoteStructures => List<NoteStructure>(C.NOTE);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
 }
 
 #region CHANGE_DATE (CHAN) p. 31

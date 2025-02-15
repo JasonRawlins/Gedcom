@@ -14,6 +14,7 @@ public static class C // Constants
     public const string AGE = "AGE"; // <AGE_AT_EVENT>
     public const string AGNC = "AGNC"; // <RESPONSIBLE_AGENCY>
     public const string ALIA = "ALIA"; // @<XREF:IND>@
+    public const string ANCE = "ANCE"; // <GENERATIONS_OF_ANCESTORS>
     public const string ANCI = "ANCI"; // @<XREF:SUBM>@
     public const string ANUL = "ANUL"; // <blank>
     public const string ASSO = "ASSO"; // @<XREF:INDI>@
@@ -47,7 +48,7 @@ public static class C // Constants
     public const string DATA = "DATA"; // <NAME_OF_SOURCE_DATA>, <blank>
     public const string DATE = "DATE"; // <DATE_VALUE>, <DATE_PERIOD>, <ENTRY_RECORDING_DATE>, <CHANGE_DATE>, <DATE_LDS_ORD>, <TRANSMISSION_DATE>, <PUBLICATION_DATE>
     public const string DEAT = "DEAT"; // <blank>
-    public const string DESC = "DESC"; // <GENERATIONS_OF_ANCESTORS>, <blank>
+    public const string DESC = "DESC"; // <GENERATIONS_OF_DESCENDANTS>, <blank>
     public const string DESI = "DESI"; // @<XREF:SUBM>@
     public const string DEST = "DEST"; // <RECEIVING_SYSTEM_NAME>
     public const string DIV = "DIV"; // <blank>

@@ -16,6 +16,23 @@
     1 DATE 12 Feb 2025
         2 TIME 04:21:39
     1 SUBM @SUBM1@
+    1 SUBN
+        2 SUBM @SUBM1@
+        2 FAMF Name of family file
+        2 TEMP Temple code
+        2 ANCE Generations of ancestors
+        2 DESC Generations of descendants
+        2 ORDI Ordinance process flag
+        2 RIN Automated record id
+        2 NOTE Gedcom note
+            3 CONT more desription
+            3 CONC    and more
+        2 CHAN
+            3 DATE Change date
+                4 TIME Time value
+            3 NOTE Gedcom note
+                4 CONT more desription
+                4 CONC    and more
     1 FILE Filename
     1 COPR Copyright gedcom file
     1 GEDC

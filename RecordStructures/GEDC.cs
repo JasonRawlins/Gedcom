@@ -1,6 +1,6 @@
 ﻿namespace Gedcom.RecordStructures;
 
-// I named this class after the tag name because there is already a class named Gedcom.cs. 
+// I named this class after the tag name because there is already a class named Gedcom.cs. Find a more appropriate name.
 public class GEDC : RecordStructureBase
 {
     public GEDC() : base() { }
