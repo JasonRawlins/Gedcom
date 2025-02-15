@@ -16,7 +16,7 @@ public class Gedcom : RecordStructureBase
         }
     }
 
-    public Header Header => First<Header>(C.HEAD);
+    public Header Header => FirstOrDefault<Header>(C.HEAD);
     public FamilyRecord GetFAM(string xrefFAM) => new(Record.Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
     public List<FamilyRecord> GetFAMs() => Record.Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FamilyRecord(r)).ToList();
     public IndividualRecord GetINDI(string xrefINDI) => new(Record.Records.First(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI)));
