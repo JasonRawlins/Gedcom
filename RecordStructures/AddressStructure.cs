@@ -16,24 +16,12 @@ public class AddressStructure : RecordStructureBase
     public string AddressCountry => _(C.CTRY);
 }
 
-//public class Address : RecordStructureBase
-//{
-//    public string AddressLine => Record.Value;
-//    public string AddressLine1 => _(C.ADR1);
-//    public string AddressLine2 => _(C.ADR2);
-//    public string AddressLine3 => _(C.ADR3);
-//    public string AddressCity => _(C.CITY);
-//    public string AddressState => _(C.STAE);
-//    public string AddressPostCode => _(C.POST);
-//    public string AddressCountry => _(C.CTRY);
-//}
-
 public interface IAddressStructure
 {
-    string PhoneNumber { get; }
-    string AddressEmail { get; }
-    string AddressFax { get; }
-    string AddressWebPage { get; }
+    List<string> PhoneNumber { get; }
+    List<string> AddressEmail { get; }
+    List<string> AddressFax { get; }
+    List<string> AddressWebPage { get; }
 }
 
 #region ADDRESS_STRUCTURE p. 31

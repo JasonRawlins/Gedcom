@@ -1,0 +1,1 @@
+Make a Visual Studio addon that formats .ged files. There might already be one.

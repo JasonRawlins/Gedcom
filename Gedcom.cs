@@ -17,10 +17,11 @@ public class Gedcom : RecordStructureBase
     }
 
     public Header Header => FirstOrDefault<Header>(C.HEAD);
-    public FamilyRecord GetFAM(string xrefFAM) => new(Record.Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
-    public List<FamilyRecord> GetFAMs() => Record.Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FamilyRecord(r)).ToList();
-    public IndividualRecord GetINDI(string xrefINDI) => new(Record.Records.First(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI)));
-    public List<IndividualRecord> GetINDIs() => Record.Records.Where(r => r.Tag.Equals(C.INDI)).Select(r => new IndividualRecord(r)).ToList();
+    public FamilyRecord GetFamily(string xrefFAM) => new(Record.Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
+    public List<FamilyRecord> GetFamilies() => Record.Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FamilyRecord(r)).ToList();
+    public IndividualRecord GetIndividual(string xrefINDI) => new(Record.Records.First(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI)));
+    public List<IndividualRecord> GetIndividuals() => Record.Records.Where(r => r.Tag.Equals(C.INDI)).Select(r => new IndividualRecord(r)).ToList();
+    public List<RepositoryStructure> GetRepositories() => Record.Records.Where(r => r.Tag.Equals(C.REPO)).Select(r => new RepositoryStructure(r)).ToList();
     public SourceCitation GetSOUR(string xrefSOUR) => new(Record.Records.First(r => r.Tag.Equals(C.SOUR) && r.Value.Equals(xrefSOUR)));
     public List<SourceCitation> GetSOURs() => Record.Records.Where(r => r.Tag.Equals(C.SOUR)).Select(r => new SourceCitation(r)).ToList();
     public static List<List<GedcomLine>> GetGedcomLinesForLevel(int level, List<GedcomLine> gedcomLines)
@@ -79,8 +80,8 @@ public class GedcomJsonConverter : JsonConverter<Gedcom>
     {
         var jsonObject = new
         {
-            gedcom.Header,
-            //Person1 = gedcom.GetINDI("@I***REMOVED***@")
+            //gedcom.Header,
+            Repo = gedcom.GetRepositories()
         };
 
         JsonSerializer.Serialize(writer, jsonObject, jsonObject.GetType(), options);
