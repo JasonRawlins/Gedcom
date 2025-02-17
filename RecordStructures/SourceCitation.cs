@@ -51,16 +51,20 @@ area for the new source record.
 The information intended to be placed in the citation structure includes:
 * The pointer to the SOURCE_RECORD, which contains a more general description of the source
 used for the fact being cited.
+
 * Information, such as a page number, to help the user find the cited data within the referenced
 source. This is stored in the “.SOUR.PAGE” tag context.
+
 * Actual text from the source that was used in making assertions, for example a date phrase as
 actually recorded in the source, or significant notes written by the recorder, or an applicable
 sentence from a letter. This is stored in the “.SOUR.DATA.TEXT” tag context.
+
 * Data that allows an assessment of the relative value of one source over another for making the
 recorded assertions (primary or secondary source, etc.). Data needed for this assessment is data
 that would help determine how much time from the date of the asserted fact and when the source
 was actually recorded, what type of event was cited, and what type of role did this person have in
 the cited source.
+
   - Date when the entry was recorded in source document is stored in the
     ".SOUR.DATA.DATE" tag context.
   - The type of event that initiated the recording is stored in the “SOUR.EVEN” tag context. The

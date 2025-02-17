@@ -8,12 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Resources\Developer Tree.ged">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\Formatted Developer Tree.ged">
+    <None Include="bin\Debug\net8.0\Resources\DeveloperTree.ged">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\FormattedDeveloperTree.ged">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+
 
 </Project>

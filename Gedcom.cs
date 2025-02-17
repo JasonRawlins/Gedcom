@@ -16,6 +16,7 @@ public class Gedcom : RecordStructureBase
         }
     }
 
+   // private List<SourceRepositoryCitation> Developer_TestObject = Record.Records.Where(r => r.Tag.Equals(.));
     public Header Header => FirstOrDefault<Header>(C.HEAD);
     public FamilyRecord GetFamily(string xrefFAM) => new(Record.Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
     public List<FamilyRecord> GetFamilies() => Record.Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FamilyRecord(r)).ToList();
@@ -81,7 +82,7 @@ public class GedcomJsonConverter : JsonConverter<Gedcom>
         var jsonObject = new
         {
             //gedcom.Header,
-            Repo = gedcom.GetRepositories()
+            Repositories = gedcom.GetRepositories()
         };
 
         JsonSerializer.Serialize(writer, jsonObject, jsonObject.GetType(), options);

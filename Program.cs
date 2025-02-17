@@ -10,7 +10,7 @@ public class Program
     {
         var assembly = Assembly.GetExecutingAssembly();
         var assemblyDirectoryName = Path.GetDirectoryName(assembly.Location) ?? "";
-        var treeName = "Developer Tree";
+        var treeName = "DeveloperTree";
         var gedFullName = Path.Combine(assemblyDirectoryName, "Resources", $"{treeName}.ged");
         var jsonFullName = Path.Combine(assemblyDirectoryName, "Resources", $"{treeName}.json");
 

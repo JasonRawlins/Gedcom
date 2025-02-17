@@ -10,6 +10,7 @@ public class RepositoryStructure : RecordStructureBase, IAddressStructure
     public UserReferenceNumber UserReferenceNumber => FirstOrDefault<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordId => _(C.RIN);
     public ChangeDate ChangeDate => FirstOrDefault<ChangeDate>(C.CHAN);
+    public CallNumber CallNumber => FirstOrDefault<CallNumber>(C.CALN);
 
     #region IAddressStructure
     public List<string> PhoneNumber => ListAsStrings(C.PHON);
@@ -32,6 +33,8 @@ n @<XREF:REPO>@ REPO {1:1}
         +2 TYPE <USER_REFERENCE_TYPE> {0:1} p.64
     +1 RIN <AUTOMATED_RECORD_ID> {0:1} p.43
     +1 <<CHANGE_DATE>> {0:1} p.31
+    +1 CALN <SOURCE_CALL_NUMBER> {0:M} p.61
+        +2 MEDI <SOURCE_MEDIA_TYPE> {0:1}
 
 */
 #endregion
