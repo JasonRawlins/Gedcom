@@ -23,8 +23,8 @@ public class Gedcom : RecordStructureBase
     public IndividualRecord GetIndividual(string xrefINDI) => new(Record.Records.First(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI)));
     public List<IndividualRecord> GetIndividuals() => Record.Records.Where(r => r.Tag.Equals(C.INDI)).Select(r => new IndividualRecord(r)).ToList();
     public List<RepositoryStructure> GetRepositories() => Record.Records.Where(r => r.Tag.Equals(C.REPO)).Select(r => new RepositoryStructure(r)).ToList();
-    public SourceCitation GetSOUR(string xrefSOUR) => new(Record.Records.First(r => r.Tag.Equals(C.SOUR) && r.Value.Equals(xrefSOUR)));
-    public List<SourceCitation> GetSOURs() => Record.Records.Where(r => r.Tag.Equals(C.SOUR)).Select(r => new SourceCitation(r)).ToList();
+    public SourceCitation GetSource(string xrefSOUR) => new(Record.Records.First(r => r.Tag.Equals(C.SOUR) && r.Value.Equals(xrefSOUR)));
+    public List<SourceCitation> GetSources() => Record.Records.Where(r => r.Tag.Equals(C.SOUR)).Select(r => new SourceCitation(r)).ToList();
     public static List<List<GedcomLine>> GetGedcomLinesForLevel(int level, List<GedcomLine> gedcomLines)
     {
         var gedcomLinesAtThisLevel = new List<List<GedcomLine>>();
@@ -82,7 +82,8 @@ public class GedcomJsonConverter : JsonConverter<Gedcom>
         var jsonObject = new
         {
             //gedcom.Header,
-            Repositories = gedcom.GetRepositories()
+            //Repositories = gedcom.GetRepositories()
+            Sources = gedcom.GetSources()
         };
 
         JsonSerializer.Serialize(writer, jsonObject, jsonObject.GetType(), options);

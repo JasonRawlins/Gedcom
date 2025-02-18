@@ -1,9 +1,9 @@
 ﻿namespace Gedcom.RecordStructures;
 
-public class Data : RecordStructureBase
+public class SourceCitationData : RecordStructureBase
 {
-    public Data() : base() { }
-    public Data(Record record) : base(record) { }
+    public SourceCitationData() : base() { }
+    public SourceCitationData(Record record) : base(record) { }
 
     public string EntryRecordingDate => _(C.DATE);
 }
