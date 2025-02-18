@@ -4,6 +4,7 @@ public class SourceRecord : RecordStructureBase
 {
     internal SourceRecord() : base() { }
     public SourceRecord(Record record) : base(record) { }
+
     public SourceRecordData SourceRecordData => FirstOrDefault<SourceRecordData>(C.DATA);
     public NoteStructure SourceOriginator => FirstOrDefault<NoteStructure>(C.AUTH);
     public NoteStructure SourceDescriptiveTitle => FirstOrDefault<NoteStructure>(C.TITL);
@@ -11,7 +12,6 @@ public class SourceRecord : RecordStructureBase
     public NoteStructure SourcePublicationFacts => FirstOrDefault<NoteStructure>(C.PUBL);
     public NoteStructure TextFromSource => FirstOrDefault<NoteStructure>(C.TEXT);
     public List<SourceRepositoryCitation> SourceRepositoryCitations => List<SourceRepositoryCitation>("");
-    // SOURCE_REPOSITORY_CITATION
     public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordId => _(C.RIN);
     public ChangeDate ChangeDate => FirstOrDefault<ChangeDate>(C.CHAN);

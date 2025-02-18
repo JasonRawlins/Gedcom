@@ -30,7 +30,9 @@ n SOUR @<XREF:SOUR>@ {1:1} p.27
     +1 <<MULTIMEDIA_LINK>> {0:M} p.37, 26
     +1 <<NOTE_STRUCTURE>> {0:M} p.37
     +1 QUAY <CERTAINTY_ASSESSMENT> {0:1} p.43
+
 | // Systems not using source records
+
 n SOUR <SOURCE_DESCRIPTION> {1:1} p.61
     +1 [CONC|CONT] <SOURCE_DESCRIPTION> {0:M}
     +1 TEXT <TEXT_FROM_SOURCE> {0:M} p.63
