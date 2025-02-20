@@ -172,9 +172,19 @@
     1 TITL SOURCE_DESCRIPTIVE_TITLE {0:1} p.62
 0 @1@ INDI
     1 NAME Person 1 /Surname/ Suffix
-        2 GIVN Person 1
-        2 SURN Surname
-        2 NSFX Suffix
+        2 NPFX <NAME_PIECE_PREFIX> {0:1} p.55
+        2 GIVN <NAME_PIECE_GIVEN> {0:1} p.55
+        2 NICK <NAME_PIECE_NICKNAME> {0:1} p.55
+        2 SPFX <NAME_PIECE_SURNAME_PREFIX {0:1} p.56
+        2 SURN <NAME_PIECE_SURNAME> {0:1} p.55
+        2 NSFX <NAME_PIECE_SUFFIX> {0:1} p.55
+        2 TEXT TEXT_FROM_SOURCE 1 {0:1} p.63
+            3 CONT TEXT_FROM_SOURCE {0:M}
+            3 CONC TEXT_FROM_SOURCE {0:M}
+        2 TEXT TEXT_FROM_SOURCE 2 {0:1} p.63
+            3 CONT TEXT_FROM_SOURCE {0:M}
+            3 CONC TEXT_FROM_SOURCE {0:M}
+        2 SOUR @1@
     1 NAME Person 1 other name /Surname/ Suffix
         2 GIVN Person 1 other name
         2 SURN Surname
@@ -183,9 +193,41 @@
     1 FAMC @F3@
     1 FAMS @F1@
     1 BIRT
+        2 AGE <AGE_AT_EVENT> {0:1} p.42
+        2 TYPE <EVENT_OR_FACT_CLASSIFICATION> {0:1} p.49
         2 DATE 01 Jan 1971
-        2 PLAC Salt Lake City, Salt Lake, Utah, USA
-        2 NOTE Person 1 was born.
+        2 PLAC <PLACE_NAME> {1:1} p.58
+            3 FORM <PLACE_HIERARCHY> {0:1} p.58
+            3 FONE <PLACE_PHONETIC_VARIATION> {0:M} p.59
+                4 TYPE <PHONETIC_TYPE> {1:1} p.57
+            3 ROMN <PLACE_ROMANIZED_VARIATION> {0:M} p.59
+                4 TYPE <ROMANIZED_TYPE> {1:1} p.61
+            3 MAP {0:1}
+                4 LATI <PLACE_LATITUDE> {1:1} p.58
+                4 LONG <PLACE_LONGITUDE> {1:1} p.58
+            3 NOTE <<NOTE_STRUCTURE>> {0:M} p.37
+        2 ADDR ADDRESS_STRUCTURE {0:1} p.54
+            3 ADR1 ADDRESS_LINE1 {0:1} p.41
+            3 CITY ADDRESS_CITY {0:1} p.41
+            3 STAE ADDRESS_STATE {0:1} p.42
+            3 POST ADDRESS_POSTAL_CODE {0:1} p.41
+            3 CTRY ADDRESS_COUNTRY {0:1} p.41
+        2 PHON PHONE_NUMBER 1 {0:3} p.57
+        2 EMAIL ADDRESS_EMAIL 1 {0:3} p.41
+        2 FAX ADDRESS_FAX 1 {0:3} p.41
+        2 WWW ADDRESS_WEB_PAGE 1 {0:3} p.42
+        2 AGNC <RESPONSIBLE_AGENCY> {0:1} p.60
+        2 RELI <RELIGIOUS_AFFILIATION> {0:1} p.60
+        2 CAUS <CAUSE_OF_EVENT> {0:1} p.43
+        2 RESN <RESTRICTION_NOTICE> {0:1} p.60
+            3 NOTE <NOTE_STRUCTURE> {0:M} p.37
+        2 SOUR @2@
+            3 PAGE <WHERE_WITHIN_SOURCE> {0:1} p.64
+        2 OBJE
+            3 FILE 1 <MULTIMEDIA_FILE_REFN> {1:M} p.54
+                4 FORM <MULTIMEDIA_FORMAT> {1:1} p.54
+                    5 MEDI <SOURCE_MEDIA_TYPE> {0:1} p.62
+            3 TITL <DESCRIPTIVE_TITLE> {0:1} p.48
     1 BIRT
         2 DATE 01 Jan 1971
         2 PLAC Salt Lake City, Salt Lake, Utah, USA
@@ -198,7 +240,7 @@
     1 ADDR
         2 DATE 01 Jan 1990
         2 PLAC Salt Lake City, Salt Lake, Utah, USA
-        2 SOUR @S1117337263@
+        2 SOUR @1@
             3 PAGE Developer Citation 1
             3 DATA
                 4 DATE 31 Dec 1999
@@ -209,23 +251,9 @@
     1 ADOP
         2 DATE 02 Feb 1990
         2 PLAC Salt Lake City, Salt Lake, Utah, USA
-        2 SOUR @S1117337263@
-            3 PAGE Developer Citation 1
-            3 DATA
-                4 DATE 31 Dec 1999
-                4 TEXT Transcription
-                4 WWW https://www.ancestry.com
-            3 NOTE Other information
     1 CHRA
         2 DATE 03 Mar 1990
         2 PLAC Salt Lake City, Salt Lake, Utah, USA
-        2 SOUR @S1117337263@
-            3 PAGE Developer Citation 1
-            3 DATA
-                4 DATE 31 Dec 1999
-                4 TEXT Transcription
-                4 WWW https://www.ancestry.com
-            3 NOTE Other information
     1 EVEN
         2 TYPE Arrival
         2 DATE 06 Jun 1990
@@ -356,21 +384,4 @@
         2 DATE 08 Aug 1992
     1 SLGC
         2 DATE 04 Apr 1995
-    1 SOUR @S1117333081@
-        2 PAGE Ancestry Family Tree
-        2 _APID 252642986533:1030:201382831
-    1 SOUR @S1117337263@
-        2 PAGE Developer Citation 1
-        2 DATA
-            3 DATE 31 Dec 1999
-            3 TEXT Transcription
-            3 WWW https://www.ancestry.com
-        2 NOTE Other information
-    1 SOUR @S1117337263@
-        2 PAGE Developer Citation 2
-        2 DATA
-            3 DATE 31 Dec 1999
-            3 TEXT Transcription
-            3 WWW https://www.ancestry.com
-        2 NOTE Other information
 0 TRLR
