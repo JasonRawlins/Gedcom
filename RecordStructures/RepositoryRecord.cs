@@ -1,9 +1,9 @@
 ﻿namespace Gedcom.RecordStructures;
 
-public class RepositoryStructure : RecordStructureBase, IAddressStructure
+public class RepositoryRecord : RecordStructureBase, IAddressStructure
 {
-    internal RepositoryStructure() : base() { }
-    public RepositoryStructure(Record record) : base(record) { }
+    internal RepositoryRecord() : base() { }
+    public RepositoryRecord(Record record) : base(record) { }
     public string Name => _(C.NAME);
     public AddressStructure AddressStructure => FirstOrDefault<AddressStructure>(C.ADDR);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);

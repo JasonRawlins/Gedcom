@@ -7,7 +7,7 @@ public class SubmitterRecord : RecordStructureBase
 
     public string SubmitterName => _(C.NAME);
     public AddressStructure AddressStructure => FirstOrDefault<AddressStructure>(C.ADDR);
-    public List<MultiMediaLink> MultimediaLink => List<MultiMediaLink>(C.MEDI);
+    public List<MultimediaLink> MultimediaLink => List<MultimediaLink>(C.MEDI);
     public List<string> LanguagePreferences => List(r => r.Tag.Equals(C.LANG)).Select(r => r.Value).ToList();
     public string SubmitterRegisteredRfn => _(C.RFN);
     public string AutomatedRecordId => _(C.RIN);

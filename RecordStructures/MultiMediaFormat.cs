@@ -1,9 +1,9 @@
 ﻿namespace Gedcom.RecordStructures;
 
-public class MultiMediaFormat : RecordStructureBase
+public class MultimediaFormat : RecordStructureBase
 {
-    public MultiMediaFormat() : base() { }
-    public MultiMediaFormat(Record record) : base(record) { }
+    public MultimediaFormat() : base() { }
+    public MultimediaFormat(Record record) : base(record) { }
 
     public string SourceMediaType => _(C.MEDI);
 }

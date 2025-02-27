@@ -8,7 +8,7 @@ public class SourceCitation : RecordStructureBase
     public string WhereWithinSource => _(C.PAGE);
     public EventTypeCitedFrom EventTypeCitedFrom => FirstOrDefault<EventTypeCitedFrom>(C.EVEN);
     public SourceCitationData Data => FirstOrDefault<SourceCitationData>(C.DATA);
-    public List<MultiMediaLink> MultiMediaLinks => List<MultiMediaLink>(C.OBJE);
+    public List<MultimediaLink> MultiMediaLinks => List<MultimediaLink>(C.OBJE);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public string CertaintyAssessment => _(C.QUAY);
 }

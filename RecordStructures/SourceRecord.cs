@@ -16,7 +16,7 @@ public class SourceRecord : RecordStructureBase
     public string AutomatedRecordId => _(C.RIN);
     public ChangeDate ChangeDate => FirstOrDefault<ChangeDate>(C.CHAN);
     public List<NoteStructure> Notestructures => List<NoteStructure>(C.NOTE);
-    public List<MultiMediaLink> MultimediaLinks => List<MultiMediaLink>(C.OBJE);
+    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
 }
 
 #region SOURCE_RECORD p. 27-28

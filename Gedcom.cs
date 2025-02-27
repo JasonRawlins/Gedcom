@@ -22,7 +22,7 @@ public class Gedcom : RecordStructureBase
     public List<FamilyRecord> GetFamilies() => Record.Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FamilyRecord(r)).ToList();
     public IndividualRecord GetIndividual(string xrefINDI) => new(Record.Records.First(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI)));
     public List<IndividualRecord> GetIndividuals() => Record.Records.Where(r => r.Tag.Equals(C.INDI)).Select(r => new IndividualRecord(r)).ToList();
-    public List<RepositoryStructure> GetRepositories() => Record.Records.Where(r => r.Tag.Equals(C.REPO)).Select(r => new RepositoryStructure(r)).ToList();
+    public List<RepositoryRecord> GetRepositories() => Record.Records.Where(r => r.Tag.Equals(C.REPO)).Select(r => new RepositoryRecord(r)).ToList();
     public SourceCitation GetSource(string xrefSOUR) => new(Record.Records.First(r => r.Tag.Equals(C.SOUR) && r.Value.Equals(xrefSOUR)));
     public List<SourceRecord> GetSourceRecords() => Record.Records.Where(r => r.Tag.Equals(C.SOUR)).Select(r => new SourceRecord(r)).ToList();
     public static List<List<GedcomLine>> GetGedcomLinesForLevel(int level, List<GedcomLine> gedcomLines)

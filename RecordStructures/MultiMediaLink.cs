@@ -1,13 +1,13 @@
 ﻿namespace Gedcom.RecordStructures;
 
-public class MultiMediaLink : RecordStructureBase
+public class MultimediaLink : RecordStructureBase
 {
-    public MultiMediaLink() : base() { }
-    public MultiMediaLink(Record record) : base(record) { }
+    public MultimediaLink() : base() { }
+    public MultimediaLink(Record record) : base(record) { }
 
     public List<MultimediaFileReferenceNumber> MultimediaFileReferenceNumbers => List<MultimediaFileReferenceNumber>(C.FILE);
     public string SourceMediaType => _(C.MEDI);
-    public string DiscriptiveTitle => _(C.TITL);
+    public string DescriptiveTitle => _(C.TITL);
 }
 
 #region MULTIMEDIA_LINK p. 37

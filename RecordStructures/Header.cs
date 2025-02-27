@@ -4,17 +4,7 @@ public class Header : RecordStructureBase
 {
     public Header() : base() { }
     public Header(Record record) : base(record) { }
-
-    //+1 SOUR <APPROVED_SYSTEM_ID> {1:1} p.42
-    //    +2 VERS <VERSION_NUMBER> {0:1} p.64
-    //    +2 NAME <NAME_OF_PRODUCT> {0:1} p.54
-    //    +2 CORP <NAME_OF_BUSINESS> {0:1} p.54
-    //        +3 <<ADDRESS_STRUCTURE>> {0:1} p.31
-    //    +2 DATA <NAME_OF_SOURCE_DATA> {0:1} p.54
-    //        +3 DATE <PUBLICATION_DATE> {0:1) p.59
-    //        +3 COPR <COPYRIGHT_SOURCE_DATA> {0:1) p.44
-    //            +4 [CONT|CONC]<COPYRIGHT_SOURCE_DATA> {0:M} p.44
-
+    
     public HeaderSOUR HeaderSOUR => FirstOrDefault<HeaderSOUR>(C.SOUR);
     public string ReceivingSystemName => _(C.DEST);
     public Date TransmissionDate => FirstOrDefault<Date>(C.DATE);

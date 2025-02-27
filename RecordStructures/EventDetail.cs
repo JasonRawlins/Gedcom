@@ -15,7 +15,7 @@ public class EventDetail : RecordStructureBase
     public string RestrictionNotice => _(C.RESN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
-    public List<MultiMediaLink> MultiMediaLinks => List<MultiMediaLink>(C.OBJE);
+    public List<MultimediaLink> MultiMediaLinks => List<MultimediaLink>(C.OBJE);
 }
 
 #region EVENT_DETAIL p. 34

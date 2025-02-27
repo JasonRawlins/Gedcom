@@ -17,7 +17,7 @@ public class FamilyRecord : RecordStructureBase
     public ChangeDate ChangeDate => FirstOrDefault<ChangeDate>(C.CHAN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
-    public List<MultiMediaLink> MultiMediaLinks => List<MultiMediaLink>(C.OBJE);
+    public List<MultimediaLink> MultiMediaLinks => List<MultimediaLink>(C.OBJE);
     public string AdoptedByWhichParent => _(C.ADOP);
     public override string ToString() => $"'{Husband}' and '{Wife}' with children {string.Join(',', Children)})";
 }
