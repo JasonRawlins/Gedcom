@@ -18,13 +18,29 @@ public class Gedcom : RecordStructureBase
 
    // private List<SourceRepositoryCitation> Developer_TestObject = Record.Records.Where(r => r.Tag.Equals(.));
     public Header Header => FirstOrDefault<Header>(C.HEAD);
-    public FamilyRecord GetFamily(string xrefFAM) => new(Record.Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
-    public List<FamilyRecord> GetFamilies() => Record.Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FamilyRecord(r)).ToList();
-    public IndividualRecord GetIndividual(string xrefINDI) => new(Record.Records.First(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI)));
-    public List<IndividualRecord> GetIndividuals() => Record.Records.Where(r => r.Tag.Equals(C.INDI)).Select(r => new IndividualRecord(r)).ToList();
-    public List<RepositoryRecord> GetRepositories() => Record.Records.Where(r => r.Tag.Equals(C.REPO)).Select(r => new RepositoryRecord(r)).ToList();
-    public SourceCitation GetSource(string xrefSOUR) => new(Record.Records.First(r => r.Tag.Equals(C.SOUR) && r.Value.Equals(xrefSOUR)));
+   
+    public FamilyRecord GetFamilyRecord(string xrefFAM) => new(Record.Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
+    public List<FamilyRecord> GetFamilyRecords() => Record.Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FamilyRecord(r)).ToList();
+    
+    public IndividualRecord GetIndividualRecord(string xrefINDI) => new(Record.Records.First(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI)));
+    public List<IndividualRecord> GetIndividualRecords() => Record.Records.Where(r => r.Tag.Equals(C.INDI)).Select(r => new IndividualRecord(r)).ToList();
+    
+    public MultimediaRecord GetMultimediaRecord(string xrefOBJE) => new(Record.Records.First(r => r.Tag.Equals(C.OBJE) && r.Value.Equals(xrefOBJE)));
+    public List<MultimediaRecord> GetMultimediaRecords() => Record.Records.Where(r => r.Tag.Equals(C.OBJE)).Select(r => new MultimediaRecord(r)).ToList();
+
+    public NoteRecord GetNoteRecord(string xrefNOTE) => new(Record.Records.First(r => r.Tag.Equals(C.NOTE) && r.Value.Equals(xrefNOTE)));
+    public List<NoteRecord> GetNoteRecords() => Record.Records.Where(r => r.Tag.Equals(C.NOTE)).Select(r => new NoteRecord(r)).ToList();
+    
+    public RepositoryRecord GetRepositoryRecord(string xrefREPO) => new(Record.Records.First(r => r.Tag.Equals(C.REPO) && r.Value.Equals(xrefREPO)));
+    public List<RepositoryRecord> GetRepositoryRecords() => Record.Records.Where(r => r.Tag.Equals(C.REPO)).Select(r => new RepositoryRecord(r)).ToList();
+   
+    public SourceCitation GetSourceRecord(string xrefSOUR) => new(Record.Records.First(r => r.Tag.Equals(C.SOUR) && r.Value.Equals(xrefSOUR)));
     public List<SourceRecord> GetSourceRecords() => Record.Records.Where(r => r.Tag.Equals(C.SOUR)).Select(r => new SourceRecord(r)).ToList();
+
+    // Submitter Record
+    public SubmitterRecord GetSubmitterRecord(string xrefSUBM) => new(Record.Records.First(r => r.Tag.Equals(C.SUBM) && r.Value.Equals(xrefSUBM)));
+    public List<SubmitterRecord> GetSubmitterRecords() => Record.Records.Where(r => r.Tag.Equals(C.SUBM)).Select(r => new SubmitterRecord(r)).ToList();
+
     public static List<List<GedcomLine>> GetGedcomLinesForLevel(int level, List<GedcomLine> gedcomLines)
     {
         var gedcomLinesAtThisLevel = new List<List<GedcomLine>>();
@@ -82,9 +98,10 @@ public class GedcomJsonConverter : JsonConverter<Gedcom>
         var jsonObject = new
         {
             //gedcom.Header,
-            //Repositories = gedcom.GetRepositories(),
+            //Repositories = gedcom.GetRepositoryRecords(),
             //Sources = gedcom.GetSourceRecords()
-            Individuals = gedcom.GetIndividuals()
+            //Sources = gedcom.GetSourceRecords()
+            Individual = gedcom.GetIndividualRecord("@I1@")
         };
 
         JsonSerializer.Serialize(writer, jsonObject, jsonObject.GetType(), options);
