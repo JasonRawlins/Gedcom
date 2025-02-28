@@ -1,4 +1,4 @@
-Run "/Resources/ScratchDeveloperTree.ged" through json conversion and verify all data is serialized.
+Find out why IndividualRecord.IndividualEventStructures isn't populating. 
 
 
 

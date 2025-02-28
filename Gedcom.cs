@@ -16,7 +16,6 @@ public class Gedcom : RecordStructureBase
         }
     }
 
-   // private List<SourceRepositoryCitation> Developer_TestObject = Record.Records.Where(r => r.Tag.Equals(.));
     public Header Header => FirstOrDefault<Header>(C.HEAD);
    
     public FamilyRecord GetFamilyRecord(string xrefFAM) => new(Record.Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
@@ -63,6 +62,7 @@ public class Gedcom : RecordStructureBase
 
         return gedcomLinesAtThisLevel.Skip(1).ToList();
     }
+
     private static string GetGedcomLinesText(Record record)
     {
         var gedcomLinesStringBuilder = new StringBuilder();
@@ -87,7 +87,7 @@ public class Gedcom : RecordStructureBase
         return gedStringBuilder.ToString();
     }
 
-    public override string ToString() => "Gedcome.ToString()"; // $"{_TREE.Value} ({RIN.Value})";
+    public override string ToString() => "Gedcom.ToString()"; // $"{_TREE.Value} ({RIN.Value})";
 }
 
 public class GedcomJsonConverter : JsonConverter<Gedcom>

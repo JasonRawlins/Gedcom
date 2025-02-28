@@ -1,4 +1,7 @@
-﻿namespace Gedcom.RecordStructures;
+﻿using System.Runtime.Intrinsics.X86;
+using System;
+
+namespace Gedcom.RecordStructures;
 
 public class IndividualRecord : RecordStructureBase
 {
@@ -7,12 +10,19 @@ public class IndividualRecord : RecordStructureBase
     public string RestrictionNotice => _(C.RESN);
     public List<PersonalNameStructure> PersonalNameStructures => List<PersonalNameStructure>(C.NAME);
     public string SexValue => _(C.SEX);
-    public List<IndividualEventStructure> IndividualEventStructures => List<IndividualEventStructure>(Record.Tag);
+    public List<IndividualEventStructure> IndividualEventStructures
+    {
+        get
+        {
+            var records = Record.Records.Where(r => IsIndividualEventStructure(r)).Select(r => new IndividualEventStructure(r)).ToList();
+            return records;
+        }
+    }
     public List<IndividualAttributeStructure> IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
-    // TODO: LDS_INDIVIDUAL_ORDINANCE
+    public List<LdsIndividualOrdinance> LdsIndividualOrdinances => List<LdsIndividualOrdinance>(C.ORDI);
     public List<ChildToFamilyLink> ChildToFamilyLinks => List<ChildToFamilyLink>(C.FAMC);
     public List<SpouseToFamilyLink>? SpouseToFamilyLinks => List<SpouseToFamilyLink>(C.ASSO);
-    public string Submitter => _(C.SUBM);
+    public string Submitter => _(C.SUBN);
     public List<AssociationStructure> AssociationStructures => List<AssociationStructure>(C.ASSO);
     public List<string> Aliases => List(r => r.Tag.Equals(C.ALIA)).Select(r => r.Value).ToList();
     public List<string> AncestorInterests => List(r => r.Tag.Equals(C.ANCI)).Select(r => r.Value).ToList();
@@ -25,6 +35,17 @@ public class IndividualRecord : RecordStructureBase
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
     public List<MultimediaLink> MultiMediaLinks => List<MultimediaLink>(C.OBJE);
+
+    private bool IsIndividualEventStructure(Record record)
+    {
+        return new string[] 
+        { 
+            "BIRT", "CHR" , "DEAT", "BURI", "CREM", "ADOP", "BAPM",
+            "BARM", "BASM", "BLES", "CHRA", "CONF", "FCOM", "ORDN",
+            "NATU", "EMIG", "IMMI", "CENS", "PROB", "WILL", "GRAD",
+            "RETI", "EVEN"
+        }.Contains(record.Tag);
+    }
 
     public override string ToString() => $"{PersonalNameStructures.First().NamePersonal} {SexValue} ({Record.Value})";
 }

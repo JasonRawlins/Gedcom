@@ -1,5 +1,4 @@
 ﻿using Gedcom.RecordStructures;
-using System.Text;
 
 namespace Gedcom;
 
