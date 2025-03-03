@@ -1,11 +1,12 @@
 ﻿using System.Runtime.Intrinsics.X86;
-using System;
-
 namespace Gedcom.RecordStructures;
 
 public class IndividualRecord : RecordStructureBase
 {
-    public IndividualRecord(Record record) : base(record) { }
+    public IndividualRecord(Record record) : base(record) 
+    {
+        var births = Record.Records.Where(r => r.Tag.Equals(C.BIRT)).ToList();
+    }
 
     public string RestrictionNotice => _(C.RESN);
     public List<PersonalNameStructure> PersonalNameStructures => List<PersonalNameStructure>(C.NAME);
@@ -40,10 +41,10 @@ public class IndividualRecord : RecordStructureBase
     {
         return new string[] 
         { 
-            "BIRT", "CHR" , "DEAT", "BURI", "CREM", "ADOP", "BAPM",
-            "BARM", "BASM", "BLES", "CHRA", "CONF", "FCOM", "ORDN",
-            "NATU", "EMIG", "IMMI", "CENS", "PROB", "WILL", "GRAD",
-            "RETI", "EVEN"
+            "BIRT", "CHR" , "DEAT", "BURI", "CREM", "ADOP", 
+            "BAPM", "BARM", "BASM", "BLES", "CHRA", "CONF", 
+            "FCOM", "ORDN", "NATU", "EMIG", "IMMI", "CENS", 
+            "PROB", "WILL", "GRAD", "RETI", "EVEN"
         }.Contains(record.Tag);
     }
 

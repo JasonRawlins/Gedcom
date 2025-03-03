@@ -1,4 +1,6 @@
 Find out why IndividualRecord.IndividualEventStructures isn't populating. 
+Use factory method to create and populate records.
+The BIRT fact in @P1@ needs sources and I need to find them in code.
 
 
 

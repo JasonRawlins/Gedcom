@@ -20,8 +20,13 @@ public class Gedcom : RecordStructureBase
    
     public FamilyRecord GetFamilyRecord(string xrefFAM) => new(Record.Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
     public List<FamilyRecord> GetFamilyRecords() => Record.Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FamilyRecord(r)).ToList();
-    
-    public IndividualRecord GetIndividualRecord(string xrefINDI) => new(Record.Records.First(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI)));
+
+    public IndividualRecord GetIndividualRecord(string xrefINDI)
+    {
+        var individualRecord = new IndividualRecord(Record.Records.First(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI)));
+
+        return individualRecord;
+    }
     public List<IndividualRecord> GetIndividualRecords() => Record.Records.Where(r => r.Tag.Equals(C.INDI)).Select(r => new IndividualRecord(r)).ToList();
     
     public MultimediaRecord GetMultimediaRecord(string xrefOBJE) => new(Record.Records.First(r => r.Tag.Equals(C.OBJE) && r.Value.Equals(xrefOBJE)));

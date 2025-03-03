@@ -201,7 +201,7 @@
         2 TEXT TEXT_FROM_SOURCE 2 {0:1} p.63
             3 CONT TEXT_FROM_SOURCE {0:M}
             3 CONC TEXT_FROM_SOURCE {0:M}
-        2 SOUR @1@
+        2 SOUR @S1@
     1 NAME Person 1 other name /Surname/ Suffix
         2 GIVN Person 1 other name
         2 SURN NAME_PIECE_SURNAME {0:1} p.55
@@ -238,7 +238,7 @@
         2 CAUS CAUSE_OF_EVENT {0:1} p.43
         2 RESN RESTRICTION_NOTICE {0:1} p.60
             3 NOTE NOTE_STRUCTURE {0:M} p.37
-        2 SOUR @2@
+        2 SOUR @S2@
             3 PAGE WHERE_WITHIN_SOURCE {0:1} p.64
         2 OBJE
             3 FILE 1 MULTIMEDIA_FILE_REFN {1:M} p.54
