@@ -1,5 +1,4 @@
-﻿using System.Runtime.Intrinsics.X86;
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 public class IndividualRecord : RecordStructureBase
 {
@@ -8,6 +7,8 @@ public class IndividualRecord : RecordStructureBase
         var births = Record.Records.Where(r => r.Tag.Equals(C.BIRT)).ToList();
     }
 
+    public string Xref => Record.Value;
+
     public string RestrictionNotice => _(C.RESN);
     public List<PersonalNameStructure> PersonalNameStructures => List<PersonalNameStructure>(C.NAME);
     public string SexValue => _(C.SEX);
@@ -15,8 +16,7 @@ public class IndividualRecord : RecordStructureBase
     {
         get
         {
-            var records = Record.Records.Where(r => IsIndividualEventStructure(r)).Select(r => new IndividualEventStructure(r)).ToList();
-            return records;
+            return Record.Records.Where(r => IsIndividualEventStructure(r)).Select(r => new IndividualEventStructure(r)).ToList();
         }
     }
     public List<IndividualAttributeStructure> IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
@@ -47,6 +47,8 @@ public class IndividualRecord : RecordStructureBase
             "PROB", "WILL", "GRAD", "RETI", "EVEN"
         }.Contains(record.Tag);
     }
+
+    public List<IndividualEventStructure> Births => List<IndividualEventStructure>(C.BIRT);
 
     public override string ToString() => $"{PersonalNameStructures.First().NamePersonal} {SexValue} ({Record.Value})";
 }

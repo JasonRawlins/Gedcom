@@ -4,7 +4,8 @@ namespace Gedcom;
 
 public class RecordStructureBase
 {
-    protected Record Record { get; private set; } = Record.Default;
+    // This probably shouldn't be public. Do I need to make a method that takes a path to the desired record?
+    public Record Record { get; private set; } = Record.Default;
 
     public RecordStructureBase() { }
     public RecordStructureBase(Record record) => Record = record;

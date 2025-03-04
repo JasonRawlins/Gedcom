@@ -4,7 +4,7 @@ public class IndividualEventStructure : RecordStructureBase
 {
     public IndividualEventStructure() { }
     public IndividualEventStructure(Record record) : base(record) { }
-    public IndividualEventDetail? IndividualEventDetail => FirstOrDefault<IndividualEventDetail>(Record.Tag);
+    public IndividualEventDetail IndividualEventDetail => FirstOrDefault<IndividualEventDetail>(Record.Tag);
     public ChildToFamilyLink ChildToFamilyLink => FirstOrDefault<ChildToFamilyLink>(C.FAMC);
 }
 

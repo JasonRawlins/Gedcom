@@ -25,6 +25,15 @@ public class Gedcom : RecordStructureBase
     {
         var individualRecord = new IndividualRecord(Record.Records.First(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI)));
 
+        foreach (var birth in individualRecord.Births)
+        {
+            foreach (var birthSourceRecord in birth.Record.Records.Where(r => r.Tag.Equals(C.SOUR))
+            {
+                var sourceRecord = GetSourceRecord(birthSourceRecord.Xref);
+                birthSourceRecord
+            }
+        }
+
         return individualRecord;
     }
     public List<IndividualRecord> GetIndividualRecords() => Record.Records.Where(r => r.Tag.Equals(C.INDI)).Select(r => new IndividualRecord(r)).ToList();

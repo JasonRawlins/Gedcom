@@ -238,7 +238,7 @@
         2 CAUS CAUSE_OF_EVENT {0:1} p.43
         2 RESN RESTRICTION_NOTICE {0:1} p.60
             3 NOTE NOTE_STRUCTURE {0:M} p.37
-        2 SOUR @S2@
+        2 SOUR @S1@
             3 PAGE WHERE_WITHIN_SOURCE {0:1} p.64
         2 OBJE
             3 FILE 1 MULTIMEDIA_FILE_REFN {1:M} p.54
