@@ -11,7 +11,7 @@ public class GedcomLine
     // pointer (e.g. xrefIndi, xrefFAM, xrefOBJE, xrefNOTE, xrefREPO, xrefSOUR).
     // Specifically, it emphasizes that a GedcomLine can only have a value or
     // a pointer (Xref), not both. However in code there is no difference. Instead, 
-    // Record.Xref will simply return Record.Value. 
+    // GedcomLine.Xref will simply return GedcomLine.Value
     public string Value { get; set; } = "";
     public string Xref => Value;
 

@@ -27,10 +27,11 @@ public class Gedcom : RecordStructureBase
 
         foreach (var birth in individualRecord.Births)
         {
-            foreach (var birthSourceRecord in birth.Record.Records.Where(r => r.Tag.Equals(C.SOUR))
+            foreach (var birthSourceRecord in birth.Record.Records.Where(r => r.Tag.Equals(C.SOUR)))
             {
-                var sourceRecord = GetSourceRecord(birthSourceRecord.Xref);
-                birthSourceRecord
+                var sourceRecord = GetSourceRecord(birthSourceRecord.Value);
+                // TODO: WIP Get record by tag path.
+                var anotherRecord = sourceRecord[[C.DATA, C.EVEN, C.DATE]];
             }
         }
 
@@ -50,7 +51,6 @@ public class Gedcom : RecordStructureBase
     public SourceCitation GetSourceRecord(string xrefSOUR) => new(Record.Records.First(r => r.Tag.Equals(C.SOUR) && r.Value.Equals(xrefSOUR)));
     public List<SourceRecord> GetSourceRecords() => Record.Records.Where(r => r.Tag.Equals(C.SOUR)).Select(r => new SourceRecord(r)).ToList();
 
-    // Submitter Record
     public SubmitterRecord GetSubmitterRecord(string xrefSUBM) => new(Record.Records.First(r => r.Tag.Equals(C.SUBM) && r.Value.Equals(xrefSUBM)));
     public List<SubmitterRecord> GetSubmitterRecords() => Record.Records.Where(r => r.Tag.Equals(C.SUBM)).Select(r => new SubmitterRecord(r)).ToList();
 
