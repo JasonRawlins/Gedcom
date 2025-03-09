@@ -27,12 +27,9 @@ public class Gedcom : RecordStructureBase
 
         foreach (var birth in individualRecord.Births)
         {
-            foreach (var birthSourceRecord in birth.Record.Records.Where(r => r.Tag.Equals(C.SOUR)))
-            {
-                var sourceRecord = GetSourceRecord(birthSourceRecord.Value);
-                // TODO: WIP Get record by tag path.
-                var anotherRecord = sourceRecord[[C.DATA, C.EVEN, C.DATE]];
-            }
+            //var sourceRecord = GetSourceRecord();
+            // TODO: WIP Get record by tag path.
+            //var anotherRecord = sourceRecord[[C.DATA, C.EVEN, C.DATE]];
         }
 
         return individualRecord;

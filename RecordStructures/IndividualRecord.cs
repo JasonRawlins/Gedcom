@@ -4,7 +4,6 @@ public class IndividualRecord : RecordStructureBase
 {
     public IndividualRecord(Record record) : base(record) 
     {
-        var births = Record.Records.Where(r => r.Tag.Equals(C.BIRT)).ToList();
     }
 
     public string Xref => Record.Value;

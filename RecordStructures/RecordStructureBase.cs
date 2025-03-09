@@ -6,18 +6,17 @@ namespace Gedcom;
 public class RecordStructureBase
 {
     // This probably shouldn't be public. Do I need to make a method that takes a path to the desired record?
-    public Record Record { get; private set; } = Record.Default;
+    protected Record Record { get; private set; } = Record.Default;
 
+    public Record this[string tag] => this[[tag]];
     public Record this[IEnumerable<string> tagPath]
     {
         get
         {
             Record currentRecord = First(tagPath.First());
 
-            if (currentRecord.IsEmpty || currentRecord.Records.Count < 2)
-            {
-                return Record.Default;
-            }
+            if (currentRecord.IsEmpty) return Record.Default; 
+            if (currentRecord.Records.Count == 1) return currentRecord;
 
             foreach (var tag in tagPath.Skip(1))
             {
