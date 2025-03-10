@@ -30,16 +30,9 @@ public class Gedcom : RecordStructureBase
             return Empty<IndividualRecord>();
         }
 
-        var individualRecord = new IndividualRecord(indiRecord);
-
-        var fullTagListValue = individualRecord[[C.BIRT, C.PLAC, C.FORM]].Value;
-        foreach (var birth in individualRecord.Births)
-        {
-            var relativeTagListValue = birth[[C.PLAC, C.FORM]].Value;
-        }
-
-        return individualRecord;
+        return new IndividualRecord(indiRecord);
     }
+
     public List<IndividualRecord> GetIndividualRecords() => Record.Records.Where(r => r.Tag.Equals(C.INDI)).Select(r => new IndividualRecord(r)).ToList();
     
     public MultimediaRecord GetMultimediaRecord(string xrefOBJE) => new(Record.Records.First(r => r.Tag.Equals(C.OBJE) && r.Value.Equals(xrefOBJE)));

@@ -14,7 +14,7 @@ public class IndividualRecord : RecordStructureBase
     {
         get
         {
-            return Record.Records.Where(r => IsIndividualEventStructure(r)).Select(r => new IndividualEventStructure(r)).ToList();
+            return Record.Records.Where(IsIndividualEventStructure).Select(r => new IndividualEventStructure(r)).ToList();
         }
     }
     public List<IndividualAttributeStructure> IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
