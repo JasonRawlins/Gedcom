@@ -8,7 +8,7 @@ public class PlaceStructure : RecordStructureBase
     public string PlaceHierarchy => _(C.FORM);
     public List<NameVariation> PlacePhoneticVariations => List<NameVariation>(C.FONE);
     public List<NameVariation> PlaceRomanizedVariations => List<NameVariation>(C.ROMN);
-    public Map Map => FirstOrDefault<Map>(C.MAP);
+    public Map Map => First<Map>(C.MAP);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
 }
 

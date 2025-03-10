@@ -8,7 +8,7 @@ public class LdsIndividualOrdinance : RecordStructureBase
     public string DateLdsOrdinance => _(C.DATE);
     public string TempleCode => _(C.TEMP);
     public string PlaceLivingOrdinance => _(C.PLAC);
-    public LdsOrdinanceStatus LdsBaptismDateStatus => FirstOrDefault<LdsOrdinanceStatus>(C.STAT);
+    public LdsOrdinanceStatus LdsBaptismDateStatus => First<LdsOrdinanceStatus>(C.STAT);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
 }

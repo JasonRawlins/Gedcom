@@ -5,9 +5,9 @@ public class FamilyEventDetail : RecordStructureBase
     public FamilyEventDetail() : base() { }
     public FamilyEventDetail(Record record) : base(record) { }
 
-    public FamilyPartner Husband => FirstOrDefault<FamilyPartner>(C.HUSB);
-    public FamilyPartner Wife => FirstOrDefault<FamilyPartner>(C.WIFE);
-    public EventDetail EventDetail => FirstOrDefault<EventDetail>(C.EVEN);
+    public FamilyPartner Husband => First<FamilyPartner>(C.HUSB);
+    public FamilyPartner Wife => First<FamilyPartner>(C.WIFE);
+    public EventDetail EventDetail => First<EventDetail>(C.EVEN);
 }
 
 public class FamilyPartner : RecordStructureBase

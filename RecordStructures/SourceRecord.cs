@@ -5,16 +5,16 @@ public class SourceRecord : RecordStructureBase
     internal SourceRecord() : base() { }
     public SourceRecord(Record record) : base(record) { }
 
-    public SourceRecordData SourceRecordData => FirstOrDefault<SourceRecordData>(C.DATA);
-    public NoteStructure SourceOriginator => FirstOrDefault<NoteStructure>(C.AUTH);
-    public NoteStructure SourceDescriptiveTitle => FirstOrDefault<NoteStructure>(C.TITL);
-    public NoteStructure SourceFiledByEntry => FirstOrDefault<NoteStructure>(C.ABBR);
-    public NoteStructure SourcePublicationFacts => FirstOrDefault<NoteStructure>(C.PUBL);
-    public NoteStructure TextFromSource => FirstOrDefault<NoteStructure>(C.TEXT);
+    public SourceRecordData SourceRecordData => First<SourceRecordData>(C.DATA);
+    public NoteStructure SourceOriginator => First<NoteStructure>(C.AUTH);
+    public NoteStructure SourceDescriptiveTitle => First<NoteStructure>(C.TITL);
+    public NoteStructure SourceFiledByEntry => First<NoteStructure>(C.ABBR);
+    public NoteStructure SourcePublicationFacts => First<NoteStructure>(C.PUBL);
+    public NoteStructure TextFromSource => First<NoteStructure>(C.TEXT);
     public List<SourceRepositoryCitation> SourceRepositoryCitations => List<SourceRepositoryCitation>("");
     public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordId => _(C.RIN);
-    public ChangeDate ChangeDate => FirstOrDefault<ChangeDate>(C.CHAN);
+    public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
     public List<NoteStructure> Notestructures => List<NoteStructure>(C.NOTE);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
 }

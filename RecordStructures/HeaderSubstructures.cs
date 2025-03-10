@@ -11,8 +11,8 @@ public class HeaderSOUR : RecordStructureBase
     public string Xref => Record.Value;
     public string Version => _(C.VERS);
     public string NameOfProduct => _(C.NAME);
-    public HeaderCORP HeaderCORP => FirstOrDefault<HeaderCORP>(C.CORP);
-    public HeaderDATA HeaderDATA => FirstOrDefault<HeaderDATA>(C.DATA);
+    public HeaderCORP HeaderCORP => First<HeaderCORP>(C.CORP);
+    public HeaderDATA HeaderDATA => First<HeaderDATA>(C.DATA);
 }
 
 public class HeaderCORP : RecordStructureBase, IAddressStructure
@@ -20,13 +20,13 @@ public class HeaderCORP : RecordStructureBase, IAddressStructure
     public HeaderCORP() : base() { }
     public HeaderCORP(Record record) : base(record) { }
 
-    public AddressStructure AddressStructure => FirstOrDefault<AddressStructure>(C.ADDR);
+    public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
 
     #region IAddressStructure
-    public List<string> PhoneNumber => ListAsStrings(C.PHON);
-    public List<string> AddressEmail => ListAsStrings(C.EMAIL);
-    public List<string> AddressFax => ListAsStrings(C.FAX);
-    public List<string> AddressWebPage => ListAsStrings(C.WWW);
+    public List<string> PhoneNumber => ListValues(C.PHON);
+    public List<string> AddressEmail => ListValues(C.EMAIL);
+    public List<string> AddressFax => ListValues(C.FAX);
+    public List<string> AddressWebPage => ListValues(C.WWW);
     #endregion
 }
 
@@ -36,7 +36,7 @@ public class HeaderDATA : RecordStructureBase
     public HeaderDATA(Record record) : base(record) { }
 
     public string PublicationDate => _(C.DATE);
-    public NoteStructure CopyrightSourceData => FirstOrDefault<NoteStructure>(C.COPR);
+    public NoteStructure CopyrightSourceData => First<NoteStructure>(C.COPR);
     //public KeyValuePair<string, string> CopyrightSourceData => new KeyValuePair<string, string>("key", "value"); // ""; //new NoteStructure(Record); // Default<NoteStructure>(); // FirstOrDefault<NoteStructure>(C.COPR);
 }
 

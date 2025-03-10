@@ -12,8 +12,6 @@ public class Record
     public List<Record> Records { get; } = [];
     public bool IsEmpty => Level == -1 && Tag.Equals(C.Empty);
 
-    public Record? this[string tag] => Records.FirstOrDefault(r => r.Tag.Equals(tag));
-
     public Record(List<GedcomLine> gedcomLines)
     {
         GedcomLines = gedcomLines;
@@ -31,7 +29,7 @@ public class Record
         }
     }
 
-    public static Record Default
+    public static Record Empty
     {
         get
         {

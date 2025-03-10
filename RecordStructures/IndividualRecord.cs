@@ -2,9 +2,8 @@
 
 public class IndividualRecord : RecordStructureBase
 {
-    public IndividualRecord(Record record) : base(record) 
-    {
-    }
+    public IndividualRecord() { }
+    public IndividualRecord(Record record) : base(record)  { }
 
     public string Xref => Record.Value;
 
@@ -31,7 +30,7 @@ public class IndividualRecord : RecordStructureBase
     public string AncestralFileNumber => _(C.AFN);
     public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordId => _(C.RIN);
-    public ChangeDate? ChangeDate => FirstOrDefault<ChangeDate>(C.CHAN);
+    public ChangeDate? ChangeDate => First<ChangeDate>(C.CHAN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
     public List<MultimediaLink> MultiMediaLinks => List<MultimediaLink>(C.OBJE);

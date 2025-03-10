@@ -5,18 +5,18 @@ public class RepositoryRecord : RecordStructureBase, IAddressStructure
     internal RepositoryRecord() : base() { }
     public RepositoryRecord(Record record) : base(record) { }
     public string Name => _(C.NAME);
-    public AddressStructure AddressStructure => FirstOrDefault<AddressStructure>(C.ADDR);
+    public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public UserReferenceNumber UserReferenceNumber => FirstOrDefault<UserReferenceNumber>(C.REFN);
+    public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordId => _(C.RIN);
-    public ChangeDate ChangeDate => FirstOrDefault<ChangeDate>(C.CHAN);
-    public CallNumber CallNumber => FirstOrDefault<CallNumber>(C.CALN);
+    public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
+    public CallNumber CallNumber => First<CallNumber>(C.CALN);
 
     #region IAddressStructure
-    public List<string> PhoneNumber => ListAsStrings(C.PHON);
-    public List<string> AddressEmail => ListAsStrings(C.EMAIL);
-    public List<string> AddressFax => ListAsStrings(C.FAX);
-    public List<string> AddressWebPage => ListAsStrings(C.WWW);
+    public List<string> PhoneNumber => ListValues(C.PHON);
+    public List<string> AddressEmail => ListValues(C.EMAIL);
+    public List<string> AddressFax => ListValues(C.FAX);
+    public List<string> AddressWebPage => ListValues(C.WWW);
     #endregion
 }
 

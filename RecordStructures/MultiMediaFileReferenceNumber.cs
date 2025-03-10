@@ -5,7 +5,7 @@ public class MultimediaFileReferenceNumber : RecordStructureBase
     public MultimediaFileReferenceNumber() { }
     public MultimediaFileReferenceNumber(Record record) : base(record) { }
 
-    public MultimediaFormat MultiMediaFormat => FirstOrDefault<MultimediaFormat>(C.FORM);
+    public MultimediaFormat MultiMediaFormat => First<MultimediaFormat>(C.FORM);
 }
 
 #region STRUCTURE_NAME p. 37

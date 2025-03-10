@@ -8,7 +8,7 @@ public class LdsSpouseSealing : RecordStructureBase
     public string DateLdsOrdinance => _(C.DATE);
     public string TempleCode => _(C.TEMP);
     public string PlaceLivingOrdinance => _(C.PLAC);
-    public LdsOrdinanceStatus LdsSpouseSealingDateStatus => FirstOrDefault<LdsOrdinanceStatus>(C.STAT);
+    public LdsOrdinanceStatus LdsSpouseSealingDateStatus => First<LdsOrdinanceStatus>(C.STAT);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
 }

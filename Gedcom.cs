@@ -16,20 +16,26 @@ public class Gedcom : RecordStructureBase
         }
     }
 
-    public Header Header => FirstOrDefault<Header>(C.HEAD);
+    public Header Header => First<Header>(C.HEAD);
    
     public FamilyRecord GetFamilyRecord(string xrefFAM) => new(Record.Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
     public List<FamilyRecord> GetFamilyRecords() => Record.Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FamilyRecord(r)).ToList();
 
     public IndividualRecord GetIndividualRecord(string xrefINDI)
     {
-        var individualRecord = new IndividualRecord(Record.Records.First(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI)));
+        var indiRecord = Single(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI));
 
+        if (indiRecord.IsEmpty)
+        {
+            return Empty<IndividualRecord>();
+        }
+
+        var individualRecord = new IndividualRecord(indiRecord);
+
+        var fullTagListValue = individualRecord[[C.BIRT, C.PLAC, C.FORM]].Value;
         foreach (var birth in individualRecord.Births)
         {
-            //var sourceRecord = GetSourceRecord();
-            // TODO: WIP Get record by tag path.
-            //var anotherRecord = sourceRecord[[C.DATA, C.EVEN, C.DATE]];
+            var relativeTagListValue = birth[[C.PLAC, C.FORM]].Value;
         }
 
         return individualRecord;

@@ -6,13 +6,13 @@ public class MultimediaRecord : RecordStructureBase
     public MultimediaRecord(Record record) : base(record) { }
 
     public List<string> MultimediaFileReferenceNumbers => List(r => r.Tag.Equals(C.FILE)).Select(r => r.Value).ToList();
-    public MultimediaFormat MultimediaFormat => FirstOrDefault<MultimediaFormat>(C.FORM);
+    public MultimediaFormat MultimediaFormat => First<MultimediaFormat>(C.FORM);
     public string DescriptiveTitle => _(C.TITL);
-    public UserReferenceNumber UserReferenceNumber => FirstOrDefault<UserReferenceNumber>(C.REFN);
+    public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordId => _(C.RIN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
-    public ChangeDate ChangeDate => FirstOrDefault<ChangeDate>(C.CHAN);
+    public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
 }
 
 #region MULTIMEDIA_RECORD p. 26
