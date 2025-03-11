@@ -105,16 +105,19 @@ public class GedcomJsonConverter : JsonConverter<Gedcom>
     public override Gedcom? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
     public override void Write(Utf8JsonWriter writer, Gedcom gedcom, JsonSerializerOptions options)
     {
+        var individual1 = gedcom.GetIndividualRecord("@I1@");
+
         var jsonObject = new
-        {
-            //gedcom.Header,
-            //Repositories = gedcom.GetRepositoryRecords(),
-            //Sources = gedcom.GetSourceRecords()
-            //Sources = gedcom.GetSourceRecords()
-            Individual = gedcom.GetIndividualRecord("@I1@")
-        };
+            {
+                Individual = individual1
+            };
 
         JsonSerializer.Serialize(writer, jsonObject, jsonObject.GetType(), options);
+    }
+
+    private void MakeEmptyRecordsNull()
+    {
+
     }
 }
 

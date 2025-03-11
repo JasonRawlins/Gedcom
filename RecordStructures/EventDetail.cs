@@ -18,6 +18,21 @@ public class EventDetail : RecordStructureBase
     public List<MultimediaLink> MultiMediaLinks => List<MultimediaLink>(C.OBJE);
 }
 
+public interface IEventDetail
+{
+    string EventOrFactClassification { get; }
+    string DateValue { get; }
+    PlaceStructure PlaceStructure { get; }
+    AddressStructure AddressStructure { get; }
+    string ResponsibleAgency { get; }
+    string ReligiousAffiliation { get; }
+    string CauseOfEvent { get; }
+    string RestrictionNotice { get; }
+    List<NoteStructure> NoteStructures { get; }
+    List<SourceCitation> SourceCitations { get; }
+    List<MultimediaLink> MultiMediaLinks { get; }
+}
+
 #region EVENT_DETAIL p. 34
 /* 
 

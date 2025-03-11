@@ -1,11 +1,27 @@
 ﻿namespace Gedcom.RecordStructures;
 
-public class IndividualEventStructure : RecordStructureBase
+public class IndividualEventStructure : RecordStructureBase, IEventDetail
 {
     public IndividualEventStructure() { }
     public IndividualEventStructure(Record record) : base(record) { }
-    public IndividualEventDetail IndividualEventDetail => First<IndividualEventDetail>(Record.Tag);
     public ChildToFamilyLink ChildToFamilyLink => First<ChildToFamilyLink>(C.FAMC);
+
+    #region IEventDetail
+
+    public string AgeAtEvent => _(C.AGE);
+    public string EventOrFactClassification => _(C.TYPE);
+    public string DateValue => _(C.DATE);
+    public PlaceStructure PlaceStructure => First<PlaceStructure>(C.PLAC);
+    public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
+    public string ResponsibleAgency => _(C.AGNC);
+    public string ReligiousAffiliation => _(C.RELI);
+    public string CauseOfEvent => _(C.CAUS);
+    public string RestrictionNotice => _(C.RESN);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+    public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
+    public List<MultimediaLink> MultiMediaLinks => List<MultimediaLink>(C.OBJE);
+
+    #endregion
 }
 
 #region INDIVIDUAL_EVENT_STRUCTURE p. 34
