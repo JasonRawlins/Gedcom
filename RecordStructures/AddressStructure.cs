@@ -20,10 +20,10 @@ public class AddressStructure : RecordStructureBase
 
 public interface IAddressStructure
 {
-    List<string> PhoneNumber { get; }
-    List<string> AddressEmail { get; }
-    List<string> AddressFax { get; }
-    List<string> AddressWebPage { get; }
+    List<string> PhoneNumbers { get; }
+    List<string> AddressEmails { get; }
+    List<string> AddressFaxNumbers { get; }
+    List<string> AddressWebPages { get; }
 }
 
 #region ADDRESS_STRUCTURE p. 31

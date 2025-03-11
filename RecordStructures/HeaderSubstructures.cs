@@ -25,10 +25,10 @@ public class HeaderCORP : RecordStructureBase, IAddressStructure
     public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
 
     #region IAddressStructure
-    public List<string> PhoneNumber => ListValues(C.PHON);
-    public List<string> AddressEmail => ListValues(C.EMAIL);
-    public List<string> AddressFax => ListValues(C.FAX);
-    public List<string> AddressWebPage => ListValues(C.WWW);
+    public List<string> PhoneNumbers => ListValues(C.PHON);
+    public List<string> AddressEmails => ListValues(C.EMAIL);
+    public List<string> AddressFaxNumbers => ListValues(C.FAX);
+    public List<string> AddressWebPages => ListValues(C.WWW);
     #endregion
 }
 

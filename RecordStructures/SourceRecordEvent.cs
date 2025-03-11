@@ -1,7 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(SourceRecordEventJsonConverter))]
 public class SourceRecordEvent : RecordStructureBase
 {
     public SourceRecordEvent() : base() { }
@@ -9,6 +12,28 @@ public class SourceRecordEvent : RecordStructureBase
 
     public string DatePeriod => _(C.DATE);
     public string SourceJurisdictionPlace => _(C.PLAC);
+}
+
+internal class SourceRecordEventJsonConverter : JsonConverter<SourceRecordEvent>
+{
+    public override SourceRecordEvent? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, SourceRecordEvent sourceRecordEvent, JsonSerializerOptions options)
+    {
+        var sourceRecordEventJson = new SourceRecordEventJson(sourceRecordEvent);
+        JsonSerializer.Serialize(writer, sourceRecordEventJson, sourceRecordEventJson.GetType(), options);
+    }
+}
+
+internal class SourceRecordEventJson
+{
+    public SourceRecordEventJson(SourceRecordEvent sourceRecordEvent)
+    {
+        DatePeriod = string.IsNullOrEmpty(sourceRecordEvent.DatePeriod) ? null : sourceRecordEvent.DatePeriod;
+        SourceJurisdictionPlace = string.IsNullOrEmpty(sourceRecordEvent.SourceJurisdictionPlace) ? null : sourceRecordEvent.SourceJurisdictionPlace;
+    }
+
+    public string? DatePeriod { get; set; }
+    public string? SourceJurisdictionPlace { get; set; }
 }
 
 #region SOURCE_RECORD (DATA) p. 27

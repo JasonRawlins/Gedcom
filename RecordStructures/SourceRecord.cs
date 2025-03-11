@@ -1,7 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(SourceRecordJsonConverter))]
 public class SourceRecord : RecordStructureBase
 {
     internal SourceRecord() : base() { }
@@ -17,8 +20,50 @@ public class SourceRecord : RecordStructureBase
     public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordId => _(C.RIN);
     public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
-    public List<NoteStructure> Notestructures => List<NoteStructure>(C.NOTE);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
+}
+
+internal class SourceRecordJsonConverter : JsonConverter<SourceRecord>
+{
+    public override SourceRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, SourceRecord sourceRecord, JsonSerializerOptions options)
+    {
+        var sourceRecordJson = new SourceRecordJson(sourceRecord);
+        JsonSerializer.Serialize(writer, sourceRecordJson, sourceRecordJson.GetType(), options);
+    }
+}
+
+internal class SourceRecordJson
+{
+    public SourceRecordJson(SourceRecord sourceRecord)
+    {
+        SourceRecordData = sourceRecord.SourceRecordData.IsEmpty ? null : sourceRecord.SourceRecordData;
+        SourceOriginator = sourceRecord.SourceOriginator.IsEmpty ? null : sourceRecord.SourceOriginator;
+        SourceDescriptiveTitle = sourceRecord.SourceDescriptiveTitle.IsEmpty ? null : sourceRecord.SourceDescriptiveTitle;
+        SourceFiledByEntry = sourceRecord.SourceFiledByEntry.IsEmpty ? null : sourceRecord.SourceFiledByEntry;
+        SourcePublicationFacts = sourceRecord.SourcePublicationFacts.IsEmpty ? null : sourceRecord.SourcePublicationFacts;
+        TextFromSource = sourceRecord.TextFromSource.IsEmpty ? null : sourceRecord.TextFromSource;
+        SourceRepositoryCitations = sourceRecord.SourceRepositoryCitations.Count == 0 ? null : sourceRecord.SourceRepositoryCitations;
+        UserReferenceNumbers = sourceRecord.UserReferenceNumbers.Count == 0 ? null : sourceRecord.UserReferenceNumbers;
+        AutomatedRecordId = string.IsNullOrEmpty(sourceRecord.AutomatedRecordId) ? null : sourceRecord.AutomatedRecordId;
+        ChangeDate = sourceRecord.ChangeDate.IsEmpty ? null : sourceRecord.ChangeDate;
+        NoteStructures = sourceRecord.NoteStructures.Count == 0 ? null : sourceRecord.NoteStructures;
+        MultimediaLinks = sourceRecord.MultimediaLinks.Count == 0 ? null : sourceRecord.MultimediaLinks;
+    }
+
+    public SourceRecordData? SourceRecordData { get; set; }
+    public NoteStructure? SourceOriginator { get; set; }
+    public NoteStructure? SourceDescriptiveTitle { get; set; }
+    public NoteStructure? SourceFiledByEntry { get; set; }
+    public NoteStructure? SourcePublicationFacts { get; set; }
+    public NoteStructure? TextFromSource { get; set; }
+    public List<SourceRepositoryCitation>? SourceRepositoryCitations { get; set; }
+    public List<UserReferenceNumber>? UserReferenceNumbers { get; set; }
+    public string? AutomatedRecordId { get; set; }
+    public ChangeDate? ChangeDate { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<MultimediaLink>? MultimediaLinks { get; set; }
 }
 
 #region SOURCE_RECORD p. 27-28
