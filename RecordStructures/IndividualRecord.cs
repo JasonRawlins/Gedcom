@@ -10,13 +10,7 @@ public class IndividualRecord : RecordStructureBase
     public string RestrictionNotice => _(C.RESN);
     public List<PersonalNameStructure> PersonalNameStructures => List<PersonalNameStructure>(C.NAME);
     public string SexValue => _(C.SEX);
-    public List<IndividualEventStructure> IndividualEventStructures
-    {
-        get
-        {
-            return Record.Records.Where(IsIndividualEventStructure).Select(r => new IndividualEventStructure(r)).ToList();
-        }
-    }
+    public List<IndividualEventStructure> IndividualEventStructures => List(IsIndividualEventStructure).Select(r => new IndividualEventStructure(r)).ToList();
     public List<IndividualAttributeStructure> IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
     public List<LdsIndividualOrdinance> LdsIndividualOrdinances => List<LdsIndividualOrdinance>(C.ORDI);
     public List<ChildToFamilyLink> ChildToFamilyLinks => List<ChildToFamilyLink>(C.FAMC);
