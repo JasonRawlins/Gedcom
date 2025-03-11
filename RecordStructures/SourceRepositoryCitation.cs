@@ -1,7 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(SourceRepositoryCitationJsonConverter))]
 public class SourceRepositoryCitation : RecordStructureBase
 {
     public SourceRepositoryCitation() : base() { }
@@ -9,6 +12,28 @@ public class SourceRepositoryCitation : RecordStructureBase
 
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<CallNumber> CallNumbers => List<CallNumber>(C.CALN);
+}
+
+internal class SourceRepositoryCitationJsonConverter : JsonConverter<SourceRepositoryCitation>
+{
+    public override SourceRepositoryCitation? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, SourceRepositoryCitation sourceRepositoryCitation, JsonSerializerOptions options)
+    {
+        var sourceRepositoryCitationJson = new SourceRepositoryCitationJson(sourceRepositoryCitation);
+        JsonSerializer.Serialize(writer, sourceRepositoryCitationJson, sourceRepositoryCitationJson.GetType(), options);
+    }
+}
+
+internal class SourceRepositoryCitationJson
+{
+    public SourceRepositoryCitationJson(SourceRepositoryCitation sourceRepositoryCitation)
+    {
+        NoteStructures = sourceRepositoryCitation.NoteStructures.Count == 0 ? null : sourceRepositoryCitation.NoteStructures;
+        CallNumbers = sourceRepositoryCitation.CallNumbers.Count == 0 ? null : sourceRepositoryCitation.CallNumbers;
+    }
+
+    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<CallNumber>? CallNumbers { get; set; }
 }
 
 #region SOURCE_REPOSITORY_CITATION p. 40

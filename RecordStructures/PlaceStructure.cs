@@ -1,7 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(PlaceStructureJsonConverter))]
 public class PlaceStructure : RecordStructureBase
 {
     public PlaceStructure() : base() { }
@@ -12,6 +15,36 @@ public class PlaceStructure : RecordStructureBase
     public List<NameVariation> PlaceRomanizedVariations => List<NameVariation>(C.ROMN);
     public Map Map => First<Map>(C.MAP);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+}
+
+internal class PlaceStructureJsonConverter : JsonConverter<PlaceStructure>
+{
+    public override PlaceStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, PlaceStructure placeStructure, JsonSerializerOptions options)
+    {
+        var placeStructureJson = new PlaceStructureJson(placeStructure);
+        JsonSerializer.Serialize(writer, placeStructureJson, placeStructureJson.GetType(), options);
+    }
+}
+
+internal class PlaceStructureJson
+{
+    public PlaceStructureJson(PlaceStructure placeStructure)
+    {
+        PlaceName = string.IsNullOrEmpty(placeStructure.PlaceName) ? null : placeStructure.PlaceName;
+        PlaceHierarchy = string.IsNullOrEmpty(placeStructure.PlaceHierarchy) ? null : placeStructure.PlaceHierarchy;
+        PlacePhoneticVariations = placeStructure.PlacePhoneticVariations.Count == 0 ? null : placeStructure.PlacePhoneticVariations;
+        PlaceRomanizedVariations = placeStructure.PlaceRomanizedVariations.Count == 0 ? null : placeStructure.PlaceRomanizedVariations;
+        Map = placeStructure.Map.IsEmpty ? null : placeStructure.Map;
+        NoteStructures = placeStructure.NoteStructures.Count == 0 ? null : placeStructure.NoteStructures;
+    }
+
+    public string? PlaceName { get; set; }
+    public string? PlaceHierarchy { get; set; }
+    public List<NameVariation>? PlacePhoneticVariations { get; set; }
+    public List<NameVariation>? PlaceRomanizedVariations { get; set; }
+    public Map? Map { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
 }
 
 #region PLACE_STRUCTURE p. 38-39

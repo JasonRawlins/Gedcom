@@ -1,7 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(SourceCitationJsonConverter))]
 public class SourceCitation : RecordStructureBase
 {
     public SourceCitation() : base() { }
@@ -13,6 +16,36 @@ public class SourceCitation : RecordStructureBase
     public List<MultimediaLink> MultiMediaLinks => List<MultimediaLink>(C.OBJE);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public string CertaintyAssessment => _(C.QUAY);
+}
+
+internal class SourceCitationJsonConverter : JsonConverter<SourceCitation>
+{
+    public override SourceCitation? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, SourceCitation sourceCitation, JsonSerializerOptions options)
+    {
+        var sourceCitationJson = new SourceCitationJson(sourceCitation);
+        JsonSerializer.Serialize(writer, sourceCitationJson, sourceCitationJson.GetType(), options);
+    }
+}
+
+internal class SourceCitationJson
+{
+    public SourceCitationJson(SourceCitation sourceCitation)
+    {
+        WhereWithinSource = string.IsNullOrEmpty(sourceCitation.WhereWithinSource) ? null : sourceCitation.WhereWithinSource;
+        EventTypeCitedFrom = sourceCitation.EventTypeCitedFrom.IsEmpty ? null : sourceCitation.EventTypeCitedFrom;
+        Data = sourceCitation.Data.IsEmpty ? null : sourceCitation.Data;
+        MultiMediaLinks = sourceCitation.MultiMediaLinks.Count == 0 ? null : sourceCitation.MultiMediaLinks;
+        NoteStructures = sourceCitation.NoteStructures.Count == 0 ? null : sourceCitation.NoteStructures;
+        CertaintyAssessment = string.IsNullOrEmpty(sourceCitation.CertaintyAssessment) ? null : sourceCitation.CertaintyAssessment;
+    }
+
+    public string? WhereWithinSource { get; set; }
+    public EventTypeCitedFrom? EventTypeCitedFrom { get; set; }
+    public SourceCitationData? Data { get; set; }
+    public List<MultimediaLink>? MultiMediaLinks { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
+    public string? CertaintyAssessment { get; set; }
 }
 
 #region SOURCE_CITATION p. 39

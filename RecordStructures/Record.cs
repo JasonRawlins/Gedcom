@@ -11,7 +11,7 @@ public class Record
     [JsonIgnore]
     public List<GedcomLine> GedcomLines { get; } = [];
     public List<Record> Records { get; } = [];
-    public bool IsEmpty => Level == -1 && Tag.Equals(C.Empty);
+    internal bool IsEmpty => Level == -1 && Tag.Equals(C.Empty) && Records.Count == 0;
 
     public Record(List<GedcomLine> gedcomLines)
     {

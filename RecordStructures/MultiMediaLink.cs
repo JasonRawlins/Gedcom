@@ -1,7 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(MultimediaLinkJsonConverter))]
 public class MultimediaLink : RecordStructureBase
 {
     public MultimediaLink() : base() { }
@@ -10,6 +13,30 @@ public class MultimediaLink : RecordStructureBase
     public List<MultimediaFileReferenceNumber> MultimediaFileReferenceNumbers => List<MultimediaFileReferenceNumber>(C.FILE);
     public string SourceMediaType => _(C.MEDI);
     public string DescriptiveTitle => _(C.TITL);
+}
+
+internal class MultimediaLinkJsonConverter : JsonConverter<MultimediaLink>
+{
+    public override MultimediaLink? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, MultimediaLink multimediaLink, JsonSerializerOptions options)
+    {
+        var mapJson = new MultimediaLinkJson(multimediaLink);
+        JsonSerializer.Serialize(writer, mapJson, mapJson.GetType(), options);
+    }
+}
+
+internal class MultimediaLinkJson
+{
+    public MultimediaLinkJson(MultimediaLink multimediaLink)
+    {
+        MultimediaFileReferenceNumbers = multimediaLink.MultimediaFileReferenceNumbers.Count == 0 ? null : multimediaLink.MultimediaFileReferenceNumbers;
+        SourceMediaType = string.IsNullOrEmpty(multimediaLink.SourceMediaType) ? null : multimediaLink.SourceMediaType;
+        DescriptiveTitle = string.IsNullOrEmpty(multimediaLink.DescriptiveTitle) ? null : multimediaLink.DescriptiveTitle;
+    }
+
+    public List<MultimediaFileReferenceNumber>? MultimediaFileReferenceNumbers { get; set; }
+    public string? SourceMediaType { get; set; }
+    public string? DescriptiveTitle { get; set; }
 }
 
 #region MULTIMEDIA_LINK p. 37

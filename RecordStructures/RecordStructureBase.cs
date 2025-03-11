@@ -1,10 +1,14 @@
 ﻿using Gedcom.RecordStructures;
+using System.Text.Json.Serialization;
 
 namespace Gedcom;
 
 public class RecordStructureBase
 {
-    protected Record Record { get; private set; } = Record.Empty;
+    [JsonIgnore]
+    internal Record Record { get; set; } = Record.Empty;
+    [JsonIgnore]
+    public bool IsEmpty => Record.IsEmpty;
     
     public Record this[string tag] => this[[tag]];
     public Record this[IEnumerable<string> tagPath]
@@ -68,6 +72,5 @@ public class RecordStructureBase
         {
             return $"{Record.Level} {Record.Tag} {Record.Value}";
         }
-    } 
+    }
 }
-

@@ -1,12 +1,15 @@
 ﻿
 using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(IndividualRecordJsonConverter))]
 public class IndividualRecord : RecordStructureBase
 {
     public IndividualRecord() { }
-    public IndividualRecord(Record record) : base(record)  { }
+    public IndividualRecord(Record record) : base(record) { }
 
     public string Xref => Record.Value;
 
@@ -17,7 +20,7 @@ public class IndividualRecord : RecordStructureBase
     public List<IndividualAttributeStructure> IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
     public List<LdsIndividualOrdinance> LdsIndividualOrdinances => List<LdsIndividualOrdinance>(C.ORDI);
     public List<ChildToFamilyLink> ChildToFamilyLinks => List<ChildToFamilyLink>(C.FAMC);
-    public List<SpouseToFamilyLink>? SpouseToFamilyLinks => List<SpouseToFamilyLink>(C.ASSO);
+    public List<SpouseToFamilyLink> SpouseToFamilyLinks => List<SpouseToFamilyLink>(C.ASSO);
     public string Submitter => _(C.SUBN);
     public List<AssociationStructure> AssociationStructures => List<AssociationStructure>(C.ASSO);
     public List<string> Aliases => List(r => r.Tag.Equals(C.ALIA)).Select(r => r.Value).ToList();
@@ -27,25 +30,90 @@ public class IndividualRecord : RecordStructureBase
     public string AncestralFileNumber => _(C.AFN);
     public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordId => _(C.RIN);
-    public ChangeDate? ChangeDate => First<ChangeDate>(C.CHAN);
+    public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
     public List<MultimediaLink> MultiMediaLinks => List<MultimediaLink>(C.OBJE);
 
     private bool IsIndividualEventStructure(Record record)
     {
-        return new string[] 
-        { 
-            "BIRT", "CHR" , "DEAT", "BURI", "CREM", "ADOP", 
-            "BAPM", "BARM", "BASM", "BLES", "CHRA", "CONF", 
-            "FCOM", "ORDN", "NATU", "EMIG", "IMMI", "CENS", 
+        return new string[]
+        {
+            "BIRT", "CHR" , "DEAT", "BURI", "CREM", "ADOP",
+            "BAPM", "BARM", "BASM", "BLES", "CHRA", "CONF",
+            "FCOM", "ORDN", "NATU", "EMIG", "IMMI", "CENS",
             "PROB", "WILL", "GRAD", "RETI", "EVEN"
         }.Contains(record.Tag);
     }
 
     public List<IndividualEventStructure> Births => List<IndividualEventStructure>(C.BIRT);
+    public List<IndividualEventStructure> Marriages => List<IndividualEventStructure>(C.BIRT);
 
     public override string ToString() => $"{PersonalNameStructures.First().NamePersonal} {SexValue} ({Record.Value})";
+}
+internal class IndividualRecordJsonConverter : JsonConverter<IndividualRecord>
+{
+    public override IndividualRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, IndividualRecord individualRecord, JsonSerializerOptions options)
+    {
+        var individualRecordJson = new IndividualRecordJson(individualRecord);
+        JsonSerializer.Serialize(writer, individualRecordJson, individualRecordJson.GetType(), options);
+    }
+}
+internal class IndividualRecordJson
+{
+    public IndividualRecordJson(IndividualRecord individualRecord)
+    {
+        Xref = individualRecord.Xref;
+        RestrictionNotice = string.IsNullOrEmpty(individualRecord.RestrictionNotice) ? null : individualRecord.RestrictionNotice;
+        Births = individualRecord.Births.Count == 0 ? null : individualRecord.Births;
+
+        //PersonalNameStructures => List<PersonalNameStructure>(C.NAME);
+        //SexValue => _(C.SEX);
+        //IndividualEventStructures => List(IsIndividualEventStructure).Select(r => new IndividualEventStructure(r)).ToList();
+        //IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
+        //LdsIndividualOrdinances => List<LdsIndividualOrdinance>(C.ORDI);
+        //ChildToFamilyLinks => List<ChildToFamilyLink>(C.FAMC);
+        //SpouseToFamilyLinks => List<SpouseToFamilyLink>(C.ASSO);
+        //Submitter => _(C.SUBN);
+        //AssociationStructures => List<AssociationStructure>(C.ASSO);
+        //Aliases => List(r => r.Tag.Equals(C.ALIA)).Select(r => r.Value).ToList();
+        //AncestorInterests => List(r => r.Tag.Equals(C.ANCI)).Select(r => r.Value).ToList();
+        //DescendantInterests => List(r => r.Tag.Equals(C.DESI)).Select(r => r.Value).ToList();
+        //PermanentRecordFileNumber => _(C.RFN);
+        //AncestralFileNumber => _(C.AFN);
+        //UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
+        //AutomatedRecordId => _(C.RIN);
+        //ChangeDate => First<ChangeDate>(C.CHAN);
+        //NoteStructures => List<NoteStructure>(C.NOTE);
+        //SourceCitations => List<SourceCitation>(C.SOUR);
+        //MultiMediaLinks => List<MultimediaLink>(C.OBJE);
+    }
+
+    public string? Xref { get; set; }
+    public string? RestrictionNotice { get; set; }
+    public List<PersonalNameStructure>? PersonalNameStructures { get; set; }
+    public string? SexValue { get; set; }
+    public List<IndividualEventStructure>? IndividualEventStructures { get; set; }
+    public List<IndividualAttributeStructure>? IndividualAttributeStructures { get; set; }
+    public List<LdsIndividualOrdinance>? LdsIndividualOrdinances { get; set; }
+    public List<ChildToFamilyLink>? ChildToFamilyLinks { get; set; }
+    public List<SpouseToFamilyLink>? SpouseToFamilyLinks { get; set; }
+    public string? Submitter { get; set; }
+    public List<AssociationStructure>? AssociationStructures { get; set; }
+    public List<string>? Aliases { get; set; }
+    public List<string>? AncestorInterests { get; set; }
+    public List<string>? DescendantInterests { get; set; }
+    public string? PermanentRecordFileNumber { get; set; }
+    public string? AncestralFileNumber { get; set; }
+    public List<UserReferenceNumber>? UserReferenceNumbers { get; set; }
+    public string? AutomatedRecordId { get; set; }
+    public ChangeDate? ChangeDate { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<SourceCitation>? SourceCitations { get; set; }
+    public List<MultimediaLink>? MultiMediaLinks { get; set; }
+    public List<IndividualEventStructure>? Births { get; set; }
+    public List<IndividualEventStructure>? Marriages { get; set; }
 }
 
 #region INDIVIDUAL_RECORD (INDI) p. 25

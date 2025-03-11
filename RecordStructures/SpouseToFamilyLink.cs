@@ -1,13 +1,37 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(SpouseToFamilyLinkJsonConverter))]
 public class SpouseToFamilyLink : RecordStructureBase
 {
     public SpouseToFamilyLink() : base() { }
     public SpouseToFamilyLink(Record record) : base(record) { }
 
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+}
+
+internal class SpouseToFamilyLinkJsonConverter : JsonConverter<SpouseToFamilyLink>
+{
+    public override SpouseToFamilyLink? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, SpouseToFamilyLink spouseToFamilyLink, JsonSerializerOptions options)
+    {
+        var mapJson = new SpouseToFamilyLinkJson(spouseToFamilyLink);
+        JsonSerializer.Serialize(writer, mapJson, mapJson.GetType(), options);
+    }
+}
+
+internal class SpouseToFamilyLinkJson
+{
+    public SpouseToFamilyLinkJson(SpouseToFamilyLink spouseToFamilyLink)
+    {
+        NoteStructures = spouseToFamilyLink.NoteStructures.Count == 0 ? null : spouseToFamilyLink.NoteStructures;
+    }
+
+    public List<NoteStructure>? NoteStructures { get; set; }
+
 }
 
 #region SPOUSE_TO_FAMILY_LINK p. 40

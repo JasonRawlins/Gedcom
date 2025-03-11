@@ -1,6 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
+
+[JsonConverter(typeof(IndividualEventStructureJsonConverter))]
 
 public class IndividualEventStructure : RecordStructureBase, IEventDetail
 {
@@ -25,6 +29,50 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
     public List<MultimediaLink> MultiMediaLinks => List<MultimediaLink>(C.OBJE);
 
     #endregion
+}
+
+internal class IndividualEventStructureJsonConverter : JsonConverter<IndividualEventStructure>
+{
+    public override IndividualEventStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, IndividualEventStructure individualEventStructure, JsonSerializerOptions options)
+    {
+        var individualEventStructureJson = new IndividualEventStructureJson(individualEventStructure);
+        JsonSerializer.Serialize(writer, individualEventStructureJson, individualEventStructureJson.GetType(), options);
+    }
+}
+
+internal class IndividualEventStructureJson
+{
+    public IndividualEventStructureJson(IndividualEventStructure individualEventStructure)
+    {
+        Tag = string.IsNullOrEmpty(individualEventStructure.Tag) ? null : individualEventStructure.Tag;
+        AgeAtEvent = string.IsNullOrEmpty(individualEventStructure.AgeAtEvent) ? null : individualEventStructure.AgeAtEvent;
+        EventOrFactClassification = !string.IsNullOrEmpty(individualEventStructure.EventOrFactClassification) ? individualEventStructure.EventOrFactClassification : null; ;
+        DateValue = string.IsNullOrEmpty(individualEventStructure.DateValue) ? null : individualEventStructure.DateValue;
+        PlaceStructure = individualEventStructure.PlaceStructure.IsEmpty ? null : individualEventStructure.PlaceStructure;
+        AddressStructure = individualEventStructure.AddressStructure.IsEmpty ? null : individualEventStructure.AddressStructure;
+        ResponsibleAgency = string.IsNullOrEmpty(individualEventStructure.ResponsibleAgency) ? null : individualEventStructure.ResponsibleAgency;
+        ReligiousAffiliation = string.IsNullOrEmpty(individualEventStructure.ReligiousAffiliation) ? null : individualEventStructure.ReligiousAffiliation;
+        CauseOfEvent = string.IsNullOrEmpty(individualEventStructure.CauseOfEvent) ? null : individualEventStructure.CauseOfEvent;
+        RestrictionNotice = string.IsNullOrEmpty(individualEventStructure.RestrictionNotice) ? null : individualEventStructure.RestrictionNotice;
+        NoteStructures = individualEventStructure.NoteStructures.Count == 0 ? null : individualEventStructure.NoteStructures;
+        SourceCitations = individualEventStructure.SourceCitations.Count == 0 ? null : individualEventStructure.SourceCitations;
+        MultiMediaLinks = individualEventStructure.MultiMediaLinks.Count == 0 ? null : individualEventStructure.MultiMediaLinks;
+    }
+
+    public string? Tag { get; set; }
+    public string? AgeAtEvent { get; set; }
+    public string? EventOrFactClassification { get; set; }
+    public string? DateValue { get; set; }
+    public PlaceStructure? PlaceStructure { get; set; }
+    public AddressStructure? AddressStructure { get; set; }
+    public string? ResponsibleAgency { get; set; }
+    public string? ReligiousAffiliation { get; set; }
+    public string? CauseOfEvent { get; set; }
+    public string? RestrictionNotice { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<SourceCitation>? SourceCitations { get; set; }
+    public List<MultimediaLink>? MultiMediaLinks { get; set; }
 }
 
 #region INDIVIDUAL_EVENT_STRUCTURE p. 34

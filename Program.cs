@@ -1,6 +1,9 @@
-﻿using Gedcom.Core;
+﻿using Gedcom;
+using Gedcom.Core;
+using Gedcom.RecordStructures;
 using System.Reflection;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 public class Program
 {
@@ -30,6 +33,7 @@ public class Program
     private static JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        WriteIndented = true
+        WriteIndented = true,
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
     };
 }

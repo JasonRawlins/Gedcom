@@ -1,7 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(SubmitterRecord))]
 public class SubmitterRecord : RecordStructureBase
 {
     public SubmitterRecord() : base() { }
@@ -9,12 +12,46 @@ public class SubmitterRecord : RecordStructureBase
 
     public string SubmitterName => _(C.NAME);
     public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
-    public List<MultimediaLink> MultimediaLink => List<MultimediaLink>(C.MEDI);
+    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.MEDI);
     public List<string> LanguagePreferences => List(r => r.Tag.Equals(C.LANG)).Select(r => r.Value).ToList();
     public string SubmitterRegisteredRfn => _(C.RFN);
     public string AutomatedRecordId => _(C.RIN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public Date ChangeDate => First<Date>(C.CHAN);
+}
+
+internal class SubmitterRecordJsonConverter : JsonConverter<SubmitterRecord>
+{
+    public override SubmitterRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, SubmitterRecord submitterRecord, JsonSerializerOptions options)
+    {
+        var mapJson = new SubmitterRecordJson(submitterRecord);
+        JsonSerializer.Serialize(writer, mapJson, mapJson.GetType(), options);
+    }
+}
+
+internal class SubmitterRecordJson
+{
+    public SubmitterRecordJson(SubmitterRecord submitterRecord)
+    {
+        SubmitterName = string.IsNullOrEmpty(submitterRecord.SubmitterName) ? null : submitterRecord.SubmitterName;
+        AddressStructure = submitterRecord.AddressStructure.IsEmpty ? null : submitterRecord.AddressStructure;
+        MultimediaLinks = submitterRecord.MultimediaLinks.Count == 0 ? null : submitterRecord.MultimediaLinks;
+        LanguagePreferences = submitterRecord.LanguagePreferences.Count == 0 ? null : submitterRecord.LanguagePreferences;
+        SubmitterRegisteredReferenceNumber = string.IsNullOrEmpty(submitterRecord.SubmitterRegisteredRfn) ? null : submitterRecord.SubmitterRegisteredRfn;
+        AutomatedRecordId = string.IsNullOrEmpty(submitterRecord.AutomatedRecordId) ? null : submitterRecord.AutomatedRecordId;
+        NoteStructures = submitterRecord.NoteStructures.Count == 0 ? null : submitterRecord.NoteStructures;
+        ChangeDate = submitterRecord.ChangeDate.IsEmpty ? null : submitterRecord.ChangeDate;
+    }
+
+    public string? SubmitterName { get; set; }
+    public AddressStructure? AddressStructure { get; set; }
+    public List<MultimediaLink>? MultimediaLinks { get; set; }
+    public List<string>? LanguagePreferences { get; set; }
+    public string? SubmitterRegisteredReferenceNumber { get; set; }
+    public string? AutomatedRecordId { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
+    public Date? ChangeDate { get; set; }
 }
 
 #region SUBMITTER_RECORD p. 28-29

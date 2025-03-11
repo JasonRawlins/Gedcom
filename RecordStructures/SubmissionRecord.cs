@@ -1,7 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(SubmissionRecord))]
 public class SubmissionRecord : RecordStructureBase
 {
     public SubmissionRecord() : base() { }
@@ -17,6 +20,46 @@ public class SubmissionRecord : RecordStructureBase
     public string AutomatedRecordId => _(C.RIN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
+}
+
+internal class SubmissionRecordJsonConverter : JsonConverter<SubmissionRecord>
+{
+    public override SubmissionRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, SubmissionRecord submissionRecord, JsonSerializerOptions options)
+    {
+        var submissionRecordJson = new SubmissionRecordJson(submissionRecord);
+        JsonSerializer.Serialize(writer, submissionRecordJson, submissionRecordJson.GetType(), options);
+    }
+}
+
+internal class SubmissionRecordJson
+{
+    public SubmissionRecordJson(SubmissionRecord submissionRecord)
+    {
+        Xref = submissionRecord.Xref;
+        Submitter = string.IsNullOrEmpty(submissionRecord.Submitter) ? null : submissionRecord.Submitter;
+        NameOfFamilyFile = string.IsNullOrEmpty(submissionRecord.NameOfFamilyFile) ? null : submissionRecord.NameOfFamilyFile;
+        TempleCode = string.IsNullOrEmpty(submissionRecord.TempleCode) ? null : submissionRecord.TempleCode;
+        GenerationsOfAncestors = string.IsNullOrEmpty(submissionRecord.GenerationsOfAncestors) ? null : submissionRecord.GenerationsOfAncestors;
+        GenerationsOfDescendants = string.IsNullOrEmpty(submissionRecord.GenerationsOfDescendants) ? null : submissionRecord.GenerationsOfDescendants;
+        OrdinanceProcessFlag = string.IsNullOrEmpty(submissionRecord.OrdinanceProcessFlag) ? null : submissionRecord.OrdinanceProcessFlag;
+        AutomatedRecordId = string.IsNullOrEmpty(submissionRecord.AutomatedRecordId) ? null : submissionRecord.AutomatedRecordId;
+        Submitter = string.IsNullOrEmpty(submissionRecord.Submitter) ? null : submissionRecord.Submitter;
+        Submitter = string.IsNullOrEmpty(submissionRecord.Submitter) ? null : submissionRecord.Submitter;
+        NoteStructures = submissionRecord.NoteStructures.Count == 0 ? null : submissionRecord.NoteStructures;
+        ChangeDate = submissionRecord.ChangeDate.IsEmpty ? null : submissionRecord.ChangeDate;
+    }
+
+    public string? Xref { get; set; }
+    public string? Submitter { get; set; }
+    public string? NameOfFamilyFile { get; set; }
+    public string? TempleCode { get; set; }
+    public string? GenerationsOfAncestors { get; set; }
+    public string? GenerationsOfDescendants { get; set; }
+    public string? OrdinanceProcessFlag { get; set; }
+    public string? AutomatedRecordId { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
+    public ChangeDate? ChangeDate { get; set; }
 }
 
 #region SUBMISSION_RECORD p. 28

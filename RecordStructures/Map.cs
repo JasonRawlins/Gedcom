@@ -1,13 +1,38 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(MapJsonConverter))]
 public class Map : RecordStructureBase
 {
     public Map() : base() { }
     public Map(Record record) : base(record) { }
     public string PlaceLatitude => _(C.LATI);
     public string PlaceLongitude => _(C.LONG);
+}
+
+internal class MapJsonConverter : JsonConverter<Map>
+{
+    public override Map? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, Map map, JsonSerializerOptions options)
+    {
+        var mapJson = new MapJson(map);
+        JsonSerializer.Serialize(writer, mapJson, mapJson.GetType(), options);
+    }
+}
+
+internal class MapJson
+{
+    public MapJson(Map map)
+    {
+        PlaceLatitude = !string.IsNullOrEmpty(map.PlaceLatitude) ? map.PlaceLatitude : null;
+        PlaceLongitude = !string.IsNullOrEmpty(map.PlaceLongitude) ? map.PlaceLongitude : null;
+    }
+
+    public string? PlaceLatitude { get; set; }
+    public string? PlaceLongitude { get; set; }
 }
 
 #region MAP p. 39

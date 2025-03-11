@@ -1,7 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(SourceRecordDataJsonConverter))]
 public class SourceRecordData : RecordStructureBase
 {
     public SourceRecordData() : base() { }
@@ -12,15 +15,32 @@ public class SourceRecordData : RecordStructureBase
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
 }
 
-public class SourceRecordEvent : RecordStructureBase
+internal class SourceRecordDataJsonConverter : JsonConverter<SourceRecordData>
 {
-    public SourceRecordEvent() : base() { }
-    public SourceRecordEvent(Record record) : base(record) { }
-
-    public string DatePeriod => _(C.DATE);
-    public string SourceJurisdictionPlace => _(C.PLAC);
-
+    public override SourceRecordData? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, SourceRecordData sourceRecordData, JsonSerializerOptions options)
+    {
+        var sourceRecordDataJson = new SourceRecordDataJson(sourceRecordData);
+        JsonSerializer.Serialize(writer, sourceRecordDataJson, sourceRecordDataJson.GetType(), options);
+    }
 }
+
+internal class SourceRecordDataJson
+{
+    public SourceRecordDataJson(SourceRecordData sourceRecordData)
+    {
+        EventsRecorded = sourceRecordData.EventsRecorded.Count == 0 ? null : sourceRecordData.EventsRecorded;
+        ResponsibleAgency = string.IsNullOrEmpty(sourceRecordData.ResponsibleAgency) ? null : sourceRecordData.ResponsibleAgency;
+        NoteStructures = sourceRecordData.NoteStructures.Count == 0 ? null : sourceRecordData.NoteStructures;
+    }
+
+    public List<SourceRecordEvent>? EventsRecorded { get; set; }
+    public string? ResponsibleAgency { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
+}
+
+
+
 
 #region SOURCE_RECORD (DATA) p. 27
 /* 
