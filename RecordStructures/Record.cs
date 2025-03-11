@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Gedcom.Core;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
@@ -21,7 +22,7 @@ public class Record
 
         if (gedcomLines.Count > 1)
         {
-            var nextLevelGedcomLines = Gedcom.GetGedcomLinesForLevel(Level + 1, gedcomLines.Skip(1).ToList());
+            var nextLevelGedcomLines = Core.Gedcom.GetGedcomLinesForLevel(Level + 1, gedcomLines.Skip(1).ToList());
             foreach (var nextLevelGedcomLine in nextLevelGedcomLines)
             {
                 Records.Add(new Record(nextLevelGedcomLine));

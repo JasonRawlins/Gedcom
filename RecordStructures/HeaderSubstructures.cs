@@ -1,4 +1,6 @@
-﻿namespace Gedcom.RecordStructures;
+﻿using Gedcom.Core;
+
+namespace Gedcom.RecordStructures;
 
 // The SOUR tag in the HEAD doesn't quite match the SOUR tags elsewhere. 
 // HeaderSOUR is the temp class name. I'll merge the two classes later

@@ -1,4 +1,6 @@
 ﻿
+using Gedcom.Core;
+
 namespace Gedcom.RecordStructures;
 
 public class IndividualRecord : RecordStructureBase

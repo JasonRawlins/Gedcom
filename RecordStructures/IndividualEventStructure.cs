@@ -1,4 +1,6 @@
-﻿namespace Gedcom.RecordStructures;
+﻿using Gedcom.Core;
+
+namespace Gedcom.RecordStructures;
 
 public class IndividualEventStructure : RecordStructureBase, IEventDetail
 {
@@ -8,6 +10,7 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
 
     #region IEventDetail
 
+    public string Tag => Record.Tag;
     public string AgeAtEvent => _(C.AGE);
     public string EventOrFactClassification => _(C.TYPE);
     public string DateValue => _(C.DATE);

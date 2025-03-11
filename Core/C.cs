@@ -1,4 +1,4 @@
-﻿namespace Gedcom;
+﻿namespace Gedcom.Core;
 
 public static class C // Constants
 {

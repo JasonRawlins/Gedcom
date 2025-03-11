@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Gedcom.RecordStructures;
 
-namespace Gedcom;
+namespace Gedcom.Core;
 
 [JsonConverter(typeof(GedcomJsonConverter))]
 public class Gedcom : RecordStructureBase
@@ -44,7 +44,7 @@ public class Gedcom : RecordStructureBase
     public RepositoryRecord GetRepositoryRecord(string xrefREPO) => new(Record.Records.First(r => r.Tag.Equals(C.REPO) && r.Value.Equals(xrefREPO)));
     public List<RepositoryRecord> GetRepositoryRecords() => Record.Records.Where(r => r.Tag.Equals(C.REPO)).Select(r => new RepositoryRecord(r)).ToList();
    
-    public SourceCitation GetSourceRecord(string xrefSOUR) => new(Record.Records.First(r => r.Tag.Equals(C.SOUR) && r.Value.Equals(xrefSOUR)));
+    public SourceRecord GetSourceRecord(string xrefSOUR) => new(Record.Records.First(r => r.Tag.Equals(C.SOUR) && r.Value.Equals(xrefSOUR)));
     public List<SourceRecord> GetSourceRecords() => Record.Records.Where(r => r.Tag.Equals(C.SOUR)).Select(r => new SourceRecord(r)).ToList();
 
     public SubmitterRecord GetSubmitterRecord(string xrefSUBM) => new(Record.Records.First(r => r.Tag.Equals(C.SUBM) && r.Value.Equals(xrefSUBM)));
@@ -105,19 +105,16 @@ public class GedcomJsonConverter : JsonConverter<Gedcom>
     public override Gedcom? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
     public override void Write(Utf8JsonWriter writer, Gedcom gedcom, JsonSerializerOptions options)
     {
-        var individual1 = gedcom.GetIndividualRecord("@I1@");
+        //var individual1 = gedcom.GetIndividualRecord("@I1@");
+        //var source1 = gedcom.GetSourceRecord("@S1@");
+        var allIndividualRecords = gedcom.GetIndividualRecords();
 
         var jsonObject = new
-            {
-                Individual = individual1
-            };
+        {
+            Individuals = allIndividualRecords
+        };
 
         JsonSerializer.Serialize(writer, jsonObject, jsonObject.GetType(), options);
-    }
-
-    private void MakeEmptyRecordsNull()
-    {
-
     }
 }
 

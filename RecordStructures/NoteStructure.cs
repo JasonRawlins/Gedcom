@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Gedcom.Core;
+using System.Text;
 
 namespace Gedcom.RecordStructures;
 

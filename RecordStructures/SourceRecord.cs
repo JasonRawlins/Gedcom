@@ -1,4 +1,6 @@
-﻿namespace Gedcom.RecordStructures;
+﻿using Gedcom.Core;
+
+namespace Gedcom.RecordStructures;
 
 public class SourceRecord : RecordStructureBase
 {
