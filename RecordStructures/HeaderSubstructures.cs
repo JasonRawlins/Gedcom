@@ -2,9 +2,6 @@
 
 namespace Gedcom.RecordStructures;
 
-// The SOUR tag in the HEAD doesn't quite match the SOUR tags elsewhere. 
-// HeaderSOUR is the temp class name. I'll merge the two classes later
-// if they turn out to represent the same entity.
 public class HeaderSOUR : RecordStructureBase
 {
     public HeaderSOUR() : base() { }
@@ -39,7 +36,6 @@ public class HeaderDATA : RecordStructureBase
 
     public string PublicationDate => _(C.DATE);
     public NoteStructure CopyrightSourceData => First<NoteStructure>(C.COPR);
-    //public KeyValuePair<string, string> CopyrightSourceData => new KeyValuePair<string, string>("key", "value"); // ""; //new NoteStructure(Record); // Default<NoteStructure>(); // FirstOrDefault<NoteStructure>(C.COPR);
 }
 
 #region HeaderSOUR p. 23

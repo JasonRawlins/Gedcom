@@ -1,7 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(PersonalNameStructureJsonConverter))]
 public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
 {
     public PersonalNameStructure() : base() { }
@@ -22,7 +25,49 @@ public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
     public string SurnamePrefix => _(C.SPFX);
 
     #endregion
+}
 
+internal class PersonalNameStructureJsonConverter : JsonConverter<PersonalNameStructure>
+{
+    public override PersonalNameStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, PersonalNameStructure personalNameStructure, JsonSerializerOptions options)
+    {
+        var personalNameStructureJson = new PersonalNameStructureJson(personalNameStructure);
+        JsonSerializer.Serialize(writer, personalNameStructureJson, personalNameStructureJson.GetType(), options);
+    }
+}
+
+internal class PersonalNameStructureJson
+{
+    public PersonalNameStructureJson(PersonalNameStructure personalNameStructure)
+    {
+        NamePersonal = string.IsNullOrEmpty(personalNameStructure.NamePersonal) ? null : personalNameStructure.NamePersonal;
+        NameType = string.IsNullOrEmpty(personalNameStructure.NameType) ? null : personalNameStructure.NameType;
+        NamePhoneticVariation = personalNameStructure.NamePhoneticVariation.IsEmpty ? null : personalNameStructure.NamePhoneticVariation;
+        NameRomanizedVariation = personalNameStructure.NameRomanizedVariation.IsEmpty ? null : personalNameStructure.NameRomanizedVariation;
+        Given = string.IsNullOrEmpty(personalNameStructure.Given) ? null : personalNameStructure.Given;
+        NamePrefix = string.IsNullOrEmpty(personalNameStructure.NamePrefix) ? null : personalNameStructure.NamePrefix;
+        NameSuffix = string.IsNullOrEmpty(personalNameStructure.NameSuffix) ? null : personalNameStructure.NameSuffix;
+        Nickname = string.IsNullOrEmpty(personalNameStructure.Nickname) ? null : personalNameStructure.Nickname;
+        Surname = string.IsNullOrEmpty(personalNameStructure.Surname) ? null : personalNameStructure.Surname;
+        SurnamePrefix = string.IsNullOrEmpty(personalNameStructure.SurnamePrefix) ? null : personalNameStructure.SurnamePrefix;
+    }
+
+    public string? NamePersonal { get; set; }
+    public string? NameType { get; set; }
+    public NameVariation? NamePhoneticVariation { get; set; }
+    public NameVariation? NameRomanizedVariation { get; set; }
+
+    #region IPersonalNamePeices
+
+    public string? Given { get; set; }
+    public string? NamePrefix { get; set; }
+    public string? NameSuffix { get; set; }
+    public string? Nickname { get; set; }
+    public string? Surname { get; set; }
+    public string? SurnamePrefix { get; set; }
+
+    #endregion
 }
 
 #region PERSONAL_NAME_STRUCTURE p. 38

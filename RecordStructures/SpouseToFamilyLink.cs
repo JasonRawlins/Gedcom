@@ -18,8 +18,8 @@ internal class SpouseToFamilyLinkJsonConverter : JsonConverter<SpouseToFamilyLin
     public override SpouseToFamilyLink? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
     public override void Write(Utf8JsonWriter writer, SpouseToFamilyLink spouseToFamilyLink, JsonSerializerOptions options)
     {
-        var mapJson = new SpouseToFamilyLinkJson(spouseToFamilyLink);
-        JsonSerializer.Serialize(writer, mapJson, mapJson.GetType(), options);
+        var spouseToFamilyLinkJson = new SpouseToFamilyLinkJson(spouseToFamilyLink);
+        JsonSerializer.Serialize(writer, spouseToFamilyLinkJson, spouseToFamilyLinkJson.GetType(), options);
     }
 }
 

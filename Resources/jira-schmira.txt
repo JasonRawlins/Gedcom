@@ -5,3 +5,9 @@ What do I do with the sources after I find them? Where is the list of sources I 
 Backlog
 -------
 Make a Visual Studio addon that formats .ged files. There might already be one.
+
+Make a postbuild event that removes leading spaces from FormattedDeveloperTree.ged and copies it to DeveloperTree.ged.
+I've already started this in PostBuildEvent.bat.
+<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	<Exec Command="call &quot;$(ProjectDir)\PostBuildEvent.bat&quot; &quot;$(ProjectDir)Resources\FormattedDeveloperTree.ged&quot; &quot;$(TargetDir)Resources\DeveloperTree.ged&quot;&#xD;&#xA;" />
+</Target>

@@ -1,7 +1,5 @@
 # Gedcom
-A program to manipulate gedcom files. Version 5.5.1
-
-
+A program to manipulate Gedcom Version 5.5.1 files.
 
 
 **Code style guide**

@@ -48,7 +48,7 @@ internal class RepositoryRecordJson
         CallNumber = repositoryRecord.CallNumber.IsEmpty ? null : repositoryRecord.CallNumber;
         PhoneNumbers = repositoryRecord.PhoneNumbers.Count == 0 ? null : repositoryRecord.PhoneNumbers;
         AddressEmails = repositoryRecord.AddressEmails.Count == 0 ? null : repositoryRecord.AddressEmails;
-        AddressFaxNumbers = repositoryRecord.AddressFaxes.Count == 0 ? null : repositoryRecord.AddressFaxes;
+        AddressFaxNumbers = repositoryRecord.AddressFaxNumbers.Count == 0 ? null : repositoryRecord.AddressFaxNumbers;
         AddressWebPages = repositoryRecord.AddressWebPages.Count == 0 ? null : repositoryRecord.AddressWebPages;
     }
 

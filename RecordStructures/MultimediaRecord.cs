@@ -1,7 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(MultimediaRecordJsonConverter))]
 public class MultimediaRecord : RecordStructureBase
 {
     public MultimediaRecord() : base() { }
@@ -15,6 +18,40 @@ public class MultimediaRecord : RecordStructureBase
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
     public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
+}
+
+internal class MultimediaRecordJsonConverter : JsonConverter<MultimediaRecord>
+{
+    public override MultimediaRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, MultimediaRecord multimediaRecord, JsonSerializerOptions options)
+    {
+        var jsonObject = new MultimediaRecordJson(multimediaRecord);
+        JsonSerializer.Serialize(writer, jsonObject, jsonObject.GetType(), options);
+    }
+}
+
+internal class MultimediaRecordJson
+{
+    public MultimediaRecordJson(MultimediaRecord multimediaRecord)
+    {
+        MultimediaFileReferenceNumbers = multimediaRecord.MultimediaFileReferenceNumbers.Count == 0 ? null : multimediaRecord.MultimediaFileReferenceNumbers;
+        MultimediaFormat = multimediaRecord.MultimediaFormat.IsEmpty ? null : multimediaRecord.MultimediaFormat;
+        DescriptiveTitle = string.IsNullOrEmpty(multimediaRecord.DescriptiveTitle) ? null : multimediaRecord.DescriptiveTitle;
+        UserReferenceNumber = multimediaRecord.UserReferenceNumber.IsEmpty ? null : multimediaRecord.UserReferenceNumber;
+        AutomatedRecordId = string.IsNullOrEmpty(multimediaRecord.AutomatedRecordId) ? null : multimediaRecord.AutomatedRecordId;
+        NoteStructures = multimediaRecord.NoteStructures.Count == 0 ? null : multimediaRecord.NoteStructures;
+        SourceCitations = multimediaRecord.SourceCitations.Count == 0 ? null : multimediaRecord.SourceCitations;
+        ChangeDate = multimediaRecord.ChangeDate.IsEmpty ? null : multimediaRecord.ChangeDate;
+    }
+
+    public List<string>? MultimediaFileReferenceNumbers { get; set; }
+    public MultimediaFormat? MultimediaFormat { get; set; }
+    public string? DescriptiveTitle { get; set; }
+    public UserReferenceNumber? UserReferenceNumber { get; set; }
+    public string? AutomatedRecordId { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<SourceCitation>? SourceCitations { get; set; }
+    public ChangeDate? ChangeDate { get; set; }
 }
 
 #region MULTIMEDIA_RECORD p. 26

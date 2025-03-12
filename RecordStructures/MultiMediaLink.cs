@@ -20,8 +20,8 @@ internal class MultimediaLinkJsonConverter : JsonConverter<MultimediaLink>
     public override MultimediaLink? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
     public override void Write(Utf8JsonWriter writer, MultimediaLink multimediaLink, JsonSerializerOptions options)
     {
-        var mapJson = new MultimediaLinkJson(multimediaLink);
-        JsonSerializer.Serialize(writer, mapJson, mapJson.GetType(), options);
+        var multimediaLinkJson = new MultimediaLinkJson(multimediaLink);
+        JsonSerializer.Serialize(writer, multimediaLinkJson, multimediaLinkJson.GetType(), options);
     }
 }
 

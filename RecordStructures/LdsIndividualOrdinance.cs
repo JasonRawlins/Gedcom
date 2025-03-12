@@ -1,7 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(LdsIndividualOrdinanceJsonConverter))]
 public class LdsIndividualOrdinance : RecordStructureBase
 {
     public LdsIndividualOrdinance() : base() { }
@@ -13,6 +16,36 @@ public class LdsIndividualOrdinance : RecordStructureBase
     public LdsOrdinanceStatus LdsBaptismDateStatus => First<LdsOrdinanceStatus>(C.STAT);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
+}
+
+internal class LdsIndividualOrdinanceJsonConverter : JsonConverter<LdsIndividualOrdinance>
+{
+    public override LdsIndividualOrdinance? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, LdsIndividualOrdinance ldsIndividualOrdinance, JsonSerializerOptions options)
+    {
+        var ldsIndividualOrdinanceJson = new LdsIndividualOrdinanceJson(ldsIndividualOrdinance);
+        JsonSerializer.Serialize(writer, ldsIndividualOrdinanceJson, ldsIndividualOrdinanceJson.GetType(), options);
+    }
+}
+
+internal class LdsIndividualOrdinanceJson
+{
+    public LdsIndividualOrdinanceJson(LdsIndividualOrdinance ldsIndividualOrdinance)
+    {
+        DateLdsOrdinance = string.IsNullOrEmpty(ldsIndividualOrdinance.DateLdsOrdinance) ? null : ldsIndividualOrdinance.DateLdsOrdinance;
+        TempleCode = string.IsNullOrEmpty(ldsIndividualOrdinance.TempleCode) ? null : ldsIndividualOrdinance.TempleCode;
+        PlaceLivingOrdinance = string.IsNullOrEmpty(ldsIndividualOrdinance.PlaceLivingOrdinance) ? null : ldsIndividualOrdinance.PlaceLivingOrdinance;
+        LdsBaptismDateStatus = ldsIndividualOrdinance.LdsBaptismDateStatus.IsEmpty ? null : ldsIndividualOrdinance.LdsBaptismDateStatus;
+        NoteStructures = ldsIndividualOrdinance.NoteStructures.Count == 0 ? null : ldsIndividualOrdinance.NoteStructures;
+        SourceCitations = ldsIndividualOrdinance.SourceCitations.Count == 0 ? null : ldsIndividualOrdinance.SourceCitations;
+    }
+
+    public string? DateLdsOrdinance { get; set; }
+    public string? TempleCode { get; set; }
+    public string? PlaceLivingOrdinance { get; set; }
+    public LdsOrdinanceStatus? LdsBaptismDateStatus { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<SourceCitation>? SourceCitations { get; set; }
 }
 
 #region LDS_INDIVIDUAL_ORDINANCE p. 

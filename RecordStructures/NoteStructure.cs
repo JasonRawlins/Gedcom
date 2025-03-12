@@ -1,8 +1,11 @@
 ﻿using Gedcom.Core;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(NoteStructureJsonConverter))]
 public class NoteStructure : RecordStructureBase
 {
     public NoteStructure() : base() { }
@@ -20,6 +23,26 @@ public class NoteStructure : RecordStructureBase
             return text.ToString();
         }
     }
+}
+
+internal class NoteStructureJsonConverter : JsonConverter<NoteStructure>
+{
+    public override NoteStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, NoteStructure noteStructure, JsonSerializerOptions options)
+    {
+        var noteStructureJson = new NoteStructureJson(noteStructure);
+        JsonSerializer.Serialize(writer, noteStructureJson, noteStructureJson.GetType(), options);
+    }
+}
+
+internal class NoteStructureJson
+{
+    public NoteStructureJson(NoteStructure noteStructure)
+    {
+        Text = noteStructure.Text;
+    }
+
+    public string Text { get; set; }
 }
 
 #region NOTE_STRUCTURE p. 37

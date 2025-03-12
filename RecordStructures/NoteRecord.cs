@@ -1,7 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(NoteRecordJsonConverter))]
 public class NoteRecord : RecordStructureBase
 {
     public NoteRecord() : base() { }
@@ -10,6 +13,30 @@ public class NoteRecord : RecordStructureBase
     public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordId => _(C.RIN);
     public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
+}
+
+internal class NoteRecordJsonConverter : JsonConverter<NoteRecord>
+{
+    public override NoteRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, NoteRecord noteRecord, JsonSerializerOptions options)
+    {
+        var noteRecordJson = new NoteRecordJson(noteRecord);
+        JsonSerializer.Serialize(writer, noteRecordJson, noteRecordJson.GetType(), options);
+    }
+}
+
+internal class NoteRecordJson
+{
+    public NoteRecordJson(NoteRecord noteRecord)
+    {
+        UserReferenceNumber = noteRecord.UserReferenceNumber.IsEmpty ? null : noteRecord.UserReferenceNumber;
+        AutomatedRecordId = string.IsNullOrEmpty(noteRecord.AutomatedRecordId) ? null : noteRecord.AutomatedRecordId;
+        ChangeDate = noteRecord.ChangeDate.IsEmpty ? null : noteRecord.ChangeDate;
+    }
+
+    public UserReferenceNumber? UserReferenceNumber { get; set; }
+    public string? AutomatedRecordId { get; set; }
+    public ChangeDate? ChangeDate { get; set; }
 }
 
 #region NOTE_RECORD (NOTE) p. 27

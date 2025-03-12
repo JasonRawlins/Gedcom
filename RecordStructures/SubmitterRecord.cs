@@ -25,8 +25,8 @@ internal class SubmitterRecordJsonConverter : JsonConverter<SubmitterRecord>
     public override SubmitterRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
     public override void Write(Utf8JsonWriter writer, SubmitterRecord submitterRecord, JsonSerializerOptions options)
     {
-        var mapJson = new SubmitterRecordJson(submitterRecord);
-        JsonSerializer.Serialize(writer, mapJson, mapJson.GetType(), options);
+        var submitterRecordJson = new SubmitterRecordJson(submitterRecord);
+        JsonSerializer.Serialize(writer, submitterRecordJson, submitterRecordJson.GetType(), options);
     }
 }
 

@@ -1,7 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(LdsSpouseSealingJsonConverter))]
 public class LdsSpouseSealing : RecordStructureBase
 {
     public LdsSpouseSealing() : base() { }
@@ -13,6 +16,36 @@ public class LdsSpouseSealing : RecordStructureBase
     public LdsOrdinanceStatus LdsSpouseSealingDateStatus => First<LdsOrdinanceStatus>(C.STAT);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
+}
+
+internal class LdsSpouseSealingJsonConverter : JsonConverter<LdsSpouseSealing>
+{
+    public override LdsSpouseSealing? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, LdsSpouseSealing ldsSpouseSealing, JsonSerializerOptions options)
+    {
+        var ldsSpouseSealingJson = new LdsSpouseSealingJson(ldsSpouseSealing);
+        JsonSerializer.Serialize(writer, ldsSpouseSealingJson, ldsSpouseSealingJson.GetType(), options);
+    }
+}
+
+internal class LdsSpouseSealingJson
+{
+    public LdsSpouseSealingJson(LdsSpouseSealing ldsSpouseSealing)
+    {
+        DateLdsOrdinance = string.IsNullOrEmpty(ldsSpouseSealing.DateLdsOrdinance) ? null : ldsSpouseSealing.DateLdsOrdinance;
+        TempleCode = string.IsNullOrEmpty(ldsSpouseSealing.TempleCode) ? null : ldsSpouseSealing.TempleCode;
+        PlaceLivingOrdinance = string.IsNullOrEmpty(ldsSpouseSealing.PlaceLivingOrdinance) ? null : ldsSpouseSealing.PlaceLivingOrdinance;
+        LdsSpouseSealingDateStatus = ldsSpouseSealing.LdsSpouseSealingDateStatus.IsEmpty ? null : ldsSpouseSealing.LdsSpouseSealingDateStatus;
+        NoteStructures = ldsSpouseSealing.NoteStructures.Count == 0 ? null : ldsSpouseSealing.NoteStructures;
+        SourceCitations = ldsSpouseSealing.SourceCitations.Count == 0 ? null : ldsSpouseSealing.SourceCitations;
+    }
+
+    public string? DateLdsOrdinance { get; set; }
+    public string? TempleCode { get; set; }
+    public string? PlaceLivingOrdinance { get; set; }
+    public LdsOrdinanceStatus? LdsSpouseSealingDateStatus { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<SourceCitation>? SourceCitations { get; set; }
 }
 
 #region LDS_SPOUSE_SEALING p. 36
