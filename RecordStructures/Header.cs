@@ -1,7 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(HeaderJsonConverter))]
 public class Header : RecordStructureBase
 {
     public Header() : base() { }
@@ -19,6 +22,43 @@ public class Header : RecordStructureBase
     public string LanguageOfText => _(C.LANG);
     public string PlaceHierarchy => Record.Records.FirstOrDefault(r => r.Tag.Equals(C.PLAC))?.Records.First(r => r.Tag.Equals(C.FORM)).Value ?? "";
     public NoteStructure GedcomContentDescription => First<NoteStructure>(C.NOTE);
+}
+
+internal class HeaderJsonConverter : JsonConverter<Header>
+{
+    public override Header? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, Header header, JsonSerializerOptions options)
+    {
+        var headerJson = new HeaderJson(header);
+        JsonSerializer.Serialize(writer, headerJson, headerJson.GetType(), options);
+    }
+}
+
+internal class HeaderJson : GedcomJson
+{
+    public HeaderJson(Header header)
+    {
+        HeaderSOUR = JsonRecord(header.HeaderSOUR);
+        ReceivingSystemName = JsonString(header.ReceivingSystemName);
+        TransmissionDate = JsonRecord(header.TransmissionDate);
+        Submitter = JsonString(header.Submitter);
+        SubmissionRecord = JsonRecord(header.SubmissionRecord);
+        FileName = JsonString(header.FileName);
+        CopyrightGedcomFile = JsonString(header.CopyrightGedcomFile);
+    }
+
+    public HeaderSOUR? HeaderSOUR { get; set; }
+    public string? ReceivingSystemName { get; set; }
+    public Date? TransmissionDate { get; set; }
+    public string? Submitter { get; set; }
+    public SubmissionRecord? SubmissionRecord { get; set; }
+    public string? FileName { get; set; }
+    public string? CopyrightGedcomFile { get; set; }
+    public GEDC? Gedcom { get; set; }
+    public CharacterSet? CharacterSet { get; set; }
+    public string? LanguageOfText { get; set; }
+    public string? PlaceHierarchy { get; set; }
+    public NoteStructure? GedcomContentDescription { get; set; }
 }
 
 #region HEADER p. 23

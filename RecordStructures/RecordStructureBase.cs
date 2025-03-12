@@ -10,8 +10,8 @@ public class RecordStructureBase
     [JsonIgnore]
     public bool IsEmpty => Record.IsEmpty;
     
-    public Record this[string tag] => this[[tag]];
-    public Record this[IEnumerable<string> tagPath]
+    private Record this[string tag] => this[[tag]];
+    private Record this[IEnumerable<string> tagPath]
     {
         get
         {
@@ -31,15 +31,15 @@ public class RecordStructureBase
         }
     }
 
-    public RecordStructureBase() { }
+    internal RecordStructureBase() { }
     public RecordStructureBase(Record record) => Record = record;
     internal void SetRecord(Record record) => Record = record;
 
     // The method "_" finds a child record value by tag name. 
     protected string _(string tag) => First(tag).Value;
     protected Record First(string tag) => Record.Records.FirstOrDefault(r => r.Tag.Equals(tag)) ?? Record.Empty;
-    protected List<Record> List(Func<Record, bool> predicate) => Record.Records.Where(predicate).ToList();
     protected Record Single(Func<Record, bool> predicate) => Record.Records.SingleOrDefault(predicate) ?? Record.Empty;
+    protected List<Record> List(Func<Record, bool> predicate) => Record.Records.Where(predicate).ToList();
     protected List<string> ListValues(string tag) => Record.Records.Where(r => r.Tag.Equals(tag)).Select(r => r.Value).ToList();
     protected T First<T>(string tag) where T : RecordStructureBase, new() => CreateRecordStructureList<T>(tag, Record).FirstOrDefault() ?? Empty<T>();
     protected List<T> List<T>(string tag) where T : RecordStructureBase, new() => CreateRecordStructureList<T>(tag, Record);

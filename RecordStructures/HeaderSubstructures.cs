@@ -1,7 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(HeaderSOUR))]
 public class HeaderSOUR : RecordStructureBase
 {
     public HeaderSOUR() : base() { }
@@ -14,6 +17,35 @@ public class HeaderSOUR : RecordStructureBase
     public HeaderDATA HeaderDATA => First<HeaderDATA>(C.DATA);
 }
 
+internal class HeaderSOURJsonConverter : JsonConverter<HeaderSOUR>
+{
+    public override HeaderSOUR? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, HeaderSOUR headerSOUR, JsonSerializerOptions options)
+    {
+        var headerSOURJson = new HeaderSOURJson(headerSOUR);
+        JsonSerializer.Serialize(writer, headerSOURJson, headerSOURJson.GetType(), options);
+    }
+}
+
+internal class HeaderSOURJson
+{
+    public HeaderSOURJson(HeaderSOUR headerSOUR)
+    {
+        Xref = string.IsNullOrEmpty(headerSOUR.Xref) ? null : headerSOUR.Xref;
+        Version = string.IsNullOrEmpty(headerSOUR.Version) ? null : headerSOUR.Version;
+        NameOfProduct = string.IsNullOrEmpty(headerSOUR.NameOfProduct) ? null : headerSOUR.NameOfProduct;
+        HeaderCORP = headerSOUR.HeaderCORP.IsEmpty ? null : headerSOUR.HeaderCORP;
+        HeaderDATA = headerSOUR.HeaderDATA.IsEmpty ? null : headerSOUR.HeaderDATA;
+    }
+
+    public string? Xref { get; set; }
+    public string? Version { get; set; }
+    public string? NameOfProduct { get; set; }
+    public HeaderCORP? HeaderCORP { get; set; }
+    public HeaderDATA? HeaderDATA { get; set; }
+}
+
+[JsonConverter(typeof(HeaderCORPJsonConverter))]
 public class HeaderCORP : RecordStructureBase, IAddressStructure
 {
     public HeaderCORP() : base() { }
@@ -22,13 +54,49 @@ public class HeaderCORP : RecordStructureBase, IAddressStructure
     public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
 
     #region IAddressStructure
+
     public List<string> PhoneNumbers => ListValues(C.PHON);
     public List<string> AddressEmails => ListValues(C.EMAIL);
     public List<string> AddressFaxNumbers => ListValues(C.FAX);
     public List<string> AddressWebPages => ListValues(C.WWW);
+
     #endregion
 }
 
+internal class HeaderCORPJsonConverter : JsonConverter<HeaderCORP>
+{
+    public override HeaderCORP? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, HeaderCORP headerCORP, JsonSerializerOptions options)
+    {
+        var headerCORPJson = new HeaderCORPJson(headerCORP);
+        JsonSerializer.Serialize(writer, headerCORPJson, headerCORPJson.GetType(), options);
+    }
+}
+
+internal class HeaderCORPJson
+{
+    public HeaderCORPJson(HeaderCORP headerCORP)
+    {
+        AddressStructure = headerCORP.AddressStructure.IsEmpty ? null : headerCORP.AddressStructure;
+        PhoneNumbers = headerCORP.PhoneNumbers.Count == 0 ? null : headerCORP.PhoneNumbers;
+        AddressEmails = headerCORP.AddressEmails.Count == 0 ? null : headerCORP.AddressEmails;
+        AddressFaxNumbers = headerCORP.AddressFaxNumbers.Count == 0 ? null : headerCORP.AddressFaxNumbers;
+        AddressWebPages = headerCORP.AddressWebPages.Count == 0 ? null : headerCORP.AddressWebPages;
+    }
+
+    public AddressStructure? AddressStructure { get; set; }
+
+    #region IAddressStructure
+
+    public List<string>? PhoneNumbers { get; set; }
+    public List<string>? AddressEmails { get; set; }
+    public List<string>? AddressFaxNumbers { get; set; }
+    public List<string>? AddressWebPages { get; set; }
+
+    #endregion
+}
+
+[JsonConverter(typeof(HeaderDATAJsonConverter))]
 public class HeaderDATA : RecordStructureBase
 {
     public HeaderDATA() : base() { }
@@ -36,6 +104,28 @@ public class HeaderDATA : RecordStructureBase
 
     public string PublicationDate => _(C.DATE);
     public NoteStructure CopyrightSourceData => First<NoteStructure>(C.COPR);
+}
+
+internal class HeaderDATAJsonConverter : JsonConverter<HeaderDATA>
+{
+    public override HeaderDATA? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, HeaderDATA headerDATA, JsonSerializerOptions options)
+    {
+        var headerDATAJson = new HeaderDATAJson(headerDATA);
+        JsonSerializer.Serialize(writer, headerDATAJson, headerDATAJson.GetType(), options);
+    }
+}
+
+internal class HeaderDATAJson
+{
+    public HeaderDATAJson(HeaderDATA headerDATA)
+    {
+        PublicationDate = string.IsNullOrEmpty(headerDATA.PublicationDate) ? null : headerDATA.PublicationDate;
+        CopyrightSourceData = headerDATA.CopyrightSourceData.IsEmpty ? null : headerDATA.CopyrightSourceData;
+    }
+
+    public string? PublicationDate { get; set; }
+    public NoteStructure? CopyrightSourceData { get; set; }
 }
 
 #region HeaderSOUR p. 23
