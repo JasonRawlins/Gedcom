@@ -1,8 +1,11 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
-// I named this class after the tag name because there is already a class named Gedcom.cs. Find a more appropriate name.
+// I named this class after the tag name because there is already a class named Gedcom.cs.
+[JsonConverter(typeof(GEDCJsonConverter))]
 public class GEDC : RecordStructureBase
 {
     public GEDC() : base() { }
@@ -10,6 +13,28 @@ public class GEDC : RecordStructureBase
 
     public string VersionNumber => _(C.VERS);
     public string GedcomForm => _(C.FORM);
+}
+
+internal class GEDCJsonConverter : JsonConverter<GEDC>
+{
+    public override GEDC? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, GEDC gedc, JsonSerializerOptions options)
+    {
+        var gedcJson = new GEDCJson(gedc);
+        JsonSerializer.Serialize(writer, gedcJson, gedcJson.GetType(), options);
+    }
+}
+
+internal class GEDCJson : GedcomJson
+{
+    public GEDCJson(GEDC gedc)
+    {
+        VersionNumber = JsonString(gedc.VersionNumber);
+        GedcomForm = JsonString(gedc.GedcomForm);
+    }
+
+    public string? VersionNumber { get; set; }
+    public string? GedcomForm { get; set; }
 }
 
 #region STRUCTURE_NAME p. 23

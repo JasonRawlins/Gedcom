@@ -1,7 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(ChildToFamilyLinkJsonConverter))]
 public class ChildToFamilyLink : RecordStructureBase
 {
     public ChildToFamilyLink() : base() { }
@@ -11,6 +14,32 @@ public class ChildToFamilyLink : RecordStructureBase
     public string ChildLinkageStatus => _(C.STAT);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public string AdoptedByWhichParent => First(C.ADOP).Value;
+}
+
+internal class ChildToFamilyLinkJsonConverter : JsonConverter<ChildToFamilyLink>
+{
+    public override ChildToFamilyLink? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, ChildToFamilyLink childToFamilyLink, JsonSerializerOptions options)
+    {
+        var childToFamilyLinkJson = new ChildToFamilyLinkJson(childToFamilyLink);
+        JsonSerializer.Serialize(writer, childToFamilyLinkJson, childToFamilyLinkJson.GetType(), options);
+    }
+}
+
+internal class ChildToFamilyLinkJson : GedcomJson
+{
+    public ChildToFamilyLinkJson(ChildToFamilyLink childToFamilyLink)
+    {
+        PedigreeLinkageType = JsonString(childToFamilyLink.PedigreeLinkageType);
+        ChildLinkageStatus = JsonString(childToFamilyLink.ChildLinkageStatus);
+        NoteStructures = JsonList(childToFamilyLink.NoteStructures);
+        AdoptedByWhichParent = JsonString(childToFamilyLink.AdoptedByWhichParent);
+    }
+
+    public string? PedigreeLinkageType { get; set; }
+    public string? ChildLinkageStatus { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
+    public string? AdoptedByWhichParent { get; set; }
 }
 
 #region CHILD_TO_FAMILY_LINK p. 31-32

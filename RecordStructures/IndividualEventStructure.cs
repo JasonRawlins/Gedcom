@@ -26,7 +26,7 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
     public string RestrictionNotice => _(C.RESN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
-    public List<MultimediaLink> MultiMediaLinks => List<MultimediaLink>(C.OBJE);
+    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
 
     #endregion
 }
@@ -41,23 +41,23 @@ internal class IndividualEventStructureJsonConverter : JsonConverter<IndividualE
     }
 }
 
-internal class IndividualEventStructureJson
+internal class IndividualEventStructureJson : GedcomJson
 {
     public IndividualEventStructureJson(IndividualEventStructure individualEventStructure)
     {
-        Tag = string.IsNullOrEmpty(individualEventStructure.Tag) ? null : individualEventStructure.Tag;
-        AgeAtEvent = string.IsNullOrEmpty(individualEventStructure.AgeAtEvent) ? null : individualEventStructure.AgeAtEvent;
-        EventOrFactClassification = !string.IsNullOrEmpty(individualEventStructure.EventOrFactClassification) ? individualEventStructure.EventOrFactClassification : null; ;
-        DateValue = string.IsNullOrEmpty(individualEventStructure.DateValue) ? null : individualEventStructure.DateValue;
-        PlaceStructure = individualEventStructure.PlaceStructure.IsEmpty ? null : individualEventStructure.PlaceStructure;
-        AddressStructure = individualEventStructure.AddressStructure.IsEmpty ? null : individualEventStructure.AddressStructure;
-        ResponsibleAgency = string.IsNullOrEmpty(individualEventStructure.ResponsibleAgency) ? null : individualEventStructure.ResponsibleAgency;
-        ReligiousAffiliation = string.IsNullOrEmpty(individualEventStructure.ReligiousAffiliation) ? null : individualEventStructure.ReligiousAffiliation;
-        CauseOfEvent = string.IsNullOrEmpty(individualEventStructure.CauseOfEvent) ? null : individualEventStructure.CauseOfEvent;
-        RestrictionNotice = string.IsNullOrEmpty(individualEventStructure.RestrictionNotice) ? null : individualEventStructure.RestrictionNotice;
-        NoteStructures = individualEventStructure.NoteStructures.Count == 0 ? null : individualEventStructure.NoteStructures;
-        SourceCitations = individualEventStructure.SourceCitations.Count == 0 ? null : individualEventStructure.SourceCitations;
-        MultiMediaLinks = individualEventStructure.MultiMediaLinks.Count == 0 ? null : individualEventStructure.MultiMediaLinks;
+        Tag = JsonString(individualEventStructure.Tag);
+        AgeAtEvent = JsonString(individualEventStructure.AgeAtEvent);
+        EventOrFactClassification = JsonString(individualEventStructure.EventOrFactClassification);
+        DateValue = JsonString(individualEventStructure.DateValue);
+        PlaceStructure = JsonRecord(individualEventStructure.PlaceStructure);
+        AddressStructure = JsonRecord(individualEventStructure.AddressStructure);
+        ResponsibleAgency = JsonString(individualEventStructure.ResponsibleAgency);
+        ReligiousAffiliation = JsonString(individualEventStructure.ReligiousAffiliation);
+        CauseOfEvent = JsonString(individualEventStructure.CauseOfEvent);
+        RestrictionNotice = JsonString(individualEventStructure.RestrictionNotice);
+        NoteStructures = JsonList(individualEventStructure.NoteStructures);
+        SourceCitations = JsonList(individualEventStructure.SourceCitations);
+        MultiMediaLinks = JsonList(individualEventStructure.MultimediaLinks);
     }
 
     public string? Tag { get; set; }

@@ -1,8 +1,11 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
-public class EventDetail : RecordStructureBase
+[JsonConverter(typeof(FamilyEventDetailJsonConverter))]
+public class EventDetail : RecordStructureBase, IEventDetail
 {
     public EventDetail() : base() { }
     public EventDetail(Record record) : base(record) { }
@@ -17,7 +20,47 @@ public class EventDetail : RecordStructureBase
     public string RestrictionNotice => _(C.RESN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
-    public List<MultimediaLink> MultiMediaLinks => List<MultimediaLink>(C.OBJE);
+    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
+}
+
+internal class EventDetailJsonConverter : JsonConverter<EventDetail>
+{
+    public override EventDetail? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, EventDetail multimediaLink, JsonSerializerOptions options)
+    {
+        var multimediaLinkJson = new EventDetailJson(multimediaLink);
+        JsonSerializer.Serialize(writer, multimediaLinkJson, multimediaLinkJson.GetType(), options);
+    }
+}
+
+internal class EventDetailJson : GedcomJson
+{
+    public EventDetailJson(EventDetail eventDetail)
+    {
+        EventOrFactClassification = JsonString(eventDetail.EventOrFactClassification);
+        DateValue = JsonString(eventDetail.DateValue);
+        PlaceStructure = JsonRecord(eventDetail.PlaceStructure);
+        AddressStructure = JsonRecord(eventDetail.AddressStructure);
+        ResponsibleAgency = JsonString(eventDetail.ResponsibleAgency);
+        ReligiousAffiliation = JsonString(eventDetail.ReligiousAffiliation);
+        CauseOfEvent = JsonString(eventDetail.CauseOfEvent);
+        RestrictionNotice = JsonString(eventDetail.RestrictionNotice);
+        NoteStructures = JsonList(eventDetail.NoteStructures);
+        SourceCitations = JsonList(eventDetail.SourceCitations);
+        MultimediaLinks = JsonList(eventDetail.MultimediaLinks);
+    }
+
+    public string? EventOrFactClassification { get; set; }
+    public string? DateValue { get; set; }
+    public PlaceStructure? PlaceStructure { get; set; }
+    public AddressStructure? AddressStructure { get; set; }
+    public string? ResponsibleAgency { get; set; }
+    public string? ReligiousAffiliation { get; set; }
+    public string? CauseOfEvent { get; set; }
+    public string? RestrictionNotice { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<SourceCitation>? SourceCitations { get; set; }
+    public List<MultimediaLink>? MultimediaLinks { get; set; }
 }
 
 public interface IEventDetail
@@ -32,7 +75,7 @@ public interface IEventDetail
     string RestrictionNotice { get; }
     List<NoteStructure> NoteStructures { get; }
     List<SourceCitation> SourceCitations { get; }
-    List<MultimediaLink> MultiMediaLinks { get; }
+    List<MultimediaLink> MultimediaLinks { get; }
 }
 
 #region EVENT_DETAIL p. 34

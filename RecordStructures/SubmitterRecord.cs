@@ -17,7 +17,7 @@ public class SubmitterRecord : RecordStructureBase
     public string SubmitterRegisteredRfn => _(C.RFN);
     public string AutomatedRecordId => _(C.RIN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public Date ChangeDate => First<Date>(C.CHAN);
+    public GedcomDate ChangeDate => First<GedcomDate>(C.CHAN);
 }
 
 internal class SubmitterRecordJsonConverter : JsonConverter<SubmitterRecord>
@@ -51,7 +51,7 @@ internal class SubmitterRecordJson
     public string? SubmitterRegisteredReferenceNumber { get; set; }
     public string? AutomatedRecordId { get; set; }
     public List<NoteStructure>? NoteStructures { get; set; }
-    public Date? ChangeDate { get; set; }
+    public GedcomDate? ChangeDate { get; set; }
 }
 
 #region SUBMITTER_RECORD p. 28-29

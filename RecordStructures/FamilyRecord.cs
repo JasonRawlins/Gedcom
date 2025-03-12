@@ -1,9 +1,13 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(FamilyRecordJsonConverter))]
 public class FamilyRecord : RecordStructureBase
 {
+    internal FamilyRecord() : base() { }
     public FamilyRecord(Record record) : base(record) { }
 
     public string RestrictionNotice => _(C.RESN);
@@ -19,9 +23,57 @@ public class FamilyRecord : RecordStructureBase
     public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
-    public List<MultimediaLink> MultiMediaLinks => List<MultimediaLink>(C.OBJE);
+    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
     public string AdoptedByWhichParent => _(C.ADOP);
     public override string ToString() => $"'{Husband}' and '{Wife}' with children {string.Join(',', Children)})";
+}
+
+internal class FamilyRecordJsonConverter : JsonConverter<FamilyRecord>
+{
+    public override FamilyRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, FamilyRecord familyRecord, JsonSerializerOptions options)
+    {
+        var familyRecordJson = new FamilyRecordJson(familyRecord);
+        JsonSerializer.Serialize(writer, familyRecordJson, familyRecordJson.GetType(), options);
+    }
+}
+
+internal class FamilyRecordJson : GedcomJson
+{
+    public FamilyRecordJson(FamilyRecord familyRecord)
+    {
+        RestrictionNotice = JsonString(familyRecord.RestrictionNotice);
+        FamilyEventStructures = JsonList(familyRecord.FamilyEventStructures);
+        Husband = JsonString(familyRecord.Husband);
+        Wife = JsonString(familyRecord.Wife);
+        Children = JsonList(familyRecord.Children);
+        CountOfChildren = JsonString(familyRecord.CountOfChildren);
+        Submitter = JsonString(familyRecord.Submitter);
+        // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
+        UserReferenceNumbers = JsonList(familyRecord.UserReferenceNumbers);
+        AutomatedRecordNumber = JsonString(familyRecord.AutomatedRecordNumber);
+        ChangeDate = JsonRecord(familyRecord.ChangeDate);
+        NoteStructures = JsonList(familyRecord.NoteStructures);
+        SourceCitations = JsonList(familyRecord.SourceCitations);
+        MultimediaLinks = JsonList(familyRecord.MultimediaLinks);
+        AdoptedByWhichParent = JsonString(familyRecord.AdoptedByWhichParent);
+    }
+
+    public string? RestrictionNotice{ get; set; }
+    public List<FamilyEventStructure>? FamilyEventStructures { get; set; }
+    public string? Husband { get; set; }
+    public string? Wife { get; set; }
+    public List<string>? Children { get; set; }
+    public string? CountOfChildren { get; set; }
+    public string? Submitter { get; set; }
+    // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
+    public List<UserReferenceNumber>? UserReferenceNumbers { get; set; }
+    public string? AutomatedRecordNumber { get; set; }
+    public ChangeDate? ChangeDate { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<SourceCitation>? SourceCitations { get; set; }
+    public List<MultimediaLink>? MultimediaLinks { get; set; }
+    public string? AdoptedByWhichParent { get; set; }
 }
 
 #region FAM_RECORD (FAM) p. 24

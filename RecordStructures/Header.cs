@@ -12,7 +12,7 @@ public class Header : RecordStructureBase
     
     public HeaderSOUR HeaderSOUR => First<HeaderSOUR>(C.SOUR);
     public string ReceivingSystemName => _(C.DEST);
-    public Date TransmissionDate => First<Date>(C.DATE);
+    public GedcomDate TransmissionDate => First<GedcomDate>(C.DATE);
     public string Submitter => _(C.SUBM);
     public SubmissionRecord SubmissionRecord => First<SubmissionRecord>(C.SUBN);
     public string FileName => _(C.FILE);
@@ -45,11 +45,16 @@ internal class HeaderJson : GedcomJson
         SubmissionRecord = JsonRecord(header.SubmissionRecord);
         FileName = JsonString(header.FileName);
         CopyrightGedcomFile = JsonString(header.CopyrightGedcomFile);
+        Gedcom = JsonRecord(header.Gedcom);
+        CharacterSet = JsonRecord(header.CharacterSet);
+        LanguageOfText = JsonString(header.LanguageOfText);
+        PlaceHierarchy = JsonString(header.PlaceHierarchy);
+        GedcomContentDescription = JsonRecord(header.GedcomContentDescription);
     }
 
     public HeaderSOUR? HeaderSOUR { get; set; }
     public string? ReceivingSystemName { get; set; }
-    public Date? TransmissionDate { get; set; }
+    public GedcomDate? TransmissionDate { get; set; }
     public string? Submitter { get; set; }
     public SubmissionRecord? SubmissionRecord { get; set; }
     public string? FileName { get; set; }

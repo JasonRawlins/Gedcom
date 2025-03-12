@@ -1,7 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(FamilyEventDetail))]
 public class FamilyEventDetail : RecordStructureBase
 {
     public FamilyEventDetail() : base() { }
@@ -12,12 +15,28 @@ public class FamilyEventDetail : RecordStructureBase
     public EventDetail EventDetail => First<EventDetail>(C.EVEN);
 }
 
-public class FamilyPartner : RecordStructureBase
+internal class FamilyEventDetailJsonConverter : JsonConverter<FamilyEventDetail>
 {
-    public FamilyPartner() { }
-    public FamilyPartner(Record record) { }
-    public string Name => Record.Value;
-    public string AgeAtEvent => Record.Records.FirstOrDefault(r => r.Tag.Equals(C.AGE))?.Value ?? "";
+    public override FamilyEventDetail? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, FamilyEventDetail familyEventDetail, JsonSerializerOptions options)
+    {
+        var familyEventDetailJson = new FamilyEventDetailJson(familyEventDetail);
+        JsonSerializer.Serialize(writer, familyEventDetailJson, familyEventDetailJson.GetType(), options);
+    }
+}
+
+internal class FamilyEventDetailJson : GedcomJson
+{
+    public FamilyEventDetailJson(FamilyEventDetail familyEventDetail)
+    {
+        Husband = JsonRecord(familyEventDetail.Husband);
+        Wife = JsonRecord(familyEventDetail.Wife);
+        EventDetail = JsonRecord(familyEventDetail.EventDetail);
+    }
+
+    public FamilyPartner? Husband { get; set; }
+    public FamilyPartner? Wife { get; set; }
+    public EventDetail? EventDetail { get; set; }
 }
 
 #region FAMILY_EVENT_DETAIL p. 32
