@@ -33,7 +33,7 @@ public class IndividualRecord : RecordStructureBase
     public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
-    public List<MultimediaLink> MultiMediaLinks => List<MultimediaLink>(C.OBJE);
+    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
 
     private bool IsIndividualEventStructure(Record record)
     {
@@ -68,28 +68,30 @@ internal class IndividualRecordJson : GedcomJson
     {
         Xref = individualRecord.Xref;
         RestrictionNotice = JsonString(individualRecord.RestrictionNotice);
-        Births = JsonList(individualRecord.Births);
+        PersonalNameStructures = JsonList(individualRecord.PersonalNameStructures);
+        SexValue = JsonString(individualRecord.SexValue);
+        IndividualEventStructures = JsonList(individualRecord.IndividualEventStructures);
+        IndividualAttributeStructures = JsonList(individualRecord.IndividualAttributeStructures);
+        LdsIndividualOrdinances = JsonList(individualRecord.LdsIndividualOrdinances);
+        ChildToFamilyLinks = JsonList(individualRecord.ChildToFamilyLinks);
+        SpouseToFamilyLinks = JsonList(individualRecord.SpouseToFamilyLinks);
+        Submitter = JsonString(individualRecord.Submitter);
+        AssociationStructures = JsonList(individualRecord.AssociationStructures);
+        Aliases = JsonList(individualRecord.Aliases);
+        AncestorInterests = JsonList(individualRecord.AncestorInterests);
+        DescendantInterests = JsonList(individualRecord.DescendantInterests);
+        PermanentRecordFileNumber = JsonString(individualRecord.PermanentRecordFileNumber);
+        AncestralFileNumber = JsonString(individualRecord.AncestralFileNumber);
+        UserReferenceNumbers = JsonList(individualRecord.UserReferenceNumbers);
+        AutomatedRecordId = JsonString(individualRecord.AutomatedRecordId);
+        ChangeDate = JsonRecord(individualRecord.ChangeDate);
+        NoteStructures = JsonList(individualRecord.NoteStructures);
+        SourceCitations = JsonList(individualRecord.SourceCitations);
+        MultimediaLinks = JsonList(individualRecord.MultimediaLinks);
 
-        //PersonalNameStructures => List<PersonalNameStructure>(C.NAME);
-        //SexValue => _(C.SEX);
-        //IndividualEventStructures => List(IsIndividualEventStructure).Select(r => new IndividualEventStructure(r)).ToList();
-        //IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
-        //LdsIndividualOrdinances => List<LdsIndividualOrdinance>(C.ORDI);
-        //ChildToFamilyLinks => List<ChildToFamilyLink>(C.FAMC);
-        //SpouseToFamilyLinks => List<SpouseToFamilyLink>(C.ASSO);
-        //Submitter => _(C.SUBN);
-        //AssociationStructures => List<AssociationStructure>(C.ASSO);
-        //Aliases => List(r => r.Tag.Equals(C.ALIA)).Select(r => r.Value).ToList();
-        //AncestorInterests => List(r => r.Tag.Equals(C.ANCI)).Select(r => r.Value).ToList();
-        //DescendantInterests => List(r => r.Tag.Equals(C.DESI)).Select(r => r.Value).ToList();
-        //PermanentRecordFileNumber => _(C.RFN);
-        //AncestralFileNumber => _(C.AFN);
-        //UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
-        //AutomatedRecordId => _(C.RIN);
-        //ChangeDate => First<ChangeDate>(C.CHAN);
-        //NoteStructures => List<NoteStructure>(C.NOTE);
-        //SourceCitations => List<SourceCitation>(C.SOUR);
-        //MultiMediaLinks => List<MultimediaLink>(C.OBJE);
+        // Computed properties
+        Births = JsonList(individualRecord.Births);
+        Marriages = JsonList(individualRecord.Marriages);
     }
 
     public string? Xref { get; set; }
@@ -113,7 +115,9 @@ internal class IndividualRecordJson : GedcomJson
     public ChangeDate? ChangeDate { get; set; }
     public List<NoteStructure>? NoteStructures { get; set; }
     public List<SourceCitation>? SourceCitations { get; set; }
-    public List<MultimediaLink>? MultiMediaLinks { get; set; }
+    public List<MultimediaLink>? MultimediaLinks { get; set; }
+
+    // Computed properties
     public List<IndividualEventStructure>? Births { get; set; }
     public List<IndividualEventStructure>? Marriages { get; set; }
 }

@@ -13,7 +13,7 @@ public class SourceCitation : RecordStructureBase
     public string WhereWithinSource => _(C.PAGE);
     public EventTypeCitedFrom EventTypeCitedFrom => First<EventTypeCitedFrom>(C.EVEN);
     public SourceCitationData Data => First<SourceCitationData>(C.DATA);
-    public List<MultimediaLink> MultiMediaLinks => List<MultimediaLink>(C.OBJE);
+    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public string CertaintyAssessment => _(C.QUAY);
 }
@@ -35,7 +35,7 @@ internal class SourceCitationJson : GedcomJson
         WhereWithinSource = JsonString(sourceCitation.WhereWithinSource);
         EventTypeCitedFrom = JsonRecord(sourceCitation.EventTypeCitedFrom);
         Data = JsonRecord(sourceCitation.Data);
-        MultiMediaLinks = JsonList(sourceCitation.MultiMediaLinks);
+        MultimediaLinks = JsonList(sourceCitation.MultimediaLinks);
         NoteStructures = JsonList(sourceCitation.NoteStructures);
         CertaintyAssessment = JsonString(sourceCitation.CertaintyAssessment);
     }
@@ -43,7 +43,7 @@ internal class SourceCitationJson : GedcomJson
     public string? WhereWithinSource { get; set; }
     public EventTypeCitedFrom? EventTypeCitedFrom { get; set; }
     public SourceCitationData? Data { get; set; }
-    public List<MultimediaLink>? MultiMediaLinks { get; set; }
+    public List<MultimediaLink>? MultimediaLinks { get; set; }
     public List<NoteStructure>? NoteStructures { get; set; }
     public string? CertaintyAssessment { get; set; }
 }

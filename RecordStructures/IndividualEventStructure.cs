@@ -56,7 +56,7 @@ internal class IndividualEventStructureJson : GedcomJson
         RestrictionNotice = JsonString(individualEventStructure.RestrictionNotice);
         NoteStructures = JsonList(individualEventStructure.NoteStructures);
         SourceCitations = JsonList(individualEventStructure.SourceCitations);
-        MultiMediaLinks = JsonList(individualEventStructure.MultimediaLinks);
+        MultimediaLinks = JsonList(individualEventStructure.MultimediaLinks);
     }
 
     public string? Tag { get; set; }
@@ -71,7 +71,7 @@ internal class IndividualEventStructureJson : GedcomJson
     public string? RestrictionNotice { get; set; }
     public List<NoteStructure>? NoteStructures { get; set; }
     public List<SourceCitation>? SourceCitations { get; set; }
-    public List<MultimediaLink>? MultiMediaLinks { get; set; }
+    public List<MultimediaLink>? MultimediaLinks { get; set; }
 }
 
 #region INDIVIDUAL_EVENT_STRUCTURE p. 34
