@@ -31,7 +31,6 @@ internal class SpouseToFamilyLinkJson
     }
 
     public List<NoteStructure>? NoteStructures { get; set; }
-
 }
 
 #region SPOUSE_TO_FAMILY_LINK p. 40

@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
-[JsonConverter(typeof(SubmitterRecord))]
+[JsonConverter(typeof(SubmitterRecordJsonConverter))]
 public class SubmitterRecord : RecordStructureBase
 {
     public SubmitterRecord() : base() { }
@@ -30,18 +30,18 @@ internal class SubmitterRecordJsonConverter : JsonConverter<SubmitterRecord>
     }
 }
 
-internal class SubmitterRecordJson
+internal class SubmitterRecordJson : GedcomJson
 {
     public SubmitterRecordJson(SubmitterRecord submitterRecord)
     {
-        SubmitterName = string.IsNullOrEmpty(submitterRecord.SubmitterName) ? null : submitterRecord.SubmitterName;
-        AddressStructure = submitterRecord.AddressStructure.IsEmpty ? null : submitterRecord.AddressStructure;
-        MultimediaLinks = submitterRecord.MultimediaLinks.Count == 0 ? null : submitterRecord.MultimediaLinks;
-        LanguagePreferences = submitterRecord.LanguagePreferences.Count == 0 ? null : submitterRecord.LanguagePreferences;
-        SubmitterRegisteredReferenceNumber = string.IsNullOrEmpty(submitterRecord.SubmitterRegisteredRfn) ? null : submitterRecord.SubmitterRegisteredRfn;
-        AutomatedRecordId = string.IsNullOrEmpty(submitterRecord.AutomatedRecordId) ? null : submitterRecord.AutomatedRecordId;
-        NoteStructures = submitterRecord.NoteStructures.Count == 0 ? null : submitterRecord.NoteStructures;
-        ChangeDate = submitterRecord.ChangeDate.IsEmpty ? null : submitterRecord.ChangeDate;
+        SubmitterName = JsonString(submitterRecord.SubmitterName);
+        AddressStructure = JsonRecord(submitterRecord.AddressStructure);
+        MultimediaLinks = JsonList(submitterRecord.MultimediaLinks);
+        LanguagePreferences = JsonList(submitterRecord.LanguagePreferences);
+        SubmitterRegisteredReferenceNumber = JsonString(submitterRecord.SubmitterRegisteredRfn);
+        AutomatedRecordId = JsonString(submitterRecord.AutomatedRecordId);
+        NoteStructures = JsonList(submitterRecord.NoteStructures);
+        ChangeDate = JsonRecord(submitterRecord.ChangeDate);
     }
 
     public string? SubmitterName { get; set; }

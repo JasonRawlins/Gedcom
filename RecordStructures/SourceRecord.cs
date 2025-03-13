@@ -34,22 +34,22 @@ internal class SourceRecordJsonConverter : JsonConverter<SourceRecord>
     }
 }
 
-internal class SourceRecordJson
+internal class SourceRecordJson : GedcomJson
 {
     public SourceRecordJson(SourceRecord sourceRecord)
     {
-        SourceRecordData = sourceRecord.SourceRecordData.IsEmpty ? null : sourceRecord.SourceRecordData;
-        SourceOriginator = sourceRecord.SourceOriginator.IsEmpty ? null : sourceRecord.SourceOriginator;
-        SourceDescriptiveTitle = sourceRecord.SourceDescriptiveTitle.IsEmpty ? null : sourceRecord.SourceDescriptiveTitle;
-        SourceFiledByEntry = sourceRecord.SourceFiledByEntry.IsEmpty ? null : sourceRecord.SourceFiledByEntry;
-        SourcePublicationFacts = sourceRecord.SourcePublicationFacts.IsEmpty ? null : sourceRecord.SourcePublicationFacts;
-        TextFromSource = sourceRecord.TextFromSource.IsEmpty ? null : sourceRecord.TextFromSource;
-        SourceRepositoryCitations = sourceRecord.SourceRepositoryCitations.Count == 0 ? null : sourceRecord.SourceRepositoryCitations;
-        UserReferenceNumbers = sourceRecord.UserReferenceNumbers.Count == 0 ? null : sourceRecord.UserReferenceNumbers;
-        AutomatedRecordId = string.IsNullOrEmpty(sourceRecord.AutomatedRecordId) ? null : sourceRecord.AutomatedRecordId;
-        ChangeDate = sourceRecord.ChangeDate.IsEmpty ? null : sourceRecord.ChangeDate;
-        NoteStructures = sourceRecord.NoteStructures.Count == 0 ? null : sourceRecord.NoteStructures;
-        MultimediaLinks = sourceRecord.MultimediaLinks.Count == 0 ? null : sourceRecord.MultimediaLinks;
+        SourceRecordData = JsonRecord(sourceRecord.SourceRecordData);
+        SourceOriginator = JsonRecord(sourceRecord.SourceOriginator);
+        SourceDescriptiveTitle = JsonRecord(sourceRecord.SourceDescriptiveTitle);
+        SourceFiledByEntry = JsonRecord(sourceRecord.SourceFiledByEntry);
+        SourcePublicationFacts = JsonRecord(sourceRecord.SourcePublicationFacts);
+        TextFromSource = JsonRecord(sourceRecord.TextFromSource);
+        SourceRepositoryCitations = JsonList(sourceRecord.SourceRepositoryCitations);
+        UserReferenceNumbers = JsonList(sourceRecord.UserReferenceNumbers);
+        AutomatedRecordId = JsonString(sourceRecord.AutomatedRecordId);
+        ChangeDate = JsonRecord(sourceRecord.ChangeDate);
+        NoteStructures = JsonList(sourceRecord.NoteStructures);
+        MultimediaLinks = JsonList(sourceRecord.MultimediaLinks);
     }
 
     public SourceRecordData? SourceRecordData { get; set; }

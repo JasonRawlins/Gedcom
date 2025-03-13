@@ -1,7 +1,10 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(AssociationStructureJsonConverter))]
 public class AssociationStructure : RecordStructureBase
 {
     public AssociationStructure() : base() { }
@@ -10,6 +13,30 @@ public class AssociationStructure : RecordStructureBase
     public string RelationIsDescriptor => _(C.RELA);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+}
+
+internal class AssociationStructureJsonConverter : JsonConverter<AssociationStructure>
+{
+    public override AssociationStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, AssociationStructure associationStructure, JsonSerializerOptions options)
+    {
+        var associationStructureJson = new AssociationStructureJson(associationStructure);
+        JsonSerializer.Serialize(writer, associationStructureJson, associationStructureJson.GetType(), options);
+    }
+}
+
+internal class AssociationStructureJson : GedcomJson
+{
+    public AssociationStructureJson(AssociationStructure associationStructure)
+    {
+        RelationIsDescriptor = JsonString(associationStructure.RelationIsDescriptor);
+        SourceCitations = JsonList(associationStructure.SourceCitations);
+        NoteStructures = JsonList(associationStructure.NoteStructures);
+    }
+
+    public string? RelationIsDescriptor { get; set; }
+    public List<SourceCitation>? SourceCitations { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
 }
 
 #region ASSOCIATION_STRUCTURE p. 31 

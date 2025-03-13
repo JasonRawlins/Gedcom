@@ -24,12 +24,12 @@ internal class SourceRepositoryCitationJsonConverter : JsonConverter<SourceRepos
     }
 }
 
-internal class SourceRepositoryCitationJson
+internal class SourceRepositoryCitationJson : GedcomJson
 {
     public SourceRepositoryCitationJson(SourceRepositoryCitation sourceRepositoryCitation)
     {
-        NoteStructures = sourceRepositoryCitation.NoteStructures.Count == 0 ? null : sourceRepositoryCitation.NoteStructures;
-        CallNumbers = sourceRepositoryCitation.CallNumbers.Count == 0 ? null : sourceRepositoryCitation.CallNumbers;
+        NoteStructures = JsonList(sourceRepositoryCitation.NoteStructures);
+        CallNumbers = JsonList(sourceRepositoryCitation.CallNumbers);
     }
 
     public List<NoteStructure>? NoteStructures { get; set; }

@@ -28,11 +28,11 @@ internal class SourceCitationJsonConverter : JsonConverter<SourceCitation>
     }
 }
 
-internal class SourceCitationJson
+internal class SourceCitationJson : GedcomJson
 {
     public SourceCitationJson(SourceCitation sourceCitation)
     {
-        WhereWithinSource = string.IsNullOrEmpty(sourceCitation.WhereWithinSource) ? null : sourceCitation.WhereWithinSource;
+        WhereWithinSource = JsonString(sourceCitation.WhereWithinSource);
         EventTypeCitedFrom = sourceCitation.EventTypeCitedFrom.IsEmpty ? null : sourceCitation.EventTypeCitedFrom;
         Data = sourceCitation.Data.IsEmpty ? null : sourceCitation.Data;
         MultiMediaLinks = sourceCitation.MultiMediaLinks.Count == 0 ? null : sourceCitation.MultiMediaLinks;

@@ -1,15 +1,39 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(ChangeDateJsonConverter))]
 public class ChangeDate : RecordStructureBase
 {
     public ChangeDate() { }
     public ChangeDate(Record record) : base(record) { }
 
     public GedcomDate ChangeDate_ => First<GedcomDate>(C.DATE);
-
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+}
+
+internal class ChangeDateJsonConverter : JsonConverter<ChangeDate>
+{
+    public override ChangeDate? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, ChangeDate changeDate, JsonSerializerOptions options)
+    {
+        var changeDateJson = new ChangeDateJson(changeDate);
+        JsonSerializer.Serialize(writer, changeDateJson, changeDateJson.GetType(), options);
+    }
+}
+
+internal class ChangeDateJson : GedcomJson
+{
+    public ChangeDateJson(ChangeDate changeDate)
+    {
+        ChangeDate = JsonRecord(changeDate.ChangeDate_);
+        NoteStructures = JsonList(changeDate.NoteStructures);
+    }
+
+    public GedcomDate? ChangeDate { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
 }
 
 #region CHANGE_DATE (CHAN) p. 31

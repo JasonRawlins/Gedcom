@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
-[JsonConverter(typeof(SubmissionRecord))]
+[JsonConverter(typeof(SubmissionRecordJsonConverter))]
 public class SubmissionRecord : RecordStructureBase
 {
     public SubmissionRecord() : base() { }
@@ -32,22 +32,20 @@ internal class SubmissionRecordJsonConverter : JsonConverter<SubmissionRecord>
     }
 }
 
-internal class SubmissionRecordJson
+internal class SubmissionRecordJson : GedcomJson
 {
     public SubmissionRecordJson(SubmissionRecord submissionRecord)
     {
         Xref = submissionRecord.Xref;
-        Submitter = string.IsNullOrEmpty(submissionRecord.Submitter) ? null : submissionRecord.Submitter;
-        NameOfFamilyFile = string.IsNullOrEmpty(submissionRecord.NameOfFamilyFile) ? null : submissionRecord.NameOfFamilyFile;
-        TempleCode = string.IsNullOrEmpty(submissionRecord.TempleCode) ? null : submissionRecord.TempleCode;
-        GenerationsOfAncestors = string.IsNullOrEmpty(submissionRecord.GenerationsOfAncestors) ? null : submissionRecord.GenerationsOfAncestors;
-        GenerationsOfDescendants = string.IsNullOrEmpty(submissionRecord.GenerationsOfDescendants) ? null : submissionRecord.GenerationsOfDescendants;
-        OrdinanceProcessFlag = string.IsNullOrEmpty(submissionRecord.OrdinanceProcessFlag) ? null : submissionRecord.OrdinanceProcessFlag;
-        AutomatedRecordId = string.IsNullOrEmpty(submissionRecord.AutomatedRecordId) ? null : submissionRecord.AutomatedRecordId;
-        Submitter = string.IsNullOrEmpty(submissionRecord.Submitter) ? null : submissionRecord.Submitter;
-        Submitter = string.IsNullOrEmpty(submissionRecord.Submitter) ? null : submissionRecord.Submitter;
-        NoteStructures = submissionRecord.NoteStructures.Count == 0 ? null : submissionRecord.NoteStructures;
-        ChangeDate = submissionRecord.ChangeDate.IsEmpty ? null : submissionRecord.ChangeDate;
+        Submitter = JsonString(submissionRecord.Submitter);
+        NameOfFamilyFile = JsonString(submissionRecord.NameOfFamilyFile);
+        TempleCode = JsonString(submissionRecord.TempleCode);
+        GenerationsOfAncestors = JsonString(submissionRecord.GenerationsOfAncestors);
+        GenerationsOfDescendants = JsonString(submissionRecord.GenerationsOfDescendants);
+        OrdinanceProcessFlag = JsonString(submissionRecord.OrdinanceProcessFlag);
+        AutomatedRecordId = JsonString(submissionRecord.AutomatedRecordId);
+        NoteStructures = JsonList(submissionRecord.NoteStructures);
+        ChangeDate = JsonRecord(submissionRecord.ChangeDate);
     }
 
     public string? Xref { get; set; }

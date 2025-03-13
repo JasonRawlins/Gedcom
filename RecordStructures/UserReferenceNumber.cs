@@ -1,5 +1,4 @@
-﻿
-using Gedcom.Core;
+﻿using Gedcom.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -24,11 +23,11 @@ internal class UserReferenceNumberJsonConverter : JsonConverter<UserReferenceNum
     }
 }
 
-internal class UserReferenceNumberJson
+internal class UserReferenceNumberJson : GedcomJson
 {
     public UserReferenceNumberJson(UserReferenceNumber userReferenceNumber)
     {
-        UserReferenceType = string.IsNullOrEmpty(userReferenceNumber.UserReferenceType) ? null : userReferenceNumber.UserReferenceType;
+        UserReferenceType = JsonString(userReferenceNumber.UserReferenceType);
     }
 
     public string? UserReferenceType { get; set; }

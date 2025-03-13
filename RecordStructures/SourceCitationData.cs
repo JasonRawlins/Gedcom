@@ -23,11 +23,11 @@ internal class SourceCitationDataJsonConverter : JsonConverter<SourceCitationDat
     }
 }
 
-internal class SourceCitationDataJson
+internal class SourceCitationDataJson : GedcomJson
 {
     public SourceCitationDataJson(SourceCitationData sourceCitationData)
     {
-        EntryRecordingDate = string.IsNullOrEmpty(sourceCitationData.EntryRecordingDate) ? null : sourceCitationData.EntryRecordingDate;
+        EntryRecordingDate = JsonString(sourceCitationData.EntryRecordingDate);
     }
 
     public string? EntryRecordingDate { get; set; }

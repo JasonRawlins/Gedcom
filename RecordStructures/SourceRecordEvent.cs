@@ -24,12 +24,12 @@ internal class SourceRecordEventJsonConverter : JsonConverter<SourceRecordEvent>
     }
 }
 
-internal class SourceRecordEventJson
+internal class SourceRecordEventJson : GedcomJson
 {
     public SourceRecordEventJson(SourceRecordEvent sourceRecordEvent)
     {
-        DatePeriod = string.IsNullOrEmpty(sourceRecordEvent.DatePeriod) ? null : sourceRecordEvent.DatePeriod;
-        SourceJurisdictionPlace = string.IsNullOrEmpty(sourceRecordEvent.SourceJurisdictionPlace) ? null : sourceRecordEvent.SourceJurisdictionPlace;
+        DatePeriod = JsonString(sourceRecordEvent.DatePeriod);
+        SourceJurisdictionPlace = JsonString(sourceRecordEvent.SourceJurisdictionPlace);
     }
 
     public string? DatePeriod { get; set; }

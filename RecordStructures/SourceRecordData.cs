@@ -25,22 +25,19 @@ internal class SourceRecordDataJsonConverter : JsonConverter<SourceRecordData>
     }
 }
 
-internal class SourceRecordDataJson
+internal class SourceRecordDataJson : GedcomJson
 {
     public SourceRecordDataJson(SourceRecordData sourceRecordData)
     {
-        EventsRecorded = sourceRecordData.EventsRecorded.Count == 0 ? null : sourceRecordData.EventsRecorded;
-        ResponsibleAgency = string.IsNullOrEmpty(sourceRecordData.ResponsibleAgency) ? null : sourceRecordData.ResponsibleAgency;
-        NoteStructures = sourceRecordData.NoteStructures.Count == 0 ? null : sourceRecordData.NoteStructures;
+        EventsRecorded = JsonList(sourceRecordData.EventsRecorded);
+        ResponsibleAgency = JsonString(sourceRecordData.ResponsibleAgency);
+        NoteStructures = JsonList(sourceRecordData.NoteStructures);
     }
 
     public List<SourceRecordEvent>? EventsRecorded { get; set; }
     public string? ResponsibleAgency { get; set; }
     public List<NoteStructure>? NoteStructures { get; set; }
 }
-
-
-
 
 #region SOURCE_RECORD (DATA) p. 27
 /* 

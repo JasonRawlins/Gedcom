@@ -1,13 +1,36 @@
 ﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+[JsonConverter(typeof(CharacterSetJsonConverter))]
 public class CharacterSet : RecordStructureBase
 {
     public CharacterSet() : base() { }
     public CharacterSet(Record record) : base(record) { }
 
     public string VersionNumber => _(C.VERS);
+}
+
+internal class CharacterSetJsonConverter : JsonConverter<CharacterSet>
+{
+    public override CharacterSet? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, CharacterSet characterSet, JsonSerializerOptions options)
+    {
+        var characterSetJson = new CharacterSetJson(characterSet);
+        JsonSerializer.Serialize(writer, characterSetJson, characterSetJson.GetType(), options);
+    }
+}
+
+internal class CharacterSetJson : GedcomJson
+{
+    public CharacterSetJson(CharacterSet characterSet)
+    {
+        VersionNumber = JsonString(characterSet.VersionNumber);
+    }
+
+    public string? VersionNumber { get; set; }
 }
 
 #region CHARACTER_SET p. 23
