@@ -35,21 +35,21 @@ internal class RepositoryRecordJsonConverter : JsonConverter<RepositoryRecord>
     }
 }
 
-internal class RepositoryRecordJson
+internal class RepositoryRecordJson : GedcomJson
 {
     public RepositoryRecordJson(RepositoryRecord repositoryRecord)
     {
-        Name = string.IsNullOrEmpty(repositoryRecord.Name) ? null : repositoryRecord.Name;
-        AddressStructure = repositoryRecord.AddressStructure.IsEmpty ? null : repositoryRecord.AddressStructure;
-        NoteStructures = repositoryRecord.NoteStructures.Count == 0 ? null : repositoryRecord.NoteStructures;
-        UserReferenceNumber = repositoryRecord.UserReferenceNumber.IsEmpty ? null : repositoryRecord.UserReferenceNumber;
-        AutomatedRecordId = string.IsNullOrEmpty(repositoryRecord.AutomatedRecordId) ? null : repositoryRecord.AutomatedRecordId;
-        ChangeDate = repositoryRecord.ChangeDate.IsEmpty ? null : repositoryRecord.ChangeDate;
-        CallNumber = repositoryRecord.CallNumber.IsEmpty ? null : repositoryRecord.CallNumber;
-        PhoneNumbers = repositoryRecord.PhoneNumbers.Count == 0 ? null : repositoryRecord.PhoneNumbers;
-        AddressEmails = repositoryRecord.AddressEmails.Count == 0 ? null : repositoryRecord.AddressEmails;
-        AddressFaxNumbers = repositoryRecord.AddressFaxNumbers.Count == 0 ? null : repositoryRecord.AddressFaxNumbers;
-        AddressWebPages = repositoryRecord.AddressWebPages.Count == 0 ? null : repositoryRecord.AddressWebPages;
+        Name = JsonString(repositoryRecord.Name);
+        AddressStructure = JsonRecord(repositoryRecord.AddressStructure);
+        NoteStructures = JsonList(repositoryRecord.NoteStructures);
+        UserReferenceNumber = JsonRecord(repositoryRecord.UserReferenceNumber);
+        AutomatedRecordId = JsonString(repositoryRecord.AutomatedRecordId);
+        ChangeDate = JsonRecord(repositoryRecord.ChangeDate);
+        CallNumber = JsonRecord(repositoryRecord.CallNumber);
+        PhoneNumbers = JsonList(repositoryRecord.PhoneNumbers);
+        AddressEmails = JsonList(repositoryRecord.AddressEmails);
+        AddressFaxNumbers = JsonList(repositoryRecord.AddressFaxNumbers);
+        AddressWebPages = JsonList(repositoryRecord.AddressWebPages);
     }
 
     public string? Name { get; set; }

@@ -33,11 +33,11 @@ internal class SourceCitationJson : GedcomJson
     public SourceCitationJson(SourceCitation sourceCitation)
     {
         WhereWithinSource = JsonString(sourceCitation.WhereWithinSource);
-        EventTypeCitedFrom = sourceCitation.EventTypeCitedFrom.IsEmpty ? null : sourceCitation.EventTypeCitedFrom;
-        Data = sourceCitation.Data.IsEmpty ? null : sourceCitation.Data;
-        MultiMediaLinks = sourceCitation.MultiMediaLinks.Count == 0 ? null : sourceCitation.MultiMediaLinks;
-        NoteStructures = sourceCitation.NoteStructures.Count == 0 ? null : sourceCitation.NoteStructures;
-        CertaintyAssessment = string.IsNullOrEmpty(sourceCitation.CertaintyAssessment) ? null : sourceCitation.CertaintyAssessment;
+        EventTypeCitedFrom = JsonRecord(sourceCitation.EventTypeCitedFrom);
+        Data = JsonRecord(sourceCitation.Data);
+        MultiMediaLinks = JsonList(sourceCitation.MultiMediaLinks);
+        NoteStructures = JsonList(sourceCitation.NoteStructures);
+        CertaintyAssessment = JsonString(sourceCitation.CertaintyAssessment);
     }
 
     public string? WhereWithinSource { get; set; }

@@ -1,10 +1,35 @@
-﻿namespace Gedcom.RecordStructures;
+﻿using Gedcom.Core;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
+namespace Gedcom.RecordStructures;
+
+[JsonConverter(typeof(IndividualAttributeStructureJsonConverter))]
 public class IndividualAttributeStructure : RecordStructureBase
 {
     public IndividualAttributeStructure() : base() { }
     public IndividualAttributeStructure(Record record) : base(record) { }
     public IndividualEventDetail IndividualEventDetail => First<IndividualEventDetail>(Record.Tag);
+}
+
+internal class IndividualAttributeStructureJsonConverter : JsonConverter<IndividualAttributeStructure>
+{
+    public override IndividualAttributeStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, IndividualAttributeStructure individualAttributeStructure, JsonSerializerOptions options)
+    {
+        var individualAttributeStructureJson = new IndividualAttributeStructureJson(individualAttributeStructure);
+        JsonSerializer.Serialize(writer, individualAttributeStructureJson, individualAttributeStructureJson.GetType(), options);
+    }
+}
+
+internal class IndividualAttributeStructureJson : GedcomJson
+{
+    public IndividualAttributeStructureJson(IndividualAttributeStructure individualAttributeStructure)
+    {
+        IndividualEventDetail = JsonRecord(individualAttributeStructure.IndividualEventDetail);
+    }
+
+    public IndividualEventDetail? IndividualEventDetail { get; set; }
 }
 
 #region INDIVIDUAL_ATTRIBUTE_STRUCTURE p. 33-34

@@ -27,16 +27,16 @@ internal class PlaceStructureJsonConverter : JsonConverter<PlaceStructure>
     }
 }
 
-internal class PlaceStructureJson
+internal class PlaceStructureJson : GedcomJson
 {
     public PlaceStructureJson(PlaceStructure placeStructure)
     {
-        PlaceName = string.IsNullOrEmpty(placeStructure.PlaceName) ? null : placeStructure.PlaceName;
-        PlaceHierarchy = string.IsNullOrEmpty(placeStructure.PlaceHierarchy) ? null : placeStructure.PlaceHierarchy;
-        PlacePhoneticVariations = placeStructure.PlacePhoneticVariations.Count == 0 ? null : placeStructure.PlacePhoneticVariations;
-        PlaceRomanizedVariations = placeStructure.PlaceRomanizedVariations.Count == 0 ? null : placeStructure.PlaceRomanizedVariations;
-        Map = placeStructure.Map.IsEmpty ? null : placeStructure.Map;
-        NoteStructures = placeStructure.NoteStructures.Count == 0 ? null : placeStructure.NoteStructures;
+        PlaceName = JsonString(placeStructure.PlaceName);
+        PlaceHierarchy = JsonString(placeStructure.PlaceHierarchy);
+        PlacePhoneticVariations = JsonList(placeStructure.PlacePhoneticVariations);
+        PlaceRomanizedVariations = JsonList(placeStructure.PlaceRomanizedVariations);
+        Map = JsonRecord(placeStructure.Map);
+        NoteStructures = JsonList(placeStructure.NoteStructures);
     }
 
     public string? PlaceName { get; set; }

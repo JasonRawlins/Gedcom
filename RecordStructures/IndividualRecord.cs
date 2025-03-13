@@ -51,6 +51,7 @@ public class IndividualRecord : RecordStructureBase
 
     public override string ToString() => $"{PersonalNameStructures.First().NamePersonal} {SexValue} ({Record.Value})";
 }
+
 internal class IndividualRecordJsonConverter : JsonConverter<IndividualRecord>
 {
     public override IndividualRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
@@ -60,13 +61,14 @@ internal class IndividualRecordJsonConverter : JsonConverter<IndividualRecord>
         JsonSerializer.Serialize(writer, individualRecordJson, individualRecordJson.GetType(), options);
     }
 }
-internal class IndividualRecordJson
+
+internal class IndividualRecordJson : GedcomJson
 {
     public IndividualRecordJson(IndividualRecord individualRecord)
     {
         Xref = individualRecord.Xref;
-        RestrictionNotice = string.IsNullOrEmpty(individualRecord.RestrictionNotice) ? null : individualRecord.RestrictionNotice;
-        Births = individualRecord.Births.Count == 0 ? null : individualRecord.Births;
+        RestrictionNotice = JsonString(individualRecord.RestrictionNotice);
+        Births = JsonList(individualRecord.Births);
 
         //PersonalNameStructures => List<PersonalNameStructure>(C.NAME);
         //SexValue => _(C.SEX);

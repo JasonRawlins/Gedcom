@@ -30,18 +30,18 @@ internal class MultimediaRecordJsonConverter : JsonConverter<MultimediaRecord>
     }
 }
 
-internal class MultimediaRecordJson
+internal class MultimediaRecordJson : GedcomJson
 {
     public MultimediaRecordJson(MultimediaRecord multimediaRecord)
     {
-        MultimediaFileReferenceNumbers = multimediaRecord.MultimediaFileReferenceNumbers.Count == 0 ? null : multimediaRecord.MultimediaFileReferenceNumbers;
-        MultimediaFormat = multimediaRecord.MultimediaFormat.IsEmpty ? null : multimediaRecord.MultimediaFormat;
-        DescriptiveTitle = string.IsNullOrEmpty(multimediaRecord.DescriptiveTitle) ? null : multimediaRecord.DescriptiveTitle;
-        UserReferenceNumber = multimediaRecord.UserReferenceNumber.IsEmpty ? null : multimediaRecord.UserReferenceNumber;
-        AutomatedRecordId = string.IsNullOrEmpty(multimediaRecord.AutomatedRecordId) ? null : multimediaRecord.AutomatedRecordId;
-        NoteStructures = multimediaRecord.NoteStructures.Count == 0 ? null : multimediaRecord.NoteStructures;
-        SourceCitations = multimediaRecord.SourceCitations.Count == 0 ? null : multimediaRecord.SourceCitations;
-        ChangeDate = multimediaRecord.ChangeDate.IsEmpty ? null : multimediaRecord.ChangeDate;
+        MultimediaFileReferenceNumbers = JsonList(multimediaRecord.MultimediaFileReferenceNumbers);
+        MultimediaFormat = JsonRecord(multimediaRecord.MultimediaFormat);
+        DescriptiveTitle = JsonString(multimediaRecord.DescriptiveTitle);
+        UserReferenceNumber = JsonRecord(multimediaRecord.UserReferenceNumber);
+        AutomatedRecordId = JsonString(multimediaRecord.AutomatedRecordId);
+        NoteStructures = JsonList(multimediaRecord.NoteStructures);
+        SourceCitations = JsonList(multimediaRecord.SourceCitations);
+        ChangeDate = JsonRecord(multimediaRecord.ChangeDate);
     }
 
     public List<string>? MultimediaFileReferenceNumbers { get; set; }

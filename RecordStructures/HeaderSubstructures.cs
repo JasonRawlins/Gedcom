@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
-[JsonConverter(typeof(HeaderSOUR))]
+[JsonConverter(typeof(HeaderSOURJsonConverter))]
 public class HeaderSOUR : RecordStructureBase
 {
     public HeaderSOUR() : base() { }
@@ -27,15 +27,15 @@ internal class HeaderSOURJsonConverter : JsonConverter<HeaderSOUR>
     }
 }
 
-internal class HeaderSOURJson
+internal class HeaderSOURJson : GedcomJson
 {
     public HeaderSOURJson(HeaderSOUR headerSOUR)
     {
-        Xref = string.IsNullOrEmpty(headerSOUR.Xref) ? null : headerSOUR.Xref;
-        Version = string.IsNullOrEmpty(headerSOUR.Version) ? null : headerSOUR.Version;
-        NameOfProduct = string.IsNullOrEmpty(headerSOUR.NameOfProduct) ? null : headerSOUR.NameOfProduct;
-        HeaderCORP = headerSOUR.HeaderCORP.IsEmpty ? null : headerSOUR.HeaderCORP;
-        HeaderDATA = headerSOUR.HeaderDATA.IsEmpty ? null : headerSOUR.HeaderDATA;
+        Xref = JsonString(headerSOUR.Xref);
+        Version = JsonString(headerSOUR.Version);
+        NameOfProduct = JsonString(headerSOUR.NameOfProduct);
+        HeaderCORP = JsonRecord(headerSOUR.HeaderCORP);
+        HeaderDATA = JsonRecord(headerSOUR.HeaderDATA);
     }
 
     public string? Xref { get; set; }
@@ -73,15 +73,15 @@ internal class HeaderCORPJsonConverter : JsonConverter<HeaderCORP>
     }
 }
 
-internal class HeaderCORPJson
+internal class HeaderCORPJson : GedcomJson
 {
     public HeaderCORPJson(HeaderCORP headerCORP)
     {
-        AddressStructure = headerCORP.AddressStructure.IsEmpty ? null : headerCORP.AddressStructure;
-        PhoneNumbers = headerCORP.PhoneNumbers.Count == 0 ? null : headerCORP.PhoneNumbers;
-        AddressEmails = headerCORP.AddressEmails.Count == 0 ? null : headerCORP.AddressEmails;
-        AddressFaxNumbers = headerCORP.AddressFaxNumbers.Count == 0 ? null : headerCORP.AddressFaxNumbers;
-        AddressWebPages = headerCORP.AddressWebPages.Count == 0 ? null : headerCORP.AddressWebPages;
+        AddressStructure = JsonRecord(headerCORP.AddressStructure);
+        PhoneNumbers = JsonList(headerCORP.PhoneNumbers);
+        AddressEmails = JsonList(headerCORP.AddressEmails);
+        AddressFaxNumbers = JsonList(headerCORP.AddressFaxNumbers);
+        AddressWebPages = JsonList(headerCORP.AddressWebPages);
     }
 
     public AddressStructure? AddressStructure { get; set; }
@@ -116,12 +116,12 @@ internal class HeaderDATAJsonConverter : JsonConverter<HeaderDATA>
     }
 }
 
-internal class HeaderDATAJson
+internal class HeaderDATAJson : GedcomJson
 {
     public HeaderDATAJson(HeaderDATA headerDATA)
     {
-        PublicationDate = string.IsNullOrEmpty(headerDATA.PublicationDate) ? null : headerDATA.PublicationDate;
-        CopyrightSourceData = headerDATA.CopyrightSourceData.IsEmpty ? null : headerDATA.CopyrightSourceData;
+        PublicationDate = JsonString(headerDATA.PublicationDate);
+        CopyrightSourceData = JsonRecord(headerDATA.CopyrightSourceData);
     }
 
     public string? PublicationDate { get; set; }

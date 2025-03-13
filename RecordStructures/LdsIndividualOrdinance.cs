@@ -28,16 +28,16 @@ internal class LdsIndividualOrdinanceJsonConverter : JsonConverter<LdsIndividual
     }
 }
 
-internal class LdsIndividualOrdinanceJson
+internal class LdsIndividualOrdinanceJson : GedcomJson
 {
     public LdsIndividualOrdinanceJson(LdsIndividualOrdinance ldsIndividualOrdinance)
     {
-        DateLdsOrdinance = string.IsNullOrEmpty(ldsIndividualOrdinance.DateLdsOrdinance) ? null : ldsIndividualOrdinance.DateLdsOrdinance;
-        TempleCode = string.IsNullOrEmpty(ldsIndividualOrdinance.TempleCode) ? null : ldsIndividualOrdinance.TempleCode;
-        PlaceLivingOrdinance = string.IsNullOrEmpty(ldsIndividualOrdinance.PlaceLivingOrdinance) ? null : ldsIndividualOrdinance.PlaceLivingOrdinance;
-        LdsBaptismDateStatus = ldsIndividualOrdinance.LdsBaptismDateStatus.IsEmpty ? null : ldsIndividualOrdinance.LdsBaptismDateStatus;
-        NoteStructures = ldsIndividualOrdinance.NoteStructures.Count == 0 ? null : ldsIndividualOrdinance.NoteStructures;
-        SourceCitations = ldsIndividualOrdinance.SourceCitations.Count == 0 ? null : ldsIndividualOrdinance.SourceCitations;
+        DateLdsOrdinance = JsonString(ldsIndividualOrdinance.DateLdsOrdinance);
+        TempleCode = JsonString(ldsIndividualOrdinance.TempleCode);
+        PlaceLivingOrdinance = JsonString(ldsIndividualOrdinance.PlaceLivingOrdinance);
+        LdsBaptismDateStatus = JsonRecord(ldsIndividualOrdinance.LdsBaptismDateStatus);
+        NoteStructures = JsonList(ldsIndividualOrdinance.NoteStructures);
+        SourceCitations = JsonList(ldsIndividualOrdinance.SourceCitations);
     }
 
     public string? DateLdsOrdinance { get; set; }

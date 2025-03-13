@@ -34,17 +34,17 @@ internal class NameVariationJsonConverter : JsonConverter<NameVariation>
     }
 }
 
-internal class NameVariationJson
+internal class NameVariationJson : GedcomJson
 {
     public NameVariationJson(NameVariation nameVariation)
     {
-        Type = string.IsNullOrEmpty(nameVariation.Type) ? null : nameVariation.Type;
-        Given = string.IsNullOrEmpty(nameVariation.Given) ? null : nameVariation.Type;
-        NamePrefix = string.IsNullOrEmpty(nameVariation.NamePrefix) ? null : nameVariation.Type;
-        NameSuffix = string.IsNullOrEmpty(nameVariation.NameSuffix) ? null : nameVariation.Type;
-        Nickname = string.IsNullOrEmpty(nameVariation.Nickname) ? null : nameVariation.Type;
-        Surname = string.IsNullOrEmpty(nameVariation.Surname) ? null : nameVariation.Type;
-        SurnamePrefix = string.IsNullOrEmpty(nameVariation.SurnamePrefix) ? null : nameVariation.Type;
+        Type = JsonString(nameVariation.Type);
+        Given = JsonString(nameVariation.Type);
+        NamePrefix = JsonString(nameVariation.Type);
+        NameSuffix = JsonString(nameVariation.Type);
+        Nickname = JsonString(nameVariation.Type);
+        Surname = JsonString(nameVariation.Type);
+        SurnamePrefix = JsonString(nameVariation.Type);
     }
 
     public string? Type { get; set; }

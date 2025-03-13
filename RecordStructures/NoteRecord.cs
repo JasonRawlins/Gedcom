@@ -25,13 +25,13 @@ internal class NoteRecordJsonConverter : JsonConverter<NoteRecord>
     }
 }
 
-internal class NoteRecordJson
+internal class NoteRecordJson : GedcomJson
 {
     public NoteRecordJson(NoteRecord noteRecord)
     {
-        UserReferenceNumber = noteRecord.UserReferenceNumber.IsEmpty ? null : noteRecord.UserReferenceNumber;
-        AutomatedRecordId = string.IsNullOrEmpty(noteRecord.AutomatedRecordId) ? null : noteRecord.AutomatedRecordId;
-        ChangeDate = noteRecord.ChangeDate.IsEmpty ? null : noteRecord.ChangeDate;
+        UserReferenceNumber = JsonRecord(noteRecord.UserReferenceNumber);
+        AutomatedRecordId = JsonString(noteRecord.AutomatedRecordId);
+        ChangeDate = JsonRecord(noteRecord.ChangeDate);
     }
 
     public UserReferenceNumber? UserReferenceNumber { get; set; }

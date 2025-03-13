@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
-[JsonConverter(typeof(FamilyEventDetail))]
+[JsonConverter(typeof(FamilyEventDetailJsonConverter))]
 public class FamilyEventDetail : RecordStructureBase
 {
     public FamilyEventDetail() : base() { }

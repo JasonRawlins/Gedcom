@@ -20,14 +20,6 @@ public class AddressStructure : RecordStructureBase
     public string AddressCountry => _(C.CTRY);
 }
 
-public interface IAddressStructure
-{
-    List<string> PhoneNumbers { get; }
-    List<string> AddressEmails { get; }
-    List<string> AddressFaxNumbers { get; }
-    List<string> AddressWebPages { get; }
-}
-
 internal class AddressStructureJsonConverter : JsonConverter<AddressStructure>
 {
     public override AddressStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
@@ -38,18 +30,18 @@ internal class AddressStructureJsonConverter : JsonConverter<AddressStructure>
     }
 }
 
-internal class AddressStructureJson
+internal class AddressStructureJson : GedcomJson
 {
     public AddressStructureJson(AddressStructure addressStructure)
     {
-        AddressLine = string.IsNullOrEmpty(addressStructure.AddressLine) ? null : addressStructure.AddressLine;
-        AddressLine1 = string.IsNullOrEmpty(addressStructure.AddressLine1) ? null : addressStructure.AddressLine1;
-        AddressLine2 = string.IsNullOrEmpty(addressStructure.AddressLine2) ? null : addressStructure.AddressLine2;
-        AddressLine3 = string.IsNullOrEmpty(addressStructure.AddressLine3) ? null : addressStructure.AddressLine3;
-        AddressCity = string.IsNullOrEmpty(addressStructure.AddressCity) ? null : addressStructure.AddressCity;
-        AddressState = string.IsNullOrEmpty(addressStructure.AddressState) ? null : addressStructure.AddressState;
-        AddressPostCode = string.IsNullOrEmpty(addressStructure.AddressPostCode) ? null : addressStructure.AddressPostCode;
-        AddressCountry = string.IsNullOrEmpty(addressStructure.AddressCountry) ? null : addressStructure.AddressCountry;
+        AddressLine = JsonString(addressStructure.AddressLine);
+        AddressLine1 = JsonString(addressStructure.AddressLine1);
+        AddressLine2 = JsonString(addressStructure.AddressLine2);
+        AddressLine3 = JsonString(addressStructure.AddressLine3);
+        AddressCity = JsonString(addressStructure.AddressCity);
+        AddressState = JsonString(addressStructure.AddressState);
+        AddressPostCode = JsonString(addressStructure.AddressPostCode);
+        AddressCountry = JsonString(addressStructure.AddressCountry);
     }
 
     public string? AddressLine { get; set; }

@@ -23,11 +23,11 @@ internal class MultimediaFileReferenceNumberJsonConverter : JsonConverter<Multim
     }
 }
 
-internal class MultimediaFileReferenceNumberJson
+internal class MultimediaFileReferenceNumberJson : GedcomJson
 {
     public MultimediaFileReferenceNumberJson(MultimediaFileReferenceNumber multimediaFileReferenceNumber)
     {
-        MultiMediaFormat = multimediaFileReferenceNumber.MultiMediaFormat.IsEmpty ? null : multimediaFileReferenceNumber.MultiMediaFormat;
+        MultiMediaFormat = JsonRecord(multimediaFileReferenceNumber.MultiMediaFormat);
     }
 
     public MultimediaFormat? MultiMediaFormat { get; set; }

@@ -5,7 +5,6 @@ using System.Text.Json.Serialization;
 namespace Gedcom.RecordStructures;
 
 [JsonConverter(typeof(IndividualEventStructureJsonConverter))]
-
 public class IndividualEventStructure : RecordStructureBase, IEventDetail
 {
     public IndividualEventStructure() { }

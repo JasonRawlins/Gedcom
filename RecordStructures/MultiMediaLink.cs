@@ -25,13 +25,13 @@ internal class MultimediaLinkJsonConverter : JsonConverter<MultimediaLink>
     }
 }
 
-internal class MultimediaLinkJson
+internal class MultimediaLinkJson : GedcomJson
 {
     public MultimediaLinkJson(MultimediaLink multimediaLink)
     {
-        MultimediaFileReferenceNumbers = multimediaLink.MultimediaFileReferenceNumbers.Count == 0 ? null : multimediaLink.MultimediaFileReferenceNumbers;
-        SourceMediaType = string.IsNullOrEmpty(multimediaLink.SourceMediaType) ? null : multimediaLink.SourceMediaType;
-        DescriptiveTitle = string.IsNullOrEmpty(multimediaLink.DescriptiveTitle) ? null : multimediaLink.DescriptiveTitle;
+        MultimediaFileReferenceNumbers = JsonList(multimediaLink.MultimediaFileReferenceNumbers);
+        SourceMediaType = JsonString(multimediaLink.SourceMediaType);
+        DescriptiveTitle = JsonString(multimediaLink.DescriptiveTitle);
     }
 
     public List<MultimediaFileReferenceNumber>? MultimediaFileReferenceNumbers { get; set; }

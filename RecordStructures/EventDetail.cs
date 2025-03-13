@@ -26,10 +26,10 @@ public class EventDetail : RecordStructureBase, IEventDetail
 internal class EventDetailJsonConverter : JsonConverter<EventDetail>
 {
     public override EventDetail? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, EventDetail multimediaLink, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, EventDetail eventDetail, JsonSerializerOptions options)
     {
-        var multimediaLinkJson = new EventDetailJson(multimediaLink);
-        JsonSerializer.Serialize(writer, multimediaLinkJson, multimediaLinkJson.GetType(), options);
+        var eventDetailJson = new EventDetailJson(eventDetail);
+        JsonSerializer.Serialize(writer, eventDetailJson, eventDetailJson.GetType(), options);
     }
 }
 

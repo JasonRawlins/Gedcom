@@ -23,11 +23,11 @@ internal class SpouseToFamilyLinkJsonConverter : JsonConverter<SpouseToFamilyLin
     }
 }
 
-internal class SpouseToFamilyLinkJson
+internal class SpouseToFamilyLinkJson : GedcomJson
 {
     public SpouseToFamilyLinkJson(SpouseToFamilyLink spouseToFamilyLink)
     {
-        NoteStructures = spouseToFamilyLink.NoteStructures.Count == 0 ? null : spouseToFamilyLink.NoteStructures;
+        NoteStructures = JsonList(spouseToFamilyLink.NoteStructures);
     }
 
     public List<NoteStructure>? NoteStructures { get; set; }

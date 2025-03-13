@@ -35,7 +35,7 @@ internal class NoteStructureJsonConverter : JsonConverter<NoteStructure>
     }
 }
 
-internal class NoteStructureJson
+internal class NoteStructureJson : GedcomJson
 {
     public NoteStructureJson(NoteStructure noteStructure)
     {

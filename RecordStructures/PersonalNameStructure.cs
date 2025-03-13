@@ -37,20 +37,20 @@ internal class PersonalNameStructureJsonConverter : JsonConverter<PersonalNameSt
     }
 }
 
-internal class PersonalNameStructureJson
+internal class PersonalNameStructureJson : GedcomJson
 {
     public PersonalNameStructureJson(PersonalNameStructure personalNameStructure)
     {
-        NamePersonal = string.IsNullOrEmpty(personalNameStructure.NamePersonal) ? null : personalNameStructure.NamePersonal;
-        NameType = string.IsNullOrEmpty(personalNameStructure.NameType) ? null : personalNameStructure.NameType;
-        NamePhoneticVariation = personalNameStructure.NamePhoneticVariation.IsEmpty ? null : personalNameStructure.NamePhoneticVariation;
-        NameRomanizedVariation = personalNameStructure.NameRomanizedVariation.IsEmpty ? null : personalNameStructure.NameRomanizedVariation;
-        Given = string.IsNullOrEmpty(personalNameStructure.Given) ? null : personalNameStructure.Given;
-        NamePrefix = string.IsNullOrEmpty(personalNameStructure.NamePrefix) ? null : personalNameStructure.NamePrefix;
-        NameSuffix = string.IsNullOrEmpty(personalNameStructure.NameSuffix) ? null : personalNameStructure.NameSuffix;
-        Nickname = string.IsNullOrEmpty(personalNameStructure.Nickname) ? null : personalNameStructure.Nickname;
-        Surname = string.IsNullOrEmpty(personalNameStructure.Surname) ? null : personalNameStructure.Surname;
-        SurnamePrefix = string.IsNullOrEmpty(personalNameStructure.SurnamePrefix) ? null : personalNameStructure.SurnamePrefix;
+        NamePersonal = JsonString(personalNameStructure.NamePersonal);
+        NameType = JsonString(personalNameStructure.NameType);
+        NamePhoneticVariation = JsonRecord(personalNameStructure.NamePhoneticVariation);
+        NameRomanizedVariation = JsonRecord(personalNameStructure.NameRomanizedVariation);
+        Given = JsonString(personalNameStructure.Given);
+        NamePrefix = JsonString(personalNameStructure.NamePrefix);
+        NameSuffix = JsonString(personalNameStructure.NameSuffix);
+        Nickname = JsonString(personalNameStructure.Nickname);
+        Surname = JsonString(personalNameStructure.Surname);
+        SurnamePrefix = JsonString(personalNameStructure.SurnamePrefix);
     }
 
     public string? NamePersonal { get; set; }

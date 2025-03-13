@@ -23,12 +23,12 @@ internal class MapJsonConverter : JsonConverter<Map>
     }
 }
 
-internal class MapJson
+internal class MapJson : GedcomJson
 {
     public MapJson(Map map)
     {
-        PlaceLatitude = !string.IsNullOrEmpty(map.PlaceLatitude) ? map.PlaceLatitude : null;
-        PlaceLongitude = !string.IsNullOrEmpty(map.PlaceLongitude) ? map.PlaceLongitude : null;
+        PlaceLatitude = JsonString(map.PlaceLatitude);
+        PlaceLongitude = JsonString(map.PlaceLongitude);
     }
 
     public string? PlaceLatitude { get; set; }
