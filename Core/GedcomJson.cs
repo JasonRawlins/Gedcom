@@ -1,4 +1,4 @@
-﻿namespace Gedcom.Core;
+﻿namespace Gedcom;
 
 internal class GedcomJson
 {

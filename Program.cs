@@ -1,6 +1,4 @@
 ﻿using Gedcom;
-using Gedcom.Core;
-using Gedcom.RecordStructures;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -9,6 +7,7 @@ public class Program
 {
     static void Main(string[] args)
     {
+        GedcomJson.ReturnAllValues = false;
         var assembly = Assembly.GetExecutingAssembly();
         var assemblyDirectoryName = @"c:\temp\Gedcom.NET"; // Path.GetDirectoryName(assembly.Location) ?? "";
         var treeName = "DeveloperTree";
@@ -23,7 +22,7 @@ public class Program
 
         var gedFileLines = File.ReadAllLines(gedFullName);
         var gedcomLines = gedFileLines.Select(GedcomLine.ParseLine).ToList();
-        var gedcom = new Gedcom.Core.Gedcom(gedcomLines);
+        var gedcom = new Gedcom.Gedcom(gedcomLines);
 
         var jsonText = JsonSerializer.Serialize(gedcom, JsonSerializerOptions);
 

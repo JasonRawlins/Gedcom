@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Gedcom.Core;
+namespace Gedcom;
 
 public class GedcomLine
 {

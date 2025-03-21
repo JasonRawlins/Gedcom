@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Gedcom.RecordStructures;
 
-namespace Gedcom.Core;
+namespace Gedcom;
 
 [JsonConverter(typeof(GedcomJsonConverter))]
 public class Gedcom : RecordStructureBase
