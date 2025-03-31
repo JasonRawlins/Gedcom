@@ -28,6 +28,7 @@ internal class MultimediaLinkJson : GedcomJson
 {
     public MultimediaLinkJson(MultimediaLink multimediaLink)
     {
+        Xref = multimediaLink.Xref;
         MultimediaFileReferenceNumbers = JsonList(multimediaLink.MultimediaFileReferenceNumbers);
         SourceMediaType = JsonString(multimediaLink.SourceMediaType);
         DescriptiveTitle = JsonString(multimediaLink.DescriptiveTitle);

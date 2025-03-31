@@ -9,7 +9,6 @@ public class HeaderSOUR : RecordStructureBase
     public HeaderSOUR() : base() { }
     public HeaderSOUR(Record record) : base(record) { }
 
-    public string Xref => Record.Value;
     public string Version => _(C.VERS);
     public string NameOfProduct => _(C.NAME);
     public HeaderCORP HeaderCORP => First<HeaderCORP>(C.CORP);
@@ -37,7 +36,6 @@ internal class HeaderSOURJson : GedcomJson
         HeaderDATA = JsonRecord(headerSOUR.HeaderDATA);
     }
 
-    public string? Xref { get; set; }
     public string? Version { get; set; }
     public string? NameOfProduct { get; set; }
     public HeaderCORP? HeaderCORP { get; set; }

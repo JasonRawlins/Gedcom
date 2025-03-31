@@ -31,6 +31,7 @@ internal class SourceCitationJson : GedcomJson
 {
     public SourceCitationJson(SourceCitation sourceCitation)
     {
+        Xref = sourceCitation.Xref;
         WhereWithinSource = JsonString(sourceCitation.WhereWithinSource);
         EventTypeCitedFrom = JsonRecord(sourceCitation.EventTypeCitedFrom);
         Data = JsonRecord(sourceCitation.Data);

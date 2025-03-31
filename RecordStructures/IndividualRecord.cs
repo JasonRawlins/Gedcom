@@ -9,8 +9,6 @@ public class IndividualRecord : RecordStructureBase
     public IndividualRecord() { }
     public IndividualRecord(Record record) : base(record) { }
 
-    public string Xref => Record.Value;
-
     public string RestrictionNotice => _(C.RESN);
     public List<PersonalNameStructure> PersonalNameStructures => List<PersonalNameStructure>(C.NAME);
     public string SexValue => _(C.SEX);
@@ -92,7 +90,6 @@ internal class IndividualRecordJson : GedcomJson
         Marriages = JsonList(individualRecord.Marriages);
     }
 
-    public string? Xref { get; set; }
     public string? RestrictionNotice { get; set; }
     public List<PersonalNameStructure>? PersonalNameStructures { get; set; }
     public string? SexValue { get; set; }

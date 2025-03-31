@@ -9,7 +9,9 @@ public class RecordStructureBase
     internal Record Record { get; set; } = Record.Empty;
     [JsonIgnore]
     public bool IsEmpty => Record.IsEmpty;
-    
+
+    public string Xref => Record.Value;
+
     private Record this[string tag] => this[[tag]];
     private Record this[IEnumerable<string> tagPath]
     {

@@ -29,6 +29,7 @@ internal class ChildToFamilyLinkJson : GedcomJson
 {
     public ChildToFamilyLinkJson(ChildToFamilyLink childToFamilyLink)
     {
+        Xref = JsonString(childToFamilyLink.Xref);
         PedigreeLinkageType = JsonString(childToFamilyLink.PedigreeLinkageType);
         ChildLinkageStatus = JsonString(childToFamilyLink.ChildLinkageStatus);
         NoteStructures = JsonList(childToFamilyLink.NoteStructures);

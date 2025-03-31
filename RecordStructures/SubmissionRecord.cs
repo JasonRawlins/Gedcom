@@ -9,7 +9,6 @@ public class SubmissionRecord : RecordStructureBase
     public SubmissionRecord() : base() { }
     public SubmissionRecord(Record record) : base(record) { }
 
-    public string Xref => Record.Value;
     public string Submitter => _(C.SUBM);
     public string NameOfFamilyFile => _(C.FAMF);
     public string TempleCode => _(C.TEMP);
@@ -47,7 +46,6 @@ internal class SubmissionRecordJson : GedcomJson
         ChangeDate = JsonRecord(submissionRecord.ChangeDate);
     }
 
-    public string? Xref { get; set; }
     public string? Submitter { get; set; }
     public string? NameOfFamilyFile { get; set; }
     public string? TempleCode { get; set; }

@@ -7,7 +7,6 @@ public class Program
 {
     static void Main(string[] args)
     {
-        GedcomJson.ReturnAllValues = false;
         var assembly = Assembly.GetExecutingAssembly();
         var assemblyDirectoryName = @"c:\temp\Gedcom.NET"; // Path.GetDirectoryName(assembly.Location) ?? "";
         var treeName = "DeveloperTree";
@@ -25,6 +24,9 @@ public class Program
         var gedcom = new Gedcom.Gedcom(gedcomLines);
 
         var jsonText = JsonSerializer.Serialize(gedcom, JsonSerializerOptions);
+
+        var individualRecord = gedcom.GetIndividualRecord("@I***REMOVED***@");
+        var individualRecords = gedcom.GetIndividualRecords();
 
         File.WriteAllText(jsonFullName, jsonText);
     }
