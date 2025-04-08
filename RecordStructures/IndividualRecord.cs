@@ -42,7 +42,19 @@ public class IndividualRecord : RecordStructureBase
         }.Contains(record.Tag);
     }
 
-    public List<IndividualEventStructure> Births => List<IndividualEventStructure>(C.BIRT);
+    private bool IsStronglyTypedEvent(Record record)
+    {
+        // By strongly-typed, I mean there is a property that specifically
+        // exposes the event. For example, there is a property named "Births"
+        // that exposes only the BIRT IndividualEventStructure.
+        return new string[]
+        {
+            "BIRT", "DEAT"
+        }.Contains(record.Tag);
+    }
+
+    public IndividualEventStructure Birth => First<IndividualEventStructure>(C.BIRT);
+    public IndividualEventStructure Death => First<IndividualEventStructure>(C.DEAT);
     public List<IndividualEventStructure> Marriages => List<IndividualEventStructure>(C.BIRT);
 
     public override string ToString() => $"{PersonalNameStructures.First().NamePersonal} {SexValue} ({Record.Value})";
@@ -64,6 +76,7 @@ internal class IndividualRecordJson : GedcomJson
     {
         Xref = individualRecord.Xref;
         RestrictionNotice = JsonString(individualRecord.RestrictionNotice);
+
         PersonalNameStructures = JsonList(individualRecord.PersonalNameStructures);
         SexValue = JsonString(individualRecord.SexValue);
         IndividualEventStructures = JsonList(individualRecord.IndividualEventStructures);
@@ -85,9 +98,10 @@ internal class IndividualRecordJson : GedcomJson
         SourceCitations = JsonList(individualRecord.SourceCitations);
         MultimediaLinks = JsonList(individualRecord.MultimediaLinks);
 
-        // Computed properties
-        Births = JsonList(individualRecord.Births);
-        Marriages = JsonList(individualRecord.Marriages);
+        // Strongly-typed properties
+        Birth = JsonString($"{individualRecord.Birth.DateValue} at {individualRecord.Birth.PlaceStructure.PlaceName}");
+        Death = JsonString($"{individualRecord.Death.DateValue} at {individualRecord.Death.PlaceStructure.PlaceName}");
+        //Marriages = JsonList(individualRecord.Marriages);
     }
 
     public string? RestrictionNotice { get; set; }
@@ -112,9 +126,13 @@ internal class IndividualRecordJson : GedcomJson
     public List<SourceCitation>? SourceCitations { get; set; }
     public List<MultimediaLink>? MultimediaLinks { get; set; }
 
-    // Computed properties
-    public List<IndividualEventStructure>? Births { get; set; }
-    public List<IndividualEventStructure>? Marriages { get; set; }
+    // Stringly-typed properties
+    public string? Birth { get; set; }
+    public string? Death { get; set; }
+    public IndividualEventStructure? Marriages { get; set; }
+
+    public string Given => PersonalNameStructures == null ? "" : PersonalNameStructures[0].Given;
+    public string Surname => PersonalNameStructures == null ? "" : PersonalNameStructures[0].Surname;
 }
 
 #region INDIVIDUAL_RECORD (INDI) p. 25
