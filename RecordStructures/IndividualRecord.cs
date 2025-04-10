@@ -12,8 +12,9 @@ public class IndividualRecord : RecordStructureBase
     public string RestrictionNotice => _(C.RESN);
     public List<PersonalNameStructure> PersonalNameStructures => List<PersonalNameStructure>(C.NAME);
     public string SexValue => _(C.SEX);
-    public List<IndividualEventStructure> IndividualEventStructures => List(IsIndividualEventStructure).Select(r => new IndividualEventStructure(r)).ToList();
+    public List<IndividualEventStructure> IndividualEventStructures => List(IsWeaklyTyped).Select(r => new IndividualEventStructure(r)).ToList();
     public List<IndividualAttributeStructure> IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
+    public List<IndividualEventStructure> IndividualEventStructures1 => List(IsWeaklyTyped).Select(r => new IndividualEventStructure(r)).ToList();
     public List<LdsIndividualOrdinance> LdsIndividualOrdinances => List<LdsIndividualOrdinance>(C.ORDI);
     public List<ChildToFamilyLink> ChildToFamilyLinks => List<ChildToFamilyLink>(C.FAMC);
     public List<SpouseToFamilyLink> SpouseToFamilyLinks => List<SpouseToFamilyLink>(C.ASSO);
@@ -31,6 +32,13 @@ public class IndividualRecord : RecordStructureBase
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
 
+    #region Strongly-typed IndividualEventStructures
+
+    public IndividualEventStructure Birth => First<IndividualEventStructure>(C.BIRT);
+    public IndividualEventStructure Death => First<IndividualEventStructure>(C.DEAT);
+
+    #endregion
+
     private bool IsIndividualEventStructure(Record record)
     {
         return new string[]
@@ -42,20 +50,16 @@ public class IndividualRecord : RecordStructureBase
         }.Contains(record.Tag);
     }
 
-    private bool IsStronglyTypedEvent(Record record)
+    private bool IsWeaklyTyped(Record record)
     {
-        // By strongly-typed, I mean there is a property that specifically
+        // By weakly-typed, I mean there isn't a property that specifically
         // exposes the event. For example, there is a property named "Births"
         // that exposes only the BIRT IndividualEventStructure.
-        return new string[]
+        return !(new string[]
         {
             "BIRT", "DEAT"
-        }.Contains(record.Tag);
+        }.Contains(record.Tag));
     }
-
-    public IndividualEventStructure Birth => First<IndividualEventStructure>(C.BIRT);
-    public IndividualEventStructure Death => First<IndividualEventStructure>(C.DEAT);
-    public List<IndividualEventStructure> Marriages => List<IndividualEventStructure>(C.BIRT);
 
     public override string ToString() => $"{PersonalNameStructures.First().NamePersonal} {SexValue} ({Record.Value})";
 }
@@ -101,7 +105,6 @@ internal class IndividualRecordJson : GedcomJson
         // Strongly-typed properties
         Birth = JsonString($"{individualRecord.Birth.DateValue} at {individualRecord.Birth.PlaceStructure.PlaceName}");
         Death = JsonString($"{individualRecord.Death.DateValue} at {individualRecord.Death.PlaceStructure.PlaceName}");
-        //Marriages = JsonList(individualRecord.Marriages);
     }
 
     public string? RestrictionNotice { get; set; }
@@ -126,11 +129,8 @@ internal class IndividualRecordJson : GedcomJson
     public List<SourceCitation>? SourceCitations { get; set; }
     public List<MultimediaLink>? MultimediaLinks { get; set; }
 
-    // Stringly-typed properties
     public string? Birth { get; set; }
     public string? Death { get; set; }
-    public IndividualEventStructure? Marriages { get; set; }
-
     public string Given => PersonalNameStructures == null ? "" : PersonalNameStructures[0].Given;
     public string Surname => PersonalNameStructures == null ? "" : PersonalNameStructures[0].Surname;
 }
