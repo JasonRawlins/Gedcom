@@ -17,7 +17,7 @@ public class IndividualRecord : RecordStructureBase
     public List<IndividualEventStructure> IndividualEventStructures1 => List(IsWeaklyTyped).Select(r => new IndividualEventStructure(r)).ToList();
     public List<LdsIndividualOrdinance> LdsIndividualOrdinances => List<LdsIndividualOrdinance>(C.ORDI);
     public List<ChildToFamilyLink> ChildToFamilyLinks => List<ChildToFamilyLink>(C.FAMC);
-    public List<SpouseToFamilyLink> SpouseToFamilyLinks => List<SpouseToFamilyLink>(C.ASSO);
+    public List<SpouseToFamilyLink> SpouseToFamilyLinks => List<SpouseToFamilyLink>(C.FAMS);
     public string Submitter => _(C.SUBN);
     public List<AssociationStructure> AssociationStructures => List<AssociationStructure>(C.ASSO);
     public List<string> Aliases => List(r => r.Tag.Equals(C.ALIA)).Select(r => r.Value).ToList();
@@ -186,7 +186,7 @@ or association is the person being pointed to. The association or relationship i
 on the subordinate RELA line. For example:
 
 0 @I1@ INDI
-    1 NAME Fred/Jones/
+    1 NAME Fred /Jones/
     1 ASSO @I2@
         2 RELA Godfather
 */

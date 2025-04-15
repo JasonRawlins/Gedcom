@@ -23,10 +23,13 @@ public class Program
         var gedcomLines = gedFileLines.Select(GedcomLine.ParseLine).ToList();
         var gedcom = new Gedcom.Gedcom(gedcomLines);
 
-        var jsonText = JsonSerializer.Serialize(gedcom, JsonSerializerOptions);
+        //var jsonText = JsonSerializer.Serialize(gedcom, JsonSerializerOptions);
 
         var individualRecord = gedcom.GetIndividualRecord("@I***REMOVED***@");
-        var individualRecords = gedcom.GetIndividualRecords();
+        //var individualRecord = gedcom.GetIndividualRecord("@I***REMOVED***@");
+       
+        var jsonText = JsonSerializer.Serialize(individualRecord, JsonSerializerOptions);
+        //var individualRecords = gedcom.GetIndividualRecords();
 
         File.WriteAllText(jsonFullName, jsonText);
     }
