@@ -11,6 +11,50 @@ public class GedcomDate : RecordStructureBase
 
     public string DateValue => Record.Value;
     public string TimeValue => _(C.TIME);
+    public DateTime DateTime => Parse(DateValue);
+
+    public static DateTime Parse(string date)
+    {
+        if (DateTime.TryParse(date, out var parsedDate))
+        {
+            return parsedDate;
+        }
+        
+        //var day = "";
+        //var month = "";
+        //var year = "";
+
+        //var dateParts = date.Split(' ');
+
+        //foreach (var datePart in dateParts)
+        //{
+        //    if (IsMonth(datePart))
+        //    {
+        //        // Possible text month name.
+        //        month = datePart;
+        //    }
+
+        //    if (int.TryParse(datePart, out var possibleDay))
+        //    {
+        //    }
+        //}
+
+        return DateTime.MinValue;
+    }
+
+    private static bool IsMonth(string datePart)
+    {
+        return new string[]
+        {
+            "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december",
+            "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"
+        }.Contains(datePart.ToLower());
+    }
+
+    private enum DatePartType
+    {
+        Day, Month, Year
+    }
 }
 
 internal class GedcomDateJsonConverter : JsonConverter<GedcomDate>
@@ -29,10 +73,12 @@ internal class GedcomDateJson : GedcomJson
     {
         DateValue = JsonString(gedcomDate.DateValue);
         TimeValue = JsonString(gedcomDate.TimeValue);
+        DateTime = gedcomDate.DateTime;
     }
 
     public string? DateValue { get; set; }
     public string? TimeValue { get; set; }
+    public DateTime? DateTime { get; set; }
 }
 
 #region DATE p. 45

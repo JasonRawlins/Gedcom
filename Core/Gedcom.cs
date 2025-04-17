@@ -23,14 +23,14 @@ public class Gedcom : RecordStructureBase
 
     public IndividualRecord GetIndividualRecord(string xrefINDI)
     {
-        var indiRecord = Single(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI));
+        var individualRecord = Single(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI));
 
-        if (indiRecord.IsEmpty)
+        if (individualRecord.IsEmpty)
         {
             return Empty<IndividualRecord>();
         }
 
-        return new IndividualRecord(indiRecord);
+        return new IndividualRecord(individualRecord);
     }
 
     public List<IndividualRecord> GetIndividualRecords() => Record.Records.Where(r => r.Tag.Equals(C.INDI)).Select(r => new IndividualRecord(r)).ToList();

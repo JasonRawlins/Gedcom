@@ -3,32 +3,32 @@ using System.Text.Json;
 
 namespace Gedcom.RecordStructures;
 
-[JsonConverter(typeof(HeaderDATAJsonConverter))]
-public class HeaderDATA : RecordStructureBase
+[JsonConverter(typeof(HeaderDataJsonConverter))]
+public class HeaderData : RecordStructureBase
 {
-    public HeaderDATA() : base() { }
-    public HeaderDATA(Record record) : base(record) { }
+    public HeaderData() : base() { }
+    public HeaderData(Record record) : base(record) { }
 
     public string PublicationDate => _(C.DATE);
     public NoteStructure CopyrightSourceData => First<NoteStructure>(C.COPR);
 }
 
-internal class HeaderDATAJsonConverter : JsonConverter<HeaderDATA>
+internal class HeaderDataJsonConverter : JsonConverter<HeaderData>
 {
-    public override HeaderDATA? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, HeaderDATA headerDATA, JsonSerializerOptions options)
+    public override HeaderData? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, HeaderData headerData, JsonSerializerOptions options)
     {
-        var headerDATAJson = new HeaderDATAJson(headerDATA);
+        var headerDATAJson = new HeaderDataJson(headerData);
         JsonSerializer.Serialize(writer, headerDATAJson, headerDATAJson.GetType(), options);
     }
 }
 
-internal class HeaderDATAJson : GedcomJson
+internal class HeaderDataJson : GedcomJson
 {
-    public HeaderDATAJson(HeaderDATA headerDATA)
+    public HeaderDataJson(HeaderData headerData)
     {
-        PublicationDate = JsonString(headerDATA.PublicationDate);
-        CopyrightSourceData = JsonRecord(headerDATA.CopyrightSourceData);
+        PublicationDate = JsonString(headerData.PublicationDate);
+        CopyrightSourceData = JsonRecord(headerData.CopyrightSourceData);
     }
 
     public string? PublicationDate { get; set; }
