@@ -10,7 +10,6 @@ public class Header : RecordStructureBase
     public Header(Record record) : base(record) { }
     
     public HeaderSource Source => First<HeaderSource>(C.SOUR);
-    public HeaderTree Tree => First<HeaderTree>(C._TREE);
     public string ReceivingSystemName => _(C.DEST);
     public GedcomDate TransmissionDate => First<GedcomDate>(C.DATE);
     public string Submitter => _(C.SUBM);
@@ -39,7 +38,6 @@ internal class HeaderJson : GedcomJson
     public HeaderJson(Header header)
     {
         Source = JsonRecord(header.Source);
-        Tree = JsonRecord(header.Tree);
         ReceivingSystemName = JsonString(header.ReceivingSystemName);
         TransmissionDate = JsonRecord(header.TransmissionDate);
         Submitter = JsonString(header.Submitter);
@@ -54,7 +52,6 @@ internal class HeaderJson : GedcomJson
     }
 
     public HeaderSource? Source { get; set; }
-    public HeaderTree Tree { get; set; }
     public string? ReceivingSystemName { get; set; }
     public GedcomDate? TransmissionDate { get; set; }
     public string? Submitter { get; set; }

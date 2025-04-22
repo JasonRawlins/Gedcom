@@ -24,16 +24,9 @@ public class Program
         var gedcomLines = gedFileLines.Select(GedcomLine.ParseLine).ToList();
         var gedcom = new Gedcom.Gedcom(gedcomLines);
 
-        // var jsonText = JsonSerializer.Serialize(gedcom, JsonSerializerOptions);
-
         var individualRecord = gedcom.GetIndividualRecord("@I***REMOVED***@"); // JSD
-        //var individualRecord = gedcom.GetIndividualRecord("@I***REMOVED***@");
 
-        //var testDate = GedcomDate.Parse("3 Feb 1854");
-       
         //var jsonText = JsonSerializer.Serialize(individualRecord, JsonSerializerOptions);
-        //var individualRecords = gedcom.GetIndividualRecords();
-
         //File.WriteAllText(jsonFullName, jsonText);
     }
 
