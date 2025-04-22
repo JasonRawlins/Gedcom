@@ -12,9 +12,8 @@ public class IndividualRecord : RecordStructureBase
     public string RestrictionNotice => _(C.RESN);
     public List<PersonalNameStructure> PersonalNameStructures => List<PersonalNameStructure>(C.NAME);
     public string SexValue => _(C.SEX);
-    public List<IndividualEventStructure> IndividualEventStructures => List(IsWeaklyTyped).Select(r => new IndividualEventStructure(r)).ToList();
+    public List<IndividualEventStructure> IndividualEventStructures => List(IndividualEventStructure.IsIndividualEventStructure).Select(r => new IndividualEventStructure(r)).ToList();
     public List<IndividualAttributeStructure> IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
-    public List<IndividualEventStructure> IndividualEventStructures1 => List(IsWeaklyTyped).Select(r => new IndividualEventStructure(r)).ToList();
     public List<LdsIndividualOrdinance> LdsIndividualOrdinances => List<LdsIndividualOrdinance>(C.ORDI);
     public List<ChildToFamilyLink> ChildToFamilyLinks => List<ChildToFamilyLink>(C.FAMC);
     public List<SpouseToFamilyLink> SpouseToFamilyLinks => List<SpouseToFamilyLink>(C.FAMS);
@@ -38,17 +37,6 @@ public class IndividualRecord : RecordStructureBase
     public IndividualEventStructure Death => First<IndividualEventStructure>(C.DEAT);
 
     #endregion
-
-    private bool IsIndividualEventStructure(Record record)
-    {
-        return new string[]
-        {
-            "BIRT", "CHR" , "DEAT", "BURI", "CREM", "ADOP",
-            "BAPM", "BARM", "BASM", "BLES", "CHRA", "CONF",
-            "FCOM", "ORDN", "NATU", "EMIG", "IMMI", "CENS",
-            "PROB", "WILL", "GRAD", "RETI", "EVEN"
-        }.Contains(record.Tag);
-    }
 
     private bool IsWeaklyTyped(Record record)
     {

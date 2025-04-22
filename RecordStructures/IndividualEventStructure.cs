@@ -27,6 +27,68 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
 
     #endregion
+
+    public string Name
+    {
+        get
+        {
+            return Tag switch
+            {
+                C.ADOP => "Adoption",
+                C.BAPL => "Baptism (LDS)",
+                C.BAPM => "Baptism",
+                C.BARM => "Bar Mitzvah",
+                C.BASM => "Bas Mitzvah",
+                C.BIRT => "Birth",
+                C.BLES => "Blessing",
+                C.BURI => "Burial",
+                C.CENS => "Census",
+                C.CHR => "Christening",
+                C.CHRA => "Christening (Adult)",
+                C.CONF => "Confirmation (LDS)",
+                C.CREM => "Cremation",
+                C.DEAT => "Death",
+                C.DIV => "Divorce",
+                C.DIVF => "Divorce Filed",
+                C.EMIG => "Emigration",
+                C.ENDL => "Endowment",
+                C.ENGA => "Engagement",
+                C.EVEN => "Event",
+                C.FCOM => "First Communion",
+                C.GRAD => "Graduation",
+                C.IMMI => "Immigration",
+                C.MARB => "Marriage Bann",
+                C.MARC => "Marriage Contract",
+                C.MARL => "Marriage License",
+                C.MARR => "Marriage",
+                C.MARS => "Marriage Settlement",
+                C.NATU => "Naturalization",
+                C.ORDI => "Ordinance",
+                C.ORDN => "Ordination",
+                C.PROB => "Probate",
+                C.RESI => "Residence",
+                C.RETI => "Retirement",
+                C.SLGC => "Sealing (Child)",
+                C.SLGS => "Sealing (Spouse)",
+                C.WILL => "Will",
+                _ => Tag,
+            };
+        }
+    }
+
+    public static bool IsIndividualEventStructure(Record record)
+    {
+        var individualEventTags = new string[]
+        {
+            "ADOP", "BAPL", "BAPM", "BARM", "BASM", "BIRT", "BLES", "BURI",
+            "CENS", "CHR", "CHRA", "CONF", "CREM", "DEAT", "DIV", "DIVF",
+            "EMIG", "ENDL", "ENGA", "EVEN", "FCOM", "GRAD", "IMMI", "MARB",
+            "MARC", "MARL", "MARR", "MARS", "NATU", "ORDI", "ORDN", "PROB",
+            "RESI", "RETI", "SLGC", "SLGS", "WILL"
+        };
+
+        return individualEventTags.Contains(record.Tag);
+    }
 }
 
 internal class IndividualEventStructureJsonConverter : JsonConverter<IndividualEventStructure>

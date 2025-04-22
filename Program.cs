@@ -1,8 +1,5 @@
 ﻿using Gedcom;
-using Gedcom.RecordStructures;
 using System.Reflection;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 public class Program
 {
@@ -23,17 +20,10 @@ public class Program
         var gedFileLines = File.ReadAllLines(gedFullName);
         var gedcomLines = gedFileLines.Select(GedcomLine.ParseLine).ToList();
         var gedcom = new Gedcom.Gedcom(gedcomLines);
+        
 
-        var individualRecord = gedcom.GetIndividualRecord("@I***REMOVED***@"); // JSD
-
+        var individualRecord = gedcom.GetIndividualRecord("@***REMOVED***@"); // 
         //var jsonText = JsonSerializer.Serialize(individualRecord, JsonSerializerOptions);
         //File.WriteAllText(jsonFullName, jsonText);
     }
-
-    private static JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        WriteIndented = true,
-        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-    };
 }
