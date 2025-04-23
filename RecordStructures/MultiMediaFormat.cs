@@ -10,6 +10,8 @@ public class MultimediaFormat : RecordStructureBase
     public MultimediaFormat(Record record) : base(record) { }
 
     public string SourceMediaType => _(C.MEDI);
+
+    public override string ToString() => $"{Record.Value}, {SourceMediaType}";
 }
 
 internal class MultimediaFormatJsonConverter : JsonConverter<MultimediaFormat>

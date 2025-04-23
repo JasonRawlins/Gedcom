@@ -90,6 +90,8 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
 
         return individualEventTags.Contains(record.Tag);
     }
+
+    public override string ToString() => $"{Record.Value}, {ResponsibleAgency}";
 }
 
 internal class IndividualEventStructureJsonConverter : JsonConverter<IndividualEventStructure>

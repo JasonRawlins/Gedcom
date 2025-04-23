@@ -15,6 +15,8 @@ public class SourceCitation : RecordStructureBase
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public string CertaintyAssessment => _(C.QUAY);
+
+    public override string ToString() => $"{Record.Value}, {WhereWithinSource}";
 }
 
 internal class SourceCitationJsonConverter : JsonConverter<SourceCitation>
@@ -36,16 +38,16 @@ internal class SourceCitationJson : GedcomJson
         EventTypeCitedFrom = JsonRecord(sourceCitation.EventTypeCitedFrom);
         Data = JsonRecord(sourceCitation.Data);
         MultimediaLinks = JsonList(sourceCitation.MultimediaLinks);
-        NoteStructures = JsonList(sourceCitation.NoteStructures);
+        Notes = JsonList(sourceCitation.NoteStructures.Select(ns => ns.Text).ToList());
         CertaintyAssessment = JsonString(sourceCitation.CertaintyAssessment);
     }
 
-    public string? WhereWithinSource { get; set; }
-    public EventTypeCitedFrom? EventTypeCitedFrom { get; set; }
-    public SourceCitationData? Data { get; set; }
-    public List<MultimediaLink>? MultimediaLinks { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
     public string? CertaintyAssessment { get; set; }
+    public SourceCitationData? Data { get; set; }
+    public EventTypeCitedFrom? EventTypeCitedFrom { get; set; }
+    public List<MultimediaLink>? MultimediaLinks { get; set; }
+    public List<string>? Notes { get; set; }
+    public string? WhereWithinSource { get; set; }
 }
 
 #region SOURCE_CITATION p. 39

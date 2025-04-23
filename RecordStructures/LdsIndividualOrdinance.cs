@@ -15,6 +15,8 @@ public class LdsIndividualOrdinance : RecordStructureBase
     public LdsOrdinanceStatus LdsBaptismDateStatus => First<LdsOrdinanceStatus>(C.STAT);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
+
+    public override string ToString() => $"{Record.Value}, {TempleCode}, {PlaceLivingOrdinance}";
 }
 
 internal class LdsIndividualOrdinanceJsonConverter : JsonConverter<LdsIndividualOrdinance>

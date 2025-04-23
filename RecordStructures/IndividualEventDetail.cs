@@ -10,6 +10,8 @@ public class IndividualEventDetail : RecordStructureBase
     public IndividualEventDetail(Record record) : base(record) { }
 
     public string AgeAtEvent => _(C.AGE);
+
+    public override string ToString() => $"{Record.Value}, {AgeAtEvent}";
 }
 
 internal class IndividualEventDetailJsonConverter : JsonConverter<IndividualEventDetail>

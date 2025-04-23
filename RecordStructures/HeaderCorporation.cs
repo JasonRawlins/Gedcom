@@ -19,6 +19,8 @@ public class HeaderCorporation : RecordStructureBase, IAddressStructure
     public List<string> AddressWebPages => ListValues(C.WWW);
 
     #endregion
+
+    public override string ToString() => $"{Record.Value}, {AddressStructure.AddressLine}";
 }
 
 internal class HeaderCorporationJsonConverter : JsonConverter<HeaderCorporation>

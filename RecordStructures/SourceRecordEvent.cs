@@ -11,6 +11,8 @@ public class SourceRecordEvent : RecordStructureBase
 
     public string DatePeriod => _(C.DATE);
     public string SourceJurisdictionPlace => _(C.PLAC);
+
+    public override string ToString() => $"{Record.Value}, {DatePeriod}";
 }
 
 internal class SourceRecordEventJsonConverter : JsonConverter<SourceRecordEvent>

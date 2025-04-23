@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using Gedcom;
+using Gedcom.RecordStructures;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
@@ -24,6 +26,8 @@ public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
     public string SurnamePrefix => _(C.SPFX);
 
     #endregion
+
+    public override string ToString() => $"{Record.Value}, {NamePersonal}";
 }
 
 internal class PersonalNameStructureJsonConverter : JsonConverter<PersonalNameStructure>

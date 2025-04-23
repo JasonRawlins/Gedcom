@@ -10,6 +10,8 @@ public class CharacterSet : RecordStructureBase
     public CharacterSet(Record record) : base(record) { }
 
     public string VersionNumber => _(C.VERS);
+
+    public override string ToString() => $"{Record.Value}, {VersionNumber}";
 }
 
 internal class CharacterSetJsonConverter : JsonConverter<CharacterSet>

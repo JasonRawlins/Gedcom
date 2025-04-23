@@ -10,6 +10,9 @@ public class SourceCitationData : RecordStructureBase
     public SourceCitationData(Record record) : base(record) { }
 
     public string EntryRecordingDate => _(C.DATE);
+    public List<NoteStructure> TextFromSources => List<NoteStructure>(C.TEXT);
+
+    public override string ToString() => $"{Record.Value}, {EntryRecordingDate}";
 }
 
 internal class SourceCitationDataJsonConverter : JsonConverter<SourceCitationData>
@@ -27,9 +30,12 @@ internal class SourceCitationDataJson : GedcomJson
     public SourceCitationDataJson(SourceCitationData sourceCitationData)
     {
         EntryRecordingDate = JsonString(sourceCitationData.EntryRecordingDate);
+        
+        TextFromSources = sourceCitationData.TextFromSources.Select(t => t.Text).ToList();
     }
 
     public string? EntryRecordingDate { get; set; }
+    public List<string> TextFromSources { get; set; }
 }
 
 #region SOUR.DATA p. 39

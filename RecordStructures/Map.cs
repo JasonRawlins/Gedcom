@@ -10,6 +10,8 @@ public class Map : RecordStructureBase
     public Map(Record record) : base(record) { }
     public string PlaceLatitude => _(C.LATI);
     public string PlaceLongitude => _(C.LONG);
+
+    public override string ToString() => $"{Record.Value}, {PlaceLatitude}, {PlaceLongitude}";
 }
 
 internal class MapJsonConverter : JsonConverter<Map>

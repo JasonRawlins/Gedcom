@@ -10,6 +10,8 @@ public class FamilyEventStructure : RecordStructureBase
     public FamilyEventStructure(Record record) : base(record) { }
 
     public FamilyEventDetail FamilyEventDetail => First<FamilyEventDetail>(Record.Tag);
+
+    public override string ToString() => $"{Record.Value}, {FamilyEventDetail.Husband}, {FamilyEventDetail.Wife}";
 }
 
 internal class FamilyEventStructureJsonConverter : JsonConverter<FamilyEventStructure>

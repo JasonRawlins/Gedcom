@@ -24,7 +24,7 @@ public class FamilyRecord : RecordStructureBase
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
     public string AdoptedByWhichParent => _(C.ADOP);
-    public override string ToString() => $"'{Husband}' and '{Wife}' with children {string.Join(',', Children)})";
+    public override string ToString() => $"{Record.Value}, {Husband} and {Wife} with {Children.Count} children";
 }
 
 internal class FamilyRecordJsonConverter : JsonConverter<FamilyRecord>

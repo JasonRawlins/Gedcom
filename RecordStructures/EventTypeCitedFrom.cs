@@ -10,6 +10,8 @@ public class EventTypeCitedFrom : RecordStructureBase
     public EventTypeCitedFrom(Record record) : base(record) { }
 
     public string RoleInEvent => _(C.ROLE);
+
+    public override string ToString() => $"{Record.Value}, {RoleInEvent}";
 }
 
 internal class EventTypeCitedFromJsonConverter : JsonConverter<EventTypeCitedFrom>

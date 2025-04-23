@@ -12,6 +12,8 @@ public class NoteRecord : RecordStructureBase
     public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordId => _(C.RIN);
     public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
+
+    public override string ToString() => $"{Record.Value}, {AutomatedRecordId}";
 }
 
 internal class NoteRecordJsonConverter : JsonConverter<NoteRecord>

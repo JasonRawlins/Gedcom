@@ -21,6 +21,8 @@ public class SourceRecord : RecordStructureBase
     public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
+
+    public override string ToString() => $"{Record.Value}, {AutomatedRecordId}";
 }
 
 internal class SourceRecordJsonConverter : JsonConverter<SourceRecord>

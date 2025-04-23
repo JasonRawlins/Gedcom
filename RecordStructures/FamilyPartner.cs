@@ -11,6 +11,8 @@ public class FamilyPartner : RecordStructureBase
 
     public string Name => Record.Value;
     public string AgeAtEvent => Record.Records.FirstOrDefault(r => r.Tag.Equals(C.AGE))?.Value ?? "";
+
+    public override string ToString() => $"{Record.Value}, {Name}";
 }
 
 internal class FamilyPartnerJsonConverter : JsonConverter<FamilyPartner>

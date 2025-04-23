@@ -16,11 +16,12 @@ public class Header : RecordStructureBase
     public SubmissionRecord SubmissionRecord => First<SubmissionRecord>(C.SUBN);
     public string FileName => _(C.FILE);
     public string CopyrightGedcomFile => _(C.COPR);
-    public GEDC Gedcom => First<GEDC>(C.GEDC);
+    public HeaderGedcom Gedcom => First<HeaderGedcom>(C.GEDC);
     public CharacterSet CharacterSet => First<CharacterSet>(C.CHAR);
     public string LanguageOfText => _(C.LANG);
     public string PlaceHierarchy => Record.Records.FirstOrDefault(r => r.Tag.Equals(C.PLAC))?.Records.First(r => r.Tag.Equals(C.FORM)).Value ?? "";
     public NoteStructure GedcomContentDescription => First<NoteStructure>(C.NOTE);
+    public override string ToString() => $"{Record.Value}, {Submitter}";
 }
 
 internal class HeaderJsonConverter : JsonConverter<Header>
@@ -58,7 +59,7 @@ internal class HeaderJson : GedcomJson
     public SubmissionRecord? SubmissionRecord { get; set; }
     public string? FileName { get; set; }
     public string? CopyrightGedcomFile { get; set; }
-    public GEDC? Gedcom { get; set; }
+    public HeaderGedcom? Gedcom { get; set; }
     public CharacterSet? CharacterSet { get; set; }
     public string? LanguageOfText { get; set; }
     public string? PlaceHierarchy { get; set; }

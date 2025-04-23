@@ -11,6 +11,8 @@ public class SourceRepositoryCitation : RecordStructureBase
 
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<CallNumber> CallNumbers => List<CallNumber>(C.CALN);
+
+    public override string ToString() => $"{Record.Value}";
 }
 
 internal class SourceRepositoryCitationJsonConverter : JsonConverter<SourceRepositoryCitation>

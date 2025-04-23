@@ -19,8 +19,11 @@ public class NameVariation : RecordStructureBase, IPersonalNamePieces
     public string Nickname => _(C.NICK);
     public string Surname => _(C.SURN);
     public string SurnamePrefix => _(C.SPFX);
+    public string FullName => $"{Given} {Surname}";
 
     #endregion
+
+    public override string ToString() => $"{Record.Value}, {Type}, {FullName}";
 }
 
 internal class NameVariationJsonConverter : JsonConverter<NameVariation>

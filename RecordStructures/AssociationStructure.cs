@@ -12,6 +12,8 @@ public class AssociationStructure : RecordStructureBase
     public string RelationIsDescriptor => _(C.RELA);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+
+    public override string ToString() => $"{Record.Value}, {RelationIsDescriptor}";
 }
 
 internal class AssociationStructureJsonConverter : JsonConverter<AssociationStructure>

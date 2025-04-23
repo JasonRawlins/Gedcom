@@ -12,6 +12,8 @@ public class FamilyEventDetail : RecordStructureBase
     public FamilyPartner Husband => First<FamilyPartner>(C.HUSB);
     public FamilyPartner Wife => First<FamilyPartner>(C.WIFE);
     public EventDetail EventDetail => First<EventDetail>(C.EVEN);
+
+    public override string ToString() => $"{Record.Value}, {Husband.Name}, {Wife.Name}";
 }
 
 internal class FamilyEventDetailJsonConverter : JsonConverter<FamilyEventDetail>

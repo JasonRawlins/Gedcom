@@ -17,11 +17,24 @@ public class NoteStructure : RecordStructureBase
             var text = new StringBuilder();
             text.Append(Record.Value);
             var contAndConc = Record.Records.Where(r => r.Tag.Equals(C.CONT) || r.Tag.Equals(C.CONC)).ToList();
-            contAndConc.ForEach(r => text.Append(r.Value));
+            contAndConc.ForEach(r => {
+                if (r.Tag.Equals(C.CONT))
+                {
+                    text.AppendLine(r.Value);
+                }
+
+                if (r.Tag.Equals(C.CONC))
+                {
+                    text.Append(r.Value);
+                }
+
+            });
 
             return text.ToString();
         }
     }
+
+    public override string ToString() => Text.Substring(0, 64);
 }
 
 internal class NoteStructureJsonConverter : JsonConverter<NoteStructure>

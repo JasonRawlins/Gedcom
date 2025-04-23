@@ -14,6 +14,8 @@ public class PlaceStructure : RecordStructureBase
     public List<NameVariation> PlaceRomanizedVariations => List<NameVariation>(C.ROMN);
     public Map Map => First<Map>(C.MAP);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+
+    public override string ToString() => $"{Record.Value}, {PlaceName}";
 }
 
 internal class PlaceStructureJsonConverter : JsonConverter<PlaceStructure>

@@ -11,6 +11,8 @@ public class HeaderData : RecordStructureBase
 
     public string PublicationDate => _(C.DATE);
     public NoteStructure CopyrightSourceData => First<NoteStructure>(C.COPR);
+
+    public override string ToString() => $"{Record.Value}, {PublicationDate}";
 }
 
 internal class HeaderDataJsonConverter : JsonConverter<HeaderData>

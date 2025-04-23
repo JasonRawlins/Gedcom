@@ -44,8 +44,6 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
         }
     }
 
-    public override string ToString() => $"{DayMonthYear} (DateValue: {DateValue})";
-
     public static GedcomDate Parse(string date, string time = "")
     {
         // Dynamically constructing a record like this is pretty sketchy. Make sure it's a valid use case.
@@ -153,6 +151,8 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
 
         return Day.CompareTo(other.Day);
     }
+
+    public override string ToString() => $"{Record.Value}, {DayMonthYear}, (Raw: {DateValue})";
 }
 
 internal class GedcomDateJsonConverter : JsonConverter<GedcomDate>
@@ -169,14 +169,20 @@ internal class GedcomDateJson : GedcomJson
 {
     public GedcomDateJson(GedcomDate gedcomDate)
     {
-        DateValue = JsonString(gedcomDate.DateValue);
-        TimeValue = JsonString(gedcomDate.TimeValue);
-        DateTime = gedcomDate.DateValue;
+        Day = gedcomDate.Day;
+        Month = gedcomDate.Month;
+        MonthName = gedcomDate.MonthName;
+        Year = gedcomDate.Year;
+        DayMonthYear = gedcomDate.DayMonthYear;
+        Time = gedcomDate.TimeValue;
     }
 
-    public string? DateValue { get; set; }
-    public string? TimeValue { get; set; }
-    public string DateTime { get; set; }
+    public int? Day { get; set; }
+    public int? Month { get; set; }
+    public string? MonthName { get; set; } = "";
+    public int? Year { get; set; }
+    public string? DayMonthYear { get; set; }
+    public string? Time { get; set; }
 }
 
 #region DATE p. 45

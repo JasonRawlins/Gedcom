@@ -22,6 +22,7 @@ public class EventDetail : RecordStructureBase, IEventDetail
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
 
+    public override string ToString() => $"{Record.Value}, {GedcomDate.DayMonthYear}";
 }
 
 internal class EventDetailJsonConverter : JsonConverter<EventDetail>

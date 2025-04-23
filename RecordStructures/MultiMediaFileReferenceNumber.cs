@@ -10,6 +10,8 @@ public class MultimediaFileReferenceNumber : RecordStructureBase
     public MultimediaFileReferenceNumber(Record record) : base(record) { }
 
     public MultimediaFormat MultiMediaFormat => First<MultimediaFormat>(C.FORM);
+
+    public override string ToString() => $"{Record.Value}, {MultiMediaFormat.Xref}";
 }
 
 internal class MultimediaFileReferenceNumberJsonConverter : JsonConverter<MultimediaFileReferenceNumber>

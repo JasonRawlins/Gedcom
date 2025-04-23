@@ -18,6 +18,7 @@ public class SubmissionRecord : RecordStructureBase
     public string AutomatedRecordId => _(C.RIN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
+    public override string ToString() => $"{Record.Value}, {Submitter}";
 }
 
 internal class SubmissionRecordJsonConverter : JsonConverter<SubmissionRecord>

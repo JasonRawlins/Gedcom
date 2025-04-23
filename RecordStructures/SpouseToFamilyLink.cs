@@ -10,6 +10,8 @@ public class SpouseToFamilyLink : RecordStructureBase
     public SpouseToFamilyLink(Record record) : base(record) { }
 
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+
+    public override string ToString() => $"{Record.Value}";
 }
 
 internal class SpouseToFamilyLinkJsonConverter : JsonConverter<SpouseToFamilyLink>

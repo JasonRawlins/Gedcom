@@ -9,8 +9,10 @@ public class ChangeDate : RecordStructureBase
     public ChangeDate() { }
     public ChangeDate(Record record) : base(record) { }
 
-    public GedcomDate ChangeDate_ => First<GedcomDate>(C.DATE);
+    public GedcomDate GedcomDate => First<GedcomDate>(C.DATE);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+
+    public override string ToString() => $"{Record.Value}, {GedcomDate.DayMonthYear}";
 }
 
 internal class ChangeDateJsonConverter : JsonConverter<ChangeDate>
@@ -27,7 +29,7 @@ internal class ChangeDateJson : GedcomJson
 {
     public ChangeDateJson(ChangeDate changeDate)
     {
-        ChangeDate = JsonRecord(changeDate.ChangeDate_);
+        ChangeDate = JsonRecord(changeDate.GedcomDate);
         NoteStructures = JsonList(changeDate.NoteStructures);
     }
 

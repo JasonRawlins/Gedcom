@@ -97,7 +97,7 @@ public class Gedcom : RecordStructureBase
         return gedStringBuilder.ToString();
     }
 
-    public override string ToString() => "Gedcom.ToString()"; // $"{_TREE.Value} ({RIN.Value})";
+    public override string ToString() => $"{Header.Source.Tree.Name} ({Header.Source.Tree.AutomatedRecordId})";
 }
 
 internal class GedcomJsonConverter : JsonConverter<Gedcom>

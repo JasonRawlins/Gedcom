@@ -14,6 +14,8 @@ public class HeaderSource : RecordStructureBase
     public HeaderCorporation Corporation => First<HeaderCorporation>(C.CORP);
     public HeaderData Data => First<HeaderData>(C.DATA);
     public HeaderTree Tree => First<HeaderTree>(C._TREE);
+
+    public override string ToString() => $"{Record.Value}, {NameOfProduct}, {Version}";
 }
 
 internal class HeaderSourceJsonConverter : JsonConverter<HeaderSource>

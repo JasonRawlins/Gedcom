@@ -9,6 +9,8 @@ public class IndividualAttributeStructure : RecordStructureBase
     public IndividualAttributeStructure() : base() { }
     public IndividualAttributeStructure(Record record) : base(record) { }
     public IndividualEventDetail IndividualEventDetail => First<IndividualEventDetail>(Record.Tag);
+
+    public override string ToString() => $"{Record.Value}";
 }
 
 internal class IndividualAttributeStructureJsonConverter : JsonConverter<IndividualAttributeStructure>

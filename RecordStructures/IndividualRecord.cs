@@ -49,7 +49,7 @@ public class IndividualRecord : RecordStructureBase
         }.Contains(record.Tag));
     }
 
-    public override string ToString() => $"{PersonalNameStructures.First().NamePersonal} {SexValue} ({Record.Value})";
+    public override string ToString() => $"{Record.Value}, {PersonalNameStructures.First().NamePersonal}, {SexValue}";
 }
 
 internal class IndividualRecordJsonConverter : JsonConverter<IndividualRecord>

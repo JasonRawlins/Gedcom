@@ -3,21 +3,22 @@ using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
-// I named this class after the tag name because there is already a class named Gedcom.cs.
 [JsonConverter(typeof(GEDCJsonConverter))]
-public class GEDC : RecordStructureBase
+public class HeaderGedcom : RecordStructureBase
 {
-    public GEDC() : base() { }
-    public GEDC(Record record) : base(record) { }
+    public HeaderGedcom() : base() { }
+    public HeaderGedcom(Record record) : base(record) { }
 
     public string VersionNumber => _(C.VERS);
     public string GedcomForm => _(C.FORM);
+
+    public override string ToString() => $"{Record.Value}, {VersionNumber}";
 }
 
-internal class GEDCJsonConverter : JsonConverter<GEDC>
+internal class GEDCJsonConverter : JsonConverter<HeaderGedcom>
 {
-    public override GEDC? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, GEDC gedc, JsonSerializerOptions options)
+    public override HeaderGedcom? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override void Write(Utf8JsonWriter writer, HeaderGedcom gedc, JsonSerializerOptions options)
     {
         var gedcJson = new GEDCJson(gedc);
         JsonSerializer.Serialize(writer, gedcJson, gedcJson.GetType(), options);
@@ -26,7 +27,7 @@ internal class GEDCJsonConverter : JsonConverter<GEDC>
 
 internal class GEDCJson : GedcomJson
 {
-    public GEDCJson(GEDC gedc)
+    public GEDCJson(HeaderGedcom gedc)
     {
         VersionNumber = JsonString(gedc.VersionNumber);
         GedcomForm = JsonString(gedc.GedcomForm);

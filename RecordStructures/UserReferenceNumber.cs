@@ -10,6 +10,8 @@ public class UserReferenceNumber : RecordStructureBase
     public UserReferenceNumber(Record record) : base(record) { }
 
     public string UserReferenceType => _(C.TYPE);
+
+    public override string ToString() => $"{Record.Value}, {UserReferenceType}";
 }
 
 internal class UserReferenceNumberJsonConverter : JsonConverter<UserReferenceNumber>

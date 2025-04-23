@@ -12,6 +12,8 @@ public class MultimediaLink : RecordStructureBase
     public List<MultimediaFileReferenceNumber> MultimediaFileReferenceNumbers => List<MultimediaFileReferenceNumber>(C.FILE);
     public string SourceMediaType => _(C.MEDI);
     public string DescriptiveTitle => _(C.TITL);
+
+    public override string ToString() => $"{Record.Value}, {SourceMediaType}, {DescriptiveTitle}";
 }
 
 internal class MultimediaLinkJsonConverter : JsonConverter<MultimediaLink>

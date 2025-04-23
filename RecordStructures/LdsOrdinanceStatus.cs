@@ -8,6 +8,8 @@ public class LdsOrdinanceStatus : RecordStructureBase
 {
     public string Status => Record.Value;
     public string ChangeDate => _(C.DATE);
+
+    public override string ToString() => $"{Record.Value}, {Status}, {ChangeDate}";
 }
 
 internal class LdsOrdinanceStatusJsonConverter : JsonConverter<LdsOrdinanceStatus>

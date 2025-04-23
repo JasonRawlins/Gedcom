@@ -15,6 +15,8 @@ public class LdsSpouseSealing : RecordStructureBase
     public LdsOrdinanceStatus LdsSpouseSealingDateStatus => First<LdsOrdinanceStatus>(C.STAT);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
+
+    public override string ToString() => $"{Record.Value}, {TempleCode}, {DateLdsOrdinance}";
 }
 
 internal class LdsSpouseSealingJsonConverter : JsonConverter<LdsSpouseSealing>

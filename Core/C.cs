@@ -38,10 +38,10 @@ public static class C // Constants
     public const string CHRA = "CHRA"; // <blank>
     public const string CREM = "CREM"; // <blank>
     public const string CITY = "CITY"; // <ADDRESS_CITY>
-    public const string CONC = "CONC"; // Continuation: Concatenate to previous line. Check spec.
+    public const string CONC = "CONC"; // Concatenation: Concatenate to previous line without a space or carriage return.
     public const string CONL = "CONL"; // <blank>
     public const string CONF = "CONF"; // <blank>
-    public const string CONT = "CONT"; // Continuation: Concatenate to previous line, preserving line breaks. Check spec.
+    public const string CONT = "CONT"; // Continued: Concatenate to previous line with a carriage return or new line. Check spec.
     public const string COPR = "COPR"; // <COPYRIGHT_GEDCOM_FILE>, <COPYRIGHT_SOURCE_DATA>
     public const string CORP = "CORP"; // <NAME_OF_BUSINESS>
     public const string CTRY = "CTRY"; // <ADDRESS_COUNTRY>

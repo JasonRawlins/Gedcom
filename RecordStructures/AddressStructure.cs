@@ -17,6 +17,8 @@ public class AddressStructure : RecordStructureBase
     public string AddressState => _(C.STAE);
     public string AddressPostCode => _(C.POST);
     public string AddressCountry => _(C.CTRY);
+
+    public override string ToString() => $"{Record.Value}, {AddressLine}";
 }
 
 internal class AddressStructureJsonConverter : JsonConverter<AddressStructure>

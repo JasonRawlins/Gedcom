@@ -21,7 +21,10 @@ public class RepositoryRecord : RecordStructureBase, IAddressStructure
     public List<string> AddressEmails => ListValues(C.EMAIL);
     public List<string> AddressFaxNumbers => ListValues(C.FAX);
     public List<string> AddressWebPages => ListValues(C.WWW);
+
     #endregion
+
+    public override string ToString() => $"{Record.Value}, {Name}";
 }
 
 internal class RepositoryRecordJsonConverter : JsonConverter<RepositoryRecord>

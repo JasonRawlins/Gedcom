@@ -17,6 +17,8 @@ public class SubmitterRecord : RecordStructureBase
     public string AutomatedRecordId => _(C.RIN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public GedcomDate ChangeDate => First<GedcomDate>(C.CHAN);
+
+    public override string ToString() => $"{Record.Value}, {SubmitterName}";
 }
 
 internal class SubmitterRecordJsonConverter : JsonConverter<SubmitterRecord>

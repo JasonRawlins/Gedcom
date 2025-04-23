@@ -10,6 +10,8 @@ public class CallNumber : RecordStructureBase
     public CallNumber(Record record) : base(record) { }
 
     public string SourceMediaType => _(C.MEDI);
+
+    public override string ToString() => $"{Record.Value}, {SourceMediaType}";
 }
 
 internal class CallNumberJsonConverter : JsonConverter<CallNumber>

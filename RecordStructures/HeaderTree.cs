@@ -11,6 +11,8 @@ public class HeaderTree : RecordStructureBase
 
     public string AutomatedRecordId => _(C.RIN);
     public string Name => Record.Value;
+
+    public override string ToString() => $"{Record.Value}, {Name}";
 }
 
 internal class HeaderTreeJsonConverter : JsonConverter<HeaderTree>

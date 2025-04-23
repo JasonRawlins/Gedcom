@@ -12,6 +12,8 @@ public class SourceRecordData : RecordStructureBase
     public List<SourceRecordEvent> EventsRecorded => List<SourceRecordEvent>(C.EVEN);
     public string ResponsibleAgency => _(C.AGNC);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+
+    public override string ToString() => $"{Record.Value}, {ResponsibleAgency}";
 }
 
 internal class SourceRecordDataJsonConverter : JsonConverter<SourceRecordData>

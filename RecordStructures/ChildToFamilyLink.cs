@@ -13,6 +13,8 @@ public class ChildToFamilyLink : RecordStructureBase
     public string ChildLinkageStatus => _(C.STAT);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public string AdoptedByWhichParent => First(C.ADOP).Value;
+
+    public override string ToString() => $"{Record.Value}, {PedigreeLinkageType}";
 }
 
 internal class ChildToFamilyLinkJsonConverter : JsonConverter<ChildToFamilyLink>
