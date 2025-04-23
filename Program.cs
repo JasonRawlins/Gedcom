@@ -18,11 +18,10 @@ public class Program
         }
 
         var gedFileLines = File.ReadAllLines(gedFullName);
-        var gedcomLines = gedFileLines.Select(GedcomLine.ParseLine).ToList();
-        var gedcom = new Gedcom.Gedcom(gedcomLines);
-        
+        var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
+        var gedcom = new Gedcom.Gedcom(gedcomLines);       
 
-        var individualRecord = gedcom.GetIndividualRecord("@***REMOVED***@"); // 
+        var individualRecord = gedcom.GetIndividualRecord("@***REMOVED***@");
         //var jsonText = JsonSerializer.Serialize(individualRecord, JsonSerializerOptions);
         //File.WriteAllText(jsonFullName, jsonText);
     }

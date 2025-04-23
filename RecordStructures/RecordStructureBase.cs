@@ -10,32 +10,11 @@ public class RecordStructureBase
     [JsonIgnore]
     public bool IsEmpty => Record.IsEmpty;
 
-    public string Xref => Record.Value;
-
-    private Record this[string tag] => this[[tag]];
-    private Record this[IEnumerable<string> tagPath]
-    {
-        get
-        {
-            var currentRecord = First(tagPath.First());
-
-            if (currentRecord.IsEmpty || currentRecord.Records.Count == 1)
-            {
-                return currentRecord;
-            }
-
-            foreach (var tag in tagPath.Skip(1))
-            {
-                currentRecord = currentRecord.Records.FirstOrDefault(r => r.Tag.Equals(tag)) ?? Record.Empty;
-            }
-
-            return currentRecord;
-        }
-    }
-
     internal RecordStructureBase() { }
     public RecordStructureBase(Record record) => Record = record;
     internal void SetRecord(Record record) => Record = record;
+
+    public string Xref => Record.Value;
 
     // The method "_" finds a child record value by tag name. 
     protected string _(string tag) => First(tag).Value;

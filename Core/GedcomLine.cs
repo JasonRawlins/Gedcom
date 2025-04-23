@@ -16,7 +16,7 @@ public class GedcomLine
     public string Value { get; set; } = "";
     public string Xref => Value;
 
-    public static GedcomLine ParseLine(string line)
+    public static GedcomLine Parse(string line)
     {
         var level = int.Parse(line.Substring(0, line.IndexOf(" ")));
         var lineWithoutLevel = line.Substring(line.IndexOf(" ") + 1);

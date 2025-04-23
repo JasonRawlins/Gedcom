@@ -16,6 +16,7 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
     public string AgeAtEvent => _(C.AGE);
     public string EventOrFactClassification => _(C.TYPE);
     public string DateValue => _(C.DATE);
+    public GedcomDate GedcomDate => GedcomDate.Parse(DateValue);
     public PlaceStructure PlaceStructure => First<PlaceStructure>(C.PLAC);
     public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
     public string ResponsibleAgency => _(C.AGNC);
@@ -109,6 +110,7 @@ internal class IndividualEventStructureJson : GedcomJson
         AgeAtEvent = JsonString(individualEventStructure.AgeAtEvent);
         EventOrFactClassification = JsonString(individualEventStructure.EventOrFactClassification);
         DateValue = JsonString(individualEventStructure.DateValue);
+        GedcomDate = individualEventStructure.GedcomDate;
         PlaceStructure = JsonRecord(individualEventStructure.PlaceStructure);
         AddressStructure = JsonRecord(individualEventStructure.AddressStructure);
         ResponsibleAgency = JsonString(individualEventStructure.ResponsibleAgency);
@@ -124,6 +126,7 @@ internal class IndividualEventStructureJson : GedcomJson
     public string? AgeAtEvent { get; set; }
     public string? EventOrFactClassification { get; set; }
     public string? DateValue { get; set; }
+    public GedcomDate GedcomDate { get; set; }
     public PlaceStructure? PlaceStructure { get; set; }
     public AddressStructure? AddressStructure { get; set; }
     public string? ResponsibleAgency { get; set; }

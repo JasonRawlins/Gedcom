@@ -11,6 +11,7 @@ public class EventDetail : RecordStructureBase, IEventDetail
 
     public string EventOrFactClassification => _(C.TYPE);
     public string DateValue => _(C.DATE);
+    public GedcomDate GedcomDate => GedcomDate.Parse(DateValue);
     public PlaceStructure PlaceStructure => First<PlaceStructure>(C.PLAC);
     public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
     public string ResponsibleAgency => _(C.AGNC);
@@ -20,6 +21,7 @@ public class EventDetail : RecordStructureBase, IEventDetail
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
+
 }
 
 internal class EventDetailJsonConverter : JsonConverter<EventDetail>
@@ -65,7 +67,7 @@ internal class EventDetailJson : GedcomJson
 public interface IEventDetail
 {
     string EventOrFactClassification { get; }
-    string DateValue { get; }
+    GedcomDate GedcomDate { get; }
     PlaceStructure PlaceStructure { get; }
     AddressStructure AddressStructure { get; }
     string ResponsibleAgency { get; }
