@@ -29,12 +29,12 @@ internal class SourceRepositoryCitationJson : GedcomJson
 {
     public SourceRepositoryCitationJson(SourceRepositoryCitation sourceRepositoryCitation)
     {
-        NoteStructures = JsonList(sourceRepositoryCitation.NoteStructures);
         CallNumbers = JsonList(sourceRepositoryCitation.CallNumbers);
+        NoteStructures = JsonList(sourceRepositoryCitation.NoteStructures);
     }
 
-    public List<NoteStructure>? NoteStructures { get; set; }
     public List<CallNumber>? CallNumbers { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
 }
 
 #region SOURCE_REPOSITORY_CITATION p. 40

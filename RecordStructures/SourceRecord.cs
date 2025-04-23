@@ -9,18 +9,18 @@ public class SourceRecord : RecordStructureBase
     internal SourceRecord() : base() { }
     public SourceRecord(Record record) : base(record) { }
 
-    public SourceRecordData SourceRecordData => First<SourceRecordData>(C.DATA);
-    public NoteStructure SourceOriginator => First<NoteStructure>(C.AUTH);
-    public NoteStructure SourceDescriptiveTitle => First<NoteStructure>(C.TITL);
-    public NoteStructure SourceFiledByEntry => First<NoteStructure>(C.ABBR);
-    public NoteStructure SourcePublicationFacts => First<NoteStructure>(C.PUBL);
-    public NoteStructure TextFromSource => First<NoteStructure>(C.TEXT);
-    public List<SourceRepositoryCitation> SourceRepositoryCitations => List<SourceRepositoryCitation>("");
-    public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordId => _(C.RIN);
     public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+    public NoteStructure SourceDescriptiveTitle => First<NoteStructure>(C.TITL);
+    public NoteStructure SourceFiledByEntry => First<NoteStructure>(C.ABBR);
+    public NoteStructure SourceOriginator => First<NoteStructure>(C.AUTH);
+    public NoteStructure SourcePublicationFacts => First<NoteStructure>(C.PUBL);
+    public SourceRecordData SourceRecordData => First<SourceRecordData>(C.DATA);
+    public List<SourceRepositoryCitation> SourceRepositoryCitations => List<SourceRepositoryCitation>("");
+    public NoteStructure TextFromSource => First<NoteStructure>(C.TEXT);
+    public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
 
     public override string ToString() => $"{Record.Value}, {AutomatedRecordId}";
 }
@@ -39,32 +39,32 @@ internal class SourceRecordJson : GedcomJson
 {
     public SourceRecordJson(SourceRecord sourceRecord)
     {
-        SourceRecordData = JsonRecord(sourceRecord.SourceRecordData);
-        SourceOriginator = JsonRecord(sourceRecord.SourceOriginator);
-        SourceDescriptiveTitle = JsonRecord(sourceRecord.SourceDescriptiveTitle);
-        SourceFiledByEntry = JsonRecord(sourceRecord.SourceFiledByEntry);
-        SourcePublicationFacts = JsonRecord(sourceRecord.SourcePublicationFacts);
-        TextFromSource = JsonRecord(sourceRecord.TextFromSource);
-        SourceRepositoryCitations = JsonList(sourceRecord.SourceRepositoryCitations);
-        UserReferenceNumbers = JsonList(sourceRecord.UserReferenceNumbers);
         AutomatedRecordId = JsonString(sourceRecord.AutomatedRecordId);
         ChangeDate = JsonRecord(sourceRecord.ChangeDate);
-        NoteStructures = JsonList(sourceRecord.NoteStructures);
         MultimediaLinks = JsonList(sourceRecord.MultimediaLinks);
+        NoteStructures = JsonList(sourceRecord.NoteStructures);
+        SourceDescriptiveTitle = JsonRecord(sourceRecord.SourceDescriptiveTitle);
+        SourceFiledByEntry = JsonRecord(sourceRecord.SourceFiledByEntry);
+        SourceOriginator = JsonRecord(sourceRecord.SourceOriginator);
+        SourcePublicationFacts = JsonRecord(sourceRecord.SourcePublicationFacts);
+        SourceRecordData = JsonRecord(sourceRecord.SourceRecordData);
+        SourceRepositoryCitations = JsonList(sourceRecord.SourceRepositoryCitations);
+        TextFromSource = JsonRecord(sourceRecord.TextFromSource);
+        UserReferenceNumbers = JsonList(sourceRecord.UserReferenceNumbers);
     }
 
-    public SourceRecordData? SourceRecordData { get; set; }
-    public NoteStructure? SourceOriginator { get; set; }
-    public NoteStructure? SourceDescriptiveTitle { get; set; }
-    public NoteStructure? SourceFiledByEntry { get; set; }
-    public NoteStructure? SourcePublicationFacts { get; set; }
-    public NoteStructure? TextFromSource { get; set; }
-    public List<SourceRepositoryCitation>? SourceRepositoryCitations { get; set; }
-    public List<UserReferenceNumber>? UserReferenceNumbers { get; set; }
     public string? AutomatedRecordId { get; set; }
     public ChangeDate? ChangeDate { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
     public List<MultimediaLink>? MultimediaLinks { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
+    public NoteStructure? SourceDescriptiveTitle { get; set; }
+    public NoteStructure? SourceFiledByEntry { get; set; }
+    public NoteStructure? SourceOriginator { get; set; }
+    public NoteStructure? SourcePublicationFacts { get; set; }
+    public SourceRecordData? SourceRecordData { get; set; }
+    public List<SourceRepositoryCitation>? SourceRepositoryCitations { get; set; }
+    public NoteStructure? TextFromSource { get; set; }
+    public List<UserReferenceNumber>? UserReferenceNumbers { get; set; }
 }
 
 #region SOURCE_RECORD p. 27-28

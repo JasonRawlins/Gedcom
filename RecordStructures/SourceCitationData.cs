@@ -29,8 +29,7 @@ internal class SourceCitationDataJson : GedcomJson
 {
     public SourceCitationDataJson(SourceCitationData sourceCitationData)
     {
-        EntryRecordingDate = JsonString(sourceCitationData.EntryRecordingDate);
-        
+        EntryRecordingDate = JsonString(sourceCitationData.EntryRecordingDate);        
         TextFromSources = sourceCitationData.TextFromSources.Select(t => t.Text).ToList();
     }
 

@@ -9,14 +9,14 @@ public class SubmitterRecord : RecordStructureBase
     public SubmitterRecord() : base() { }
     public SubmitterRecord(Record record) : base(record) { }
 
-    public string SubmitterName => _(C.NAME);
     public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
-    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.MEDI);
-    public List<string> LanguagePreferences => List(r => r.Tag.Equals(C.LANG)).Select(r => r.Value).ToList();
-    public string SubmitterRegisteredRfn => _(C.RFN);
     public string AutomatedRecordId => _(C.RIN);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public GedcomDate ChangeDate => First<GedcomDate>(C.CHAN);
+    public List<string> LanguagePreferences => List(r => r.Tag.Equals(C.LANG)).Select(r => r.Value).ToList();
+    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.MEDI);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+    public string SubmitterName => _(C.NAME);
+    public string SubmitterRegisteredRfn => _(C.RFN);
 
     public override string ToString() => $"{Record.Value}, {SubmitterName}";
 }
@@ -35,24 +35,24 @@ internal class SubmitterRecordJson : GedcomJson
 {
     public SubmitterRecordJson(SubmitterRecord submitterRecord)
     {
-        SubmitterName = JsonString(submitterRecord.SubmitterName);
         AddressStructure = JsonRecord(submitterRecord.AddressStructure);
-        MultimediaLinks = JsonList(submitterRecord.MultimediaLinks);
-        LanguagePreferences = JsonList(submitterRecord.LanguagePreferences);
-        SubmitterRegisteredReferenceNumber = JsonString(submitterRecord.SubmitterRegisteredRfn);
         AutomatedRecordId = JsonString(submitterRecord.AutomatedRecordId);
-        NoteStructures = JsonList(submitterRecord.NoteStructures);
         ChangeDate = JsonRecord(submitterRecord.ChangeDate);
+        LanguagePreferences = JsonList(submitterRecord.LanguagePreferences);
+        MultimediaLinks = JsonList(submitterRecord.MultimediaLinks);
+        NoteStructures = JsonList(submitterRecord.NoteStructures);
+        SubmitterName = JsonString(submitterRecord.SubmitterName);
+        SubmitterRegisteredReferenceNumber = JsonString(submitterRecord.SubmitterRegisteredRfn);
     }
 
-    public string? SubmitterName { get; set; }
     public AddressStructure? AddressStructure { get; set; }
-    public List<MultimediaLink>? MultimediaLinks { get; set; }
-    public List<string>? LanguagePreferences { get; set; }
-    public string? SubmitterRegisteredReferenceNumber { get; set; }
     public string? AutomatedRecordId { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
     public GedcomDate? ChangeDate { get; set; }
+    public List<string>? LanguagePreferences { get; set; }
+    public List<MultimediaLink>? MultimediaLinks { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
+    public string? SubmitterName { get; set; }
+    public string? SubmitterRegisteredReferenceNumber { get; set; }
 }
 
 #region SUBMITTER_RECORD p. 28-29

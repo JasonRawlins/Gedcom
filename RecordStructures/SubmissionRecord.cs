@@ -35,27 +35,27 @@ internal class SubmissionRecordJson : GedcomJson
 {
     public SubmissionRecordJson(SubmissionRecord submissionRecord)
     {
-        Xref = submissionRecord.Xref;
-        Submitter = JsonString(submissionRecord.Submitter);
-        NameOfFamilyFile = JsonString(submissionRecord.NameOfFamilyFile);
-        TempleCode = JsonString(submissionRecord.TempleCode);
+        AutomatedRecordId = JsonString(submissionRecord.AutomatedRecordId);
+        ChangeDate = JsonRecord(submissionRecord.ChangeDate);
         GenerationsOfAncestors = JsonString(submissionRecord.GenerationsOfAncestors);
         GenerationsOfDescendants = JsonString(submissionRecord.GenerationsOfDescendants);
+        NameOfFamilyFile = JsonString(submissionRecord.NameOfFamilyFile);
         OrdinanceProcessFlag = JsonString(submissionRecord.OrdinanceProcessFlag);
-        AutomatedRecordId = JsonString(submissionRecord.AutomatedRecordId);
-        NoteStructures = JsonList(submissionRecord.NoteStructures);
-        ChangeDate = JsonRecord(submissionRecord.ChangeDate);
+        Submitter = JsonString(submissionRecord.Submitter);
+        TempleCode = JsonString(submissionRecord.TempleCode);
+        Xref = submissionRecord.Xref;
     }
 
-    public string? Submitter { get; set; }
-    public string? NameOfFamilyFile { get; set; }
-    public string? TempleCode { get; set; }
+    public string? AutomatedRecordId { get; set; }
+    public ChangeDate? ChangeDate { get; set; }
     public string? GenerationsOfAncestors { get; set; }
     public string? GenerationsOfDescendants { get; set; }
-    public string? OrdinanceProcessFlag { get; set; }
-    public string? AutomatedRecordId { get; set; }
+    public string? NameOfFamilyFile { get; set; }
     public List<NoteStructure>? NoteStructures { get; set; }
-    public ChangeDate? ChangeDate { get; set; }
+    public string? OrdinanceProcessFlag { get; set; }
+    public string? Submitter { get; set; }
+    public string? TempleCode { get; set; }
+    public string? Xref { get; set; }
 }
 
 #region SUBMISSION_RECORD p. 28

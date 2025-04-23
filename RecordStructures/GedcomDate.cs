@@ -11,12 +11,7 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
     public GedcomDate(Record record) : base(record) { }
 
     public string DateValue => Record.Value;
-    public string TimeValue => _(C.TIME);
-
     public int Day { get; set; }
-    public int Month { get; set; }
-    public string MonthName { get; set; } = "";
-    public int Year { get; set; }
     public string DayMonthYear
     {
         get
@@ -43,7 +38,64 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
             return stringBuilder.ToString();
         }
     }
+    public int Month { get; set; }
+    public string MonthName { get; set; } = "";
+    public string TimeValue => _(C.TIME);
+    public int Year { get; set; }
 
+    public int CompareTo(GedcomDate? other)
+    {
+        if (other == null) return 1;
+
+        // Compare by year first, then month, then day
+        int yearComparison = Year.CompareTo(other.Year);
+        if (yearComparison != 0) return yearComparison;
+
+        int monthComparison = Month.CompareTo(other.Month);
+        if (monthComparison != 0) return monthComparison;
+
+        return Day.CompareTo(other.Day);
+    }
+    private static int GetMonthNumber(string monthName)
+    {
+        return monthName.ToUpper() switch
+        {
+            "JANUARY" => 1,
+            "JAN" => 1,
+            "FEBRUARY" => 2,
+            "FEB" => 2,
+            "MARCH" => 3,
+            "MAR" => 3,
+            "APRIL" => 4,
+            "APR" => 4,
+            "MAY" => 5,
+            "JUNE" => 6,
+            "JUN" => 6,
+            "JULY" => 7,
+            "JUL" => 7,
+            "AUGUST" => 8,
+            "AUG" => 8,
+            "SEPTEMBER" => 9,
+            "SEP" => 9,
+            "OCTOBER" => 10,
+            "OCT" => 10,
+            "NOVEMBER" => 11,
+            "NOV" => 11,
+            "DECEMBER" => 12,
+            "DEC" => 12,
+            _ => 0
+        };
+    }
+    private static bool IsMonth(string possibleMonthName)
+    {
+        var monthNameVariations = new string[]
+        {
+            "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER",
+            "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
+        };
+
+        return monthNameVariations.Contains(possibleMonthName.ToUpper());
+    }
     public static GedcomDate Parse(string date, string time = "")
     {
         // Dynamically constructing a record like this is pretty sketchy. Make sure it's a valid use case.
@@ -96,62 +148,6 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
         return gedcomDate;
     }
 
-    private static bool IsMonth(string possibleMonthName)
-    {
-        var monthNameVariations = new string[]
-        {
-            "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER",
-            "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
-        };
-
-        return monthNameVariations.Contains(possibleMonthName.ToUpper());
-    }
-
-    private static int GetMonthNumber(string monthName)
-    {
-        return monthName.ToUpper() switch
-        {
-            "JANUARY" => 1,
-            "JAN" => 1,
-            "FEBRUARY" => 2,
-            "FEB" => 2,
-            "MARCH" => 3,
-            "MAR" => 3,
-            "APRIL" => 4,
-            "APR" => 4,
-            "MAY" => 5,
-            "JUNE" => 6,
-            "JUN" => 6,
-            "JULY" => 7,
-            "JUL" => 7,
-            "AUGUST" => 8,
-            "AUG" => 8,
-            "SEPTEMBER" => 9,
-            "SEP" => 9,
-            "OCTOBER" => 10,
-            "OCT" => 10,
-            "NOVEMBER" => 11,
-            "NOV" => 11,
-            "DECEMBER" => 12,
-            "DEC" => 12,
-            _ => 0
-        };
-    }
-
-    public int CompareTo(GedcomDate? other)
-    {
-        if (other == null) return 1;
-
-        // Compare by year first, then month, then day
-        int yearComparison = Year.CompareTo(other.Year);
-        if (yearComparison != 0) return yearComparison;
-
-        int monthComparison = Month.CompareTo(other.Month);
-        if (monthComparison != 0) return monthComparison;
-
-        return Day.CompareTo(other.Day);
-    }
-
     public override string ToString() => $"{Record.Value}, {DayMonthYear}, (Raw: {DateValue})";
 }
 
@@ -170,19 +166,19 @@ internal class GedcomDateJson : GedcomJson
     public GedcomDateJson(GedcomDate gedcomDate)
     {
         Day = gedcomDate.Day;
+        DayMonthYear = gedcomDate.DayMonthYear;
         Month = gedcomDate.Month;
         MonthName = gedcomDate.MonthName;
-        Year = gedcomDate.Year;
-        DayMonthYear = gedcomDate.DayMonthYear;
         Time = gedcomDate.TimeValue;
+        Year = gedcomDate.Year;
     }
 
     public int? Day { get; set; }
+    public string? DayMonthYear { get; set; }
     public int? Month { get; set; }
     public string? MonthName { get; set; } = "";
-    public int? Year { get; set; }
-    public string? DayMonthYear { get; set; }
     public string? Time { get; set; }
+    public int? Year { get; set; }
 }
 
 #region DATE p. 45

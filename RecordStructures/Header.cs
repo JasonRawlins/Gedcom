@@ -9,18 +9,19 @@ public class Header : RecordStructureBase
     public Header() : base() { }
     public Header(Record record) : base(record) { }
     
-    public HeaderSource Source => First<HeaderSource>(C.SOUR);
-    public string ReceivingSystemName => _(C.DEST);
-    public GedcomDate TransmissionDate => First<GedcomDate>(C.DATE);
-    public string Submitter => _(C.SUBM);
-    public SubmissionRecord SubmissionRecord => First<SubmissionRecord>(C.SUBN);
-    public string FileName => _(C.FILE);
-    public string CopyrightGedcomFile => _(C.COPR);
-    public HeaderGedcom Gedcom => First<HeaderGedcom>(C.GEDC);
     public CharacterSet CharacterSet => First<CharacterSet>(C.CHAR);
+    public string CopyrightGedcomFile => _(C.COPR);
+    public string FileName => _(C.FILE);
+    public HeaderGedcom Gedcom => First<HeaderGedcom>(C.GEDC);
+    public NoteStructure GedcomContentDescription => First<NoteStructure>(C.NOTE);
     public string LanguageOfText => _(C.LANG);
     public string PlaceHierarchy => Record.Records.FirstOrDefault(r => r.Tag.Equals(C.PLAC))?.Records.First(r => r.Tag.Equals(C.FORM)).Value ?? "";
-    public NoteStructure GedcomContentDescription => First<NoteStructure>(C.NOTE);
+    public string ReceivingSystemName => _(C.DEST);
+    public HeaderSource Source => First<HeaderSource>(C.SOUR);
+    public SubmissionRecord SubmissionRecord => First<SubmissionRecord>(C.SUBN);
+    public string Submitter => _(C.SUBM);
+    public GedcomDate TransmissionDate => First<GedcomDate>(C.DATE);
+
     public override string ToString() => $"{Record.Value}, {Submitter}";
 }
 
@@ -38,32 +39,32 @@ internal class HeaderJson : GedcomJson
 {
     public HeaderJson(Header header)
     {
-        Source = JsonRecord(header.Source);
-        ReceivingSystemName = JsonString(header.ReceivingSystemName);
-        TransmissionDate = JsonRecord(header.TransmissionDate);
-        Submitter = JsonString(header.Submitter);
-        SubmissionRecord = JsonRecord(header.SubmissionRecord);
-        FileName = JsonString(header.FileName);
-        CopyrightGedcomFile = JsonString(header.CopyrightGedcomFile);
-        Gedcom = JsonRecord(header.Gedcom);
         CharacterSet = JsonRecord(header.CharacterSet);
+        CopyrightGedcomFile = JsonString(header.CopyrightGedcomFile);
+        FileName = JsonString(header.FileName);
+        Gedcom = JsonRecord(header.Gedcom);
+        GedcomContentDescription = JsonRecord(header.GedcomContentDescription);
         LanguageOfText = JsonString(header.LanguageOfText);
         PlaceHierarchy = JsonString(header.PlaceHierarchy);
-        GedcomContentDescription = JsonRecord(header.GedcomContentDescription);
+        ReceivingSystemName = JsonString(header.ReceivingSystemName);
+        Source = JsonRecord(header.Source);
+        SubmissionRecord = JsonRecord(header.SubmissionRecord);
+        Submitter = JsonString(header.Submitter);
+        TransmissionDate = JsonRecord(header.TransmissionDate);
     }
 
-    public HeaderSource? Source { get; set; }
-    public string? ReceivingSystemName { get; set; }
-    public GedcomDate? TransmissionDate { get; set; }
-    public string? Submitter { get; set; }
-    public SubmissionRecord? SubmissionRecord { get; set; }
-    public string? FileName { get; set; }
-    public string? CopyrightGedcomFile { get; set; }
-    public HeaderGedcom? Gedcom { get; set; }
     public CharacterSet? CharacterSet { get; set; }
+    public string? CopyrightGedcomFile { get; set; }
+    public string? FileName { get; set; }
+    public HeaderGedcom? Gedcom { get; set; }
+    public NoteStructure? GedcomContentDescription { get; set; }
     public string? LanguageOfText { get; set; }
     public string? PlaceHierarchy { get; set; }
-    public NoteStructure? GedcomContentDescription { get; set; }
+    public string? ReceivingSystemName { get; set; }
+    public HeaderSource? Source { get; set; }
+    public SubmissionRecord? SubmissionRecord { get; set; }
+    public string? Submitter { get; set; }
+    public GedcomDate? TransmissionDate { get; set; }
 }
 
 #region HEADER p. 23

@@ -9,9 +9,9 @@ public class AssociationStructure : RecordStructureBase
     public AssociationStructure() : base() { }
     public AssociationStructure(Record record) : base(record) { }
 
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public string RelationIsDescriptor => _(C.RELA);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
 
     public override string ToString() => $"{Record.Value}, {RelationIsDescriptor}";
 }
@@ -30,14 +30,14 @@ internal class AssociationStructureJson : GedcomJson
 {
     public AssociationStructureJson(AssociationStructure associationStructure)
     {
+        NoteStructures = JsonList(associationStructure.NoteStructures);
         RelationIsDescriptor = JsonString(associationStructure.RelationIsDescriptor);
         SourceCitations = JsonList(associationStructure.SourceCitations);
-        NoteStructures = JsonList(associationStructure.NoteStructures);
     }
 
+    public List<NoteStructure>? NoteStructures { get; set; }
     public string? RelationIsDescriptor { get; set; }
     public List<SourceCitation>? SourceCitations { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
 }
 
 #region ASSOCIATION_STRUCTURE p. 31 

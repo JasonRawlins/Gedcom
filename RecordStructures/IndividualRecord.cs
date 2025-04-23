@@ -9,27 +9,27 @@ public class IndividualRecord : RecordStructureBase
     public IndividualRecord() { }
     public IndividualRecord(Record record) : base(record) { }
 
-    public string RestrictionNotice => _(C.RESN);
-    public List<PersonalNameStructure> PersonalNameStructures => List<PersonalNameStructure>(C.NAME);
-    public string SexValue => _(C.SEX);
-    public List<IndividualEventStructure> IndividualEventStructures => List(IndividualEventStructure.IsIndividualEventStructure).Select(r => new IndividualEventStructure(r)).ToList();
-    public List<IndividualAttributeStructure> IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
-    public List<LdsIndividualOrdinance> LdsIndividualOrdinances => List<LdsIndividualOrdinance>(C.ORDI);
-    public List<ChildToFamilyLink> ChildToFamilyLinks => List<ChildToFamilyLink>(C.FAMC);
-    public List<SpouseToFamilyLink> SpouseToFamilyLinks => List<SpouseToFamilyLink>(C.FAMS);
-    public string Submitter => _(C.SUBN);
-    public List<AssociationStructure> AssociationStructures => List<AssociationStructure>(C.ASSO);
     public List<string> Aliases => List(r => r.Tag.Equals(C.ALIA)).Select(r => r.Value).ToList();
     public List<string> AncestorInterests => List(r => r.Tag.Equals(C.ANCI)).Select(r => r.Value).ToList();
-    public List<string> DescendantInterests => List(r => r.Tag.Equals(C.DESI)).Select(r => r.Value).ToList();
-    public string PermanentRecordFileNumber => _(C.RFN);
     public string AncestralFileNumber => _(C.AFN);
-    public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
+    public List<AssociationStructure> AssociationStructures => List<AssociationStructure>(C.ASSO);
     public string AutomatedRecordId => _(C.RIN);
     public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
+    public List<ChildToFamilyLink> ChildToFamilyLinks => List<ChildToFamilyLink>(C.FAMC);
+    public List<string> DescendantInterests => List(r => r.Tag.Equals(C.DESI)).Select(r => r.Value).ToList();
+    public List<IndividualAttributeStructure> IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
+    public List<IndividualEventStructure> IndividualEventStructures => List(IndividualEventStructure.IsIndividualEventStructure).Select(r => new IndividualEventStructure(r)).ToList();
+    public List<LdsIndividualOrdinance> LdsIndividualOrdinances => List<LdsIndividualOrdinance>(C.ORDI);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+    public string PermanentRecordFileNumber => _(C.RFN);
+    public List<PersonalNameStructure> PersonalNameStructures => List<PersonalNameStructure>(C.NAME);
+    public string RestrictionNotice => _(C.RESN);
+    public string SexValue => _(C.SEX);
+    public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
+    public List<SpouseToFamilyLink> SpouseToFamilyLinks => List<SpouseToFamilyLink>(C.FAMS);
+    public string Submitter => _(C.SUBN);
+    public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
 
     #region Strongly-typed IndividualEventStructures
 
@@ -66,61 +66,58 @@ internal class IndividualRecordJson : GedcomJson
 {
     public IndividualRecordJson(IndividualRecord individualRecord)
     {
-        Xref = individualRecord.Xref;
-        RestrictionNotice = JsonString(individualRecord.RestrictionNotice);
-
-        PersonalNameStructures = JsonList(individualRecord.PersonalNameStructures);
-        SexValue = JsonString(individualRecord.SexValue);
-        IndividualEventStructures = JsonList(individualRecord.IndividualEventStructures);
-        IndividualAttributeStructures = JsonList(individualRecord.IndividualAttributeStructures);
-        LdsIndividualOrdinances = JsonList(individualRecord.LdsIndividualOrdinances);
-        ChildToFamilyLinks = JsonList(individualRecord.ChildToFamilyLinks);
-        SpouseToFamilyLinks = JsonList(individualRecord.SpouseToFamilyLinks);
-        Submitter = JsonString(individualRecord.Submitter);
-        AssociationStructures = JsonList(individualRecord.AssociationStructures);
         Aliases = JsonList(individualRecord.Aliases);
         AncestorInterests = JsonList(individualRecord.AncestorInterests);
-        DescendantInterests = JsonList(individualRecord.DescendantInterests);
-        PermanentRecordFileNumber = JsonString(individualRecord.PermanentRecordFileNumber);
         AncestralFileNumber = JsonString(individualRecord.AncestralFileNumber);
-        UserReferenceNumbers = JsonList(individualRecord.UserReferenceNumbers);
+        AssociationStructures = JsonList(individualRecord.AssociationStructures);
         AutomatedRecordId = JsonString(individualRecord.AutomatedRecordId);
-        ChangeDate = JsonRecord(individualRecord.ChangeDate);
-        NoteStructures = JsonList(individualRecord.NoteStructures);
-        SourceCitations = JsonList(individualRecord.SourceCitations);
-        MultimediaLinks = JsonList(individualRecord.MultimediaLinks);
-
-        // Strongly-typed properties
         Birth = JsonString($"{individualRecord.Birth.DateValue} at {individualRecord.Birth.PlaceStructure.PlaceName}");
+        ChangeDate = JsonRecord(individualRecord.ChangeDate);
+        ChildToFamilyLinks = JsonList(individualRecord.ChildToFamilyLinks);
         Death = JsonString($"{individualRecord.Death.DateValue} at {individualRecord.Death.PlaceStructure.PlaceName}");
+        DescendantInterests = JsonList(individualRecord.DescendantInterests);
+        IndividualAttributeStructures = JsonList(individualRecord.IndividualAttributeStructures);
+        IndividualEventStructures = JsonList(individualRecord.IndividualEventStructures);
+        LdsIndividualOrdinances = JsonList(individualRecord.LdsIndividualOrdinances);
+        MultimediaLinks = JsonList(individualRecord.MultimediaLinks);
+        NoteStructures = JsonList(individualRecord.NoteStructures);
+        PermanentRecordFileNumber = JsonString(individualRecord.PermanentRecordFileNumber);
+        PersonalNameStructures = JsonList(individualRecord.PersonalNameStructures);
+        RestrictionNotice = JsonString(individualRecord.RestrictionNotice);
+        SexValue = JsonString(individualRecord.SexValue);
+        SourceCitations = JsonList(individualRecord.SourceCitations);
+        SpouseToFamilyLinks = JsonList(individualRecord.SpouseToFamilyLinks);
+        Submitter = JsonString(individualRecord.Submitter);
+        UserReferenceNumbers = JsonList(individualRecord.UserReferenceNumbers);
+        Xref = individualRecord.Xref;
     }
 
-    public string? RestrictionNotice { get; set; }
-    public List<PersonalNameStructure>? PersonalNameStructures { get; set; }
-    public string? SexValue { get; set; }
-    public List<IndividualEventStructure>? IndividualEventStructures { get; set; }
-    public List<IndividualAttributeStructure>? IndividualAttributeStructures { get; set; }
-    public List<LdsIndividualOrdinance>? LdsIndividualOrdinances { get; set; }
-    public List<ChildToFamilyLink>? ChildToFamilyLinks { get; set; }
-    public List<SpouseToFamilyLink>? SpouseToFamilyLinks { get; set; }
-    public string? Submitter { get; set; }
-    public List<AssociationStructure>? AssociationStructures { get; set; }
     public List<string>? Aliases { get; set; }
     public List<string>? AncestorInterests { get; set; }
-    public List<string>? DescendantInterests { get; set; }
-    public string? PermanentRecordFileNumber { get; set; }
     public string? AncestralFileNumber { get; set; }
-    public List<UserReferenceNumber>? UserReferenceNumbers { get; set; }
+    public List<AssociationStructure>? AssociationStructures { get; set; }
     public string? AutomatedRecordId { get; set; }
-    public ChangeDate? ChangeDate { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
-    public List<SourceCitation>? SourceCitations { get; set; }
-    public List<MultimediaLink>? MultimediaLinks { get; set; }
-
     public string? Birth { get; set; }
+    public ChangeDate? ChangeDate { get; set; }
+    public List<ChildToFamilyLink>? ChildToFamilyLinks { get; set; }
     public string? Death { get; set; }
+    public List<string>? DescendantInterests { get; set; }
     public string Given => PersonalNameStructures == null ? "" : PersonalNameStructures[0].Given;
+    public List<IndividualAttributeStructure>? IndividualAttributeStructures { get; set; }
+    public List<IndividualEventStructure>? IndividualEventStructures { get; set; }
+    public List<LdsIndividualOrdinance>? LdsIndividualOrdinances { get; set; }
+    public List<MultimediaLink>? MultimediaLinks { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
+    public string? PermanentRecordFileNumber { get; set; }
+    public List<PersonalNameStructure>? PersonalNameStructures { get; set; }
+    public string? RestrictionNotice { get; set; }
+    public string? SexValue { get; set; }
+    public List<SourceCitation>? SourceCitations { get; set; }
+    public List<SpouseToFamilyLink>? SpouseToFamilyLinks { get; set; }
+    public string? Submitter { get; set; }
     public string Surname => PersonalNameStructures == null ? "" : PersonalNameStructures[0].Surname;
+    public List<UserReferenceNumber>? UserReferenceNumbers { get; set; }
+    public string? Xref { get; set; }
 }
 
 #region INDIVIDUAL_RECORD (INDI) p. 25

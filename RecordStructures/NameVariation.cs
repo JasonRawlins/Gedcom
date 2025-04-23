@@ -9,19 +9,14 @@ public class NameVariation : RecordStructureBase, IPersonalNamePieces
     public NameVariation() { }
     public NameVariation(Record record) : base(record) { }
 
-    public string Type => _(C.TYPE); // PHONETIC_TYPE or ROMANIZED_TYPE
-
-    #region IPersonalNamePieces
-
+    public string FullName => $"{Given} {Surname}";
     public string Given => _(C.GIVN);
     public string NamePrefix => _(C.NPFX);
     public string NameSuffix => _(C.NSFX);
     public string Nickname => _(C.NICK);
     public string Surname => _(C.SURN);
     public string SurnamePrefix => _(C.SPFX);
-    public string FullName => $"{Given} {Surname}";
-
-    #endregion
+    public string Type => _(C.TYPE);
 
     public override string ToString() => $"{Record.Value}, {Type}, {FullName}";
 }
@@ -40,18 +35,15 @@ internal class NameVariationJson : GedcomJson
 {
     public NameVariationJson(NameVariation nameVariation)
     {
-        Type = JsonString(nameVariation.Type);
         Given = JsonString(nameVariation.Type);
         NamePrefix = JsonString(nameVariation.Type);
         NameSuffix = JsonString(nameVariation.Type);
         Nickname = JsonString(nameVariation.Type);
         Surname = JsonString(nameVariation.Type);
         SurnamePrefix = JsonString(nameVariation.Type);
+        Type = JsonString(nameVariation.Type);
     }
 
-    public string? Type { get; set; }
-
-    #region IPersonalNamePieces
 
     public string? Given { get; set; }
     public string? NamePrefix { get; set; }
@@ -59,8 +51,7 @@ internal class NameVariationJson : GedcomJson
     public string? Nickname { get; set; }
     public string? Surname { get; set; }
     public string? SurnamePrefix { get; set; }
-
-    #endregion
+    public string? Type { get; set; }
 }
 
 #region NAME_PHONETIC_VARIATION (FONE) and NAME_ROMANIZED_VARIATION (ROMN) p. 38

@@ -9,11 +9,11 @@ public class HeaderSource : RecordStructureBase
     public HeaderSource() : base() { }
     public HeaderSource(Record record) : base(record) { }
 
-    public string Version => _(C.VERS);
-    public string NameOfProduct => _(C.NAME);
     public HeaderCorporation Corporation => First<HeaderCorporation>(C.CORP);
     public HeaderData Data => First<HeaderData>(C.DATA);
+    public string NameOfProduct => _(C.NAME);
     public HeaderTree Tree => First<HeaderTree>(C._TREE);
+    public string Version => _(C.VERS);
 
     public override string ToString() => $"{Record.Value}, {NameOfProduct}, {Version}";
 }
@@ -32,19 +32,20 @@ internal class HeaderSourceJson : GedcomJson
 {
     public HeaderSourceJson(HeaderSource headerSource)
     {
-        Xref = JsonString(headerSource.Xref);
-        Version = JsonString(headerSource.Version);
-        NameOfProduct = JsonString(headerSource.NameOfProduct);
         Corporation = JsonRecord(headerSource.Corporation);
         Data = JsonRecord(headerSource.Data);
+        NameOfProduct = JsonString(headerSource.NameOfProduct);
         Tree = JsonRecord(headerSource.Tree);
+        Version = JsonString(headerSource.Version);
+        Xref = JsonString(headerSource.Xref);
     }
 
-    public string? Version { get; set; }
-    public string? NameOfProduct { get; set; }
     public HeaderCorporation? Corporation { get; set; }
     public HeaderData? Data { get; set; }
+    public string? NameOfProduct { get; set; }
     public HeaderTree? Tree { get; set; }
+    public string? Version { get; set; }
+    public string? Xref { get; set; }
 }
 
 

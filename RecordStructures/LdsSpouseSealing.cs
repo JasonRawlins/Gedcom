@@ -10,11 +10,11 @@ public class LdsSpouseSealing : RecordStructureBase
     public LdsSpouseSealing(Record record) : base(record) { }
 
     public string DateLdsOrdinance => _(C.DATE);
-    public string TempleCode => _(C.TEMP);
-    public string PlaceLivingOrdinance => _(C.PLAC);
     public LdsOrdinanceStatus LdsSpouseSealingDateStatus => First<LdsOrdinanceStatus>(C.STAT);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+    public string PlaceLivingOrdinance => _(C.PLAC);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
+    public string TempleCode => _(C.TEMP);
 
     public override string ToString() => $"{Record.Value}, {TempleCode}, {DateLdsOrdinance}";
 }
@@ -34,19 +34,19 @@ internal class LdsSpouseSealingJson : GedcomJson
     public LdsSpouseSealingJson(LdsSpouseSealing ldsSpouseSealing)
     {
         DateLdsOrdinance = JsonString(ldsSpouseSealing.DateLdsOrdinance);
-        TempleCode = JsonString(ldsSpouseSealing.TempleCode);
-        PlaceLivingOrdinance = JsonString(ldsSpouseSealing.PlaceLivingOrdinance);
         LdsSpouseSealingDateStatus = JsonRecord(ldsSpouseSealing.LdsSpouseSealingDateStatus);
         NoteStructures = JsonList(ldsSpouseSealing.NoteStructures);
+        PlaceLivingOrdinance = JsonString(ldsSpouseSealing.PlaceLivingOrdinance);
         SourceCitations = JsonList(ldsSpouseSealing.SourceCitations);
+        TempleCode = JsonString(ldsSpouseSealing.TempleCode);
     }
 
     public string? DateLdsOrdinance { get; set; }
-    public string? TempleCode { get; set; }
-    public string? PlaceLivingOrdinance { get; set; }
     public LdsOrdinanceStatus? LdsSpouseSealingDateStatus { get; set; }
     public List<NoteStructure>? NoteStructures { get; set; }
+    public string? PlaceLivingOrdinance { get; set; }
     public List<SourceCitation>? SourceCitations { get; set; }
+    public string? TempleCode { get; set; }
 }
 
 #region LDS_SPOUSE_SEALING p. 36

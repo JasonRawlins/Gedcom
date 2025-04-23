@@ -9,9 +9,9 @@ public class MultimediaLink : RecordStructureBase
     public MultimediaLink() : base() { }
     public MultimediaLink(Record record) : base(record) { }
 
+    public string DescriptiveTitle => _(C.TITL);
     public List<MultimediaFileReferenceNumber> MultimediaFileReferenceNumbers => List<MultimediaFileReferenceNumber>(C.FILE);
     public string SourceMediaType => _(C.MEDI);
-    public string DescriptiveTitle => _(C.TITL);
 
     public override string ToString() => $"{Record.Value}, {SourceMediaType}, {DescriptiveTitle}";
 }
@@ -30,15 +30,16 @@ internal class MultimediaLinkJson : GedcomJson
 {
     public MultimediaLinkJson(MultimediaLink multimediaLink)
     {
-        Xref = multimediaLink.Xref;
+        DescriptiveTitle = JsonString(multimediaLink.DescriptiveTitle);
         MultimediaFileReferenceNumbers = JsonList(multimediaLink.MultimediaFileReferenceNumbers);
         SourceMediaType = JsonString(multimediaLink.SourceMediaType);
-        DescriptiveTitle = JsonString(multimediaLink.DescriptiveTitle);
+        Xref = multimediaLink.Xref;
     }
 
+    public string? DescriptiveTitle { get; set; }
     public List<MultimediaFileReferenceNumber>? MultimediaFileReferenceNumbers { get; set; }
     public string? SourceMediaType { get; set; }
-    public string? DescriptiveTitle { get; set; }
+    public string? Xref { get; set; }
 }
 
 #region MULTIMEDIA_LINK p. 37

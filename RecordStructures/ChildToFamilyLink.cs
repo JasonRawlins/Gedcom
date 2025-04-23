@@ -9,10 +9,10 @@ public class ChildToFamilyLink : RecordStructureBase
     public ChildToFamilyLink() : base() { }
     public ChildToFamilyLink(Record record) : base(record) { }
 
-    public string PedigreeLinkageType => _(C.PEDI);
+    public string AdoptedByWhichParent => _(C.ADOP);
     public string ChildLinkageStatus => _(C.STAT);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public string AdoptedByWhichParent => First(C.ADOP).Value;
+    public string PedigreeLinkageType => _(C.PEDI);
 
     public override string ToString() => $"{Record.Value}, {PedigreeLinkageType}";
 }
@@ -31,17 +31,18 @@ internal class ChildToFamilyLinkJson : GedcomJson
 {
     public ChildToFamilyLinkJson(ChildToFamilyLink childToFamilyLink)
     {
-        Xref = JsonString(childToFamilyLink.Xref);
-        PedigreeLinkageType = JsonString(childToFamilyLink.PedigreeLinkageType);
+        AdoptedByWhichParent = JsonString(childToFamilyLink.AdoptedByWhichParent);
         ChildLinkageStatus = JsonString(childToFamilyLink.ChildLinkageStatus);
         NoteStructures = JsonList(childToFamilyLink.NoteStructures);
-        AdoptedByWhichParent = JsonString(childToFamilyLink.AdoptedByWhichParent);
+        PedigreeLinkageType = JsonString(childToFamilyLink.PedigreeLinkageType);
+        Xref = JsonString(childToFamilyLink.Xref);
     }
 
-    public string? PedigreeLinkageType { get; set; }
+    public string? AdoptedByWhichParent { get; set; }
     public string? ChildLinkageStatus { get; set; }
     public List<NoteStructure>? NoteStructures { get; set; }
-    public string? AdoptedByWhichParent { get; set; }
+    public string? PedigreeLinkageType { get; set; }
+    public string? Xref { get; set; }
 }
 
 #region CHILD_TO_FAMILY_LINK p. 31-32

@@ -9,16 +9,11 @@ public class HeaderCorporation : RecordStructureBase, IAddressStructure
     public HeaderCorporation() : base() { }
     public HeaderCorporation(Record record) : base(record) { }
 
-    public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
-
-    #region IAddressStructure
-
-    public List<string> PhoneNumbers => ListValues(C.PHON);
     public List<string> AddressEmails => ListValues(C.EMAIL);
     public List<string> AddressFaxNumbers => ListValues(C.FAX);
+    public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
     public List<string> AddressWebPages => ListValues(C.WWW);
-
-    #endregion
+    public List<string> PhoneNumbers => ListValues(C.PHON);
 
     public override string ToString() => $"{Record.Value}, {AddressStructure.AddressLine}";
 }
@@ -37,23 +32,18 @@ internal class HeaderCorporationJson : GedcomJson
 {
     public HeaderCorporationJson(HeaderCorporation headerCorporation)
     {
-        AddressStructure = JsonRecord(headerCorporation.AddressStructure);
-        PhoneNumbers = JsonList(headerCorporation.PhoneNumbers);
         AddressEmails = JsonList(headerCorporation.AddressEmails);
         AddressFaxNumbers = JsonList(headerCorporation.AddressFaxNumbers);
+        AddressStructure = JsonRecord(headerCorporation.AddressStructure);
         AddressWebPages = JsonList(headerCorporation.AddressWebPages);
+        PhoneNumbers = JsonList(headerCorporation.PhoneNumbers);
     }
 
-    public AddressStructure? AddressStructure { get; set; }
-
-    #region IAddressStructure
-
-    public List<string>? PhoneNumbers { get; set; }
     public List<string>? AddressEmails { get; set; }
     public List<string>? AddressFaxNumbers { get; set; }
+    public AddressStructure? AddressStructure { get; set; }
     public List<string>? AddressWebPages { get; set; }
-
-    #endregion
+    public List<string>? PhoneNumbers { get; set; }
 }
 
 #region HeaderCorporation p. 23

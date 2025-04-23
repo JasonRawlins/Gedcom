@@ -28,12 +28,12 @@ internal class SpouseToFamilyLinkJson : GedcomJson
 {
     public SpouseToFamilyLinkJson(SpouseToFamilyLink spouseToFamilyLink)
     {
-        Xref = spouseToFamilyLink.Xref;
         NoteStructures = JsonList(spouseToFamilyLink.NoteStructures);
+        Xref = spouseToFamilyLink.Xref;
     }
 
-    public string Xref { get; set; }
     public List<NoteStructure>? NoteStructures { get; set; }
+    public string Xref { get; set; }
 }
 
 #region SPOUSE_TO_FAMILY_LINK p. 40

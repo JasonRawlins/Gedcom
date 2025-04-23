@@ -9,18 +9,18 @@ public class EventDetail : RecordStructureBase, IEventDetail
     public EventDetail() : base() { }
     public EventDetail(Record record) : base(record) { }
 
-    public string EventOrFactClassification => _(C.TYPE);
-    public string DateValue => _(C.DATE);
-    public GedcomDate GedcomDate => GedcomDate.Parse(DateValue);
-    public PlaceStructure PlaceStructure => First<PlaceStructure>(C.PLAC);
     public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
-    public string ResponsibleAgency => _(C.AGNC);
-    public string ReligiousAffiliation => _(C.RELI);
     public string CauseOfEvent => _(C.CAUS);
-    public string RestrictionNotice => _(C.RESN);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
+    public string DateValue => _(C.DATE);
+    public string EventOrFactClassification => _(C.TYPE);
+    public GedcomDate GedcomDate => GedcomDate.Parse(DateValue);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+    public PlaceStructure PlaceStructure => First<PlaceStructure>(C.PLAC);
+    public string ReligiousAffiliation => _(C.RELI);
+    public string ResponsibleAgency => _(C.AGNC);
+    public string RestrictionNotice => _(C.RESN);
+    public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
 
     public override string ToString() => $"{Record.Value}, {GedcomDate.DayMonthYear}";
 }
@@ -39,45 +39,30 @@ internal class EventDetailJson : GedcomJson
 {
     public EventDetailJson(EventDetail eventDetail)
     {
-        EventOrFactClassification = JsonString(eventDetail.EventOrFactClassification);
-        DateValue = JsonString(eventDetail.DateValue);
-        PlaceStructure = JsonRecord(eventDetail.PlaceStructure);
         AddressStructure = JsonRecord(eventDetail.AddressStructure);
-        ResponsibleAgency = JsonString(eventDetail.ResponsibleAgency);
-        ReligiousAffiliation = JsonString(eventDetail.ReligiousAffiliation);
         CauseOfEvent = JsonString(eventDetail.CauseOfEvent);
-        RestrictionNotice = JsonString(eventDetail.RestrictionNotice);
-        NoteStructures = JsonList(eventDetail.NoteStructures);
-        SourceCitations = JsonList(eventDetail.SourceCitations);
+        DateValue = JsonString(eventDetail.DateValue);
+        EventOrFactClassification = JsonString(eventDetail.EventOrFactClassification);
         MultimediaLinks = JsonList(eventDetail.MultimediaLinks);
+        NoteStructures = JsonList(eventDetail.NoteStructures);
+        PlaceStructure = JsonRecord(eventDetail.PlaceStructure);
+        ReligiousAffiliation = JsonString(eventDetail.ReligiousAffiliation);
+        ResponsibleAgency = JsonString(eventDetail.ResponsibleAgency);
+        RestrictionNotice = JsonString(eventDetail.RestrictionNotice);
+        SourceCitations = JsonList(eventDetail.SourceCitations);
     }
 
-    public string? EventOrFactClassification { get; set; }
-    public string? DateValue { get; set; }
-    public PlaceStructure? PlaceStructure { get; set; }
     public AddressStructure? AddressStructure { get; set; }
-    public string? ResponsibleAgency { get; set; }
-    public string? ReligiousAffiliation { get; set; }
     public string? CauseOfEvent { get; set; }
-    public string? RestrictionNotice { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
-    public List<SourceCitation>? SourceCitations { get; set; }
+    public string? DateValue { get; set; }
+    public string? EventOrFactClassification { get; set; }
     public List<MultimediaLink>? MultimediaLinks { get; set; }
-}
-
-public interface IEventDetail
-{
-    string EventOrFactClassification { get; }
-    GedcomDate GedcomDate { get; }
-    PlaceStructure PlaceStructure { get; }
-    AddressStructure AddressStructure { get; }
-    string ResponsibleAgency { get; }
-    string ReligiousAffiliation { get; }
-    string CauseOfEvent { get; }
-    string RestrictionNotice { get; }
-    List<NoteStructure> NoteStructures { get; }
-    List<SourceCitation> SourceCitations { get; }
-    List<MultimediaLink> MultimediaLinks { get; }
+    public List<NoteStructure>? NoteStructures { get; set; }
+    public PlaceStructure? PlaceStructure { get; set; }
+    public string? ReligiousAffiliation { get; set; }
+    public string? ResponsibleAgency { get; set; }
+    public string? RestrictionNotice { get; set; }
+    public List<SourceCitation>? SourceCitations { get; set; }
 }
 
 #region EVENT_DETAIL p. 34

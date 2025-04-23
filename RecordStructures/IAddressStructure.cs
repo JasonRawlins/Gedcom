@@ -2,10 +2,10 @@
 
 public interface IAddressStructure
 {
-    List<string> PhoneNumbers { get; }
     List<string> AddressEmails { get; }
     List<string> AddressFaxNumbers { get; }
     List<string> AddressWebPages { get; }
+    List<string> PhoneNumbers { get; }
 }
 
 #region ADDRESS_STRUCTURE p. 

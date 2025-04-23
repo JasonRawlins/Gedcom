@@ -10,25 +10,13 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
     public IndividualEventStructure(Record record) : base(record) { }
     public ChildToFamilyLink ChildToFamilyLink => First<ChildToFamilyLink>(C.FAMC);
 
-    #region IEventDetail
-
-    public string Tag => Record.Tag;
-    public string AgeAtEvent => _(C.AGE);
-    public string EventOrFactClassification => _(C.TYPE);
-    public string DateValue => _(C.DATE);
-    public GedcomDate GedcomDate => GedcomDate.Parse(DateValue);
-    public PlaceStructure PlaceStructure => First<PlaceStructure>(C.PLAC);
     public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
-    public string ResponsibleAgency => _(C.AGNC);
-    public string ReligiousAffiliation => _(C.RELI);
+    public string AgeAtEvent => _(C.AGE);
     public string CauseOfEvent => _(C.CAUS);
-    public string RestrictionNotice => _(C.RESN);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
+    public string DateValue => _(C.DATE);
+    public string EventOrFactClassification => _(C.TYPE);
+    public GedcomDate GedcomDate => GedcomDate.Parse(DateValue);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
-
-    #endregion
-
     public string Name
     {
         get
@@ -76,6 +64,13 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
             };
         }
     }
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+    public PlaceStructure PlaceStructure => First<PlaceStructure>(C.PLAC);
+    public string ReligiousAffiliation => _(C.RELI);
+    public string ResponsibleAgency => _(C.AGNC);
+    public string RestrictionNotice => _(C.RESN);
+    public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
+    public string Tag => Record.Tag;
 
     public static bool IsIndividualEventStructure(Record record)
     {
@@ -108,36 +103,37 @@ internal class IndividualEventStructureJson : GedcomJson
 {
     public IndividualEventStructureJson(IndividualEventStructure individualEventStructure)
     {
-        Tag = JsonString(individualEventStructure.Tag);
-        AgeAtEvent = JsonString(individualEventStructure.AgeAtEvent);
-        EventOrFactClassification = JsonString(individualEventStructure.EventOrFactClassification);
-        DateValue = JsonString(individualEventStructure.DateValue);
-        GedcomDate = individualEventStructure.GedcomDate;
-        PlaceStructure = JsonRecord(individualEventStructure.PlaceStructure);
         AddressStructure = JsonRecord(individualEventStructure.AddressStructure);
-        ResponsibleAgency = JsonString(individualEventStructure.ResponsibleAgency);
-        ReligiousAffiliation = JsonString(individualEventStructure.ReligiousAffiliation);
+        AgeAtEvent = JsonString(individualEventStructure.AgeAtEvent);
         CauseOfEvent = JsonString(individualEventStructure.CauseOfEvent);
-        RestrictionNotice = JsonString(individualEventStructure.RestrictionNotice);
-        NoteStructures = JsonList(individualEventStructure.NoteStructures);
-        SourceCitations = JsonList(individualEventStructure.SourceCitations);
+        DateValue = JsonString(individualEventStructure.DateValue);
+        EventOrFactClassification = JsonString(individualEventStructure.EventOrFactClassification);
+        GedcomDate = individualEventStructure.GedcomDate;
         MultimediaLinks = JsonList(individualEventStructure.MultimediaLinks);
+        NoteStructures = JsonList(individualEventStructure.NoteStructures);
+        PlaceStructure = JsonRecord(individualEventStructure.PlaceStructure);
+        ReligiousAffiliation = JsonString(individualEventStructure.ReligiousAffiliation);
+        ResponsibleAgency = JsonString(individualEventStructure.ResponsibleAgency);
+        RestrictionNotice = JsonString(individualEventStructure.RestrictionNotice);
+        SourceCitations = JsonList(individualEventStructure.SourceCitations);
+        Tag = JsonString(individualEventStructure.Tag);
+
     }
 
-    public string? Tag { get; set; }
-    public string? AgeAtEvent { get; set; }
-    public string? EventOrFactClassification { get; set; }
-    public string? DateValue { get; set; }
-    public GedcomDate GedcomDate { get; set; }
-    public PlaceStructure? PlaceStructure { get; set; }
     public AddressStructure? AddressStructure { get; set; }
-    public string? ResponsibleAgency { get; set; }
-    public string? ReligiousAffiliation { get; set; }
+    public string? AgeAtEvent { get; set; }
     public string? CauseOfEvent { get; set; }
-    public string? RestrictionNotice { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
-    public List<SourceCitation>? SourceCitations { get; set; }
+    public string? DateValue { get; set; }
+    public string? EventOrFactClassification { get; set; }
+    public GedcomDate GedcomDate { get; set; }
     public List<MultimediaLink>? MultimediaLinks { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
+    public PlaceStructure? PlaceStructure { get; set; }
+    public string? ReligiousAffiliation { get; set; }
+    public string? ResponsibleAgency { get; set; }
+    public string? RestrictionNotice { get; set; }
+    public List<SourceCitation>? SourceCitations { get; set; }
+    public string? Tag { get; set; }
 }
 
 #region INDIVIDUAL_EVENT_STRUCTURE p. 34

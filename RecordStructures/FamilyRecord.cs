@@ -9,21 +9,22 @@ public class FamilyRecord : RecordStructureBase
     internal FamilyRecord() : base() { }
     public FamilyRecord(Record record) : base(record) { }
 
-    public string RestrictionNotice => _(C.RESN);
-    public List<FamilyEventStructure> FamilyEventStructures => List<FamilyEventStructure>(C.FAM);
-    public string Husband => _(C.HUSB);
-    public string Wife => _(C.WIFE);
-    public List<string> Children => List(r => r.Tag.Equals(C.CHIL)).Select(r => r.Value).ToList();
-    public string CountOfChildren => _(C.NCHI);
-    public string Submitter => _(C.SUBM);
-    // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
-    public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
+    public string AdoptedByWhichParent => _(C.ADOP);
     public string AutomatedRecordNumber => _(C.RIN);
     public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
+    public List<string> Children => List(r => r.Tag.Equals(C.CHIL)).Select(r => r.Value).ToList();
+    public string CountOfChildren => _(C.NCHI);
+    public List<FamilyEventStructure> FamilyEventStructures => List<FamilyEventStructure>(C.FAM);
+    public string Husband => _(C.HUSB);
+    // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
-    public string AdoptedByWhichParent => _(C.ADOP);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+    public string RestrictionNotice => _(C.RESN);
+    public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
+    public string Submitter => _(C.SUBM);
+    public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
+    public string Wife => _(C.WIFE);
+
     public override string ToString() => $"{Record.Value}, {Husband} and {Wife} with {Children.Count} children";
 }
 
@@ -41,38 +42,39 @@ internal class FamilyRecordJson : GedcomJson
 {
     public FamilyRecordJson(FamilyRecord familyRecord)
     {
-        RestrictionNotice = JsonString(familyRecord.RestrictionNotice);
-        FamilyEventStructures = JsonList(familyRecord.FamilyEventStructures);
-        Husband = JsonString(familyRecord.Husband);
-        Wife = JsonString(familyRecord.Wife);
-        Children = JsonList(familyRecord.Children);
-        CountOfChildren = JsonString(familyRecord.CountOfChildren);
-        Submitter = JsonString(familyRecord.Submitter);
-        // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
-        UserReferenceNumbers = JsonList(familyRecord.UserReferenceNumbers);
+        AdoptedByWhichParent = JsonString(familyRecord.AdoptedByWhichParent);
         AutomatedRecordNumber = JsonString(familyRecord.AutomatedRecordNumber);
         ChangeDate = JsonRecord(familyRecord.ChangeDate);
-        NoteStructures = JsonList(familyRecord.NoteStructures);
-        SourceCitations = JsonList(familyRecord.SourceCitations);
+        Children = JsonList(familyRecord.Children);
+        CountOfChildren = JsonString(familyRecord.CountOfChildren);
+        FamilyEventStructures = JsonList(familyRecord.FamilyEventStructures);
+        Husband = JsonString(familyRecord.Husband);
+        // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
         MultimediaLinks = JsonList(familyRecord.MultimediaLinks);
-        AdoptedByWhichParent = JsonString(familyRecord.AdoptedByWhichParent);
+        NoteStructures = JsonList(familyRecord.NoteStructures);
+        RestrictionNotice = JsonString(familyRecord.RestrictionNotice);
+        SourceCitations = JsonList(familyRecord.SourceCitations);
+        Submitter = JsonString(familyRecord.Submitter);
+        UserReferenceNumbers = JsonList(familyRecord.UserReferenceNumbers);
+        Wife = JsonString(familyRecord.Wife);
+
     }
 
-    public string? RestrictionNotice{ get; set; }
-    public List<FamilyEventStructure>? FamilyEventStructures { get; set; }
-    public string? Husband { get; set; }
-    public string? Wife { get; set; }
-    public List<string>? Children { get; set; }
-    public string? CountOfChildren { get; set; }
-    public string? Submitter { get; set; }
-    // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
-    public List<UserReferenceNumber>? UserReferenceNumbers { get; set; }
+    public string? AdoptedByWhichParent { get; set; }
     public string? AutomatedRecordNumber { get; set; }
     public ChangeDate? ChangeDate { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
-    public List<SourceCitation>? SourceCitations { get; set; }
+    public List<string>? Children { get; set; }
+    public string? CountOfChildren { get; set; }
+    public List<FamilyEventStructure>? FamilyEventStructures { get; set; }
+    public string? Husband { get; set; }
+    // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
     public List<MultimediaLink>? MultimediaLinks { get; set; }
-    public string? AdoptedByWhichParent { get; set; }
+    public List<NoteStructure>? NoteStructures { get; set; }
+    public string? RestrictionNotice { get; set; }
+    public List<SourceCitation>? SourceCitations { get; set; }
+    public string? Submitter { get; set; }
+    public List<UserReferenceNumber>? UserReferenceNumbers { get; set; }
+    public string? Wife { get; set; }
 }
 
 #region FAM_RECORD (FAM) p. 24

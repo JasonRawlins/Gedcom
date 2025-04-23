@@ -9,14 +9,14 @@ public class AddressStructure : RecordStructureBase
     public AddressStructure() { }
     public AddressStructure(Record record) : base(record) { }
 
+    public string AddressCity => _(C.CITY);
+    public string AddressCountry => _(C.CTRY);
     public string AddressLine => Record.Value;
     public string AddressLine1 => _(C.ADR1);
     public string AddressLine2 => _(C.ADR2);
     public string AddressLine3 => _(C.ADR3);
-    public string AddressCity => _(C.CITY);
-    public string AddressState => _(C.STAE);
     public string AddressPostCode => _(C.POST);
-    public string AddressCountry => _(C.CTRY);
+    public string AddressState => _(C.STAE);
 
     public override string ToString() => $"{Record.Value}, {AddressLine}";
 }
@@ -35,24 +35,24 @@ internal class AddressStructureJson : GedcomJson
 {
     public AddressStructureJson(AddressStructure addressStructure)
     {
+        AddressCity = JsonString(addressStructure.AddressCity);
+        AddressCountry = JsonString(addressStructure.AddressCountry);
         AddressLine = JsonString(addressStructure.AddressLine);
         AddressLine1 = JsonString(addressStructure.AddressLine1);
         AddressLine2 = JsonString(addressStructure.AddressLine2);
         AddressLine3 = JsonString(addressStructure.AddressLine3);
-        AddressCity = JsonString(addressStructure.AddressCity);
-        AddressState = JsonString(addressStructure.AddressState);
         AddressPostCode = JsonString(addressStructure.AddressPostCode);
-        AddressCountry = JsonString(addressStructure.AddressCountry);
+        AddressState = JsonString(addressStructure.AddressState);
     }
 
+    public string? AddressCity { get; set; }
+    public string? AddressCountry { get; set; }
     public string? AddressLine { get; set; }
     public string? AddressLine1 { get; set; }
     public string? AddressLine2 { get; set; }
     public string? AddressLine3 { get; set; }
-    public string? AddressCity { get; set; }
-    public string? AddressState { get; set; }
     public string? AddressPostCode { get; set; }
-    public string? AddressCountry { get; set; }
+    public string? AddressState { get; set; }
 }
 
 #region ADDRESS_STRUCTURE p. 31

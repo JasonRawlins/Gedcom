@@ -9,12 +9,12 @@ public class SourceCitation : RecordStructureBase
     public SourceCitation() : base() { }
     public SourceCitation(Record record) : base(record) { }
 
-    public string WhereWithinSource => _(C.PAGE);
-    public EventTypeCitedFrom EventTypeCitedFrom => First<EventTypeCitedFrom>(C.EVEN);
+    public string CertaintyAssessment => _(C.QUAY);
     public SourceCitationData Data => First<SourceCitationData>(C.DATA);
+    public EventTypeCitedFrom EventTypeCitedFrom => First<EventTypeCitedFrom>(C.EVEN);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public string CertaintyAssessment => _(C.QUAY);
+    public string WhereWithinSource => _(C.PAGE);
 
     public override string ToString() => $"{Record.Value}, {WhereWithinSource}";
 }
@@ -33,13 +33,13 @@ internal class SourceCitationJson : GedcomJson
 {
     public SourceCitationJson(SourceCitation sourceCitation)
     {
-        Xref = sourceCitation.Xref;
-        WhereWithinSource = JsonString(sourceCitation.WhereWithinSource);
-        EventTypeCitedFrom = JsonRecord(sourceCitation.EventTypeCitedFrom);
+        CertaintyAssessment = JsonString(sourceCitation.CertaintyAssessment);
         Data = JsonRecord(sourceCitation.Data);
+        EventTypeCitedFrom = JsonRecord(sourceCitation.EventTypeCitedFrom);
         MultimediaLinks = JsonList(sourceCitation.MultimediaLinks);
         Notes = JsonList(sourceCitation.NoteStructures.Select(ns => ns.Text).ToList());
-        CertaintyAssessment = JsonString(sourceCitation.CertaintyAssessment);
+        WhereWithinSource = JsonString(sourceCitation.WhereWithinSource);
+        Xref = sourceCitation.Xref;
     }
 
     public string? CertaintyAssessment { get; set; }
@@ -48,6 +48,7 @@ internal class SourceCitationJson : GedcomJson
     public List<MultimediaLink>? MultimediaLinks { get; set; }
     public List<string>? Notes { get; set; }
     public string? WhereWithinSource { get; set; }
+    public string? Xref { get; set; }
 }
 
 #region SOURCE_CITATION p. 39

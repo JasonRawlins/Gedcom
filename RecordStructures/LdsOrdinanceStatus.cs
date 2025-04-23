@@ -6,8 +6,8 @@ namespace Gedcom.RecordStructures;
 [JsonConverter(typeof(LdsOrdinanceStatusJsonConverter))]
 public class LdsOrdinanceStatus : RecordStructureBase
 {
-    public string Status => Record.Value;
     public string ChangeDate => _(C.DATE);
+    public string Status => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {Status}, {ChangeDate}";
 }
@@ -26,12 +26,12 @@ internal class LdsOrdinanceStatusJson : GedcomJson
 {
     public LdsOrdinanceStatusJson(LdsOrdinanceStatus ldsOrdinanceStatus)
     {
-        Status = JsonString(ldsOrdinanceStatus.Status);
         ChangeDate = JsonString(ldsOrdinanceStatus.ChangeDate);
+        Status = JsonString(ldsOrdinanceStatus.Status);
     }
 
-    public string? Status { get; set; }
     public string? ChangeDate { get; set; }
+    public string? Status { get; set; }
 }
 
 #region STRUCTURE_NAME p. 

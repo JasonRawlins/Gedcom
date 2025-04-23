@@ -10,7 +10,6 @@ internal class GedcomJson
         return recordStructureBase;
     }
 
-    public string? Xref { get; set; }
     protected string? JsonString(string value) => string.IsNullOrEmpty(value) ? null : value;    
     protected List<string>? JsonList(List<string> stringList) => stringList.Count == 0 ? null : stringList;
     protected List<T>? JsonList<T>(List<T>? recordStructureBaseList) where T : RecordStructureBase => 

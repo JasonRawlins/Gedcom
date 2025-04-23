@@ -1,6 +1,4 @@
-﻿using Gedcom;
-using Gedcom.RecordStructures;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
@@ -11,21 +9,16 @@ public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
     public PersonalNameStructure() : base() { }
     public PersonalNameStructure(Record record) : base(record) { }
 
-    public string NamePersonal => Record.Value;
-    public string NameType => _(C.TYPE);
-    public NameVariation NamePhoneticVariation => First<NameVariation>(C.FONE);
-    public NameVariation NameRomanizedVariation => First<NameVariation>(C.ROMN);
-
-    #region IPersonalNamePeices
-
     public string Given => _(C.GIVN);
+    public string NamePersonal => Record.Value;
+    public NameVariation NamePhoneticVariation => First<NameVariation>(C.FONE);
     public string NamePrefix => _(C.NPFX);
     public string NameSuffix => _(C.NSFX);
+    public NameVariation NameRomanizedVariation => First<NameVariation>(C.ROMN);
+    public string NameType => _(C.TYPE);
     public string Nickname => _(C.NICK);
     public string Surname => _(C.SURN);
     public string SurnamePrefix => _(C.SPFX);
-
-    #endregion
 
     public override string ToString() => $"{Record.Value}, {NamePersonal}";
 }
@@ -44,33 +37,29 @@ internal class PersonalNameStructureJson : GedcomJson
 {
     public PersonalNameStructureJson(PersonalNameStructure personalNameStructure)
     {
-        NamePersonal = JsonString(personalNameStructure.NamePersonal);
-        NameType = JsonString(personalNameStructure.NameType);
-        NamePhoneticVariation = JsonRecord(personalNameStructure.NamePhoneticVariation);
-        NameRomanizedVariation = JsonRecord(personalNameStructure.NameRomanizedVariation);
         Given = JsonString(personalNameStructure.Given);
+        NamePersonal = JsonString(personalNameStructure.NamePersonal);
+        NamePhoneticVariation = JsonRecord(personalNameStructure.NamePhoneticVariation);
         NamePrefix = JsonString(personalNameStructure.NamePrefix);
+        NameRomanizedVariation = JsonRecord(personalNameStructure.NameRomanizedVariation);
         NameSuffix = JsonString(personalNameStructure.NameSuffix);
+        NameType = JsonString(personalNameStructure.NameType);
         Nickname = JsonString(personalNameStructure.Nickname);
         Surname = JsonString(personalNameStructure.Surname);
         SurnamePrefix = JsonString(personalNameStructure.SurnamePrefix);
     }
 
-    public string? NamePersonal { get; set; }
-    public string? NameType { get; set; }
-    public NameVariation? NamePhoneticVariation { get; set; }
-    public NameVariation? NameRomanizedVariation { get; set; }
-
-    #region IPersonalNamePeices
-
     public string? Given { get; set; }
+    public string? NamePersonal { get; set; }
+    public NameVariation? NamePhoneticVariation { get; set; }
     public string? NamePrefix { get; set; }
+    public NameVariation? NameRomanizedVariation { get; set; }
     public string? NameSuffix { get; set; }
+    public string? NameType { get; set; }
     public string? Nickname { get; set; }
     public string? Surname { get; set; }
     public string? SurnamePrefix { get; set; }
 
-    #endregion
 }
 
 #region PERSONAL_NAME_STRUCTURE p. 38

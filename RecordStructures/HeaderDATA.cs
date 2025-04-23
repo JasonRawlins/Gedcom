@@ -9,8 +9,8 @@ public class HeaderData : RecordStructureBase
     public HeaderData() : base() { }
     public HeaderData(Record record) : base(record) { }
 
-    public string PublicationDate => _(C.DATE);
     public NoteStructure CopyrightSourceData => First<NoteStructure>(C.COPR);
+    public string PublicationDate => _(C.DATE);
 
     public override string ToString() => $"{Record.Value}, {PublicationDate}";
 }
@@ -29,14 +29,13 @@ internal class HeaderDataJson : GedcomJson
 {
     public HeaderDataJson(HeaderData headerData)
     {
-        PublicationDate = JsonString(headerData.PublicationDate);
         CopyrightSourceData = JsonRecord(headerData.CopyrightSourceData);
+        PublicationDate = JsonString(headerData.PublicationDate);
     }
 
-    public string? PublicationDate { get; set; }
     public NoteStructure? CopyrightSourceData { get; set; }
+    public string? PublicationDate { get; set; }
 }
-
 
 #region HeaderSOUR p. 23
 /* 

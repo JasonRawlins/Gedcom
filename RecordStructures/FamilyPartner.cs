@@ -9,8 +9,8 @@ public class FamilyPartner : RecordStructureBase
     public FamilyPartner() { }
     public FamilyPartner(Record record) { }
 
-    public string Name => Record.Value;
     public string AgeAtEvent => Record.Records.FirstOrDefault(r => r.Tag.Equals(C.AGE))?.Value ?? "";
+    public string Name => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {Name}";
 }
@@ -29,10 +29,10 @@ internal class FamilyPartnerJson : GedcomJson
 {
     public FamilyPartnerJson(FamilyPartner familyPartner)
     {
-        Name = JsonString(familyPartner.Name);
         AgeAtEvent = JsonString(familyPartner.AgeAtEvent);
+        Name = JsonString(familyPartner.Name);
     }
 
-    public string? Name { get; set; }
     public string? AgeAtEvent { get; set; }
+    public string? Name { get; set; }
 }

@@ -9,8 +9,8 @@ public class HeaderGedcom : RecordStructureBase
     public HeaderGedcom() : base() { }
     public HeaderGedcom(Record record) : base(record) { }
 
-    public string VersionNumber => _(C.VERS);
     public string GedcomForm => _(C.FORM);
+    public string VersionNumber => _(C.VERS);
 
     public override string ToString() => $"{Record.Value}, {VersionNumber}";
 }
@@ -29,12 +29,12 @@ internal class GEDCJson : GedcomJson
 {
     public GEDCJson(HeaderGedcom gedc)
     {
-        VersionNumber = JsonString(gedc.VersionNumber);
         GedcomForm = JsonString(gedc.GedcomForm);
+        VersionNumber = JsonString(gedc.VersionNumber);
     }
 
-    public string? VersionNumber { get; set; }
     public string? GedcomForm { get; set; }
+    public string? VersionNumber { get; set; }
 }
 
 #region STRUCTURE_NAME p. 23

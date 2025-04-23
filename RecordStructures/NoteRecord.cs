@@ -9,9 +9,9 @@ public class NoteRecord : RecordStructureBase
     public NoteRecord() : base() { }
     public NoteRecord(Record record) : base(record) { }
 
-    public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(C.REFN);
     public string AutomatedRecordId => _(C.RIN);
     public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
+    public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(C.REFN);
 
     public override string ToString() => $"{Record.Value}, {AutomatedRecordId}";
 }
@@ -30,14 +30,14 @@ internal class NoteRecordJson : GedcomJson
 {
     public NoteRecordJson(NoteRecord noteRecord)
     {
-        UserReferenceNumber = JsonRecord(noteRecord.UserReferenceNumber);
         AutomatedRecordId = JsonString(noteRecord.AutomatedRecordId);
         ChangeDate = JsonRecord(noteRecord.ChangeDate);
+        UserReferenceNumber = JsonRecord(noteRecord.UserReferenceNumber);
     }
 
-    public UserReferenceNumber? UserReferenceNumber { get; set; }
     public string? AutomatedRecordId { get; set; }
     public ChangeDate? ChangeDate { get; set; }
+    public UserReferenceNumber? UserReferenceNumber { get; set; }
 }
 
 #region NOTE_RECORD (NOTE) p. 27

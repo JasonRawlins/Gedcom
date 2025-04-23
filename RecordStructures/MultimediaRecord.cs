@@ -9,14 +9,14 @@ public class MultimediaRecord : RecordStructureBase
     public MultimediaRecord() : base() { }
     public MultimediaRecord(Record record) : base(record) { }
 
+    public string AutomatedRecordId => _(C.RIN);
+    public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
+    public string DescriptiveTitle => _(C.TITL);
     public List<string> MultimediaFileReferenceNumbers => List(r => r.Tag.Equals(C.FILE)).Select(r => r.Value).ToList();
     public MultimediaFormat MultimediaFormat => First<MultimediaFormat>(C.FORM);
-    public string DescriptiveTitle => _(C.TITL);
-    public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(C.REFN);
-    public string AutomatedRecordId => _(C.RIN);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
-    public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
+    public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(C.REFN);
 
     public override string ToString() => $"{Record.Value}, {AutomatedRecordId}, {DescriptiveTitle}";
 }
@@ -35,24 +35,24 @@ internal class MultimediaRecordJson : GedcomJson
 {
     public MultimediaRecordJson(MultimediaRecord multimediaRecord)
     {
+        AutomatedRecordId = JsonString(multimediaRecord.AutomatedRecordId);
+        ChangeDate = JsonRecord(multimediaRecord.ChangeDate);
+        DescriptiveTitle = JsonString(multimediaRecord.DescriptiveTitle);
         MultimediaFileReferenceNumbers = JsonList(multimediaRecord.MultimediaFileReferenceNumbers);
         MultimediaFormat = JsonRecord(multimediaRecord.MultimediaFormat);
-        DescriptiveTitle = JsonString(multimediaRecord.DescriptiveTitle);
-        UserReferenceNumber = JsonRecord(multimediaRecord.UserReferenceNumber);
-        AutomatedRecordId = JsonString(multimediaRecord.AutomatedRecordId);
         NoteStructures = JsonList(multimediaRecord.NoteStructures);
         SourceCitations = JsonList(multimediaRecord.SourceCitations);
-        ChangeDate = JsonRecord(multimediaRecord.ChangeDate);
+        UserReferenceNumber = JsonRecord(multimediaRecord.UserReferenceNumber);
     }
 
+    public string? AutomatedRecordId { get; set; }
+    public ChangeDate? ChangeDate { get; set; }
+    public string? DescriptiveTitle { get; set; }
     public List<string>? MultimediaFileReferenceNumbers { get; set; }
     public MultimediaFormat? MultimediaFormat { get; set; }
-    public string? DescriptiveTitle { get; set; }
-    public UserReferenceNumber? UserReferenceNumber { get; set; }
-    public string? AutomatedRecordId { get; set; }
     public List<NoteStructure>? NoteStructures { get; set; }
     public List<SourceCitation>? SourceCitations { get; set; }
-    public ChangeDate? ChangeDate { get; set; }
+    public UserReferenceNumber? UserReferenceNumber { get; set; }
 }
 
 #region MULTIMEDIA_RECORD p. 26

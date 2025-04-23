@@ -10,11 +10,11 @@ public class LdsIndividualOrdinance : RecordStructureBase
     public LdsIndividualOrdinance(Record record) : base(record) { }
 
     public string DateLdsOrdinance => _(C.DATE);
-    public string TempleCode => _(C.TEMP);
-    public string PlaceLivingOrdinance => _(C.PLAC);
     public LdsOrdinanceStatus LdsBaptismDateStatus => First<LdsOrdinanceStatus>(C.STAT);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+    public string PlaceLivingOrdinance => _(C.PLAC);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
+    public string TempleCode => _(C.TEMP);
 
     public override string ToString() => $"{Record.Value}, {TempleCode}, {PlaceLivingOrdinance}";
 }
@@ -34,19 +34,19 @@ internal class LdsIndividualOrdinanceJson : GedcomJson
     public LdsIndividualOrdinanceJson(LdsIndividualOrdinance ldsIndividualOrdinance)
     {
         DateLdsOrdinance = JsonString(ldsIndividualOrdinance.DateLdsOrdinance);
-        TempleCode = JsonString(ldsIndividualOrdinance.TempleCode);
-        PlaceLivingOrdinance = JsonString(ldsIndividualOrdinance.PlaceLivingOrdinance);
         LdsBaptismDateStatus = JsonRecord(ldsIndividualOrdinance.LdsBaptismDateStatus);
         NoteStructures = JsonList(ldsIndividualOrdinance.NoteStructures);
+        PlaceLivingOrdinance = JsonString(ldsIndividualOrdinance.PlaceLivingOrdinance);
         SourceCitations = JsonList(ldsIndividualOrdinance.SourceCitations);
+        TempleCode = JsonString(ldsIndividualOrdinance.TempleCode);
     }
 
     public string? DateLdsOrdinance { get; set; }
-    public string? TempleCode { get; set; }
-    public string? PlaceLivingOrdinance { get; set; }
     public LdsOrdinanceStatus? LdsBaptismDateStatus { get; set; }
     public List<NoteStructure>? NoteStructures { get; set; }
+    public string? PlaceLivingOrdinance { get; set; }
     public List<SourceCitation>? SourceCitations { get; set; }
+    public string? TempleCode { get; set; }
 }
 
 #region LDS_INDIVIDUAL_ORDINANCE p. 

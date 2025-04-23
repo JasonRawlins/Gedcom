@@ -9,9 +9,9 @@ public class FamilyEventDetail : RecordStructureBase
     public FamilyEventDetail() : base() { }
     public FamilyEventDetail(Record record) : base(record) { }
 
+    public EventDetail EventDetail => First<EventDetail>(C.EVEN);
     public FamilyPartner Husband => First<FamilyPartner>(C.HUSB);
     public FamilyPartner Wife => First<FamilyPartner>(C.WIFE);
-    public EventDetail EventDetail => First<EventDetail>(C.EVEN);
 
     public override string ToString() => $"{Record.Value}, {Husband.Name}, {Wife.Name}";
 }
@@ -30,14 +30,14 @@ internal class FamilyEventDetailJson : GedcomJson
 {
     public FamilyEventDetailJson(FamilyEventDetail familyEventDetail)
     {
+        EventDetail = JsonRecord(familyEventDetail.EventDetail);
         Husband = JsonRecord(familyEventDetail.Husband);
         Wife = JsonRecord(familyEventDetail.Wife);
-        EventDetail = JsonRecord(familyEventDetail.EventDetail);
     }
 
+    public EventDetail? EventDetail { get; set; }
     public FamilyPartner? Husband { get; set; }
     public FamilyPartner? Wife { get; set; }
-    public EventDetail? EventDetail { get; set; }
 }
 
 #region FAMILY_EVENT_DETAIL p. 32

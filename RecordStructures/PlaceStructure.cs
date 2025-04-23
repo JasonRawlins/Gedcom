@@ -8,12 +8,13 @@ public class PlaceStructure : RecordStructureBase
 {
     public PlaceStructure() : base() { }
     public PlaceStructure(Record record) : base(record) { }
-    public string PlaceName => Record.Value;
-    public string PlaceHierarchy => _(C.FORM);
-    public List<NameVariation> PlacePhoneticVariations => List<NameVariation>(C.FONE);
-    public List<NameVariation> PlaceRomanizedVariations => List<NameVariation>(C.ROMN);
+
     public Map Map => First<Map>(C.MAP);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+    public string PlaceHierarchy => _(C.FORM);
+    public string PlaceName => Record.Value;
+    public List<NameVariation> PlacePhoneticVariations => List<NameVariation>(C.FONE);
+    public List<NameVariation> PlaceRomanizedVariations => List<NameVariation>(C.ROMN);
 
     public override string ToString() => $"{Record.Value}, {PlaceName}";
 }
@@ -32,20 +33,20 @@ internal class PlaceStructureJson : GedcomJson
 {
     public PlaceStructureJson(PlaceStructure placeStructure)
     {
-        PlaceName = JsonString(placeStructure.PlaceName);
-        PlaceHierarchy = JsonString(placeStructure.PlaceHierarchy);
-        PlacePhoneticVariations = JsonList(placeStructure.PlacePhoneticVariations);
-        PlaceRomanizedVariations = JsonList(placeStructure.PlaceRomanizedVariations);
         Map = JsonRecord(placeStructure.Map);
         NoteStructures = JsonList(placeStructure.NoteStructures);
+        PlaceHierarchy = JsonString(placeStructure.PlaceHierarchy);
+        PlaceName = JsonString(placeStructure.PlaceName);
+        PlacePhoneticVariations = JsonList(placeStructure.PlacePhoneticVariations);
+        PlaceRomanizedVariations = JsonList(placeStructure.PlaceRomanizedVariations);
     }
 
-    public string? PlaceName { get; set; }
-    public string? PlaceHierarchy { get; set; }
-    public List<NameVariation>? PlacePhoneticVariations { get; set; }
-    public List<NameVariation>? PlaceRomanizedVariations { get; set; }
     public Map? Map { get; set; }
     public List<NoteStructure>? NoteStructures { get; set; }
+    public string? PlaceHierarchy { get; set; }
+    public string? PlaceName { get; set; }
+    public List<NameVariation>? PlacePhoneticVariations { get; set; }
+    public List<NameVariation>? PlaceRomanizedVariations { get; set; }
 }
 
 #region PLACE_STRUCTURE p. 38-39

@@ -10,8 +10,8 @@ public class SourceRecordData : RecordStructureBase
     public SourceRecordData(Record record) : base(record) { }
 
     public List<SourceRecordEvent> EventsRecorded => List<SourceRecordEvent>(C.EVEN);
-    public string ResponsibleAgency => _(C.AGNC);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+    public string ResponsibleAgency => _(C.AGNC);
 
     public override string ToString() => $"{Record.Value}, {ResponsibleAgency}";
 }
@@ -31,13 +31,13 @@ internal class SourceRecordDataJson : GedcomJson
     public SourceRecordDataJson(SourceRecordData sourceRecordData)
     {
         EventsRecorded = JsonList(sourceRecordData.EventsRecorded);
-        ResponsibleAgency = JsonString(sourceRecordData.ResponsibleAgency);
         NoteStructures = JsonList(sourceRecordData.NoteStructures);
+        ResponsibleAgency = JsonString(sourceRecordData.ResponsibleAgency);
     }
 
     public List<SourceRecordEvent>? EventsRecorded { get; set; }
-    public string? ResponsibleAgency { get; set; }
     public List<NoteStructure>? NoteStructures { get; set; }
+    public string? ResponsibleAgency { get; set; }
 }
 
 #region SOURCE_RECORD (DATA) p. 27
