@@ -10,6 +10,7 @@ public class SourceRecord : RecordStructureBase
     public SourceRecord(Record record) : base(record) { }
 
     public string AutomatedRecordId => _(C.RIN);
+    public string CallNumber => _(C.CALN);
     public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
@@ -40,6 +41,7 @@ internal class SourceRecordJson : GedcomJson
     public SourceRecordJson(SourceRecord sourceRecord)
     {
         AutomatedRecordId = JsonString(sourceRecord.AutomatedRecordId);
+        CallNumber = JsonString(sourceRecord.CallNumber);
         ChangeDate = JsonRecord(sourceRecord.ChangeDate);
         MultimediaLinks = JsonList(sourceRecord.MultimediaLinks);
         NoteStructures = JsonList(sourceRecord.NoteStructures);
@@ -54,6 +56,7 @@ internal class SourceRecordJson : GedcomJson
     }
 
     public string? AutomatedRecordId { get; set; }
+    public string? CallNumber { get; set; }
     public ChangeDate? ChangeDate { get; set; }
     public List<MultimediaLink>? MultimediaLinks { get; set; }
     public List<NoteStructure>? NoteStructures { get; set; }

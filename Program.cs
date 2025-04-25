@@ -9,7 +9,7 @@ public class Program
     {
         var assembly = Assembly.GetExecutingAssembly();
         var assemblyDirectoryName = @"c:\temp\Gedcom.NET"; // Path.GetDirectoryName(assembly.Location) ?? "";
-        var treeName = "DeveloperTree";
+        var treeName = "Gedcom.NET";
         var gedFullName = Path.Combine(assemblyDirectoryName, "Resources", $"{treeName}.ged");
         var jsonFullName = Path.Combine(assemblyDirectoryName, "Resources", $"{treeName}.json");
 
@@ -23,7 +23,7 @@ public class Program
         var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
         var gedcom = new Gedcom.Gedcom(gedcomLines);       
 
-        var individualRecord = gedcom.GetIndividualRecord("@I***REMOVED***@"); // JSD
+        var individualRecord = gedcom.GetIndividualRecord("@I***REMOVED***@");
         
         var jsonText = JsonSerializer.Serialize(individualRecord, JsonSerializerOptions);
         File.WriteAllText(jsonFullName, jsonText);

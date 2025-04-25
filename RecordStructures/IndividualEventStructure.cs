@@ -52,6 +52,7 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
                 C.MARR => "Marriage",
                 C.MARS => "Marriage Settlement",
                 C.NATU => "Naturalization",
+                C.OCCU => "Occupations",
                 C.ORDI => "Ordinance",
                 C.ORDN => "Ordination",
                 C.PROB => "Probate",
@@ -79,8 +80,8 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
             "ADOP", "BAPL", "BAPM", "BARM", "BASM", "BIRT", "BLES", "BURI",
             "CENS", "CHR", "CHRA", "CONF", "CREM", "DEAT", "DIV", "DIVF",
             "EMIG", "ENDL", "ENGA", "EVEN", "FCOM", "GRAD", "IMMI", "MARB",
-            "MARC", "MARL", "MARR", "MARS", "NATU", "ORDI", "ORDN", "PROB",
-            "RESI", "RETI", "SLGC", "SLGS", "WILL"
+            "MARC", "MARL", "MARR", "MARS", "NATU", "OCCU", "ORDI", "ORDN",
+            "PROB", "RESI", "RETI", "SLGC", "SLGS", "WILL"
         };
 
         return individualEventTags.Contains(record.Tag);

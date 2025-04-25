@@ -41,7 +41,7 @@ public class IndividualRecord : RecordStructureBase
     private bool IsWeaklyTyped(Record record)
     {
         // By weakly-typed, I mean there isn't a property that specifically
-        // exposes the event. For example, there is a property named "Births"
+        // exposes the event. For example, there is a property named "Birth"
         // that exposes only the BIRT IndividualEventStructure.
         return !(new string[]
         {
