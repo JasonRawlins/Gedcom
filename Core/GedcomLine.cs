@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Gedcom;
 
+// The Gedcom Standard 5.1.1 documentation is at the end of this file.
 public class GedcomLine
 {
     public int Level { get; set; } = -1;
@@ -40,8 +41,8 @@ public class GedcomLine
         if (level == 0 && Regex.IsMatch(secondSegment, @"@.*@"))
         {
             tag = thirdSegment;
-            var extId = Regex.Match(secondSegment, @"@.*@").Value;
-            value = extId;
+            var xref = Regex.Match(secondSegment, @"@.*@").Value;
+            value = xref;
         }
         else
         {

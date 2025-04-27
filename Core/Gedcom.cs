@@ -5,6 +5,7 @@ using Gedcom.RecordStructures;
 
 namespace Gedcom;
 
+// The Gedcom Standard 5.1.1 documentation is at the end of this file.
 [JsonConverter(typeof(GedcomJsonConverter))]
 public class Gedcom : RecordStructureBase
 {

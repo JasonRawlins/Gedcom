@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
+// The Gedcom Standard 5.1.1 documentation is at the end of this file.
 [JsonConverter(typeof(EventTypeCitedFromJsonConverter))]
 public class EventTypeCitedFrom : RecordStructureBase
 {

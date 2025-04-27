@@ -1,5 +1,6 @@
 ﻿namespace Gedcom.RecordStructures;
 
+// The Gedcom Standard 5.1.1 documentation is at the end of this file.
 public class _RECORD_STRUCTURE_NAME : RecordStructureBase
 {
     public _RECORD_STRUCTURE_NAME() : base() { }

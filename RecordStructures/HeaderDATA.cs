@@ -3,6 +3,7 @@ using System.Text.Json;
 
 namespace Gedcom.RecordStructures;
 
+// The Gedcom Standard 5.1.1 documentation is at the end of this file.
 [JsonConverter(typeof(HeaderDataJsonConverter))]
 public class HeaderData : RecordStructureBase
 {
