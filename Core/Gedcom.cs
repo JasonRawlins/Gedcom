@@ -51,6 +51,7 @@ public class Gedcom : RecordStructureBase
     public SubmitterRecord GetSubmitterRecord(string xrefSUBM) => new(Record.Records.First(r => r.Tag.Equals(C.SUBM) && r.Value.Equals(xrefSUBM)));
     public List<SubmitterRecord> GetSubmitterRecords() => Record.Records.Where(r => r.Tag.Equals(C.SUBM)).Select(r => new SubmitterRecord(r)).ToList();
 
+    // The explanation of this function is at the end of the file. 
     public static List<List<GedcomLine>> GetGedcomLinesForLevel(int level, List<GedcomLine> gedcomLines)
     {
         var gedcomLinesAtThisLevel = new List<List<GedcomLine>>();
@@ -138,4 +139,41 @@ bolded. Note that some contexts are not required but if they are used then the b
 required.
 
 */
+#endregion
+
+
+#region 
+
+/*
+Explanation of List<List<GedcomLine>> GetGedcomLinesForLevel(int level, List<GedcomLine> gedcomLines)
+
+Note: I will be indenting the lines by level in this example for readability, but no leading whitespace 
+is allowed in a valid ged file.
+
+A Gedcom file is made up of a series of lines that each have a level, from 0 to 99. Here is a small ged file
+representing two individuals (INDI):
+
+// gedcom lines
+0 HEAD
+0 @I0987654321@ INDI
+	1 NAME John /Doe/
+		2 GIVN John
+		2 SURN Doe
+	1 SEX M
+0 @I1234567890@ INDI
+	1 NAME Mary /Jane/
+		2 GIVN Mary
+		2 SURN Jane
+	1 SEX F
+0 TRLR
+
+This function groups gedcom lines together logically into a tree structure of nested lists. For
+example, calling GetGedcomLinesForLevel(0, <gedcom lines>) with the above file will create four lists 
+(HEAD, INDI, INDI, TRLR). If I call GetGedcomLinesForLevel(1, <gedcom lines>) and pass one of the INDI 
+records, I'll get two lists (NAME, SEX). If I call GetGedcomLinesForLevel(2, <gedcom lines>) and pass 
+one of the NAME records, I'll get two lists (GIVN, SURN). And so on. I think 99 levels is the 
+official limit. 
+
+*/
+
 #endregion

@@ -1,10 +1,32 @@
 # Gedcom
-A program to manipulate Gedcom Version 5.5.1 files.
+A program to manage Gedcom Standard 5.5.1 files.
 
+Gedcom.NET is a tool to explore and transform Gedcom files (.ged). Gedcom files are the default format used 
+on genealogy sites like Ancestry and FamilySearch to store genealogy information.
 
-This program parses a .ged file and then allows various operations, such as converting the .ged to JSON and other custom actions.
+I started this because I wanted to search the data in ged files an unstructured way. I was doing raw text 
+searches through a ged file and found some interesting things right away. Then I got an idea for a fun
+genealogy website, but I would need the Gedcom data as json. There didn't seem to be anything that did that
+so I decided to write a simple Gedcom parser. 
 
-The most basic data structure in a .ged file is a Gedcom line. A line contains a level, a tag, and a value. Here is an example of an INDI (Individual) record:
+If you are a data structure nerd, you might get a kick out of the Gedcom Standard 5.5.1. They released it in
+the 1980s and now that I understand it, I think it was pretty clever. I've integrated the documentation with
+the code for easy reference. I can't imagine too many people are going to be interested in this, but for any
+that are, I want it to be a tool to learn Gedcom 5.5.1 so that 3rd-party development is consistent with the 
+standard.
+
+Here are the goals of Gedcom.NET:
+
+* A tool to explore the raw data in ged files.
+* Export to multiple file formats, starting with json.
+* Easy-to-use command line tool to query and transform ged files.
+* Provide a human-readable abstraction of the standard using a doman-driven code style. 
+* Code base is integrated with the Gedcom documentation.
+* Readonly for now.
+
+**Gedcom structure**
+Gedcom files are quite simple. The most basic data structure is a Gedcom line. A line 
+contains a level, a tag, and a value. Here is an example of an INDI (Individual) record:
 
 0 @I***REMOVED***@ INDI
 1 NAME John /Doe/
@@ -13,7 +35,10 @@ The most basic data structure in a .ged file is a Gedcom line. A line contains a
 2 SOUR @S983746243@
 1 SEX M
 
-Each Gedcom line starts with a level, followed by a space, then a tag and value. In a well-formed Gedcom file, leading whitespace is not allowed, but I'll be indenting the data to make it more readable in this readme. The amount of indentation is determined by the level of the line. For example, here is the formatted individual record (INDI):
+Each Gedcom line starts with a level, followed by a space, then a tag and value. In a 
+well-formed Gedcom file, leading whitespace is not allowed, but I'll be indenting the data 
+to make it more readable in this readme. The amount of indentation is determined by the level 
+of the line. For example, here is the formatted individual record (INDI):
 
 0 @I***REMOVED***@ INDI
 	1 NAME John /Doe/
@@ -21,7 +46,7 @@ Each Gedcom line starts with a level, followed by a space, then a tag and value.
 		2 SURN Doe
 	1 SEX M
 
-Notice each line is indented by an amount equal to (Level * tab). 
+Notice each line is indented by an amount equal to (Level * indent). 
 
 A Gedcom line with a level of 0 is known as a record. There are seven record tags:
 * FAM (Family)
@@ -51,7 +76,7 @@ The NAME substructure then has two child properties of its own: GIVN and SURN.
 	2 GIVN John
 	2 SURN Doe
 
-This creates a tree-like structure that can be used to build up any number of arbitrary objects. 
+This creates a tree structure that can be used to build up any number of arbitrary objects. 
 For example, here is a more complicated INDI (Individual record).
 
 0 @I***REMOVED***@ INDI
@@ -68,11 +93,11 @@ For example, here is a more complicated INDI (Individual record).
 
 There are five distinct records here.
 1. The INDI record itself. 
-2. The INDI record has four properties: NAME, SEX, FAMC, and BIRT.
-3. The NAME record has three properties: GIVN, SURN, and SOUR.
-4. The SEX record has one property: SOUR.
-5. The FAMC record has no properties.
-6. The BIRT record has two properties: DATE, PLAC
+2. The INDI record has four sub records: NAME, SEX, FAMC, and BIRT.
+3. The NAME record has three sub records: GIVN, SURN, and SOUR.
+4. The SEX record has one sub record: SOUR.
+5. The FAMC record has no sub records.
+6. The BIRT record has two sub records: DATE, PLAC
 
 An object-oriented representation of this data might look something like this: 
 
@@ -109,7 +134,7 @@ all common and must be handled correctly.
 The next most primitive class in Gedcom.NET is a Record. A record contains any number of parsed 
 Gedcom lines. It has three properties: Level, Tag, Value. It also contains a child Record structure 
 that contains the Gedcom lines for all of its substructures. Using the previous INDI (Individual) 
-record example. 
+record example:
 
 0 @I***REMOVED***@ INDI
 	1 NAME John /Doe/
@@ -130,3 +155,4 @@ class Record {
 	List<Record> Records { get; } = []; // A collection of all parsed child records. 	
 }
 
+Actually, that's pretty much it. Everything else is tree manipulation. 
