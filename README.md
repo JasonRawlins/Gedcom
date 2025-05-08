@@ -64,14 +64,14 @@ a number and then surrounded by @ signs. Here are some examples:
 * Individual: @I322665662962@
 * Repository: @R805769907@
 
-Each record can have any number of sub records, which define the properties of the record. For 
-example, the INDI record above has two child properties: NAME and SEX.
+Each record can have any number of sub records, which define its properties. For example, the 
+INDI record above has two sub records: NAME and SEX.
 
 0 @I***REMOVED***@ INDI
 	1 NAME John /Doe/
 	1 SEX M
 
-The NAME substructure then has two child properties of its own: GIVN and SURN.
+The NAME substructure then has two sub records of its own: GIVN and SURN.
 1 NAME John /Doe/
 	2 GIVN John
 	2 SURN Doe
@@ -127,9 +127,8 @@ public class BIRT {
 	public string PLAC; // Place
 }
 
-The Gedcom data format allows for any number of arbitrary records to be created like this. This 
-results in a very weakly-typed data structure. Empty strings, nulls, and undefined properties are 
-all common and must be handled correctly.
+This results in a very weakly-typed data structure. Empty strings, nulls, and undefined properties 
+are all common and must be handled correctly.
 
 The next most primitive class in Gedcom.NET is a Record. A record contains any number of parsed 
 Gedcom lines. It has three properties: Level, Tag, Value. It also contains a child Record structure 
@@ -155,4 +154,30 @@ class Record {
 	List<Record> Records { get; } = []; // A collection of all parsed child records. 	
 }
 
-Actually, that's pretty much it. Everything else is tree manipulation. 
+Actually, that's pretty much it. Everything else is tree manipulation, almost all of which is done 
+in the RecordBaseStructure base class. It's pretty simple and every other record inherits from it. 
+The primary way of querying child records is by searching records based on their tag. The complete 
+list of tags are in the C.cs class. Notice I've added a comment after each tag listing the records 
+that use it. 
+
+Here are the query functions in the RecordStructureBase class.
+
+class RecordStructureBase
+{    
+    string _(string tag); // The method "_" finds a child record value by tag name. 
+    Record First(string tag);
+    List<Record> List(Func<Record, bool> predicate);
+    T First<T>(string tag);
+    List<T> List<T>(string tag);
+}
+
+Here is an example of how these functions are used in the PersonalNameStructure record:
+
+class PersonalNameStructure : RecordStructureBase
+{
+    string Given => _(C.GIVN);
+    string NamePersonal => Record.Value;
+    NameVariation NamePhoneticVariation => First<NameVariation>(C.FONE);
+    string Surname => _(C.SURN);
+}
+
