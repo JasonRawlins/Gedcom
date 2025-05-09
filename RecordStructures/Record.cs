@@ -31,6 +31,11 @@ public class Record
 
     public bool IsQueryMatch(string query)
     {
+        if (string.IsNullOrEmpty(query))
+        {
+            return true;
+        }
+
         if (Value.ToUpper().Contains(query.ToUpper()))
         {
             return true;

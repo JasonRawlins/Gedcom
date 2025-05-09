@@ -25,9 +25,12 @@ public class Gedcom : RecordStructureBase
     public FamilyRecord GetFamilyRecord(string xrefFAM) => new(Record.Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
     public List<FamilyRecord> GetFamilyRecords() => Record.Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FamilyRecord(r)).ToList();
 
-    public IndividualRecord GetIndividualRecord(string xrefINDI)
+    public IndividualRecord GetIndividualRecord(string xref, string query)
     {
-        var individualRecord = Single(r => r.Tag.Equals(C.INDI) && r.Value.Equals(xrefINDI));
+        var individualRecord = Single(r => 
+            r.Tag.Equals(C.INDI) 
+            && r.Value.Equals(xref)
+            && r.IsQueryMatch(query));
 
         if (individualRecord.IsEmpty)
         {
@@ -37,25 +40,23 @@ public class Gedcom : RecordStructureBase
         return new IndividualRecord(individualRecord);
     }
 
-    public List<IndividualRecord> GetIndividualRecords() => Record.Records.Where(r => r.Tag.Equals(C.INDI)).Select(r => new IndividualRecord(r)).ToList();
-    public List<IndividualRecord> GetIndividualRecords(string query)
-    {
-        return Record.Records.Where(r => r.Tag.Equals(C.INDI) && r.IsQueryMatch(query)).Select(r => new IndividualRecord(r)).ToList();
-    }
+    public List<IndividualRecord> GetIndividualRecords() => GetIndividualRecords("");
+    public List<IndividualRecord> GetIndividualRecords(string query) => 
+        Record.Records.Where(r => r.Tag.Equals(C.INDI) && r.IsQueryMatch(query)).Select(r => new IndividualRecord(r)).ToList();
     
-    public MultimediaRecord GetMultimediaRecord(string xrefOBJE) => new(Record.Records.First(r => r.Tag.Equals(C.OBJE) && r.Value.Equals(xrefOBJE)));
+    public MultimediaRecord GetMultimediaRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(C.OBJE) && r.Value.Equals(xref)));
     public List<MultimediaRecord> GetMultimediaRecords() => Record.Records.Where(r => r.Tag.Equals(C.OBJE)).Select(r => new MultimediaRecord(r)).ToList();
 
-    public NoteRecord GetNoteRecord(string xrefNOTE) => new(Record.Records.First(r => r.Tag.Equals(C.NOTE) && r.Value.Equals(xrefNOTE)));
+    public NoteRecord GetNoteRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(C.NOTE) && r.Value.Equals(xref)));
     public List<NoteRecord> GetNoteRecords() => Record.Records.Where(r => r.Tag.Equals(C.NOTE)).Select(r => new NoteRecord(r)).ToList();
     
-    public RepositoryRecord GetRepositoryRecord(string xrefREPO) => new(Record.Records.First(r => r.Tag.Equals(C.REPO) && r.Value.Equals(xrefREPO)));
+    public RepositoryRecord GetRepositoryRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(C.REPO) && r.Value.Equals(xref)));
     public List<RepositoryRecord> GetRepositoryRecords() => Record.Records.Where(r => r.Tag.Equals(C.REPO)).Select(r => new RepositoryRecord(r)).ToList();
    
-    public SourceRecord GetSourceRecord(string xrefSOUR) => new(Record.Records.First(r => r.Tag.Equals(C.SOUR) && r.Value.Equals(xrefSOUR)));
+    public SourceRecord GetSourceRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(C.SOUR) && r.Value.Equals(xref)));
     public List<SourceRecord> GetSourceRecords() => Record.Records.Where(r => r.Tag.Equals(C.SOUR)).Select(r => new SourceRecord(r)).ToList();
 
-    public SubmitterRecord GetSubmitterRecord(string xrefSUBM) => new(Record.Records.First(r => r.Tag.Equals(C.SUBM) && r.Value.Equals(xrefSUBM)));
+    public SubmitterRecord GetSubmitterRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(C.SUBM) && r.Value.Equals(xref)));
     public List<SubmitterRecord> GetSubmitterRecords() => Record.Records.Where(r => r.Tag.Equals(C.SUBM)).Select(r => new SubmitterRecord(r)).ToList();
 
     // The explanation of this function is at the end of the file. 

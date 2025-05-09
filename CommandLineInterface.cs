@@ -54,11 +54,17 @@ public class Options
                 }
             }
 
+            if (List && !string.IsNullOrEmpty(Xref))
+            {
+                argumentErrors.Add("If -list is specified, -xref cannot be.");
+            }
+
             var acceptedFormats = new string[] { C.GEDC, C.JSON };
             if (!acceptedFormats.Contains(Format.ToUpper())) 
             {
                 argumentErrors.Add($"{Format} is not a valid format.");
             }
+
 
             return argumentErrors;
         }
