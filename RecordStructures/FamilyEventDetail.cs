@@ -11,6 +11,18 @@ public class FamilyEventDetail : RecordStructureBase
     public FamilyEventDetail(Record record) : base(record) { }
 
     public EventDetail EventDetail => First<EventDetail>(C.EVEN);
+
+    /*
+    The FAM record was originally structured to represent families where a male HUSB (p.75) (husband or
+    father) and female WIFE (p.91) (wife or mother) produce CHIL (p.68) (children). The FAM record may
+    also be used for cultural parallels to this, including nuclear families, marriage, cohabitation, fostering,
+    adoption, and so on, regardless of the gender of the partners. 
+    
+    I named these properties Husband and Wife because that is what the Gedcom Standard 5.1.1 calls them. 
+    In Gedcom 7, Sex, gender, titles, and roles of partners should not be inferred based on the partner
+    that the HUSB or WIFE structure points to. The individuals pointed to by the HUSB and WIFE are
+    collectively referred to as "partners", "parents" or "spouses".
+    */
     public FamilyPartner Husband => First<FamilyPartner>(C.HUSB);
     public FamilyPartner Wife => First<FamilyPartner>(C.WIFE);
 

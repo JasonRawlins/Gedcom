@@ -5,6 +5,9 @@ using System.Text.Json.Serialization;
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// Many dates in a ged file are missing or oddly formatted, or you may only have
+// part of the date e.g. "Mar 1889" (only month and year), "1943" (only year)
+// It may also have arbitrary text in it such as "Spring 1980".
 [JsonConverter(typeof(GedcomDateJsonConverter))]
 public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
 {
@@ -13,6 +16,8 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
 
     public string DateValue => Record.Value;
     public int Day { get; set; }
+    
+    // Returns the GedcomDate in Ancestry format: dd MMM yyyy e.g. "4 Aug 1983".
     public string DayMonthYear
     {
         get
@@ -44,6 +49,12 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
     public string TimeValue => _(C.TIME);
     public int Year { get; set; }
 
+
+    // Sorts by year, then month, then day. Remember that many dates may not parse
+    // correctly with DateTime.Parse. For example, if the date doesn't have a day,
+    // DateTime.Parse will actually succeed but the day will be set to 1. That's
+    // no bueno because it is a false date. That's why I have separated out day, month
+    // and year in this class. 
     public int CompareTo(GedcomDate? other)
     {
         if (other == null) return 1;

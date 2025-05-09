@@ -79,6 +79,7 @@ public static class C // Constants
     public const string INDI = "INDI"; // @XREF:INDI@ INDI
     public const string IDNO = "IDNO"; // <NATOINAL_ID_NUMBER>
     public const string IMMI = "IMMI"; // <blank>
+    public const string JSON = "JSON"; 
     public const string LANG = "LANG"; // <LANGUAGE_PREFERENCE>, <LANGUAGE_OF_TEXT>
     public const string LATI = "LATI"; // <PLACE_LATITUDE>
     public const string LONG = "LONG"; // <PLACE_LONGITUDE>

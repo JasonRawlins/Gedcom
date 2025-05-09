@@ -11,6 +11,9 @@ public class Gedcom : RecordStructureBase
 {
     public Gedcom(List<GedcomLine> gedcomLines)
     {
+        // Level 0 records are the top-level records. They are FAM (Family),
+        // INDI (Individual), OBJE (Multimedia), NOTE (Note), REPO (Repository),
+        // SOUR (Source), SUBM (Submitter)
         foreach (var level0Record in GetGedcomLinesForLevel(0, gedcomLines))
         {
             Record.Records.Add(new Record(level0Record));
@@ -35,6 +38,10 @@ public class Gedcom : RecordStructureBase
     }
 
     public List<IndividualRecord> GetIndividualRecords() => Record.Records.Where(r => r.Tag.Equals(C.INDI)).Select(r => new IndividualRecord(r)).ToList();
+    public List<IndividualRecord> GetIndividualRecords(string query)
+    {
+        return Record.Records.Where(r => r.Tag.Equals(C.INDI) && r.IsQueryMatch(query)).Select(r => new IndividualRecord(r)).ToList();
+    }
     
     public MultimediaRecord GetMultimediaRecord(string xrefOBJE) => new(Record.Records.First(r => r.Tag.Equals(C.OBJE) && r.Value.Equals(xrefOBJE)));
     public List<MultimediaRecord> GetMultimediaRecords() => Record.Records.Where(r => r.Tag.Equals(C.OBJE)).Select(r => new MultimediaRecord(r)).ToList();
@@ -107,16 +114,14 @@ internal class GedcomJsonConverter : JsonConverter<Gedcom>
     public override Gedcom? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
     public override void Write(Utf8JsonWriter writer, Gedcom gedcom, JsonSerializerOptions options)
     {
-        //var individual1 = gedcom.GetIndividualRecord("@I1@");
-        //var source1 = gedcom.GetSourceRecord("@S1@");
         var allIndividualRecords = gedcom.GetIndividualRecords();
 
-        var jsonObject = new
+        var gedcomJson = new
         {
             Individuals = allIndividualRecords
         };
 
-        JsonSerializer.Serialize(writer, jsonObject, jsonObject.GetType(), options);
+        JsonSerializer.Serialize(writer, gedcomJson, gedcomJson.GetType(), options);
     }
 }
 
@@ -150,7 +155,7 @@ Explanation of List<List<GedcomLine>> GetGedcomLinesForLevel(int level, List<Ged
 Note: I will be indenting the lines by level in this example for readability, but no leading whitespace 
 is allowed in a valid ged file.
 
-A Gedcom file is made up of a series of lines that each have a level, from 0 to 99. Here is a small ged file
+A Gedcom file is made up of a series of lines that each have a level. Here is a small ged file
 representing two individuals (INDI):
 
 // gedcom lines

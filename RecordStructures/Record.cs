@@ -29,6 +29,26 @@ public class Record
         }
     }
 
+    public bool IsQueryMatch(string query)
+    {
+        if (Value.ToUpper().Contains(query.ToUpper()))
+        {
+            return true;
+        }
+
+        foreach (var record in Records)
+        {
+            if (record.IsQueryMatch(query))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Gedcom.NET does not deal with null records. Instead, I've decided to use 
+    // an empty record instead of nulls for C# code.  
     public static Record Empty
     {
         get

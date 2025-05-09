@@ -17,15 +17,20 @@ public class GedcomLine
     public string Value { get; set; } = "";
     public string Xref => Value;
 
+    // This takes the text of a single line and parses it into a GedcomLine.
+    // The format of a top-level record (level 0 record) is Level, Xref, and TAG: "0 @I1234567890@ INDI".
+    // For all other lines, the order is Level, Tag, Value: "1 NAME John /Doe/".
     public static GedcomLine Parse(string line)
     {
         var level = int.Parse(line.Substring(0, line.IndexOf(" ")));
         var lineWithoutLevel = line.Substring(line.IndexOf(" ") + 1);
+        // Some lines do not have a value, such as events like a birth: "1 BIRT".
+        // In this case, there will not be a second space index.
         var secondSpaceIndex = lineWithoutLevel.IndexOf(" ");
         var secondSegment = "";
         var thirdSegment = "";
 
-        if (secondSpaceIndex != -1)
+        if (secondSpaceIndex != -1) // The line has no value, and hence no second space index.
         {
             secondSegment = lineWithoutLevel.Substring(0, lineWithoutLevel.IndexOf(" "));
             thirdSegment = lineWithoutLevel.Substring(lineWithoutLevel.IndexOf(' ') + 1);
@@ -40,12 +45,16 @@ public class GedcomLine
 
         if (level == 0 && Regex.IsMatch(secondSegment, @"@.*@"))
         {
+            // If level == 0, it is a top-level record in the form of (Level, Xref (Value), Tag).
+            // Example: "0 @I1234567890@ INDI".
             tag = thirdSegment;
             var xref = Regex.Match(secondSegment, @"@.*@").Value;
             value = xref;
         }
         else
         {
+            // If level != 0, it is a substructure in the form of (Level, Tag, and Value).
+            // Example: "1 NAME John /Doe/".
             tag = secondSegment;
             value = thirdSegment;
         }
@@ -63,6 +72,9 @@ public class GedcomLine
         return ToString(0);
     }
 
+    // This will not produce a valid Gedcom line if indentLevel is > 0 because it adds 
+    // leading whitespace, which is invalid in The Gedcom Standard 5.1.1. It displays
+    // the gedcom in a human-readable format.
     public string ToString(int indentLevel)
     {
         var displayLine = new StringBuilder();

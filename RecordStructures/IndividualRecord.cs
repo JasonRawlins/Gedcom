@@ -25,6 +25,7 @@ public class IndividualRecord : RecordStructureBase
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public string PermanentRecordFileNumber => _(C.RFN);
     public List<PersonalNameStructure> PersonalNameStructures => List<PersonalNameStructure>(C.NAME);
+    public string FullName => PersonalNameStructures[0].NamePersonal;
     public string RestrictionNotice => _(C.RESN);
     public string SexValue => _(C.SEX);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);

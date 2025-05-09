@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Gedcom": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\amorm\\source\\repos\\Gedcom\\bin\\Debug\\net8.0\\gedcom \r\n-i \"C:\\temp\\Gedcom.NET\\Resources\\DeveloperTree.ged\" \r\n-o \"C:\\temp\\Gedcom.NET\\Resources\\cli-output.json\" \r\n-t INDI\r\n-l"
+    }
+  }
+}

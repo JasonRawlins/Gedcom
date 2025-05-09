@@ -10,7 +10,6 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
     public IndividualEventStructure() { }
     public IndividualEventStructure(Record record) : base(record) { }
     public ChildToFamilyLink ChildToFamilyLink => First<ChildToFamilyLink>(C.FAMC);
-
     public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
     public string AgeAtEvent => _(C.AGE);
     public string CauseOfEvent => _(C.CAUS);
