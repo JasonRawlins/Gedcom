@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Gedcom;
 
-internal class Exporter
+public class Exporter
 {
     private Options Options { get; set; }
     private Gedcom Gedcom { get; set; }
@@ -14,16 +14,17 @@ internal class Exporter
         Options = options ?? new Options();
     }
 
-    internal void ExportGedJson()
+    public string GedcomJson()
     {
         if (Options.Format.ToUpper().Equals(C.JSON))
         {
-            var gedcomJson = JsonSerializer.Serialize(Gedcom, JsonSerializerOptions);
-            WriteAllText(gedcomJson);
+            return JsonSerializer.Serialize(Gedcom, JsonSerializerOptions);
         }
+
+        return "";
     }
 
-    internal void ExportIndividualRecords()
+    public string IndividualRecordsJson()
     {
         if (string.IsNullOrEmpty(Options.Xref))
         {
@@ -42,8 +43,7 @@ internal class Exporter
                 }
 
                 var individualRecordsJson = JsonSerializer.Serialize(individualRecords, JsonSerializerOptions);
-                Console.Write(individualRecordsJson);
-                WriteAllText(individualRecordsJson);
+                return individualRecordsJson;
             }
         }
         else
@@ -51,11 +51,13 @@ internal class Exporter
             // If an xref is defined, export that individualRecord.
             var individualRecord = Gedcom.GetIndividualRecord(Options.Xref, Options.Query);
             var individualRecordJson = JsonSerializer.Serialize(individualRecord, JsonSerializerOptions);
-            WriteAllText(individualRecordJson);
+            return individualRecordJson;
         }
+
+        return "";
     }
 
-    internal void ExportGedcomList()
+    public string GedcomListJson()
     {
         var recordJson = "";
 
@@ -71,22 +73,12 @@ internal class Exporter
             recordJson = JsonSerializer.Serialize(sourceRecordGedcomList, JsonSerializerOptions);
         }
 
-        WriteAllText(recordJson);
+        return recordJson;
     }
 
-    internal void ExportSourceRecords()
-    {
-        var sourceRecordJson = JsonSerializer.Serialize(Gedcom.GetSourceRecords(), JsonSerializerOptions);
-        WriteAllText(sourceRecordJson);
-    }
+    public string SourceRecordsJson() => JsonSerializer.Serialize(Gedcom.GetSourceRecords(), JsonSerializerOptions);
 
-    private void WriteAllText(string recordJson)
-    {
-        Console.WriteLine(recordJson);
-        File.WriteAllText(Options.OutputFilePath, recordJson);
-    }
-
-    internal static JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions
+    public static JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         WriteIndented = true,
@@ -94,7 +86,7 @@ internal class Exporter
     };
 }
 
-internal class GedcomListItem
+public class GedcomListItem
 {
     public GedcomListItem(string xref, string value)
     {

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gedcom", "Gedcom.csproj", "{EFB04AE0-2B2D-45BE-BF6B-7220803BF411}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GedcomTests", "..\GedcomTests\GedcomTests.csproj", "{D0ABF573-10C6-43C2-A2B9-0EAADE03FC90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{EFB04AE0-2B2D-45BE-BF6B-7220803BF411}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFB04AE0-2B2D-45BE-BF6B-7220803BF411}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFB04AE0-2B2D-45BE-BF6B-7220803BF411}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0ABF573-10C6-43C2-A2B9-0EAADE03FC90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0ABF573-10C6-43C2-A2B9-0EAADE03FC90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0ABF573-10C6-43C2-A2B9-0EAADE03FC90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0ABF573-10C6-43C2-A2B9-0EAADE03FC90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {24C393C1-52E7-45E3-8798-C699A6CB896A}
 	EndGlobalSection
 EndGlobal

@@ -3,6 +3,8 @@ using Gedcom;
 
 public class Program
 {
+    private static Options Options { get; set; } = new Options();
+
     static void Main(string[] args)
     {
         Parser.Default.ParseArguments<Options>(args)
@@ -14,36 +16,38 @@ public class Program
 
     static void RunOptions(Options options)
     {
-        if (options.ArgumentErrors.Count > 0)
+        Options = options;
+
+        if (Options.ArgumentErrors.Count > 0)
         {
-            options.ArgumentErrors.ForEach(ae => Console.WriteLine(ae));
+            Options.ArgumentErrors.ForEach(ae => Console.WriteLine(ae));
             return;
         }
 
-        var gedcom = CreateGedcom(options.InputFilePath);
-        var exporter = new Exporter(gedcom, options);
+        var gedcom = CreateGedcom(Options.InputFilePath);
+        var exporter = new Exporter(gedcom, Options);
 
-        if (options.RecordType.ToUpper().Equals(C.GEDC))
+        if (Options.RecordType.ToUpper().Equals(C.GEDC))
         {
-            exporter.ExportGedJson();
+            WriteAllText(exporter.GedcomJson());
             return;
         }
 
-        if (options.List)
+        if (Options.List)
         {
-            exporter.ExportGedcomList();
+            WriteAllText(exporter.GedcomListJson());
             return;
         }
 
-        if (options.RecordType.ToUpper().Equals(C.INDI))
+        if (Options.RecordType.ToUpper().Equals(C.INDI))
         {
-            exporter.ExportIndividualRecords();
+            WriteAllText(exporter.IndividualRecordsJson());
             return;
         }
 
-        if (options.RecordType.ToUpper().Equals(C.SOUR))
+        if (Options.RecordType.ToUpper().Equals(C.SOUR))
         {
-            exporter.ExportSourceRecords();
+            WriteAllText(exporter.SourceRecordsJson());
             return;
         }
     }
@@ -53,6 +57,12 @@ public class Program
         var gedFileLines = File.ReadAllLines(gedFullName);
         var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
         return new Gedcom.Gedcom(gedcomLines);
+    }
+    
+    private static void WriteAllText(string recordJson)
+    {
+        Console.WriteLine(recordJson);
+        File.WriteAllText(Options.OutputFilePath, recordJson);
     }
 
     static void HandleParseError(IEnumerable<Error> errors)
