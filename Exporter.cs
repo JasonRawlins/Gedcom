@@ -8,6 +8,7 @@ public class Exporter
 {
     private Options Options { get; set; }
     private Gedcom Gedcom { get; set; }
+
     public Exporter(Gedcom gedcom, Options options)
     {
         Gedcom = gedcom;

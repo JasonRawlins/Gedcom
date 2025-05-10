@@ -11,7 +11,7 @@ public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
     public PersonalNameStructure(Record record) : base(record) { }
 
     public string Given => _(C.GIVN);
-    public string NamePersonal => Record.Value;
+    public string NamePersonal => Record.Value; // The complete name, (e.g. John /Doe/)
     public NameVariation NamePhoneticVariation => First<NameVariation>(C.FONE);
     public string NamePrefix => _(C.NPFX);
     public string NameSuffix => _(C.NSFX);

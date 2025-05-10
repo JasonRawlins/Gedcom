@@ -1,12 +1,13 @@
 ﻿namespace Gedcom;
 
 /*
- * All RecordStructure classes are serialized as a GedcomJson object.
- * This allows some properites to be marked as null when a certain condition is met. For example,
- * when a list has no items in it we don't want to return the empty array, we want to make it
- * null. That way the property can be ignored later during json serialization. The reason I
- * did this is because most of the entire gedcom object graph doesn't contain any data. And by 
- * most, I mean 90%. The front end will have to handle these missing properties. 
+ * All RecordStructure classes are serialized as GedcomJson objects. This allows 
+ * some properites to be marked as null when a certain condition is met. For example,
+ * when a list has no items in it we don't want to return the empty array, we want to
+ * make it null. That way the property can be ignored later during json serialization. 
+ * The reason I did this is because most of the gedcom object graph doesn't contain 
+ * any data. And by most, I mean 90%. The front end will have to handle these missing 
+ * properties. 
  */
 internal class GedcomJson
 {
