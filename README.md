@@ -1,14 +1,12 @@
 # Gedcom
-A program to manage Gedcom Standard 5.5.1 files.
-
-Gedcom.NET is a tool to explore and transform Gedcom files (.ged). Gedcom files are the default format used 
-on genealogy sites like Ancestry and FamilySearch to store genealogy information. This tool expects a 
-well-formed ged file and I have only tested it on trees exported from Ancestry. 
+Gedcom.NET is a tool to query and transform Gedcom Standard 5.5.1 files (ged). Gedcom files are the default
+format used on genealogy sites like Ancestry and FamilySearch to store genealogy information.
 
 I started this because I wanted to search the data in ged files in an unstructured way. I was doing raw text 
 searches through a ged file and found some interesting things right away. Then I got an idea for a fun
 genealogy website, but I would need the Gedcom data as json. There didn't seem to be anything that did that. 
-I didn't look too hard, actually, I just wanted an excuse to write a simple Gedcom parser. 
+I didn't look too hard, actually, I just wanted an excuse to write a simple Gedcom parser. This tool expects a 
+well-formed ged file and I have only tested it on trees exported from Ancestry. 
 
 If you are a data structure nerd, you might get a kick out of the Gedcom Standard 5.5.1. They released it in
 the 1980s and now that I understand it, I think it was pretty clever. I've integrated the documentation with
@@ -18,7 +16,7 @@ standard.
 
 Here are the goals of Gedcom.NET:
 
-* A tool to explore the raw data in ged files.
+* A tool to explore the raw data in gedcom files.
 * Export to multiple file formats, starting with json.
 * Easy-to-use command line tool to query and transform ged files.
 * Provide a human-readable abstraction of the standard in the code.
@@ -38,7 +36,7 @@ contains a level, a tag, and a value. Here is an example of an INDI (Individual)
 
 Each Gedcom line starts with a level, followed by a space, then a tag and value. In a 
 well-formed Gedcom file, leading whitespace is not allowed, but I'll be indenting the data 
-to make it more readable in this readme. The amount of indentation is determined by the level 
+to make it more readable. The amount of indentation is determined by the level 
 of the line. For example, here is the formatted individual record (INDI):
 
 0 @I72800176@ INDI
@@ -73,7 +71,7 @@ INDI record above has two sub records: NAME and SEX.
 	1 NAME John /Doe/
 	1 SEX M
 
-The NAME substructure then has two sub records of its own: GIVN and SURN.
+The NAME substructure then has two subrecords of its own: GIVN and SURN.
 1 NAME John /Doe/
 	2 GIVN John
 	2 SURN Doe
@@ -93,10 +91,10 @@ For example, here is a more complicated INDI (Individual record).
 		2 DATE 31 Dec 1999
 		2 PLAC San Diego, California, USA
 
-There are five distinct records here.
+There are five records here:
 1. The INDI record itself. 
-2. The INDI record has four sub records: NAME, SEX, FAMC, and BIRT.
-3. The NAME record has three sub records: GIVN, SURN, and SOUR.
+2. The INDI record has four subrecords: NAME, SEX, FAMC, and BIRT.
+3. The NAME record has three subrecords: GIVN, SURN, and SOUR.
 4. The SEX record has one sub record: SOUR.
 5. The FAMC record has no sub records. 
 6. The BIRT record has two sub records: DATE, PLAC
@@ -133,7 +131,7 @@ This results in a very weakly-typed data structure. Empty strings, nulls, and un
 are all common and must be handled.
 
 The next most primitive class in Gedcom.NET is a Record. A record contains any number of parsed 
-Gedcom lines. It has three properties: Level, Tag, Value. It also contains a child Record structure 
+Gedcom lines. It has three properties: Level, Tag, Value. It also contains a list of child records 
 that contains the Gedcom lines for all of its substructures. Using the previous INDI (Individual) 
 record example:
 
@@ -148,10 +146,10 @@ a Record property that contains NAME and SEX. The second line has a level of 1, 
 and a value of "John /Doe/", etc., Here is the Record class: 
 
 class Record {
-	int Level { get; }
-	string Tag { get; }
-	string Value { get; }
-	List<Record> Records { get; }
+	int Level;
+	string Tag;
+	string Value;
+	List<Record> Records;
 }
 
 Actually, that's pretty much it. Everything else is tree manipulation, almost all of which is done 
@@ -164,7 +162,7 @@ Here are the query functions in the RecordStructureBase class.
 
 class RecordStructureBase
 {    
-    string _(string tag); // The method "_" finds a child record value by tag name. 
+    string _(string tag); // The "_" method finds the value of a child record by tag name. 
     Record First(string tag);
     List<Record> List(Func<Record, bool> predicate);
     T First<T>(string tag);
@@ -181,11 +179,10 @@ class PersonalNameStructure : RecordStructureBase
     NameVariation NamePhoneticVariation => First<NameVariation>(C.FONE);
 }
 
-Notice that the properties of the RecordStructureBase classes find a sub record's value using 
+Notice that the properties of the RecordStructureBase classes find a subrecord's value using 
 tags. I've named all C# properties after their name in the The Gedcom Standard 5.1.1. For 
 example, C.FONE in C.cs has a comment next to it: <NAME_PHONETIC_VARIATION>. I've named the 
 property PersonalNameStructure.NamePhoneticVariation after this comment. I think properties 
 are named plainly enough that they don't need much more explanation.
-
 
 **Command line reference**

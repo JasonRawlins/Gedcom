@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.1.1 documentation is at the end of this file.
+
 // Many dates in a ged file are missing or oddly formatted, or you may only have
 // part of the date e.g. "Mar 1889" (only month and year), "1943" (only year)
 // It may also have arbitrary text in it such as "Spring 1980".
@@ -17,7 +18,7 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
     public string DateValue => Record.Value;
     public int Day { get; set; }
     
-    // Returns the GedcomDate in Ancestry format: dd MMM yyyy e.g. "4 Aug 1983".
+    // Returns the GedcomDate in Ancestry format: d MMM yyyy (e.g. "4 Aug 1983").
     public string DayMonthYear
     {
         get
@@ -31,13 +32,13 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
 
             if (Month > 0)
             {
-                if (Day > 0) { stringBuilder.Append(" "); }
+                if (Day > 0) { stringBuilder.Append(' '); }
                 stringBuilder.Append(MonthName);
             }
 
             if (Year > 0)
             {
-                if (Month > 0) { stringBuilder.Append(" "); }
+                if (Month > 0) { stringBuilder.Append(' '); }
                 stringBuilder.Append(Year);
             }
 
@@ -50,11 +51,7 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
     public int Year { get; set; }
 
 
-    // Sorts by year, then month, then day. Remember that many dates may not parse
-    // correctly with DateTime.Parse. For example, if the date doesn't have a day,
-    // DateTime.Parse will actually succeed but the day will be set to 1. That's
-    // no bueno because it is a false date. That's why I have separated out day, month
-    // and year in this class. 
+    // Sorts by year, then month, then day.
     public int CompareTo(GedcomDate? other)
     {
         if (other == null) return 1;
@@ -68,6 +65,7 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
 
         return Day.CompareTo(other.Day);
     }
+
     private static int GetMonthNumber(string monthName)
     {
         return monthName.ToUpper() switch
@@ -98,6 +96,7 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
             _ => 0
         };
     }
+
     private static bool IsMonth(string possibleMonthName)
     {
         var monthNameVariations = new string[]
@@ -108,6 +107,11 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
 
         return monthNameVariations.Contains(possibleMonthName.ToUpper());
     }
+
+    // Many dates may not parse correctly with DateTime.Parse(). For example, if the date
+    // doesn't have a day, DateTime.Parse() will actually succeed but the day will be set
+    // to 1. That's no bueno because it is a false date. That's why I have separated out day,
+    // month and year in this class. 
     public static GedcomDate Parse(string date, string time = "")
     {
         // Dynamically constructing a record like this is pretty sketchy. Make sure it's a valid use case.
@@ -133,7 +137,6 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
         }
 
         // The date cannot be parsed by DateTime.Parse() at this point and needs custom parsing.
-
 
         foreach (var datePart in dateParts)
         {

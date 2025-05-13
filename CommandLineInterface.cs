@@ -43,8 +43,13 @@ public class Options
 
             if (isValidXref && !hasRecordType)
             {
-                argumentErrors.Add("If an xref is specified, then a record type must also be specified.");
+                // It looks like Ancestry is the one that prepends a letter to the xrefs based on 
+                // type, like "I" for INDI xrefs ("@I234@"). This is not part of the standard.
+                // See comment below on xref_ID for more details.
+                argumentErrors.Add("If an xref is specified, then a record type must also be specified. (e.g. FAM, INDI, OBJE, NOTE, REPO, SOUR, SUBM)");
             }
+
+            
 
             if (!string.IsNullOrEmpty(Xref))
             {
@@ -54,9 +59,9 @@ public class Options
                 }
             }
 
-            if (List && !string.IsNullOrEmpty(Xref))
+            if (List && !string.IsNullOrEmpty(RecordType))
             {
-                argumentErrors.Add("If -list is specified, -xref cannot be.");
+                argumentErrors.Add("If -list is specified, -type must also be specified.");
             }
 
             var acceptedFormats = new string[] { C.GEDC, C.JSON };
@@ -70,3 +75,15 @@ public class Options
         }
     }
 }
+
+/*
+The Gedcom Standard 5.1.1. p. 17.
+
+xref_ID:=
+    (See pointer, page 16)
+    The xref_ID is formed by any arbitrary combination of characters from the pointer_char set.
+    The first character must be an alpha or a digit. The xref_ID is not retained in the receiving
+    system, and it may therefore be formed from any convenient combination of identifiers from the
+    sending system. No meaning is attributed by the receiver to any part of the xref_ID, other than its
+    unique association with the associated record. The use of the colon (:) character is also reserved.
+*/
