@@ -14,7 +14,7 @@ the code for easy reference. I can't imagine too many people are going to be int
 that are, I want it to be a tool to learn Gedcom 5.5.1 so that 3rd-party development is consistent with the 
 standard.
 
-Here are the goals of Gedcom.NET:
+# Goals of Gedcom.NET
 
 * A tool to explore the raw data in gedcom files.
 * Export to multiple file formats, starting with json.
@@ -23,30 +23,35 @@ Here are the goals of Gedcom.NET:
 * A code base that is integrated with the Gedcom documentation.
 * Readonly for now.
 
-**Gedcom structure**
+## Gedcom structure
 Gedcom files are quite simple. The most basic data structure is a Gedcom line. A line 
 contains a level, a tag, and a value. Here is an example of an INDI (Individual) record:
 
+```
 0 @I72800176@ INDI
 1 NAME John /Doe/
 2 GIVN John
 2 SURN Doe
 2 SOUR @S983746243@
 1 SEX M
+```
 
 Each Gedcom line starts with a level, followed by a space, then a tag and value. In a 
 well-formed Gedcom file, leading whitespace is not allowed, but I'll be indenting the data 
 to make it more readable. The amount of indentation is determined by the level 
 of the line. For example, here is the formatted individual record (INDI):
 
+```
 0 @I72800176@ INDI
 	1 NAME John /Doe/
 		2 GIVN John
 		2 SURN Doe
 	1 SEX M
+```
 
 Notice each line is indented by an amount equal to (Level * indent). 
 
+## Level 0 records
 A Gedcom line with a level of 0 is known as a record. There are seven record tags:
 
 * FAM (Family)
@@ -67,18 +72,23 @@ a number and then surrounded by @ signs. Here are some examples:
 Each record can have any number of sub records, which define its properties. For example, the 
 INDI record above has two sub records: NAME and SEX.
 
+```
 0 @I72800176@ INDI
 	1 NAME John /Doe/
 	1 SEX M
+```
 
 The NAME substructure then has two subrecords of its own: GIVN and SURN.
+```
 1 NAME John /Doe/
 	2 GIVN John
 	2 SURN Doe
+```
 
 This creates a tree structure that can be used to build up any number of arbitrary objects. 
 For example, here is a more complicated INDI (Individual record).
 
+```
 0 @I72800176@ INDI
 	1 NAME John /Doe/
 		2 GIVN John
@@ -90,6 +100,7 @@ For example, here is a more complicated INDI (Individual record).
 	1 BIRT
 		2 DATE 31 Dec 1999
 		2 PLAC San Diego, California, USA
+```
 
 There are five records here:
 1. The INDI record itself. 
@@ -101,6 +112,7 @@ There are five records here:
 
 An object-oriented representation of this data might look something like this: 
 
+```
 class INDI {
 	NAME Name;
 	SEX Sex { get; set; }
@@ -126,31 +138,37 @@ public class BIRT {
 	public string DATE;
 	public string PLAC; // Place
 }
+```
 
 This results in a very weakly-typed data structure. Empty strings, nulls, and undefined properties 
 are all common and must be handled.
 
+## Gedcom Record 
 The next most primitive class in Gedcom.NET is a Record. A record contains any number of parsed 
 Gedcom lines. It has three properties: Level, Tag, Value. It also contains a list of child records 
 that contains the Gedcom lines for all of its substructures. Using the previous INDI (Individual) 
 record example:
 
+```
 0 @I72800176@ INDI
 	1 NAME John /Doe/
 		2 GIVN John
 		2 SURN Doe
 	1 SEX M
+```
 
 The first line has a level of "0", a tag of "INDI", and a value of "@I72800176@". It also has 
 a Record property that contains NAME and SEX. The second line has a level of 1, a tag of "NAME", 
 and a value of "John /Doe/", etc., Here is the Record class: 
 
+```
 class Record {
 	int Level;
 	string Tag;
 	string Value;
 	List<Record> Records;
 }
+```
 
 Actually, that's pretty much it. Everything else is tree manipulation, almost all of which is done 
 in the RecordBaseStructure base class. It's pretty simple and every other record inherits from it. 
@@ -160,6 +178,7 @@ that use it.
 
 Here are the query functions in the RecordStructureBase class.
 
+```
 class RecordStructureBase
 {    
     string _(string tag); // The "_" method finds the value of a child record by tag name. 
@@ -168,9 +187,11 @@ class RecordStructureBase
     T First<T>(string tag);
     List<T> List<T>(string tag);
 }
+```
 
 Here is an example of how these functions are used in the PersonalNameStructure subrecord:
 
+```
 class PersonalNameStructure : RecordStructureBase
 {
     string Given => _(C.GIVN);
@@ -178,6 +199,7 @@ class PersonalNameStructure : RecordStructureBase
     string NamePersonal => Record.Value;
     NameVariation NamePhoneticVariation => First<NameVariation>(C.FONE);
 }
+```
 
 Notice that the properties of the RecordStructureBase classes find a subrecord's value using 
 tags. I've named all C# properties after their name in the The Gedcom Standard 5.1.1. For 
