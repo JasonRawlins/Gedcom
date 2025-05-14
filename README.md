@@ -43,10 +43,10 @@ of the line. For example, here is the formatted individual record (INDI):
 
 ```
 0 @I72800176@ INDI
-	1 NAME John /Doe/
-		2 GIVN John
-		2 SURN Doe
-	1 SEX M
+    1 NAME John /Doe/
+        2 GIVN John
+        2 SURN Doe
+    1 SEX M
 ```
 
 Notice each line is indented by an amount equal to (Level * indent). 
@@ -74,15 +74,15 @@ INDI record above has two sub records: NAME and SEX.
 
 ```
 0 @I72800176@ INDI
-	1 NAME John /Doe/
-	1 SEX M
+    1 NAME John /Doe/
+    1 SEX M
 ```
 
 The NAME substructure then has two subrecords of its own: GIVN and SURN.
 ```
 1 NAME John /Doe/
-	2 GIVN John
-	2 SURN Doe
+    2 GIVN John
+    2 SURN Doe
 ```
 
 This creates a tree structure that can be used to build up any number of arbitrary objects. 
@@ -90,16 +90,16 @@ For example, here is a more complicated INDI (Individual record).
 
 ```
 0 @I72800176@ INDI
-	1 NAME John /Doe/
-		2 GIVN John
-		2 SURN Doe
-		2 SOUR @S914715036@
-	1 SEX M
-		2 SOUR @S914079447@
-	1 FAMC @F2078@
-	1 BIRT
-		2 DATE 31 Dec 1999
-		2 PLAC San Diego, California, USA
+    1 NAME John /Doe/
+        2 GIVN John
+        2 SURN Doe
+        2 SOUR @S914715036@
+    1 SEX M
+        2 SOUR @S914079447@
+    1 FAMC @F2078@
+    1 BIRT
+        2 DATE 31 Dec 1999
+        2 PLAC San Diego, California, USA
 ```
 
 There are five records here:
@@ -114,29 +114,29 @@ An object-oriented representation of this data might look something like this:
 
 ```
 class INDI {
-	NAME Name;
-	SEX Sex { get; set; }
-	FAMC ChildToFamilyLink { get; set;}
-	BIRT Birth { get; set; }
+    NAME Name;
+    SEX Sex { get; set; }
+    FAMC ChildToFamilyLink { get; set;}
+    BIRT Birth { get; set; }
 }
 
 class NAME {
-	string GIVN; // Given
-	string SURN; // Surname
-	string SOUR; // Source
+    string GIVN; // Given
+    string SURN; // Surname
+    string SOUR; // Source
 }
 
 class SEX {
-	string SOUR; // Source
+    string SOUR; // Source
 }
 
 class FAMC { 
-	// No properties, but still has a value. More on that later.
+    // No properties, but still has a value. More on that later.
 }
 
 public class BIRT {
-	public string DATE;
-	public string PLAC; // Place
+    public string DATE;
+    public string PLAC; // Place
 }
 ```
 
@@ -151,10 +151,10 @@ record example:
 
 ```
 0 @I72800176@ INDI
-	1 NAME John /Doe/
-		2 GIVN John
-		2 SURN Doe
-	1 SEX M
+    1 NAME John /Doe/
+        2 GIVN John
+        2 SURN Doe
+    1 SEX M
 ```
 
 The first line has a level of "0", a tag of "INDI", and a value of "@I72800176@". It also has 
@@ -163,10 +163,10 @@ and a value of "John /Doe/", etc., Here is the Record class:
 
 ```
 class Record {
-	int Level;
-	string Tag;
-	string Value;
-	List<Record> Records;
+    int Level;
+    string Tag;
+    string Value;
+    List<Record> Records;
 }
 ```
 
