@@ -1,4 +1,4 @@
-# Gedcom
+# Gedcom.NET
 Gedcom.NET is a tool to query and transform Gedcom Standard 5.5.1 files (ged). Gedcom files are the default
 format used on genealogy sites like Ancestry and FamilySearch to store genealogy information.
 
@@ -69,8 +69,8 @@ a number and then surrounded by @ signs. Here are some examples:
 * Individual: @I93847628@
 * Repository: @R99271728@
 
-Each record can have any number of sub records, which define its properties. For example, the 
-INDI record above has two sub records: NAME and SEX.
+Each record can have any number of subrecords, which define its properties. For example, the 
+INDI record above has two subrecords: NAME and SEX.
 
 ```
 0 @I72800176@ INDI
@@ -102,13 +102,13 @@ For example, here is a more complicated INDI (Individual record).
         2 PLAC San Diego, California, USA
 ```
 
-There are five records here:
+There are several records here:
 1. The INDI record itself. 
 2. The INDI record has four subrecords: NAME, SEX, FAMC, and BIRT.
 3. The NAME record has three subrecords: GIVN, SURN, and SOUR.
-4. The SEX record has one sub record: SOUR.
-5. The FAMC record has no sub records. 
-6. The BIRT record has two sub records: DATE, PLAC
+4. The SEX record has one subrecord: SOUR.
+5. The FAMC record has no subrecords. 
+6. The BIRT record has two subrecords: DATE, PLAC
 
 An object-oriented representation of this data might look something like this: 
 
