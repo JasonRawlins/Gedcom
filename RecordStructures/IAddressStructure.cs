@@ -9,7 +9,7 @@ public interface IAddressStructure
     List<string> PhoneNumbers { get; }
 }
 
-#region ADDRESS_STRUCTURE p. 
+#region ADDRESS_STRUCTURE p. 31.
 /* 
 
 ADDRESS_STRUCTURE:=

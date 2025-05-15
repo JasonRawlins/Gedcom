@@ -10,8 +10,8 @@ public class NoteStructure : RecordStructureBase
     public NoteStructure() : base() { }
     public NoteStructure(Record record) : base(record) { }
 
-    // A NoteStructure may only have a value. However, the max length of a line is
-    // 255 characters. If the value is greater than 255 characters, it may also have
+    // A NoteStructure might only have a value. However, the max length of that value is
+    // 255 characters. If the value is greater than 255 characters, the record may also have
     // the sub records CONC (Concatenate) or CONT (Continue). The Value, CONC, and CONT
     // values must be merged together to get the full text for a NoteStructure.
     public string Text

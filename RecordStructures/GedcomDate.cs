@@ -108,8 +108,8 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
     }
 
     // Many dates may not parse correctly with DateTime.Parse(). For example, if the date
-    // doesn't have a day, DateTime.Parse() will actually succeed but the day will be set
-    // to 1. That's no bueno because it is a false date. That's why I have separated out day,
+    // only has a month and year, DateTime.Parse() will actually succeed but the day will be set
+    // to 1. That's is invalid because it is a false date. That's why I have separated out day,
     // month and year in this class. 
     public static GedcomDate Parse(string date, string time = "")
     {
