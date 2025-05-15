@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -17,11 +16,13 @@ public class FamilyEventStructure : RecordStructureBase
 
 internal class FamilyEventStructureJsonConverter : JsonConverter<FamilyEventStructure>
 {
-    public override FamilyEventStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, FamilyEventStructure familyEventStructure, JsonSerializerOptions options)
+    public override FamilyEventStructure? ReadJson(JsonReader reader, Type objectType, FamilyEventStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, FamilyEventStructure? familyEventStructure, JsonSerializer serializer)
     {
-        var familyEventStructureJson = new FamilyEventStructureJson(familyEventStructure);
-        JsonSerializer.Serialize(writer, familyEventStructureJson, familyEventStructureJson.GetType(), options);
+        if (familyEventStructure == null) throw new ArgumentNullException(nameof(familyEventStructure));
+
+        serializer.Serialize(writer, new FamilyEventStructureJson(familyEventStructure));
     }
 }
 

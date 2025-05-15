@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -19,11 +18,13 @@ public class NoteRecord : RecordStructureBase
 
 internal class NoteRecordJsonConverter : JsonConverter<NoteRecord>
 {
-    public override NoteRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, NoteRecord noteRecord, JsonSerializerOptions options)
+    public override NoteRecord? ReadJson(JsonReader reader, Type objectType, NoteRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, NoteRecord? noteRecord, JsonSerializer serializer)
     {
-        var noteRecordJson = new NoteRecordJson(noteRecord);
-        JsonSerializer.Serialize(writer, noteRecordJson, noteRecordJson.GetType(), options);
+        if (noteRecord == null) throw new ArgumentNullException(nameof(noteRecord));
+
+        serializer.Serialize(writer, new NoteRecordJson(noteRecord));
     }
 }
 

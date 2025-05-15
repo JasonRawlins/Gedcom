@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -22,11 +21,13 @@ public class LdsIndividualOrdinance : RecordStructureBase
 
 internal class LdsIndividualOrdinanceJsonConverter : JsonConverter<LdsIndividualOrdinance>
 {
-    public override LdsIndividualOrdinance? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, LdsIndividualOrdinance ldsIndividualOrdinance, JsonSerializerOptions options)
+    public override LdsIndividualOrdinance? ReadJson(JsonReader reader, Type objectType, LdsIndividualOrdinance? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, LdsIndividualOrdinance? ldsIndividualOrdinance, JsonSerializer serializer)
     {
-        var ldsIndividualOrdinanceJson = new LdsIndividualOrdinanceJson(ldsIndividualOrdinance);
-        JsonSerializer.Serialize(writer, ldsIndividualOrdinanceJson, ldsIndividualOrdinanceJson.GetType(), options);
+        if (ldsIndividualOrdinance  == null) throw new ArgumentNullException(nameof(ldsIndividualOrdinance));
+
+        serializer.Serialize(writer, new LdsIndividualOrdinanceJson(ldsIndividualOrdinance));
     }
 }
 

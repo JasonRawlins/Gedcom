@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -17,11 +16,13 @@ public class IndividualAttribute : RecordStructureBase
 
 internal class IndividualAttributeJsonConverter : JsonConverter<IndividualAttribute>
 {
-    public override IndividualAttribute? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, IndividualAttribute individualAttribute, JsonSerializerOptions options)
+    public override IndividualAttribute? ReadJson(JsonReader reader, Type objectType, IndividualAttribute? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, IndividualAttribute? individualAttribute, JsonSerializer serializer)
     {
-        var individualAttributeJson = new IndividualAttributeJson(individualAttribute);
-        JsonSerializer.Serialize(writer, individualAttributeJson, individualAttributeJson.GetType(), options);
+        if (individualAttribute == null) throw new ArgumentNullException(nameof(individualAttribute));
+
+        serializer.Serialize(writer, new IndividualAttributeJson(individualAttribute));
     }
 }
 

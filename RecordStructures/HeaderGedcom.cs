@@ -1,10 +1,9 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.1.1 documentation is at the end of this file.
-[JsonConverter(typeof(GEDCJsonConverter))]
+[JsonConverter(typeof(HeaderGedcomJsonConverter))]
 public class HeaderGedcom : RecordStructureBase
 {
     public HeaderGedcom() : base() { }
@@ -16,19 +15,21 @@ public class HeaderGedcom : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {VersionNumber}";
 }
 
-internal class GEDCJsonConverter : JsonConverter<HeaderGedcom>
+internal class HeaderGedcomJsonConverter : JsonConverter<HeaderGedcom>
 {
-    public override HeaderGedcom? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, HeaderGedcom gedc, JsonSerializerOptions options)
+    public override HeaderGedcom? ReadJson(JsonReader reader, Type objectType, HeaderGedcom? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, HeaderGedcom? headerGedcom, JsonSerializer serializer)
     {
-        var gedcJson = new GEDCJson(gedc);
-        JsonSerializer.Serialize(writer, gedcJson, gedcJson.GetType(), options);
+        if (headerGedcom == null) throw new ArgumentNullException(nameof(headerGedcom));
+
+        serializer.Serialize(writer, new HeaderGedcomJson(headerGedcom));
     }
 }
 
-internal class GEDCJson : GedcomJson
+internal class HeaderGedcomJson : GedcomJson
 {
-    public GEDCJson(HeaderGedcom gedc)
+    public HeaderGedcomJson(HeaderGedcom gedc)
     {
         GedcomForm = JsonString(gedc.GedcomForm);
         VersionNumber = JsonString(gedc.VersionNumber);

@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -17,11 +16,13 @@ public class Map : RecordStructureBase
 
 internal class MapJsonConverter : JsonConverter<Map>
 {
-    public override Map? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, Map map, JsonSerializerOptions options)
+    public override Map? ReadJson(JsonReader reader, Type objectType, Map? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, Map? map, JsonSerializer serializer)
     {
-        var mapJson = new MapJson(map);
-        JsonSerializer.Serialize(writer, mapJson, mapJson.GetType(), options);
+        if (map == null) throw new ArgumentNullException(nameof(map));
+
+        serializer.Serialize(writer, new MapJson(map));
     }
 }
 

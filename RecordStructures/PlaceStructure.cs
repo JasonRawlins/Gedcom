@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -22,11 +21,13 @@ public class PlaceStructure : RecordStructureBase
 
 internal class PlaceStructureJsonConverter : JsonConverter<PlaceStructure>
 {
-    public override PlaceStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, PlaceStructure placeStructure, JsonSerializerOptions options)
+    public override PlaceStructure? ReadJson(JsonReader reader, Type objectType, PlaceStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, PlaceStructure? placeStructure, JsonSerializer serializer)
     {
-        var placeStructureJson = new PlaceStructureJson(placeStructure);
-        JsonSerializer.Serialize(writer, placeStructureJson, placeStructureJson.GetType(), options);
+        if (placeStructure == null) throw new ArgumentNullException(nameof(placeStructure));
+
+        serializer.Serialize(writer, new PlaceStructureJson(placeStructure));
     }
 }
 

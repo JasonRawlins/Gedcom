@@ -1,5 +1,5 @@
-﻿using Gedcom.RecordStructures;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using Gedcom.RecordStructures;
 
 namespace Gedcom;
 

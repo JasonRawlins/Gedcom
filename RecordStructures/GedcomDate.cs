@@ -1,6 +1,5 @@
 ﻿using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -18,7 +17,7 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
     public string DateValue => Record.Value;
     public int Day { get; set; }
     
-    // Returns the GedcomDate in Ancestry format: d MMM yyyy (e.g. "4 Aug 1983").
+    // Returns the GedcomDate in Ancestry format: dd MMM yyyy (e.g. "4 Aug 1983").
     public string DayMonthYear
     {
         get
@@ -168,11 +167,13 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
 
 internal class GedcomDateJsonConverter : JsonConverter<GedcomDate>
 {
-    public override GedcomDate? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, GedcomDate gedcomDate, JsonSerializerOptions options)
+    public override GedcomDate? ReadJson(JsonReader reader, Type objectType, GedcomDate? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, GedcomDate? gedcomDate, JsonSerializer serializer)
     {
-        var gedcomDateJson = new GedcomDateJson(gedcomDate);
-        JsonSerializer.Serialize(writer, gedcomDateJson, gedcomDateJson.GetType(), options);
+        if (gedcomDate == null) throw new ArgumentNullException(nameof(gedcomDate));
+
+        serializer.Serialize(writer, new GedcomDateJson(gedcomDate));
     }
 }
 

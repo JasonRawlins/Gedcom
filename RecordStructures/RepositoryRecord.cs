@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -28,11 +27,13 @@ public class RepositoryRecord : RecordStructureBase, IAddressStructure
 
 internal class RepositoryRecordJsonConverter : JsonConverter<RepositoryRecord>
 {
-    public override RepositoryRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, RepositoryRecord repositoryRecord, JsonSerializerOptions options)
+    public override RepositoryRecord? ReadJson(JsonReader reader, Type objectType, RepositoryRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, RepositoryRecord? repositoryRecord, JsonSerializer serializer)
     {
-        var repositoryRecordJson = new RepositoryRecordJson(repositoryRecord);
-        JsonSerializer.Serialize(writer, repositoryRecordJson, repositoryRecordJson.GetType(), options);
+        if (repositoryRecord == null) throw new ArgumentNullException(nameof(repositoryRecord));
+
+        serializer.Serialize(writer, new RepositoryRecordJson(repositoryRecord));
     }
 }
 

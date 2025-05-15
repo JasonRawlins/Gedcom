@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -24,11 +23,13 @@ public class AddressStructure : RecordStructureBase
 
 internal class AddressStructureJsonConverter : JsonConverter<AddressStructure>
 {
-    public override AddressStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, AddressStructure addressStructure, JsonSerializerOptions options)
+    public override AddressStructure? ReadJson(JsonReader reader, Type objectType, AddressStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, AddressStructure? addressStructure, JsonSerializer serializer)
     {
-        var addressStructureJson = new AddressStructureJson(addressStructure);
-        JsonSerializer.Serialize(writer, addressStructureJson, addressStructureJson.GetType(), options);
+        if (addressStructure == null) throw new ArgumentNullException(nameof(addressStructure));
+
+        serializer.Serialize(writer, new AddressStructureJson(addressStructure));
     }
 }
 

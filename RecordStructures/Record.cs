@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -52,8 +52,7 @@ public class Record
         return false;
     }
 
-    // Gedcom.NET does not deal with null records. Instead, I've decided to use 
-    // an empty record instead of nulls for C# code.  
+    // Gedcom.NET does not deal with null records. Instead, it uses an empty record instead of nulls.  
     public static Record Empty
     {
         get

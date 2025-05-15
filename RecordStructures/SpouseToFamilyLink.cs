@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -18,11 +17,13 @@ public class SpouseToFamilyLink : RecordStructureBase
 
 internal class SpouseToFamilyLinkJsonConverter : JsonConverter<SpouseToFamilyLink>
 {
-    public override SpouseToFamilyLink? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, SpouseToFamilyLink spouseToFamilyLink, JsonSerializerOptions options)
+    public override SpouseToFamilyLink? ReadJson(JsonReader reader, Type objectType, SpouseToFamilyLink? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, SpouseToFamilyLink? spouseToFamilyLink, JsonSerializer serializer)
     {
-        var spouseToFamilyLinkJson = new SpouseToFamilyLinkJson(spouseToFamilyLink);
-        JsonSerializer.Serialize(writer, spouseToFamilyLinkJson, spouseToFamilyLinkJson.GetType(), options);
+        if (spouseToFamilyLink == null) throw new ArgumentNullException(nameof(spouseToFamilyLink));
+
+        serializer.Serialize(writer, new SpouseToFamilyLinkJson(spouseToFamilyLink));
     }
 }
 

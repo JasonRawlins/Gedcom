@@ -101,9 +101,9 @@ internal class GedcomJsonConverter : JsonConverter<Gedcom>
             
         var gedcomObject = new
         {
-            //Families = gedcom.GetFamilyRecords(),
-            //Individuals = gedcom.GetIndividualRecords(),
-            //Repositories = gedcom.GetRepositoryRecords(),
+            Families = gedcom.GetFamilyRecords(),
+            Individuals = gedcom.GetIndividualRecords(),
+            Repositories = gedcom.GetRepositoryRecords(),
             Sources = gedcom.GetSourceRecords()
         };
 

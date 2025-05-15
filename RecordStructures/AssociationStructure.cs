@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -19,11 +18,13 @@ public class AssociationStructure : RecordStructureBase
 
 internal class AssociationStructureJsonConverter : JsonConverter<AssociationStructure>
 {
-    public override AssociationStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, AssociationStructure associationStructure, JsonSerializerOptions options)
+    public override AssociationStructure? ReadJson(JsonReader reader, Type objectType, AssociationStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, AssociationStructure? associationStructure, JsonSerializer serializer)
     {
-        var associationStructureJson = new AssociationStructureJson(associationStructure);
-        JsonSerializer.Serialize(writer, associationStructureJson, associationStructureJson.GetType(), options);
+        if (associationStructure == null) throw new ArgumentNullException(nameof(associationStructure));
+
+        serializer.Serialize(writer, new AssociationStructureJson(associationStructure));
     }
 }
 

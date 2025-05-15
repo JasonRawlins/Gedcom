@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -31,11 +30,13 @@ public class FamilyRecord : RecordStructureBase
 
 internal class FamilyRecordJsonConverter : JsonConverter<FamilyRecord>
 {
-    public override FamilyRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, FamilyRecord familyRecord, JsonSerializerOptions options)
+    public override FamilyRecord? ReadJson(JsonReader reader, Type objectType, FamilyRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, FamilyRecord? familyRecord, JsonSerializer serializer)
     {
-        var familyRecordJson = new FamilyRecordJson(familyRecord);
-        JsonSerializer.Serialize(writer, familyRecordJson, familyRecordJson.GetType(), options);
+        if (familyRecord == null) throw new ArgumentNullException(nameof(familyRecord));
+
+        serializer.Serialize(writer, new FamilyRecordJson(familyRecord));
     }
 }
 

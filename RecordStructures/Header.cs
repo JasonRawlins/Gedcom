@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -28,11 +27,13 @@ public class Header : RecordStructureBase
 
 internal class HeaderJsonConverter : JsonConverter<Header>
 {
-    public override Header? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, Header header, JsonSerializerOptions options)
+    public override Header? ReadJson(JsonReader reader, Type objectType, Header? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, Header? header, JsonSerializer serializer)
     {
-        var headerJson = new HeaderJson(header);
-        JsonSerializer.Serialize(writer, headerJson, headerJson.GetType(), options);
+        if (header == null) throw new ArgumentNullException(nameof(header));
+
+        serializer.Serialize(writer, new HeaderJson(header));
     }
 }
 

@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -22,11 +21,13 @@ public class LdsSpouseSealing : RecordStructureBase
 
 internal class LdsSpouseSealingJsonConverter : JsonConverter<LdsSpouseSealing>
 {
-    public override LdsSpouseSealing? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, LdsSpouseSealing ldsSpouseSealing, JsonSerializerOptions options)
+    public override LdsSpouseSealing? ReadJson(JsonReader reader, Type objectType, LdsSpouseSealing? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, LdsSpouseSealing? ldsSpouseSealing, JsonSerializer serializer)
     {
-        var ldsSpouseSealingJson = new LdsSpouseSealingJson(ldsSpouseSealing);
-        JsonSerializer.Serialize(writer, ldsSpouseSealingJson, ldsSpouseSealingJson.GetType(), options);
+        if (ldsSpouseSealing  == null) throw new ArgumentNullException(nameof(ldsSpouseSealing));
+
+        serializer.Serialize(writer, new LdsSpouseSealingJson(ldsSpouseSealing));
     }
 }
 

@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -26,11 +25,13 @@ public class SubmissionRecord : RecordStructureBase
 
 internal class SubmissionRecordJsonConverter : JsonConverter<SubmissionRecord>
 {
-    public override SubmissionRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, SubmissionRecord submissionRecord, JsonSerializerOptions options)
+    public override SubmissionRecord? ReadJson(JsonReader reader, Type objectType, SubmissionRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, SubmissionRecord? submissionRecord, JsonSerializer serializer)
     {
-        var submissionRecordJson = new SubmissionRecordJson(submissionRecord);
-        JsonSerializer.Serialize(writer, submissionRecordJson, submissionRecordJson.GetType(), options);
+        if (submissionRecord == null) throw new ArgumentNullException(nameof(submissionRecord));
+
+        serializer.Serialize(writer, new SubmissionRecordJson(submissionRecord));
     }
 }
 

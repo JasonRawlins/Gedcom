@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -17,11 +16,13 @@ public class MultimediaFormat : RecordStructureBase
 
 internal class MultimediaFormatJsonConverter : JsonConverter<MultimediaFormat>
 {
-    public override MultimediaFormat? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, MultimediaFormat multimediaFormat, JsonSerializerOptions options)
+    public override MultimediaFormat? ReadJson(JsonReader reader, Type objectType, MultimediaFormat? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, MultimediaFormat? multimediaFormat, JsonSerializer serializer)
     {
-        var multimediaFormatJson = new MultimediaFormatJson(multimediaFormat);
-        JsonSerializer.Serialize(writer, multimediaFormatJson, multimediaFormatJson.GetType(), options);
+        if (multimediaFormat == null) throw new ArgumentNullException(nameof(multimediaFormat));
+
+        serializer.Serialize(writer, new MultimediaFormatJson(multimediaFormat));
     }
 }
 

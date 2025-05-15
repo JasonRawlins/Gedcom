@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -15,11 +14,13 @@ public class LdsOrdinanceStatus : RecordStructureBase
 
 internal class LdsOrdinanceStatusJsonConverter : JsonConverter<LdsOrdinanceStatus>
 {
-    public override LdsOrdinanceStatus? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, LdsOrdinanceStatus ldsOrdinanceStatus, JsonSerializerOptions options)
+    public override LdsOrdinanceStatus? ReadJson(JsonReader reader, Type objectType, LdsOrdinanceStatus? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, LdsOrdinanceStatus? ldsOrdinanceStatus, JsonSerializer serializer)
     {
-        var ldsOrdinanceStatusJson = new LdsOrdinanceStatusJson(ldsOrdinanceStatus);
-        JsonSerializer.Serialize(writer, ldsOrdinanceStatusJson, ldsOrdinanceStatusJson.GetType(), options);
+        if (ldsOrdinanceStatus == null) throw new ArgumentNullException(nameof(ldsOrdinanceStatus));
+
+        serializer.Serialize(writer, new LdsOrdinanceStatusJson(ldsOrdinanceStatus));
     }
 }
 

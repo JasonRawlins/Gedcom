@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -24,11 +23,13 @@ public class NameVariation : RecordStructureBase, IPersonalNamePieces
 
 internal class NameVariationJsonConverter : JsonConverter<NameVariation>
 {
-    public override NameVariation? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, NameVariation nameVariation, JsonSerializerOptions options)
+    public override NameVariation? ReadJson(JsonReader reader, Type objectType, NameVariation? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, NameVariation? nameVariation, JsonSerializer serializer)
     {
-        var nameVariationJson = new NameVariationJson(nameVariation);
-        JsonSerializer.Serialize(writer, nameVariationJson, nameVariationJson.GetType(), options);
+        if (nameVariation == null) throw new ArgumentNullException(nameof(nameVariation));
+
+        serializer.Serialize(writer, new NameVariationJson(nameVariation));
     }
 }
 

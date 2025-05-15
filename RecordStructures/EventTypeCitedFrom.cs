@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -17,11 +16,13 @@ public class EventTypeCitedFrom : RecordStructureBase
 
 internal class EventTypeCitedFromJsonConverter : JsonConverter<EventTypeCitedFrom>
 {
-    public override EventTypeCitedFrom? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, EventTypeCitedFrom eventTypeCitedFrom, JsonSerializerOptions options)
+    public override EventTypeCitedFrom? ReadJson(JsonReader reader, Type type, EventTypeCitedFrom? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, EventTypeCitedFrom? eventTypeCitedFrom, JsonSerializer serializer)
     {
-        var eventTypeCitedFromJson = new EventTypeCitedFromJson(eventTypeCitedFrom);
-        JsonSerializer.Serialize(writer, eventTypeCitedFromJson, eventTypeCitedFromJson.GetType(), options);
+        if (eventTypeCitedFrom == null) throw new ArgumentNullException(nameof(eventTypeCitedFrom));
+
+        serializer.Serialize(writer, new EventTypeCitedFromJson(eventTypeCitedFrom));
     }
 }
 
