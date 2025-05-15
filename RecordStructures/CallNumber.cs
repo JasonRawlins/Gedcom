@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -17,11 +16,13 @@ public class CallNumber : RecordStructureBase
 
 internal class CallNumberJsonConverter : JsonConverter<CallNumber>
 {
-    public override CallNumber? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, CallNumber callNumber, JsonSerializerOptions options)
+    public override CallNumber? ReadJson(JsonReader reader, Type objectType, CallNumber? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, CallNumber? callNumber, JsonSerializer serializer)
     {
-        var callNumberJson = new CallNumberJson(callNumber);
-        JsonSerializer.Serialize(writer, callNumberJson, callNumberJson.GetType(), options);
+        if (callNumber == null) throw new ArgumentNullException(nameof(callNumber));
+
+        serializer.Serialize(writer, new CallNumberJson(callNumber));
     }
 }
 

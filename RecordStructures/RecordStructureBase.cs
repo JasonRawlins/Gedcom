@@ -1,5 +1,5 @@
 ﻿using Gedcom.RecordStructures;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Gedcom;
 
@@ -13,8 +13,6 @@ public class RecordStructureBase
     internal RecordStructureBase() { }
     public RecordStructureBase(Record record) => Record = record;
     internal void SetRecord(Record record) => Record = record;
-
-    public string Xref => Record.Value;
 
     // The method "_" finds a child record value by tag name. 
     protected string _(string tag) => First(tag).Value;
@@ -42,7 +40,7 @@ public class RecordStructureBase
         dynamicRecord.SetRecord(record);
         return (T)dynamicRecord;
     }
-
+    
     public override string ToString()
     {
         if (Record.Level == 0)

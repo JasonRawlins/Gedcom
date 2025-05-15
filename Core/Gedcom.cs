@@ -1,7 +1,7 @@
-﻿using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using System.Diagnostics;
+using System.Text;
 using Gedcom.RecordStructures;
+using Newtonsoft.Json;
 
 namespace Gedcom;
 
@@ -11,9 +11,14 @@ public class Gedcom : RecordStructureBase
 {
     public Gedcom(List<GedcomLine> gedcomLines)
     {
-        // Level 0 records are the top-level records. They are FAM (Family),
-        // INDI (Individual), OBJE (Multimedia), NOTE (Note), REPO (Repository),
-        // SOUR (Source), SUBM (Submitter)
+        // Level 0 records are the top-level records. They are
+        // FAM (Family),
+        // INDI (Individual),
+        // OBJE (Multimedia),
+        // NOTE (Note),
+        // REPO (Repository),
+        // SOUR (Source),
+        // SUBM (Submitter)
         foreach (var level0Record in GetGedcomLinesForLevel(0, gedcomLines))
         {
             Record.Records.Add(new Record(level0Record));
@@ -83,46 +88,29 @@ public class Gedcom : RecordStructureBase
         return gedcomLinesAtThisLevel.Skip(1).ToList();
     }
 
-    private static string GetGedcomLinesText(Record record)
-    {
-        var gedcomLinesStringBuilder = new StringBuilder();
-        gedcomLinesStringBuilder.AppendLine(new string(' ', record.Level * 1) + record);
-
-        foreach (var recursiveRecord in record.Records)
-        {
-            gedcomLinesStringBuilder.Append(GetGedcomLinesText(recursiveRecord));
-        }
-
-        return gedcomLinesStringBuilder.ToString();
-    }
-
-    public string ToGed()
-    {
-        var gedStringBuilder = new StringBuilder();
-        foreach (var record in Record.Records)
-        {
-            gedStringBuilder.Append(GetGedcomLinesText(record));
-        }
-
-        return gedStringBuilder.ToString();
-    }
-
     public override string ToString() => $"{Header.Source.Tree.Name} ({Header.Source.Tree.AutomatedRecordId})";
 }
 
 internal class GedcomJsonConverter : JsonConverter<Gedcom>
 {
-    public override Gedcom? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, Gedcom gedcom, JsonSerializerOptions options)
-    {
-        var allIndividualRecords = gedcom.GetIndividualRecords();
+    public override Gedcom? ReadJson(JsonReader reader, Type objectType, Gedcom? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
-        var gedcomJson = new
+    public override void WriteJson(JsonWriter writer, Gedcom? gedcom, JsonSerializer serializer)
+    {
+        if (gedcom == null) throw new ArgumentNullException(nameof(gedcom));
+            
+        var gedcomObject = new
         {
-            Individuals = allIndividualRecords
+            //Families = gedcom.GetFamilyRecords(),
+            //Individuals = gedcom.GetIndividualRecords(),
+            //Repositories = gedcom.GetRepositoryRecords(),
+            Sources = gedcom.GetSourceRecords()
         };
 
-        JsonSerializer.Serialize(writer, gedcomJson, gedcomJson.GetType(), options);
+        var stopwatch = Stopwatch.StartNew();
+        serializer.Serialize(writer, gedcomObject);
+        stopwatch.Stop();
+        var elaspsedMilliseconds = stopwatch.ElapsedMilliseconds;
     }
 }
 

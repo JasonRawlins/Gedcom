@@ -1,6 +1,6 @@
 ﻿using Gedcom.RecordStructures;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace Gedcom;
 
@@ -19,7 +19,8 @@ public class Exporter
     {
         if (Options.Format.ToUpper().Equals(C.JSON))
         {
-            return JsonSerializer.Serialize(Gedcom, JsonSerializerOptions);
+            var json = JsonConvert.SerializeObject(Gedcom, JsonSettings.DefaultOptions);
+            return json;
         }
 
         return "";
@@ -43,48 +44,52 @@ public class Exporter
                     individualRecords = Gedcom.GetIndividualRecords(Options.Query);
                 }
 
-                var individualRecordsJson = JsonSerializer.Serialize(individualRecords, JsonSerializerOptions);
-                return individualRecordsJson;
+                return JsonConvert.SerializeObject(individualRecords);
             }
         }
         else
         {
             // If an xref is defined, export that individualRecord.
             var individualRecord = Gedcom.GetIndividualRecord(Options.Xref, Options.Query);
-            var individualRecordJson = JsonSerializer.Serialize(individualRecord, JsonSerializerOptions);
-            return individualRecordJson;
+            return JsonConvert.SerializeObject(individualRecord);
         }
 
         return "";
     }
 
-    public string GedcomListJson()
+    //public string GedcomListJson()
+    //{
+    //    var recordJson = "";
+
+    //    if (Options.RecordType.Equals(C.INDI))
+    //    {
+    //        var individualRecordGedcomList = Gedcom.GetIndividualRecords(Options.Query).Select(ir => new GedcomListItem(ir.Xref, ir.FullName)).ToList();
+    //        recordJson = JsonConvert.SerializeObject(individualRecordGedcomList);
+    //    }
+
+    //    if (Options.RecordType.Equals(C.SOUR))
+    //    {
+    //        var sourceRecordGedcomList = Gedcom.GetSourceRecords().Select(sr => new GedcomListItem(sr.Xref, sr.TextFromSource.Text)).ToList();
+    //        recordJson = JsonConvert.SerializeObject(sourceRecordGedcomList);
+    //    }
+
+    //    return recordJson;
+    //}
+
+    public string SourceRecordsJson()
     {
-        var recordJson = "";
+        var stopwatch = Stopwatch.StartNew();
+        var sourceRecords = Gedcom.GetSourceRecords();
+        stopwatch.Stop();
+        var ellapsedMS = stopwatch.ElapsedMilliseconds;
 
-        if (Options.RecordType.Equals(C.INDI))
-        {
-            var individualRecordGedcomList = Gedcom.GetIndividualRecords(Options.Query).Select(ir => new GedcomListItem(ir.Xref, ir.FullName)).ToList();
-            recordJson = JsonSerializer.Serialize(individualRecordGedcomList, JsonSerializerOptions);
-        }
+        stopwatch.Restart();
+        var json = JsonConvert.SerializeObject(sourceRecords);
+        stopwatch.Stop();
+        var ms = stopwatch.ElapsedMilliseconds;
 
-        if (Options.RecordType.Equals(C.SOUR))
-        {
-            var sourceRecordGedcomList = Gedcom.GetSourceRecords().Select(sr => new GedcomListItem(sr.Xref, sr.TextFromSource.Text)).ToList();
-            recordJson = JsonSerializer.Serialize(sourceRecordGedcomList, JsonSerializerOptions);
-        }
-
-        return recordJson;
+        return json;
     }
-
-    public string SourceRecordsJson() => JsonSerializer.Serialize(Gedcom.GetSourceRecords(), JsonSerializerOptions);
-
-    public static JsonSerializerOptions JsonSerializerOptions = new JsonSerializerOptions
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        WriteIndented = true,
-        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-    };
 }
 
 public class GedcomListItem

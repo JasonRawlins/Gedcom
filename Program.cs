@@ -33,11 +33,11 @@ public class Program
             return;
         }
 
-        if (Options.List)
-        {
-            WriteAllText(exporter.GedcomListJson());
-            return;
-        }
+        //if (Options.List)
+        //{
+        //    WriteAllText(exporter.GedcomListJson());
+        //    return;
+        //}
 
         if (Options.RecordType.ToUpper().Equals(C.INDI))
         {

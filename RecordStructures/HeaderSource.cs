@@ -15,6 +15,7 @@ public class HeaderSource : RecordStructureBase
     public string NameOfProduct => _(C.NAME);
     public HeaderTree Tree => First<HeaderTree>(C._TREE);
     public string Version => _(C.VERS);
+    public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {NameOfProduct}, {Version}";
 }

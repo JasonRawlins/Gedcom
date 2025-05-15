@@ -11,6 +11,7 @@ public class SpouseToFamilyLink : RecordStructureBase
     public SpouseToFamilyLink(Record record) : base(record) { }
 
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
+    public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}";
 }

@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -32,6 +31,7 @@ public class IndividualRecord : RecordStructureBase
     public List<SpouseToFamilyLink> SpouseToFamilyLinks => List<SpouseToFamilyLink>(C.FAMS);
     public string Submitter => _(C.SUBN);
     public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
+    public string Xref => Record.Value;
 
     #region Strongly-typed IndividualEventStructures
 
@@ -56,11 +56,13 @@ public class IndividualRecord : RecordStructureBase
 
 internal class IndividualRecordJsonConverter : JsonConverter<IndividualRecord>
 {
-    public override IndividualRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, IndividualRecord individualRecord, JsonSerializerOptions options)
+    public override IndividualRecord? ReadJson(JsonReader reader, Type objectType, IndividualRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, IndividualRecord? individualRecord, JsonSerializer serializer)
     {
-        var individualRecordJson = new IndividualRecordJson(individualRecord);
-        JsonSerializer.Serialize(writer, individualRecordJson, individualRecordJson.GetType(), options);
+        if (individualRecord == null) throw new ArgumentNullException(nameof(individualRecord));
+
+        serializer.Serialize(writer, new IndividualRecordJson(individualRecord));
     }
 }
 

@@ -21,6 +21,7 @@ public class RepositoryRecord : RecordStructureBase, IAddressStructure
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public List<string> PhoneNumbers => ListValues(C.PHON);
     public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(C.REFN);
+    public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {Name}";
 }

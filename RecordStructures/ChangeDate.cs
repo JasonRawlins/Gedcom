@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -18,11 +17,13 @@ public class ChangeDate : RecordStructureBase
 
 internal class ChangeDateJsonConverter : JsonConverter<ChangeDate>
 {
-    public override ChangeDate? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, ChangeDate changeDate, JsonSerializerOptions options)
+    public override ChangeDate? ReadJson(JsonReader reader, Type objectType, ChangeDate? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, ChangeDate? changeDate, JsonSerializer serializer)
     {
-        var changeDateJson = new ChangeDateJson(changeDate);
-        JsonSerializer.Serialize(writer, changeDateJson, changeDateJson.GetType(), options);
+        if (changeDate == null) throw new ArgumentNullException(nameof(changeDate));
+
+        serializer.Serialize(writer, new ChangeDateJson(changeDate));
     }
 }
 

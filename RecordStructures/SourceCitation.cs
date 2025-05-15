@@ -16,6 +16,7 @@ public class SourceCitation : RecordStructureBase
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public string WhereWithinSource => _(C.PAGE);
+    public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {WhereWithinSource}";
 }

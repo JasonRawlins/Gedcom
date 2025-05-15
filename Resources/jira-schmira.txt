@@ -1,9 +1,11 @@
-The BIRT fact in @P1@ needs sources and I need to find them in code.
-What do I do with the sources after I find them? Where is the list of sources I need to populate?
+Move DeveloperTree
 
 
 Backlog
 -------
+The BIRT fact in @P1@ needs sources and I need to find them in code.
+What do I do with the sources after I find them? Where is the list of sources I need to populate?
+
 Make a Visual Studio addon that formats .ged files. There might already be one.
 
 Make a postbuild event that removes leading spaces from FormattedDeveloperTree.ged and copies it to DeveloperTree.ged.

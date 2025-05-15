@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -20,20 +19,23 @@ public class SourceRecord : RecordStructureBase
     public NoteStructure SourceOriginator => First<NoteStructure>(C.AUTH);
     public NoteStructure SourcePublicationFacts => First<NoteStructure>(C.PUBL);
     public SourceRecordData SourceRecordData => First<SourceRecordData>(C.DATA);
-    public List<SourceRepositoryCitation> SourceRepositoryCitations => List<SourceRepositoryCitation>("");
+    public List<SourceRepositoryCitation> SourceRepositoryCitations => List<SourceRepositoryCitation>(C.REPO);
     public NoteStructure TextFromSource => First<NoteStructure>(C.TEXT);
     public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
+    public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {AutomatedRecordId}";
 }
 
 internal class SourceRecordJsonConverter : JsonConverter<SourceRecord>
 {
-    public override SourceRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, SourceRecord sourceRecord, JsonSerializerOptions options)
+    public override SourceRecord? ReadJson(JsonReader reader, Type objectType, SourceRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, SourceRecord? sourceRecord, JsonSerializer serializer)
     {
-        var sourceRecordJson = new SourceRecordJson(sourceRecord);
-        JsonSerializer.Serialize(writer, sourceRecordJson, sourceRecordJson.GetType(), options);
+        if (sourceRecord == null) throw new ArgumentNullException(nameof(sourceRecord));
+
+        serializer.Serialize(writer, new SourceRecordJson(sourceRecord));
     }
 }
 

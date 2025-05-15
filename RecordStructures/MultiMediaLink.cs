@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -13,17 +12,20 @@ public class MultimediaLink : RecordStructureBase
     public string DescriptiveTitle => _(C.TITL);
     public List<MultimediaFileReferenceNumber> MultimediaFileReferenceNumbers => List<MultimediaFileReferenceNumber>(C.FILE);
     public string SourceMediaType => _(C.MEDI);
+    public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {SourceMediaType}, {DescriptiveTitle}";
 }
 
 internal class MultimediaLinkJsonConverter : JsonConverter<MultimediaLink>
 {
-    public override MultimediaLink? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-    public override void Write(Utf8JsonWriter writer, MultimediaLink multimediaLink, JsonSerializerOptions options)
+    public override MultimediaLink? ReadJson(JsonReader reader, Type objectType, MultimediaLink? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+
+    public override void WriteJson(JsonWriter writer, MultimediaLink? multimediaLink, JsonSerializer serializer)
     {
-        var multimediaLinkJson = new MultimediaLinkJson(multimediaLink);
-        JsonSerializer.Serialize(writer, multimediaLinkJson, multimediaLinkJson.GetType(), options);
+        if (multimediaLink == null) throw new ArgumentNullException(nameof(multimediaLink));
+
+        serializer.Serialize(writer, new MultimediaLinkJson(multimediaLink));
     }
 }
 

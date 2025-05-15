@@ -14,6 +14,7 @@ public class ChildToFamilyLink : RecordStructureBase
     public string ChildLinkageStatus => _(C.STAT);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public string PedigreeLinkageType => _(C.PEDI);
+    public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {PedigreeLinkageType}";
 }
