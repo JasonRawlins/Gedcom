@@ -24,7 +24,6 @@ public class IndividualRecord : RecordStructureBase
     public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
     public string PermanentRecordFileNumber => _(C.RFN);
     public List<PersonalNameStructure> PersonalNameStructures => List<PersonalNameStructure>(C.NAME);
-    public string FullName => PersonalNameStructures[0].NamePersonal;
     public string RestrictionNotice => _(C.RESN);
     public string SexValue => _(C.SEX);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
@@ -32,6 +31,14 @@ public class IndividualRecord : RecordStructureBase
     public string Submitter => _(C.SUBN);
     public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
     public string Xref => Record.Value;
+
+    #region Convenience properties
+
+    public string FullName => $"{Given} {Surname}";
+    public string Given => $"{PersonalNameStructures[0].Given}";
+    public string Surname => $"{PersonalNameStructures[0].Surname}";
+
+    #endregion
 
     #region Strongly-typed IndividualEventStructures
 

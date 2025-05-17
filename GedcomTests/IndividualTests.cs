@@ -1,5 +1,6 @@
 ﻿using Gedcom;
-using System.Text;
+using Gedcom.CLI;
+using GedcomTests.TestData;
 
 namespace GedcomTests;
 
@@ -12,15 +13,13 @@ public sealed class IndividualTests
    
     static IndividualTests()
     {
-        var gedFileLines = Encoding.UTF8.GetString(Properties.Resources.DeveloperTree).Split(Environment.NewLine);
-        var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
-        Gedcom = new Gedcom.Gedcom(gedcomLines);
+        Gedcom = TestUtilities.CreateGedcom();
     }
 
     [TestMethod]
     public void ExportIndividualsJsonTest()
     {
-        var options = TestUtilities.CreateOptionsWithInputAndOutput();
+        var options = TestUtilities.CreateOptionsWithInputAndJsonOutput();
         options.RecordType = C.INDI;
 
         var exporter = new Exporter(Gedcom, options);
@@ -30,17 +29,37 @@ public sealed class IndividualTests
         var individualsJson = exporter.IndividualRecordsJson();
 
         Assert.IsTrue(
-            individualsJson.Contains("@I1@")
-            && individualsJson.Contains("@I2@")
-            && individualsJson.Contains("@I3@"));
+            individualsJson.Contains(TestTree.Individuals.RobertDavis.Xref)
+            && individualsJson.Contains(TestTree.Individuals.RosaGarcia.Xref)
+            && individualsJson.Contains(TestTree.Individuals.MariaDavis.Xref)
+            && individualsJson.Contains(TestTree.Individuals.DylanLewis.Xref)
+            && individualsJson.Contains(TestTree.Individuals.GwenLewis.Xref)
+            && individualsJson.Contains(TestTree.Individuals.MateoDavis.Xref));
+    }
+
+    [TestMethod]
+    public void ExportIndividualsListTest()
+    {
+        var options = TestUtilities.CreateOptionsWithInputAndTextOutput();
+        options.Format = C.LIST;
+        options.RecordType = C.INDI;
+
+        var exporter = new Exporter(Gedcom, options);
+
+        GedcomAssert.ExporterIsValid(exporter);
+
+        var individualRecords = Gedcom.GetIndividualRecords();
+        var individualsList = exporter.IndividualRecordsList();
+
+        Assert.IsTrue(individualsList.Count == individualRecords.Count);
     }
 
     [TestMethod]
     public void ExportIndividualJsonTest()
     {
-        var options = TestUtilities.CreateOptionsWithInputAndOutput();
+        var options = TestUtilities.CreateOptionsWithInputAndJsonOutput();
         options.RecordType = C.INDI;
-        options.Xref = "@I1@";
+        options.Xref = TestTree.Individuals.MariaDavis.Xref;
 
         var exporter = new Exporter(Gedcom, options);
 
@@ -49,14 +68,14 @@ public sealed class IndividualTests
         var individualJson = exporter.IndividualRecordJson(options.Xref);
 
         Assert.IsTrue(
-            individualJson.Contains("@I1@")
-            && !(individualJson.Contains("@I2@") || individualJson.Contains("@I3@")));
+            individualJson.Contains(TestTree.Individuals.MariaDavis.Xref)
+                && !(individualJson.Contains(TestTree.Individuals.DylanLewis.Xref) || individualJson.Contains(TestTree.Individuals.GwenLewis.Xref)));
     }
 
     [TestMethod]
     public void NonExistingIndividualJsonTest()
     {
-        var options = TestUtilities.CreateOptionsWithInputAndOutput();
+        var options = TestUtilities.CreateOptionsWithInputAndJsonOutput();
         options.RecordType = C.INDI;
         options.Xref = "@INVALID_XREF@";
 
@@ -72,16 +91,20 @@ public sealed class IndividualTests
     [TestMethod]
     public void QueryIndividualsJsonTest()
     {
-        var options = TestUtilities.CreateOptionsWithInputAndOutput();
+        var options = TestUtilities.CreateOptionsWithInputAndJsonOutput();
         options.RecordType = C.INDI;
-        options.Query = "Person /Three/";
+        options.Query = "Davis";
 
         var exporter = new Exporter(Gedcom, options);
 
         GedcomAssert.ExporterIsValid(exporter);
 
-        var individualJson = exporter.IndividualRecordsJson();
+        var individualRecordsJson = exporter.IndividualRecordsJson();
 
-        Assert.IsTrue(individualJson.Contains("@I3@"));
+        Assert.IsTrue(
+            individualRecordsJson.Contains(TestTree.Individuals.RobertDavis.Xref)
+            && individualRecordsJson.Contains(TestTree.Individuals.MariaDavis.Xref)
+            && individualRecordsJson.Contains(TestTree.Individuals.MateoDavis.Xref)
+            && !individualRecordsJson.Contains(TestTree.Individuals.GwenLewis.Xref));
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Gedcom;
+using Gedcom.CLI;
 using System.Text;
 
 namespace GedcomTests;
@@ -10,9 +11,7 @@ public sealed class ExporterTests
 
     static ExporterTests()
     {
-        var gedFileLines = Encoding.UTF8.GetString(Properties.Resources.DeveloperTree).Split(Environment.NewLine);
-        var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
-        Gedcom = new Gedcom.Gedcom(gedcomLines);
+        Gedcom = TestUtilities.CreateGedcom();
     }
 
     [TestMethod]
@@ -20,7 +19,7 @@ public sealed class ExporterTests
     {
         var options = new Options
         {
-            OutputFilePath = TestUtilities.TestTreeOutputFullName,
+            OutputFilePath = TestUtilities.GedcomNetTreeOutputJsonFullName,
             RecordType = C.INDI
         };
 
@@ -34,7 +33,7 @@ public sealed class ExporterTests
     {
         var options = new Options
         {
-            InputFilePath = TestUtilities.TestTreeFullName,
+            InputFilePath = TestUtilities.GedcomNetTreeFullName,
             RecordType = C.INDI
         };
 
@@ -46,7 +45,7 @@ public sealed class ExporterTests
     [TestMethod]
     public void RecordTypeIsValidTest()
     {
-        var options = TestUtilities.CreateOptionsWithInputAndOutput();
+        var options = TestUtilities.CreateOptionsWithInputAndJsonOutput();
 
         var exporter = new Exporter(Gedcom, options);
 
@@ -56,7 +55,7 @@ public sealed class ExporterTests
     [TestMethod]
     public void DefaultFormatTest()
     {
-        var options = TestUtilities.CreateOptionsWithInputAndOutput();
+        var options = TestUtilities.CreateOptionsWithInputAndJsonOutput();
 
         Assert.IsTrue(options.Format == C.JSON, $"The default format should be {C.JSON}.");
     }
@@ -64,7 +63,7 @@ public sealed class ExporterTests
     [TestMethod]
     public void InvalidFormatTest()
     {
-        var options = TestUtilities.CreateOptionsWithInputAndOutput();
+        var options = TestUtilities.CreateOptionsWithInputAndJsonOutput();
         options.Format = "INVALID_FORMAT";
 
         var exporter = new Exporter(Gedcom, options);
@@ -72,11 +71,3 @@ public sealed class ExporterTests
         Assert.IsFalse(Exporter.RecordTypes.Contains(options.Format), "Invalid format");
     }
 }
-
-
-//public const string MissingInputFilePath = "Could not find the input file:";
-//public const string MissingOutputFilePath = "The output file path must refer to an existing directory.";
-//public const string RecordTypeIsRequired = "Record type is required.";
-//public const string InvalidRecordType = "is not a valid record type. (e.g. FAM, INDI, OBJE, NOTE, REPO, SOUR, SUBM)";
-//public const string InvalidFormat = "is not a valid export format. (e.g. GEDC, JSON)";
-//public const string InvalidXref = "is not a valid xref.";

@@ -1,5 +1,6 @@
 ﻿using CommandLine;
 using Gedcom;
+using Gedcom.CLI;
 
 public class Program
 {
@@ -25,13 +26,21 @@ public class Program
 
         if (options.RecordType.Equals(C.GEDC))
         {
-            WriteAllText(exporter.GedcomJson());
+            WriteJson(exporter.GedcomJson());
             return;
         }
 
         if (options.RecordType.Equals(C.INDI))
         {
-            WriteAllText(exporter.IndividualRecordsJson());
+            if (options.Format.Equals(C.LIST))
+            {
+                WriteList(exporter.IndividualRecordsList());
+            }
+            else if (options.Format.Equals(C.JSON))
+            {
+                WriteJson(exporter.IndividualRecordsJson());
+            }
+
             return;
         }
 
@@ -40,7 +49,7 @@ public class Program
         {
             if (options.RecordType.Equals(C.INDI))
             {
-                WriteAllText(exporter.IndividualRecordJson(options.Xref));
+                WriteJson(exporter.IndividualRecordJson(options.Xref));
             }
         }
 
@@ -50,10 +59,21 @@ public class Program
         //    return;
         //}
 
-        void WriteAllText(string recordJson)
+        void WriteJson(string recordJson)
         {
             Console.WriteLine(recordJson);
             File.WriteAllText(options.OutputFilePath, recordJson);
+        }
+
+        void WriteList(List<IndividualListItem> individualListItems)
+        {
+            var individualsList = individualListItems.Select(ili => ili.ToString());
+            foreach (var individualListItem in individualsList)
+            {
+                Console.WriteLine(individualListItem);
+            }
+
+            File.WriteAllLines(options.OutputFilePath, individualsList);
         }
     }
 

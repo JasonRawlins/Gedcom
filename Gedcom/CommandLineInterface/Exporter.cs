@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 
-namespace Gedcom;
+namespace Gedcom.CLI;
 
 public class Exporter
 {
     public static string[] RecordTypes = [C.FAM, C.INDI, C.OBJE, C.NOTE, C.REPO, C.SOUR, C.SUBM];
-    public static string[] OutputFormats = [C.GEDC, C.JSON];
+    public static string[] OutputFormats = [C.JSON, C.LIST];
 
     private Options Options { get; set; }
     private Gedcom Gedcom { get; set; }
@@ -33,33 +33,17 @@ public class Exporter
     public string IndividualRecordsJson()
     {
         var individualRecords = Gedcom.GetIndividualRecords(Options.Query);
+
         return JsonConvert.SerializeObject(individualRecords, JsonSettings.DefaultOptions);
     }
-    
-    //public string GedcomListJson()
-    //{
-    //    var recordJson = "";
 
-    //    if (Options.RecordType.Equals(C.INDI))
-    //    {
-    //        var individualRecordGedcomList = Gedcom.GetIndividualRecords(Options.Query).Select(ir => new GedcomListItem(ir.Xref, ir.FullName)).ToList();
-    //        recordJson = JsonConvert.SerializeObject(individualRecordGedcomList);
-    //    }
+    public List<IndividualListItem> IndividualRecordsList()
+    {
+        var individualRecords = Gedcom.GetIndividualRecords();
+        var individualsList = individualRecords.Select(ir => new IndividualListItem(ir)).ToList();
 
-    //    if (Options.RecordType.Equals(C.SOUR))
-    //    {
-    //        var sourceRecordGedcomList = Gedcom.GetSourceRecords().Select(sr => new GedcomListItem(sr.Xref, sr.TextFromSource.Text)).ToList();
-    //        recordJson = JsonConvert.SerializeObject(sourceRecordGedcomList);
-    //    }
-
-    //    return recordJson;
-    //}
-
-    //public string SourceRecordsJson()
-    //{
-    //    var sourceRecords = Gedcom.GetSourceRecords();
-    //    return JsonConvert.SerializeObject(sourceRecords);
-    //}
+        return individualsList;
+    }
 
     public List<string> Errors
     {
@@ -109,21 +93,7 @@ public class Exporter
         public const string InputFilePathIsRequired = "Could not find the input file:";
         public const string OutputFilePathIsRequired = "The output file path must refer to an existing directory.";
         public const string InvalidRecordType = "is not a valid record type. (e.g. FAM, INDI, OBJE, NOTE, REPO, SOUR, SUBM)";
-        public const string InvalidFormat = "is not a valid export format. (e.g. GEDC, JSON)";
+        public const string InvalidFormat = "is not a valid export format. (e.g. JSON, LIST)";
         public const string InvalidXref = "is not a valid xref.";
     }
-}
-
-public class GedcomListItem
-{
-    public GedcomListItem(string xref, string value)
-    {
-        Xref = xref;
-        Value = value;
-    }
-
-    public string Xref { get; set; } = "";
-    public string Value { get; set; } = "";
-
-    public override string ToString() => $"{Value} ({Xref})";
 }

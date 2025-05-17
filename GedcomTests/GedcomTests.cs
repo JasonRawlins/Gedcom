@@ -1,5 +1,6 @@
 ﻿using Gedcom;
-using System.Text;
+using Gedcom.CLI;
+using GedcomTests.TestData;
 
 namespace GedcomTests;
 
@@ -10,9 +11,7 @@ public sealed class GedcomTests
 
     static GedcomTests()
     {
-        var gedFileLines = Encoding.UTF8.GetString(Properties.Resources.DeveloperTree).Split(Environment.NewLine);
-        var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
-        Gedcom = new Gedcom.Gedcom(gedcomLines);
+        Gedcom = TestUtilities.CreateGedcom();
     }
 
     [TestMethod]
@@ -20,35 +19,20 @@ public sealed class GedcomTests
     {
         var options = new Options
         {
-            RecordType = C.GEDC,
+            RecordType = C.GEDC
         };
 
         var exporter = new Exporter(Gedcom, options);
         var gedcomJson = exporter.GedcomJson();
 
         Assert.IsTrue(
-            gedcomJson.Contains("@I1@")
-            && gedcomJson.Contains("@I2@")
-            && gedcomJson.Contains("@I3@")
-            && gedcomJson.Contains("@S1@")
-            && gedcomJson.Contains("@F1@")
-            && gedcomJson.Contains("@R1@"));
-    }
-
-    [TestMethod]
-    public void ExportIndividualsJsonTest()
-    {
-        var options = new Options
-        {
-            RecordType = C.INDI
-        };
-
-        var exporter = new Exporter(Gedcom, options);
-        var individualsJson = exporter.IndividualRecordsJson();
-
-        Assert.IsTrue(
-            individualsJson.Contains("@I1@")
-            && individualsJson.Contains("@I2@")
-            && individualsJson.Contains("@I3@"));
+            gedcomJson.Contains(TestTree.Individuals.RobertDavis.Xref)
+            && gedcomJson.Contains(TestTree.Individuals.RosaGarcia.Xref)
+            && gedcomJson.Contains(TestTree.Individuals.MariaDavis.Xref)
+            && gedcomJson.Contains(TestTree.Individuals.DylanLewis.Xref)
+            && gedcomJson.Contains(TestTree.Individuals.MateoDavis.Xref)
+            && gedcomJson.Contains(TestTree.Individuals.GwenLewis.Xref)
+            && gedcomJson.Contains(TestTree.Families.RobertAndRosaDavis.Xref)
+            && gedcomJson.Contains(TestTree.Families.DylanAndMariaLewis.Xref));
     }
 }

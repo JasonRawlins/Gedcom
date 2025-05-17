@@ -1,36 +1,22 @@
 ﻿using CommandLine;
-using System.Reflection.Metadata.Ecma335;
-using System.Text.RegularExpressions;
-using static Gedcom.Ancestry;
 
-namespace Gedcom;
+namespace Gedcom.CLI;
 
 public class Options
 {
-    [Option('i', "input", Required = true, HelpText = "Input file path.")]
-    public string InputFilePath { get; set; } = "";
-
-    [Option('o', "output", Required = true, HelpText = "Output file path.")]
-    public string OutputFilePath { get; set; } = "";
-
-    private string recordType = "";
-    [Option('t', "record-type", Required = true, HelpText = "Record type to export. (e.g. GEDC, FAM, INDI, OBJE, NOTE, REPO, SOUR, SUBM)")]
-    public string RecordType
-    {
-        get => recordType.ToUpper();
-        set => recordType = value;
-    }
-
     private string format = C.JSON;
-    [Option('f', "format", Required = false, HelpText = "Output format (e.g. json, ged).")]
-    public string Format 
+    [Option('f', "format", Required = false, HelpText = "Output format (e.g. json, ged, list).")]
+    public string Format
     {
         get => format.ToUpper();
         set => format = value;
     }
 
-    [Option('x', "xref", Required = false, HelpText = "Record xref. (e.g. @I123@, @R456@, @S894, etc.")]
-    public string Xref { get; set; } = "";
+    [Option('i', "input", Required = true, HelpText = "Input file path.")]
+    public string InputFilePath { get; set; } = "";
+
+    [Option('o', "output", Required = true, HelpText = "Output file path.")]
+    public string OutputFilePath { get; set; } = "";
 
     private string query = "";
     [Option('q', "query", Required = false, HelpText = "Filters records by a query value")]
@@ -39,6 +25,17 @@ public class Options
         get => query.ToUpper();
         set => query = value;
     }
+
+    private string recordType = "";
+    [Option('t', "record-type", Required = true, HelpText = "Record type to export. (e.g. GEDC, FAM, INDI, OBJE, NOTE, REPO, SOUR, SUBM)")]
+    public string RecordType
+    {
+        get => recordType.ToUpper();
+        set => recordType = value;
+    }    
+
+    [Option('x', "xref", Required = false, HelpText = "Record xref. (e.g. @I123@, @R456@, @S894, etc.")]
+    public string Xref { get; set; } = "";
 }
 
 /*

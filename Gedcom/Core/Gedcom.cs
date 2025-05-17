@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
+﻿using Newtonsoft.Json;
+using Gedcom.CLI;
 using Gedcom.RecordStructures;
-using Newtonsoft.Json;
 
 namespace Gedcom;
 
@@ -10,7 +10,7 @@ public class Gedcom : RecordStructureBase
 {
     public Gedcom(List<GedcomLine> gedcomLines)
     {
-        // Level 0 records are the top-level records. They are
+        // Level 0 records are the top-level records:
         // FAM (Family),
         // INDI (Individual),
         // OBJE (Multimedia),
@@ -52,7 +52,7 @@ public class Gedcom : RecordStructureBase
     public List<IndividualRecord> GetIndividualRecords() => GetIndividualRecords("");
     public List<IndividualRecord> GetIndividualRecords(string query) => 
         Record.Records.Where(r => r.Tag.Equals(C.INDI) && r.IsQueryMatch(query)).Select(r => new IndividualRecord(r)).ToList();
-    
+
     public MultimediaRecord GetMultimediaRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(C.OBJE) && r.Value.Equals(xref)));
     public List<MultimediaRecord> GetMultimediaRecords() => Record.Records.Where(r => r.Tag.Equals(C.OBJE)).Select(r => new MultimediaRecord(r)).ToList();
 
@@ -111,10 +111,7 @@ internal class GedcomJsonConverter : JsonConverter<Gedcom>
             Sources = gedcom.GetSourceRecords()
         };
 
-        var stopwatch = Stopwatch.StartNew();
         serializer.Serialize(writer, gedcomObject);
-        stopwatch.Stop();
-        var elaspsedMilliseconds = stopwatch.ElapsedMilliseconds;
     }
 }
 
@@ -140,7 +137,7 @@ required.
 #endregion
 
 
-#region 
+#region Explanation of GetGedcomLinesForLevel()
 
 /*
 Explanation of List<List<GedcomLine>> GetGedcomLinesForLevel(int level, List<GedcomLine> gedcomLines)
@@ -169,8 +166,7 @@ This function groups gedcom lines together logically into a tree structure of ne
 example, calling GetGedcomLinesForLevel(0, <gedcom lines>) with the above file will create four lists 
 (HEAD, INDI, INDI, TRLR). If I call GetGedcomLinesForLevel(1, <gedcom lines>) and pass one of the INDI 
 records, I'll get two lists (NAME, SEX). If I call GetGedcomLinesForLevel(2, <gedcom lines>) and pass 
-one of the NAME records, I'll get two lists (GIVN, SURN). And so on. I think 99 levels is the 
-official limit. 
+one of the NAME records, I'll get two lists (GIVN, SURN). And so on. The upper bound for level is 99.
 
 */
 

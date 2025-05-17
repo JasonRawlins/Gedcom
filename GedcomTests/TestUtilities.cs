@@ -1,19 +1,38 @@
 ﻿using Gedcom;
+using Gedcom.CLI;
+using System.Text;
 
 namespace GedcomTests;
 
 public class TestUtilities
 {
-    public static string TestTreeFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "TestTree.ged");
-    public static string TestTreeDirectory = Path.GetDirectoryName(TestTreeFullName) ?? "";
-    public static string TestTreeOutputFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "TestTree.json");
+    public static string GedcomNetTreeFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.ged");
+    public static string GedcomNetTreeDirectory = Path.GetDirectoryName(GedcomNetTreeFullName) ?? "";
+    public static string GedcomNetTreeOutputJsonFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.json");
+    public static string GedcomNetTreeOutputTextFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.txt");
 
-    public static Options CreateOptionsWithInputAndOutput()
+    public static Gedcom.Gedcom CreateGedcom()
+    {
+        var gedFileLines = Encoding.UTF8.GetString(Properties.Resources.GedcomNET).Split('\n');
+        var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
+        return new Gedcom.Gedcom(gedcomLines);
+    }
+
+    public static Options CreateOptionsWithInputAndJsonOutput()
     {
         return new Options
         {
-            InputFilePath = TestTreeFullName,
-            OutputFilePath = TestTreeOutputFullName,
+            InputFilePath = GedcomNetTreeFullName,
+            OutputFilePath = GedcomNetTreeOutputJsonFullName,
+        };
+    }
+
+    public static Options CreateOptionsWithInputAndTextOutput()
+    {
+        return new Options
+        {
+            InputFilePath = GedcomNetTreeFullName,
+            OutputFilePath = GedcomNetTreeOutputTextFullName
         };
     }
 }
