@@ -25,43 +25,53 @@ public class Gedcom : RecordStructureBase
     }
 
     public Header Header => First<Header>(C.HEAD);
-   
+
     public FamilyRecord GetFamilyRecord(string xrefFAM) => new(Record.Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
     public List<FamilyRecord> GetFamilyRecords() => Record.Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FamilyRecord(r)).ToList();
-
-    public IndividualRecord GetIndividual(string xref)
-    {
-        return GetIndividualRecord(xref, "");
-    }
-
-    public IndividualRecord GetIndividualRecord(string xref, string query)
-    {
-        var individualRecord = Single(r => 
-            r.Tag.Equals(C.INDI) 
-            && r.Value.Equals(xref)
-            && r.IsQueryMatch(query));
-
-        if (individualRecord.IsEmpty)
-        {
-            return Empty<IndividualRecord>();
-        }
-
-        return new IndividualRecord(individualRecord);
-    }
-
-    public List<IndividualRecord> GetIndividualRecords() => GetIndividualRecords("");
-    public List<IndividualRecord> GetIndividualRecords(string query) => 
-        Record.Records.Where(r => r.Tag.Equals(C.INDI) && r.IsQueryMatch(query)).Select(r => new IndividualRecord(r)).ToList();
 
     public MultimediaRecord GetMultimediaRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(C.OBJE) && r.Value.Equals(xref)));
     public List<MultimediaRecord> GetMultimediaRecords() => Record.Records.Where(r => r.Tag.Equals(C.OBJE)).Select(r => new MultimediaRecord(r)).ToList();
 
     public NoteRecord GetNoteRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(C.NOTE) && r.Value.Equals(xref)));
     public List<NoteRecord> GetNoteRecords() => Record.Records.Where(r => r.Tag.Equals(C.NOTE)).Select(r => new NoteRecord(r)).ToList();
-    
-    public RepositoryRecord GetRepositoryRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(C.REPO) && r.Value.Equals(xref)));
-    public List<RepositoryRecord> GetRepositoryRecords() => Record.Records.Where(r => r.Tag.Equals(C.REPO)).Select(r => new RepositoryRecord(r)).ToList();
-   
+
+
+
+    // Individuals (INDI)
+    public IndividualRecord GetIndividualRecord(string xref, string query = "") => GetRecord<IndividualRecord>(C.INDI, xref, "");
+    public List<IndividualRecord> GetIndividualRecords(string query = "") => GetRecords<IndividualRecord>(C.INDI, query);
+
+    // Repositories (REPO)
+    public RepositoryRecord GetRepositoryRecord(string xref, string query = "") => GetRecord<RepositoryRecord>(C.REPO, xref, query);
+    public List<RepositoryRecord> GetRepositoryRecords(string query = "") => GetRecords<RepositoryRecord>(C.REPO, query);
+
+
+    private T GetRecord<T>(string tag, string xref = "", string query = "") where T : RecordStructureBase, new()
+    {
+        var record = Single(r =>
+            r.Tag.Equals(tag)
+            && (!string.IsNullOrEmpty(xref) && r.Value.Equals(xref))
+            && r.IsQueryMatch(query));
+
+        return CreateRecord<T>(record);
+    }
+
+    private List<T> GetRecords<T>(string tag, string query) where T : RecordStructureBase, new()
+    {
+        var records = Record.Records.Where(r =>
+            r.Tag.Equals(tag)
+            && r.IsQueryMatch(query));
+
+        return records.Select(CreateRecord<T>).ToList();
+    }
+
+    private T CreateRecord<T>(Record record) where T : RecordStructureBase, new()
+    {
+        var dynamic = new T();
+        dynamic.SetRecord(record);
+        return dynamic;
+    }
+
     public SourceRecord GetSourceRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(C.SOUR) && r.Value.Equals(xref)));
     public List<SourceRecord> GetSourceRecords() => Record.Records.Where(r => r.Tag.Equals(C.SOUR)).Select(r => new SourceRecord(r)).ToList();
 
@@ -79,7 +89,7 @@ public class Gedcom : RecordStructureBase
             if (gedcomLine.Level == level)
             {
                 gedcomLinesAtThisLevel.Add(currentGedcomLines);
-                currentGedcomLines = [gedcomLine];                
+                currentGedcomLines = [gedcomLine];
             }
             else
             {
@@ -102,7 +112,7 @@ internal class GedcomJsonConverter : JsonConverter<Gedcom>
     public override void WriteJson(JsonWriter writer, Gedcom? gedcom, JsonSerializer serializer)
     {
         if (gedcom == null) throw new ArgumentNullException(nameof(gedcom));
-            
+
         var gedcomObject = new
         {
             Families = gedcom.GetFamilyRecords(),

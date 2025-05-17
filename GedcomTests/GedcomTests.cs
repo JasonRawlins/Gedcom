@@ -33,6 +33,8 @@ public sealed class GedcomTests
             && gedcomJson.Contains(TestTree.Individuals.MateoDavis.Xref)
             && gedcomJson.Contains(TestTree.Individuals.GwenLewis.Xref)
             && gedcomJson.Contains(TestTree.Families.RobertAndRosaDavis.Xref)
-            && gedcomJson.Contains(TestTree.Families.DylanAndMariaLewis.Xref));
+            && gedcomJson.Contains(TestTree.Families.DylanAndMariaLewis.Xref)
+            && gedcomJson.Contains(TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref)
+            && gedcomJson.Contains(TestTree.Sources.GarciaFamilyBirths.Xref));
     }
 }

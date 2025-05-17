@@ -3,17 +3,18 @@
 1 SOUR Ancestry.com Family Trees
 2 NAME Ancestry.com Member Trees
 2 VERS 2025.04
-2 _TREE Gedcom.NET
+2 _TREE GedcomNET
 3 RIN 204223479
+3 NOTE A tree containing the test data for Gedcom.NET.
 3 _ENV prd
 2 CORP Ancestry.com
 3 PHON 801-705-7000
 3 WWW www.ancestry.com
 3 ADDR 1300 West Traverse Parkway
-4 CONT Lehi, UT 84043
+4 CONT Lehi, UT  84043
 4 CONT USA
 1 DATE 17 May 2025
-2 TIME 16:47:06
+2 TIME 18:49:34
 1 GEDC
 2 VERS 5.5.1
 2 FORM LINEAGE-LINKED
@@ -30,9 +31,29 @@
 1 BIRT
 2 DATE 15 Jan 1920
 2 PLAC San Diego, San Diego, California, USA
+2 SOUR @S1670740985@
+3 PAGE Children of Robert and Rosa Garcia
+3 DATA
+4 DATE 4 Nov 1925
+4 TEXT Maria Davis was born on this day, January 15, 1920 in San Diego, California to Rosa Garcia Davis and Robert Davis.
+3 NOTE Found with with the family group sheets.
+2 SOUR @S1670741627@
+3 PAGE p. 21 Maria was born on January 15, 1920.
+3 DATA
+4 TEXT I had just made it back to San Diego in time for the birth of my first daughter, Maria. She was born in the early morning of January 15, 1920.
 1 DEAT
 2 DATE 23 Mar 1985
 2 PLAC San Diego, San Diego, California, USA
+1 SOUR @S1670740985@
+2 PAGE Children of Robert and Rosa Garcia
+2 DATA
+3 DATE 4 Nov 1925
+3 TEXT Maria Davis was born on this day, January 15, 1920 in San Diego, California to Rosa Garcia Davis and Robert Davis.
+2 NOTE Found with with the family group sheets.
+1 SOUR @S1670741627@
+2 PAGE p. 21 Maria was born on January 15, 1920.
+2 DATA
+3 TEXT I had just made it back to San Diego in time for the birth of my first daughter, Maria. She was born in the early morning of January 15, 1920.
 0 @I412679332995@ INDI
 1 NAME Robert /Davis/
 2 GIVN Robert
@@ -102,4 +123,34 @@
 1 HUSB @I412679333361@
 1 WIFE @I412679332996@
 1 CHIL @I412679333479@
+0 @S1670740985@ SOUR
+1 TITL Garcia family births
+1 AUTH Rosa Garcia
+1 PUBL Garcia family
+2 DATE 1920
+2 PLAC 3940 Hortensia Street, Suite 201, San Diego 92110
+1 REPO @R1555932347@
+1 NOTE Birth announcements for the Garcia family.
+0 @S1670741627@ SOUR
+1 TITL Autobiography of Robert Davis
+1 AUTH Robert Davis
+1 PUBL Privately published
+2 DATE 1947
+2 PLAC San Diego, California
+1 REPO @R1555932401@
+1 NOTE The autobiography of Robert Davis. 
+0 @R1555932347@ REPO
+1 NAME Garcia family book of remembrance
+1 ADDR <line>3940 Hortensia Street, Suite 201, San Diego 92110</line>
+1 PHON (619) 555-4721
+1 EMAIL garciafamily@@example.com
+1 CALN 1918
+1 REFN 1918
+1 NOTE The Garcia family book of remembrance, including family history, journals, and pictures.
+0 @R1555932401@ REPO
+1 NAME FamilySearch Library
+1 ADDR <line>35 North West Temple Street Salt Lake City, Utah 84150</line>
+1 PHON (801) 240-6996
+1 EMAIL fhl@@FamilySearch.org
+1 NOTE The FamilySearch Library in Salt Lake City, Utah, USA
 0 TRLR

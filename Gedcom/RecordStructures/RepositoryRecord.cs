@@ -6,7 +6,7 @@ namespace Gedcom.RecordStructures;
 [JsonConverter(typeof(RepositoryRecordJsonConverter))]
 public class RepositoryRecord : RecordStructureBase, IAddressStructure
 {
-    internal RepositoryRecord() : base() { }
+    public RepositoryRecord() : base() { }
     public RepositoryRecord(Record record) : base(record) { }
 
     public List<string> AddressEmails => ListValues(C.EMAIL);

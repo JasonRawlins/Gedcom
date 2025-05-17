@@ -19,7 +19,7 @@ public class Exporter
 
     public string GedcomJson() => JsonConvert.SerializeObject(Gedcom, JsonSettings.DefaultOptions);
 
-    public string IndividualRecordJson(string xref)
+    public string IndividualRecordJson()
     {
         var individualRecord = Gedcom.GetIndividualRecord(Options.Xref, Options.Query);
         if (individualRecord.IsEmpty)
@@ -43,6 +43,21 @@ public class Exporter
         var individualsList = individualRecords.Select(ir => new IndividualListItem(ir)).ToList();
 
         return individualsList;
+    }
+
+    public string RepositoryRecordJson() => GetRecordJson(Gedcom.GetRepositoryRecord(Options.Xref));
+    public string RepositoryRecordsJson() => GetRecordsJson(Gedcom.GetRepositoryRecords(Options.Query));
+
+    private string GetRecordJson(RecordStructureBase recordStructure)
+    {
+        if (recordStructure.IsEmpty) return "";
+        return JsonConvert.SerializeObject(recordStructure, JsonSettings.DefaultOptions);
+    }
+
+    private string GetRecordsJson(IEnumerable<RecordStructureBase> recordStructures)
+    {
+        if (recordStructures.Count() == 0) return "";
+        return JsonConvert.SerializeObject(recordStructures);
     }
 
     public List<string> Errors

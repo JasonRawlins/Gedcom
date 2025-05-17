@@ -65,7 +65,7 @@ public sealed class IndividualTests
 
         GedcomAssert.ExporterIsValid(exporter);
 
-        var individualJson = exporter.IndividualRecordJson(options.Xref);
+        var individualJson = exporter.IndividualRecordJson();
 
         Assert.IsTrue(
             individualJson.Contains(TestTree.Individuals.MariaDavis.Xref)
@@ -83,7 +83,7 @@ public sealed class IndividualTests
 
         GedcomAssert.ExporterIsValid(exporter);
 
-        var individualJson = exporter.IndividualRecordJson(options.Xref);
+        var individualJson = exporter.IndividualRecordJson();
 
         Assert.IsTrue(string.IsNullOrWhiteSpace(individualJson));
     }

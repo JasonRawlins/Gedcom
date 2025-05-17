@@ -49,7 +49,7 @@ public class Program
         {
             if (options.RecordType.Equals(C.INDI))
             {
-                WriteJson(exporter.IndividualRecordJson(options.Xref));
+                WriteJson(exporter.IndividualRecordJson());
             }
         }
 
