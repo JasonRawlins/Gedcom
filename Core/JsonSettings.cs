@@ -12,7 +12,7 @@ public static class JsonSettings
         {
             NamingStrategy = new CamelCaseNamingStrategy()
         },
-        Formatting = Formatting.None
+        Formatting = Formatting.Indented
     };
 }
 

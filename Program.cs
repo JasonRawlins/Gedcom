@@ -3,8 +3,6 @@ using Gedcom;
 
 public class Program
 {
-    private static Options Options { get; set; } = new Options();
-
     static void Main(string[] args)
     {
         Parser.Default.ParseArguments<Options>(args)
@@ -16,53 +14,47 @@ public class Program
 
     static void RunOptions(Options options)
     {
-        Options = options;
+        var gedcom = CreateGedcom(options.InputFilePath);
+        var exporter = new Exporter(gedcom, options);
 
-        if (Options.ArgumentErrors.Count > 0)
+        if (exporter.Errors.Count > 0)
         {
-            Options.ArgumentErrors.ForEach(ae => Console.WriteLine(ae));
+            exporter.Errors.ForEach(ae => Console.WriteLine(ae));
             return;
         }
 
-        var gedcom = CreateGedcom(Options.InputFilePath);
-        var exporter = new Exporter(gedcom, Options);
-
-        if (Options.RecordType.ToUpper().Equals(C.GEDC))
+        if (options.RecordType.Equals(C.GEDC))
         {
             WriteAllText(exporter.GedcomJson());
             return;
         }
 
-        //if (Options.List)
-        //{
-        //    WriteAllText(exporter.GedcomListJson());
-        //    return;
-        //}
-
-        if (Options.RecordType.ToUpper().Equals(C.INDI))
+        if (options.RecordType.Equals(C.INDI))
         {
             WriteAllText(exporter.IndividualRecordsJson());
             return;
         }
 
-        if (Options.RecordType.ToUpper().Equals(C.SOUR))
+        // Find a record by query.
+        if (!string.IsNullOrEmpty(options.Xref))
         {
-            WriteAllText(exporter.SourceRecordsJson());
-            return;
+            if (options.RecordType.Equals(C.INDI))
+            {
+                WriteAllText(exporter.IndividualRecordJson(options.Xref));
+            }
         }
-    }
 
-    private static Gedcom.Gedcom CreateGedcom(string gedFullName)
-    {
-        var gedFileLines = File.ReadAllLines(gedFullName);
-        var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
-        return new Gedcom.Gedcom(gedcomLines);
-    }
-    
-    private static void WriteAllText(string recordJson)
-    {
-        Console.WriteLine(recordJson);
-        File.WriteAllText(Options.OutputFilePath, recordJson);
+        //if (Options.RecordType.Equals(C.SOUR))
+        //{
+        //    WriteAllText(exporter.SourceRecordsJson());
+        //    return;
+        //}
+
+        void WriteAllText(string recordJson)
+        {
+            Console.WriteLine(recordJson);
+            File.WriteAllText(options.OutputFilePath, recordJson);
+        }
     }
 
     static void HandleParseError(IEnumerable<Error> errors)
@@ -72,5 +64,12 @@ public class Program
         {
             Console.WriteLine(error);
         }
+    }
+
+    private static Gedcom.Gedcom CreateGedcom(string gedFullName)
+    {
+        var gedFileLines = File.ReadAllLines(gedFullName);
+        var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
+        return new Gedcom.Gedcom(gedcomLines);
     }
 }

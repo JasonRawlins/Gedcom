@@ -1,4 +1,5 @@
 ﻿using CommandLine;
+using System.Reflection.Metadata.Ecma335;
 using System.Text.RegularExpressions;
 using static Gedcom.Ancestry;
 
@@ -12,67 +13,31 @@ public class Options
     [Option('o', "output", Required = true, HelpText = "Output file path.")]
     public string OutputFilePath { get; set; } = "";
 
-    [Option('f', "format", Required = false, HelpText = "Sets the output format (e.g. json).")]
-    public string Format { get; set; } = "JSON";
+    private string recordType = "";
+    [Option('t', "record-type", Required = true, HelpText = "Record type to export. (e.g. GEDC, FAM, INDI, OBJE, NOTE, REPO, SOUR, SUBM)")]
+    public string RecordType
+    {
+        get => recordType.ToUpper();
+        set => recordType = value;
+    }
+
+    private string format = C.JSON;
+    [Option('f', "format", Required = false, HelpText = "Output format (e.g. json, ged).")]
+    public string Format 
+    {
+        get => format.ToUpper();
+        set => format = value;
+    }
 
     [Option('x', "xref", Required = false, HelpText = "Record xref. (e.g. @I123@, @R456@, @S894, etc.")]
     public string Xref { get; set; } = "";
 
-    [Option('t', "record-type", Required = false, HelpText = "Record type to export. (e.g. GEDC, FAM, INDI, OBJE, NOTE, REPO, SOUR, SUBM)")]
-    public string RecordType { get; set; } = C.GEDC;
-
-    [Option('q', "query", Required = false, HelpText = "The query that is used to filter records by query value")]
-    public string Query { get; set; } = "";
-
-    [Option('l', "list", Required = false, HelpText = "Lists all records of the record type.")]
-    public bool List { get; set; } = false;
-
-    public List<string> ArgumentErrors
+    private string query = "";
+    [Option('q', "query", Required = false, HelpText = "Filters records by a query value")]
+    public string Query
     {
-        get
-        {
-            var argumentErrors = new List<string>();
-
-            if (string.IsNullOrEmpty(InputFilePath) || !File.Exists(InputFilePath))
-            {
-                argumentErrors.Add($"Could not find the file '{InputFilePath}'");
-            }
-
-            var isValidXref = Regex.IsMatch(Xref, @"@.*@");
-            var hasRecordType = !string.IsNullOrEmpty(RecordType);
-
-            if (isValidXref && !hasRecordType)
-            {
-                // It looks like Ancestry is the one that prepends a letter to the xrefs based on 
-                // type, like "I" for INDI xrefs ("@I234@"). This is not part of the standard.
-                // See comment below on xref_ID for more details.
-                argumentErrors.Add("If an xref is specified, then a record type must also be specified. (e.g. FAM, INDI, OBJE, NOTE, REPO, SOUR, SUBM)");
-            }
-
-            
-
-            if (!string.IsNullOrEmpty(Xref))
-            {
-                if (!isValidXref)
-                {
-                    argumentErrors.Add("Invalid xref. It should be an @ sign, a letter, a number, and an '@' sign. (e.g. @I123@, @S456@, @R843@, etc.)");
-                }
-            }
-
-            if (List && !string.IsNullOrEmpty(RecordType))
-            {
-                argumentErrors.Add("If -list is specified, -type must also be specified.");
-            }
-
-            var acceptedFormats = new string[] { C.GEDC, C.JSON };
-            if (!acceptedFormats.Contains(Format.ToUpper())) 
-            {
-                argumentErrors.Add($"{Format} is not a valid format.");
-            }
-
-
-            return argumentErrors;
-        }
+        get => query.ToUpper();
+        set => query = value;
     }
 }
 

@@ -29,6 +29,11 @@ public class Gedcom : RecordStructureBase
     public FamilyRecord GetFamilyRecord(string xrefFAM) => new(Record.Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
     public List<FamilyRecord> GetFamilyRecords() => Record.Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FamilyRecord(r)).ToList();
 
+    public IndividualRecord GetIndividual(string xref)
+    {
+        return GetIndividualRecord(xref, "");
+    }
+
     public IndividualRecord GetIndividualRecord(string xref, string query)
     {
         var individualRecord = Single(r => 
