@@ -6,7 +6,7 @@ namespace Gedcom.RecordStructures;
 [JsonConverter(typeof(SourceRecordJsonConverter))]
 public class SourceRecord : RecordStructureBase
 {
-    internal SourceRecord() : base() { }
+    public SourceRecord() : base() { }
     public SourceRecord(Record record) : base(record) { }
 
     public string AutomatedRecordId => _(C.RIN);
@@ -56,6 +56,7 @@ internal class SourceRecordJson : GedcomJson
         SourceRepositoryCitations = JsonList(sourceRecord.SourceRepositoryCitations);
         TextFromSource = JsonRecord(sourceRecord.TextFromSource);
         UserReferenceNumbers = JsonList(sourceRecord.UserReferenceNumbers);
+        Xref = sourceRecord.Xref;
     }
 
     public string? AutomatedRecordId { get; set; }
@@ -71,6 +72,7 @@ internal class SourceRecordJson : GedcomJson
     public List<SourceRepositoryCitation>? SourceRepositoryCitations { get; set; }
     public NoteStructure? TextFromSource { get; set; }
     public List<UserReferenceNumber>? UserReferenceNumbers { get; set; }
+    public string Xref { get; set; }
 }
 
 #region SOURCE_RECORD p. 27-28

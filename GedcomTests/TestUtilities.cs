@@ -17,24 +17,6 @@ public class TestUtilities
         var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
         return new Gedcom.Gedcom(gedcomLines);
     }
-
-    public static Options CreateOptionsWithInputAndJsonOutput()
-    {
-        return new Options
-        {
-            InputFilePath = GedcomNetTreeFullName,
-            OutputFilePath = GedcomNetTreeOutputJsonFullName,
-        };
-    }
-
-    public static Options CreateOptionsWithInputAndTextOutput()
-    {
-        return new Options
-        {
-            InputFilePath = GedcomNetTreeFullName,
-            OutputFilePath = GedcomNetTreeOutputTextFullName
-        };
-    }
 }
 
 public class GedcomAssert
@@ -47,7 +29,7 @@ public class GedcomAssert
         }
     }
     
-    public static void RecordJsonIsValid(Exporter exporter, Func<string> JsonExportFunction, Func<string, bool> AssertFunction, bool assertValidExporter = true)
+    public static void RecordJsonIsValid(Exporter exporter, Func<string> JsonExportFunction, Func<string, bool> AssertFunction, string callingFunction = "", bool assertValidExporter = true)
     {
         exporter.Options.InputFilePath = TestUtilities.GedcomNetTreeFullName;
         exporter.Options.OutputFilePath = TestUtilities.GedcomNetTreeOutputJsonFullName;
@@ -59,7 +41,7 @@ public class GedcomAssert
 
         var exportedJson = JsonExportFunction();
 
-        Assert.IsTrue(AssertFunction(exportedJson));
+        Assert.IsTrue(AssertFunction(exportedJson), $"Called from {callingFunction}");
     }
 }
 

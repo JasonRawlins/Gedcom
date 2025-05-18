@@ -1,6 +1,5 @@
 ﻿using Gedcom;
 using Gedcom.CLI;
-using System.Text;
 
 namespace GedcomTests;
 
@@ -43,11 +42,9 @@ public sealed class ExporterTests
     }
 
     [TestMethod]
-    public void RecordTypeIsValidTest()
+    public void InvalidRecordTypeTest()
     {
-        var options = TestUtilities.CreateOptionsWithInputAndJsonOutput();
-
-        var exporter = new Exporter(Gedcom, options);
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = "INVALID_RECORD_TYPE" });
 
         Assert.IsTrue(exporter.Errors.Find(e => e.Contains(Exporter.ErrorMessages.InvalidRecordType)) != null, "Record type is invalid.");
     }
@@ -55,19 +52,8 @@ public sealed class ExporterTests
     [TestMethod]
     public void DefaultFormatTest()
     {
-        var options = TestUtilities.CreateOptionsWithInputAndJsonOutput();
+        var options = new Options();
 
         Assert.IsTrue(options.Format == C.JSON, $"The default format should be {C.JSON}.");
-    }
-
-    [TestMethod]
-    public void InvalidFormatTest()
-    {
-        var options = TestUtilities.CreateOptionsWithInputAndJsonOutput();
-        options.Format = "INVALID_FORMAT";
-
-        var exporter = new Exporter(Gedcom, options);
-
-        Assert.IsFalse(Exporter.RecordTypes.Contains(options.Format), "Invalid format");
     }
 }

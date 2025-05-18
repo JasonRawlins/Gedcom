@@ -38,13 +38,15 @@ public class Gedcom : RecordStructureBase
 
 
     // Individuals (INDI)
-    public IndividualRecord GetIndividualRecord(string xref, string query = "") => GetRecord<IndividualRecord>(C.INDI, xref, "");
+    public IndividualRecord GetIndividualRecord(string xref, string query = "") => GetRecord<IndividualRecord>(C.INDI, xref, query);
     public List<IndividualRecord> GetIndividualRecords(string query = "") => GetRecords<IndividualRecord>(C.INDI, query);
 
     // Repositories (REPO)
     public RepositoryRecord GetRepositoryRecord(string xref, string query = "") => GetRecord<RepositoryRecord>(C.REPO, xref, query);
     public List<RepositoryRecord> GetRepositoryRecords(string query = "") => GetRecords<RepositoryRecord>(C.REPO, query);
 
+    public SourceRecord GetSourceRecord(string xref, string query = "") => GetRecord<SourceRecord>(C.SOUR, xref, query);
+    public List<SourceRecord> GetSourceRecords(string query = "") => GetRecords<SourceRecord>(C.SOUR, query);
 
     private T GetRecord<T>(string tag, string xref = "", string query = "") where T : RecordStructureBase, new()
     {
@@ -71,9 +73,6 @@ public class Gedcom : RecordStructureBase
         dynamic.SetRecord(record);
         return dynamic;
     }
-
-    public SourceRecord GetSourceRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(C.SOUR) && r.Value.Equals(xref)));
-    public List<SourceRecord> GetSourceRecords() => Record.Records.Where(r => r.Tag.Equals(C.SOUR)).Select(r => new SourceRecord(r)).ToList();
 
     public SubmitterRecord GetSubmitterRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(C.SUBM) && r.Value.Equals(xref)));
     public List<SubmitterRecord> GetSubmitterRecords() => Record.Records.Where(r => r.Tag.Equals(C.SUBM)).Select(r => new SubmitterRecord(r)).ToList();

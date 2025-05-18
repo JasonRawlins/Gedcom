@@ -51,6 +51,8 @@ public class Exporter
 
     public string RepositoryRecordJson() => GetRecordJson(Gedcom.GetRepositoryRecord(Options.Xref));
     public string RepositoryRecordsJson() => GetRecordsJson(Gedcom.GetRepositoryRecords(Options.Query));
+    public string SourceRecordJson() => GetRecordJson(Gedcom.GetSourceRecord(Options.Xref));
+    public string SourceRecordsJson() => GetRecordsJson(Gedcom.GetSourceRecords(Options.Query));
 
     private string GetRecordJson(RecordStructureBase recordStructure)
     {
