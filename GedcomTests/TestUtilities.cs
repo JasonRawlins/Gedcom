@@ -47,7 +47,7 @@ public class GedcomAssert
         }
     }
     
-    public static void RecordJson(Exporter exporter, Func<string> JsonExportFunc, Func<string, bool> AssertFunc, bool assertValidExporter = true)
+    public static void RecordJsonIsValid(Exporter exporter, Func<string> JsonExportFunction, Func<string, bool> AssertFunction, bool assertValidExporter = true)
     {
         exporter.Options.InputFilePath = TestUtilities.GedcomNetTreeFullName;
         exporter.Options.OutputFilePath = TestUtilities.GedcomNetTreeOutputJsonFullName;
@@ -57,9 +57,9 @@ public class GedcomAssert
             ExporterIsValid(exporter);
         }
 
-        var exportedJson = JsonExportFunc();
+        var exportedJson = JsonExportFunction();
 
-        Assert.IsTrue(AssertFunc(exportedJson));
+        Assert.IsTrue(AssertFunction(exportedJson));
     }
 }
 
