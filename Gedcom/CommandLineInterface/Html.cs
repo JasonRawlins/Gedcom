@@ -7,6 +7,7 @@ public static class Html
 {
    public static List<string> CreateIndividualLis(List<IndividualListItem> individualListItems, string TreeId)
     {
+        individualListItems.Sort();
         var liList = new List<string>();
         foreach (var li in individualListItems)
         {
