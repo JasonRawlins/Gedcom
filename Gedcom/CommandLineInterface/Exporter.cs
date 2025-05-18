@@ -55,7 +55,7 @@ public class Exporter
     private string GetRecordsJson(IEnumerable<RecordStructureBase> recordStructures)
     {
         if (recordStructures.Count() == 0) return "";
-        return JsonConvert.SerializeObject(recordStructures);
+        return JsonConvert.SerializeObject(recordStructures, JsonSettings.DefaultOptions);
     }
 
     private string GetIndividualsHtml(List<IndividualListItem> individualListItems)
@@ -69,7 +69,7 @@ public class Exporter
 
     public string GetCliCommand()
     {
-        return $"gedcom -i {Options.InputFilePath} -o {Options.OutputFilePath} -t {Options.RecordType} -f {Options.Format}";
+        return $"gedcom -i {Options.InputFilePath} -o {Options.OutputFilePath} -t {Options.RecordType} -f {Options.Format} -x {Options.Xref}";
     }
 
     public List<string> Errors
