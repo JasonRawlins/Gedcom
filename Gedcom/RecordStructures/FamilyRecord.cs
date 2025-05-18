@@ -6,7 +6,7 @@ namespace Gedcom.RecordStructures;
 [JsonConverter(typeof(FamilyRecordJsonConverter))]
 public class FamilyRecord : RecordStructureBase
 {
-    internal FamilyRecord() : base() { }
+    public FamilyRecord() : base() { }
     public FamilyRecord(Record record) : base(record) { }
 
     public string AdoptedByWhichParent => _(C.ADOP);
@@ -24,6 +24,7 @@ public class FamilyRecord : RecordStructureBase
     public string Submitter => _(C.SUBM);
     public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
     public string Wife => _(C.WIFE);
+    public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {Husband} and {Wife} with {Children.Count} children";
 }
@@ -59,6 +60,7 @@ internal class FamilyRecordJson : GedcomJson
         Submitter = JsonString(familyRecord.Submitter);
         UserReferenceNumbers = JsonList(familyRecord.UserReferenceNumbers);
         Wife = JsonString(familyRecord.Wife);
+        Xref = familyRecord.Xref;
 
     }
 
@@ -77,6 +79,7 @@ internal class FamilyRecordJson : GedcomJson
     public string? Submitter { get; set; }
     public List<UserReferenceNumber>? UserReferenceNumbers { get; set; }
     public string? Wife { get; set; }
+    public string Xref { get; set; }
 }
 
 #region FAM_RECORD (FAM) p. 24

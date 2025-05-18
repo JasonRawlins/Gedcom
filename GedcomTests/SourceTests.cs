@@ -18,7 +18,7 @@ public sealed class SourceTests
     public void ExportSourcesJsonTest()
     {
         var exporter = new Exporter(Gedcom, new Options() { RecordType = C.SOUR });
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.SourceRecordsJson, AssertFunction, "ExportSourcesJsonTest");
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.SourceRecordsJson, AssertFunction, nameof(ExportSourcesJsonTest));
 
         bool AssertFunction(string json) =>
             json.Contains(TestTree.Sources.GarciaFamilyBirths.Xref)
@@ -34,7 +34,7 @@ public sealed class SourceTests
             Xref = TestTree.Sources.GarciaFamilyBirths.Xref
         });
 
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.SourceRecordJson, AssertFunction, "ExportSourceJsonTest");
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.SourceRecordJson, AssertFunction, nameof(ExportSourceJsonTest));
 
         bool AssertFunction(string json) =>
             json.Contains(TestTree.Sources.GarciaFamilyBirths.Xref)
@@ -45,7 +45,7 @@ public sealed class SourceTests
     public void ExportNonExistingSourceJsonTest()
     {
         var exporter = new Exporter(Gedcom, new Options() { RecordType = C.SOUR, Xref = "INVALID_XREF"});
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.SourceRecordJson, AssertFunction, "ExportNonExistingSourceJsonTest", false);
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.SourceRecordJson, AssertFunction, nameof(ExportNonExistingSourceJsonTest), false);
 
         bool AssertFunction(string json) => string.IsNullOrWhiteSpace(json);
     }
@@ -54,7 +54,7 @@ public sealed class SourceTests
     public void QuerySourceJsonTest()
     {
         var exporter = new Exporter(Gedcom, new Options() { RecordType = C.SOUR, Query = "Autobiography of Robert Davis" });
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.SourceRecordsJson, AssertFunction, "QuerySourceJsonTest");
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.SourceRecordsJson, AssertFunction, nameof(QuerySourceJsonTest));
 
         bool AssertFunction(string json) => 
             json.Contains(TestTree.Sources.AutobiographyOfRobertDavis.Xref)

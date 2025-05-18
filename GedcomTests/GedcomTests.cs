@@ -17,24 +17,19 @@ public sealed class GedcomTests
     [TestMethod]
     public void ExportGedcomAsJsonTest()
     {
-        var options = new Options
-        {
-            RecordType = C.GEDC
-        };
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.GEDC });
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.GedcomJson, AssertFunction, nameof(ExportGedcomAsJsonTest));
 
-        var exporter = new Exporter(Gedcom, options);
-        var gedcomJson = exporter.GedcomJson();
-
-        Assert.IsTrue(
-            gedcomJson.Contains(TestTree.Individuals.RobertDavis.Xref)
-            && gedcomJson.Contains(TestTree.Individuals.RosaGarcia.Xref)
-            && gedcomJson.Contains(TestTree.Individuals.MariaDavis.Xref)
-            && gedcomJson.Contains(TestTree.Individuals.DylanLewis.Xref)
-            && gedcomJson.Contains(TestTree.Individuals.MateoDavis.Xref)
-            && gedcomJson.Contains(TestTree.Individuals.GwenLewis.Xref)
-            && gedcomJson.Contains(TestTree.Families.RobertAndRosaDavis.Xref)
-            && gedcomJson.Contains(TestTree.Families.DylanAndMariaLewis.Xref)
-            && gedcomJson.Contains(TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref)
-            && gedcomJson.Contains(TestTree.Sources.GarciaFamilyBirths.Xref));
+        bool AssertFunction(string json) => 
+            json.Contains(TestTree.Individuals.RobertDavis.Xref)
+            && json.Contains(TestTree.Individuals.RosaGarcia.Xref)
+            && json.Contains(TestTree.Individuals.MariaDavis.Xref)
+            && json.Contains(TestTree.Individuals.DylanLewis.Xref)
+            && json.Contains(TestTree.Individuals.MateoDavis.Xref)
+            && json.Contains(TestTree.Individuals.GwenLewis.Xref)
+            && json.Contains(TestTree.Families.RobertAndRosaDavis.Xref)
+            && json.Contains(TestTree.Families.DylanAndMariaLewis.Xref)
+            && json.Contains(TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref)
+            && json.Contains(TestTree.Sources.GarciaFamilyBirths.Xref);
     }
 }

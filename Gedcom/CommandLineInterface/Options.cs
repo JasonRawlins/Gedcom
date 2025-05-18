@@ -5,7 +5,7 @@ namespace Gedcom.CLI;
 public class Options
 {
     private string format = C.JSON;
-    [Option('f', "format", Required = false, HelpText = "Output format (e.g. json, ged, list).")]
+    [Option('f', "format", Required = false, HelpText = "Output format (json, ged, list).")]
     public string Format
     {
         get => format.ToUpper();
@@ -27,14 +27,14 @@ public class Options
     }
 
     private string recordType = "";
-    [Option('t', "record-type", Required = true, HelpText = "Record type to export. (e.g. GEDC, FAM, INDI, OBJE, NOTE, REPO, SOUR, SUBM)")]
+    [Option('t', "record-type", Required = true, HelpText = "Record type to export. (GEDC, FAM, INDI, OBJE, NOTE, REPO, SOUR, SUBM)")]
     public string RecordType
     {
         get => recordType.ToUpper();
         set => recordType = value;
     }    
 
-    [Option('x', "xref", Required = false, HelpText = "Record xref. (e.g. @I123@, @R456@, @S894, etc.")]
+    [Option('x', "xref", Required = false, HelpText = "Record xref. (@I123@, @R456@, @S894, etc.")]
     public string Xref { get; set; } = "";
 }
 

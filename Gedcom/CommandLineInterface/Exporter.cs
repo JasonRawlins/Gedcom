@@ -5,7 +5,7 @@ namespace Gedcom.CLI;
 
 public class Exporter
 {
-    public static string[] RecordTypes = [C.FAM, C.INDI, C.OBJE, C.NOTE, C.REPO, C.SOUR, C.SUBM];
+    public static string[] RecordTypes = [C.FAM, C.INDI, C.OBJE, C.NOTE, C.REPO, C.SOUR, C.SUBM, C.GEDC /* GEDC is not a real top-level record type. It's used when the whole gedcom is exported. */];
     public static string[] OutputFormats = [C.JSON, C.LIST];
 
     public Options Options { get; set; }
@@ -23,23 +23,13 @@ public class Exporter
 
     public string GedcomJson() => JsonConvert.SerializeObject(Gedcom, JsonSettings.DefaultOptions);
 
-    public string IndividualRecordJson()
-    {
-        var individualRecord = Gedcom.GetIndividualRecord(Options.Xref, Options.Query);
-        if (individualRecord.IsEmpty)
-        {
-            return "";
-        }
+    // Family (FAM)
+    public string FamilyRecordJson() => GetRecordJson(Gedcom.GetFamilyRecord(Options.Xref, Options.Query));
+    public string FamilyRecordsJson() => GetRecordsJson(Gedcom.GetFamilyRecords(Options.Query));
 
-        return JsonConvert.SerializeObject(individualRecord, JsonSettings.DefaultOptions);
-    }
-
-    public string IndividualRecordsJson()
-    {
-        var individualRecords = Gedcom.GetIndividualRecords(Options.Query);
-
-        return JsonConvert.SerializeObject(individualRecords, JsonSettings.DefaultOptions);
-    }
+    // Individual (INDI)
+    public string IndividualRecordJson() => GetRecordJson(Gedcom.GetIndividualRecord(Options.Xref, Options.Query));
+    public string IndividualRecordsJson() => GetRecordsJson(Gedcom.GetIndividualRecords(Options.Query));
 
     public List<IndividualListItem> IndividualRecordsList()
     {
@@ -49,8 +39,10 @@ public class Exporter
         return individualsList;
     }
 
+    // Repository (REPO)
     public string RepositoryRecordJson() => GetRecordJson(Gedcom.GetRepositoryRecord(Options.Xref));
     public string RepositoryRecordsJson() => GetRecordsJson(Gedcom.GetRepositoryRecords(Options.Query));
+    // Source (SOUR)
     public string SourceRecordJson() => GetRecordJson(Gedcom.GetSourceRecord(Options.Xref));
     public string SourceRecordsJson() => GetRecordsJson(Gedcom.GetSourceRecords(Options.Query));
 
@@ -113,8 +105,8 @@ public class Exporter
     {
         public const string InputFilePathIsRequired = "Could not find the input file:";
         public const string OutputFilePathIsRequired = "The output file path must refer to an existing directory.";
-        public const string InvalidRecordType = "is not a valid record type. (e.g. FAM, INDI, OBJE, NOTE, REPO, SOUR, SUBM)";
-        public const string InvalidFormat = "is not a valid export format. (e.g. JSON, LIST)";
+        public const string InvalidRecordType = "is not a valid record type. (FAM, INDI, OBJE, NOTE, REPO, SOUR, SUBM)";
+        public const string InvalidFormat = "is not a valid export format. (JSON, LIST)";
         public const string InvalidXref = "is not a valid xref.";
     }
 }

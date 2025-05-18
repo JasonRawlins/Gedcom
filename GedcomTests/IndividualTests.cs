@@ -20,7 +20,7 @@ public sealed class IndividualTests
     public void ExportIndividualsJsonTest()
     {
         var exporter = new Exporter(Gedcom, new Options() { RecordType = C.INDI });
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordsJson, AssertFunction);
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordsJson, AssertFunction, nameof(ExportIndividualsJsonTest));
 
         bool AssertFunction(string json) => 
             json.Contains(TestTree.Individuals.RobertDavis.Xref)
@@ -38,7 +38,7 @@ public sealed class IndividualTests
         //var exporter = new Exporter(Gedcom, new Options() { RecordType = C.INDI, Format = C.LIST });
         //var individualRecords = Gedcom.GetIndividualRecords();
 
-        //GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordsList, AssertFunction);
+        //GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordsList, AssertFunction, nameof(ExportIndividualsListTest));
 
         //var individualsList = exporter.IndividualRecordsList();
 
@@ -49,7 +49,7 @@ public sealed class IndividualTests
     public void ExportIndividualJsonTest()
     {
         var exporter = new Exporter(Gedcom, new Options() { RecordType = C.INDI, Xref = TestTree.Individuals.MariaDavis.Xref});
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordJson, AssertFunction);
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordJson, AssertFunction, nameof(ExportIndividualJsonTest));
 
         bool AssertFunction(string json) => 
             json.Contains(TestTree.Individuals.MariaDavis.Xref)
@@ -60,7 +60,7 @@ public sealed class IndividualTests
     public void NonExistingIndividualJsonTest()
     {
         var exporter = new Exporter(Gedcom, new Options() { RecordType = C.INDI, Xref = "INVALID_XREF" });
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordJson, AssertFunction, assertValidExporter: false);
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordJson, AssertFunction, nameof(NonExistingIndividualJsonTest), false);
 
         bool AssertFunction(string json) => string.IsNullOrWhiteSpace(json);
     }
@@ -69,7 +69,7 @@ public sealed class IndividualTests
     public void QueryIndividualsJsonTest()
     {
         var exporter = new Exporter(Gedcom, new Options() {  RecordType = C.INDI, Query = "Davis" });
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordsJson, AssertFunction);
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordsJson, AssertFunction, nameof(QueryIndividualsJsonTest));
 
         bool AssertFunction(string json) =>
             json.Contains(TestTree.Individuals.RobertDavis.Xref)

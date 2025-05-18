@@ -26,27 +26,29 @@ public class Gedcom : RecordStructureBase
 
     public Header Header => First<Header>(C.HEAD);
 
-    public FamilyRecord GetFamilyRecord(string xrefFAM) => new(Record.Records.First(r => r.Tag.Equals(C.FAM) && r.Value.Equals(xrefFAM)));
-    public List<FamilyRecord> GetFamilyRecords() => Record.Records.Where(r => r.Tag.Equals(C.FAM)).Select(r => new FamilyRecord(r)).ToList();
+    // Family (FAM)
+    public FamilyRecord GetFamilyRecord(string xref, string query = "") => GetRecord<FamilyRecord>(C.FAM, xref, query);
+    public List<FamilyRecord> GetFamilyRecords(string query = "") => GetRecords<FamilyRecord>(C.FAM, query);
 
-    public MultimediaRecord GetMultimediaRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(C.OBJE) && r.Value.Equals(xref)));
-    public List<MultimediaRecord> GetMultimediaRecords() => Record.Records.Where(r => r.Tag.Equals(C.OBJE)).Select(r => new MultimediaRecord(r)).ToList();
-
-    public NoteRecord GetNoteRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(C.NOTE) && r.Value.Equals(xref)));
-    public List<NoteRecord> GetNoteRecords() => Record.Records.Where(r => r.Tag.Equals(C.NOTE)).Select(r => new NoteRecord(r)).ToList();
-
-
-
-    // Individuals (INDI)
+    // Individual (INDI)
     public IndividualRecord GetIndividualRecord(string xref, string query = "") => GetRecord<IndividualRecord>(C.INDI, xref, query);
     public List<IndividualRecord> GetIndividualRecords(string query = "") => GetRecords<IndividualRecord>(C.INDI, query);
 
-    // Repositories (REPO)
+    //public MultimediaRecord GetMultimediaRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(C.OBJE) && r.Value.Equals(xref)));
+    //public List<MultimediaRecord> GetMultimediaRecords() => Record.Records.Where(r => r.Tag.Equals(C.OBJE)).Select(r => new MultimediaRecord(r)).ToList();
+
+    //public NoteRecord GetNoteRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(C.NOTE) && r.Value.Equals(xref)));
+    //public List<NoteRecord> GetNoteRecords() => Record.Records.Where(r => r.Tag.Equals(C.NOTE)).Select(r => new NoteRecord(r)).ToList();
+
+    // Repository (REPO)
     public RepositoryRecord GetRepositoryRecord(string xref, string query = "") => GetRecord<RepositoryRecord>(C.REPO, xref, query);
     public List<RepositoryRecord> GetRepositoryRecords(string query = "") => GetRecords<RepositoryRecord>(C.REPO, query);
 
+    // Source (SOUR)
     public SourceRecord GetSourceRecord(string xref, string query = "") => GetRecord<SourceRecord>(C.SOUR, xref, query);
     public List<SourceRecord> GetSourceRecords(string query = "") => GetRecords<SourceRecord>(C.SOUR, query);
+
+    // Submitter (SUBM) TODO:
 
     private T GetRecord<T>(string tag, string xref = "", string query = "") where T : RecordStructureBase, new()
     {
