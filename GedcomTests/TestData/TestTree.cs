@@ -35,14 +35,15 @@ internal class TestIndividual
 {
     public TestIndividual(string xref, string given, string surname)
     {
-        Xref = xref;
         Given = given;
         Surname = surname;
+        Xref = xref;
     }
 
-    public string Xref { get; set; }
     public string Given { get; set; }
     public string Surname { get; set; }
+    public string Xref { get; set; }
+    public string XrefId => Xref.Replace("@", "").Replace("I", "");
 }
 
 internal class TestFamily

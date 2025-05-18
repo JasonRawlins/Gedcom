@@ -82,11 +82,11 @@ public sealed class IndividualTests
         GedcomAssert.RecordHtmlIsValid(exporter, exporter.IndividualsHtml, AssertFunction, nameof(ExportIndividualsHtmlTest));
 
         bool AssertFunction (string html) =>
-            html.Contains(TestTree.Individuals.RobertDavis.Xref)
-            && html.Contains(TestTree.Individuals.RosaGarcia.Xref)
-            && html.Contains(TestTree.Individuals.MariaDavis.Xref)
-            && html.Contains(TestTree.Individuals.DylanLewis.Xref)
-            && html.Contains(TestTree.Individuals.GwenLewis.Xref)
-            && html.Contains(TestTree.Individuals.MateoDavis.Xref);
+            html.Contains(TestTree.Individuals.RobertDavis.XrefId)
+            && html.Contains(TestTree.Individuals.RosaGarcia.XrefId)
+            && html.Contains(TestTree.Individuals.MariaDavis.XrefId)
+            && html.Contains(TestTree.Individuals.DylanLewis.XrefId)
+            && html.Contains(TestTree.Individuals.GwenLewis.XrefId)
+            && html.Contains(TestTree.Individuals.MateoDavis.XrefId);
     }
 }
