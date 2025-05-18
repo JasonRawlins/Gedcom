@@ -61,7 +61,7 @@ public class Exporter
     private string GetIndividualsHtml(List<IndividualListItem> individualListItems)
     {
         var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.IndividualsHtmlTemplate);
-        var individualLis = Html.CreateIndividualLis(individualListItems, Gedcom.Header.Source.Tree.AutomatedRecordId);
+        var individualLis = HtmlWriter.CreateIndividualLis(individualListItems, Gedcom.Header.Source.Tree.AutomatedRecordId);
         var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", string.Join(Environment.NewLine, individualLis));
 
         return finalHtml;

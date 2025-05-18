@@ -1,9 +1,6 @@
-﻿using CommandLine;
-using System.Text;
+﻿namespace Gedcom.CLI;
 
-namespace Gedcom.CLI;
-
-public static class Html
+public static class HtmlWriter
 {
    public static List<string> CreateIndividualLis(List<IndividualListItem> individualListItems, string TreeId)
     {

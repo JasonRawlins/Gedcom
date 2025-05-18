@@ -1,8 +1,7 @@
 ﻿using CommandLine;
 using Gedcom;
 using Gedcom.CLI;
-using Gedcom.RecordStructures;
-using System.Text;
+using System.Diagnostics;
 
 public class Program
 {
@@ -83,8 +82,14 @@ public class Program
         }
 
         void WriteHtml(string html)
-        {        
+        {
             File.WriteAllText(options.OutputFilePath, html);
+
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = options.OutputFilePath,
+                UseShellExecute = true
+            });
         }
     }
 
