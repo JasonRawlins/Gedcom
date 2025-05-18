@@ -90,14 +90,3 @@ public sealed class IndividualTests
             && html.Contains(TestTree.Individuals.MateoDavis.Xref);
     }
 }
-
-/*
-void WriteHtml(List<IndividualListItem> individualListItems)
-{
-    var htmlTemplate = Encoding.UTF8.GetString(Gedcom.Properties.Resources.IndividualsHtmlTemplate);
-    var individualLis = Html.CreateIndividualListItem(individualListItems, gedcom.Header.Source.Tree.AutomatedRecordId);
-    var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", string.Join(Environment.NewLine, individualLis));
-            
-    File.WriteAllText(options.OutputFilePath, finalHtml);
-}
-*/

@@ -7,7 +7,9 @@ public class IndividualListItem
     public IndividualListItem(IndividualRecord individualRecord)
     {
         Birth = individualRecord.Birth.GedcomDate;
+        BirthPlace = individualRecord.Birth.PlaceStructure.PlaceName;
         Death = individualRecord.Death.GedcomDate;
+        DeathPlace = individualRecord.Death.PlaceStructure.PlaceName;
         FullName = individualRecord.FullName;
         Given = individualRecord.Given;
         Surname = individualRecord.Surname;
@@ -15,11 +17,14 @@ public class IndividualListItem
     }
 
     public GedcomDate Birth { get; set; }
+    public string BirthPlace { get; set; }
     public GedcomDate Death { get; set; }
+    public string DeathPlace { get; set; }
     public string FullName { get; set; }
     public string Given { get; set; }
     public string Surname { get; set; }
     public string Xref { get; set; }
+    public string XrefId => Xref.Replace("@", "").Replace("I", "");
 
     public override string ToString()
     {

@@ -32,4 +32,10 @@ public sealed class GedcomTests
             && json.Contains(TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref)
             && json.Contains(TestTree.Sources.GarciaFamilyBirths.Xref);
     }
+
+    //[TestMethod]
+    //public void GetImageBase64String()
+    //{
+    //    var imageBase64String = TestUtilities.GetImageBase64String();
+    //}
 }

@@ -11,10 +11,18 @@ public static class Html
         foreach (var li in individualListItems)
         {
             liList.Add(
-$@"<li>
-      <a href='{GenerateProfileLink(TreeId, li.Xref)}' target='_blank'>
-          {li.Surname}, {li.Given} ({li.Birth.DayMonthYear} — {li.Death.DayMonthYear}). {li.Xref}
-      </a>
+$@"<li class='individual-card'>
+    <a href='https://www.ancestry.com/family-tree/person/tree/{TreeId}/person/{li.XrefId}/facts' target='_blank'>
+        <h3>
+            {li.Surname}, {li.Given}
+        </h3>
+        <div class='vitals'>
+            BIRTH {li.Birth.DayMonthYear} • {li.BirthPlace}
+        </div>
+        <div class='vitals'>
+            DEATH {li.Death.DayMonthYear} • {li.DeathPlace}
+        </div>
+    </a>
 </li>");
         }
 

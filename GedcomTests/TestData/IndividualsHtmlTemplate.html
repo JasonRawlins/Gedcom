@@ -1,13 +1,168 @@
 <!DOCTYPE html>
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+
 <head>
-    <meta charset="utf-8" />
-    <title></title>
+    <meta charset='utf-8' />
+    <title>Gedcom.NET</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%h;
+            margin: 0;
+            background-color: #f4f4f4;
+            font-family: 'ui-serifed', 'Times New Roman', Times, serif;
+        }
+
+        .content {
+            width: 1000px;
+            height: 100vh;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            min-height: fit-content;
+        }
+
+        ul {
+            text-align: left;
+            list-style-type: none;
+            padding-left: 20px;
+        }
+
+        li.individual-card {
+            border: 1px dotted black;
+            padding: 10px;
+            width: 500px;
+            font: 14.5px / 1.33 ui-sans, Helvetica Neue, Arial, sans-serif;
+            margin-top: 5px;
+        }
+
+            li.individual-card:hover {
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            }
+
+            li.individual-card h3 {
+                font-size: 1.5em;
+            }
+
+            li.individual-card a {
+                text-decoration: none;
+                color: black;
+            }
+
+                li.individual-card a:hover {
+                    text-decoration: none;
+                }
+
+        header {
+            background-color: #4D4D4D;
+            color: white;
+            padding: 10px;
+        }
+
+        h1 {
+            font-size: 3em;
+            padding: 15px;
+            margin: 0;
+        }
+
+        .individual-card h3 {
+            font-size: 1.2em;
+            padding: 0px;
+            margin: 0px;
+        }
+    </style>
+
 </head>
+
 <body>
-    <ul>
-        {{INDIVIDUAL_LIST_ITEMS}}
-    </ul>
+    <div class='content'>
+        <header>
+            <h1>Gedcom.NET</h1>
+        </header>
+        <ul>
+            <li class='individual-card'>
+    <a href='https://www.ancestry.com/family-tree/person/tree/204223479/person/412679332996/facts' target='_blank'>
+        <h3>
+            Davis, Maria
+        </h3>
+        <div class='vitals'>
+            BIRTH 15 Jan 1920 • San Diego, San Diego, California, USA
+        </div>
+        <div class='vitals'>
+            DEATH 23 Mar 1985 • San Diego, San Diego, California, USA
+        </div>
+    </a>
+</li>
+<li class='individual-card'>
+    <a href='https://www.ancestry.com/family-tree/person/tree/204223479/person/412679332995/facts' target='_blank'>
+        <h3>
+            Davis, Robert
+        </h3>
+        <div class='vitals'>
+            BIRTH 21 Jun 1890 • Cardiff, Glamorgan, Wales
+        </div>
+        <div class='vitals'>
+            DEATH 18 Nov 1960 • San Diego, San Diego, California, USA
+        </div>
+    </a>
+</li>
+<li class='individual-card'>
+    <a href='https://www.ancestry.com/family-tree/person/tree/204223479/person/412679333070/facts' target='_blank'>
+        <h3>
+            Garcia, Rosa
+        </h3>
+        <div class='vitals'>
+            BIRTH 1900 • Mexico City, Mexico
+        </div>
+        <div class='vitals'>
+            DEATH 1970 • San Diego, San Diego, California, USA
+        </div>
+    </a>
+</li>
+<li class='individual-card'>
+    <a href='https://www.ancestry.com/family-tree/person/tree/204223479/person/412679333252/facts' target='_blank'>
+        <h3>
+            Davis, Mateo
+        </h3>
+        <div class='vitals'>
+            BIRTH 4 Nov 1925 • Encinitas, San Diego, California, USA
+        </div>
+        <div class='vitals'>
+            DEATH 11 Feb 1995 • St George, Washington, Utah, USA
+        </div>
+    </a>
+</li>
+<li class='individual-card'>
+    <a href='https://www.ancestry.com/family-tree/person/tree/204223479/person/412679333361/facts' target='_blank'>
+        <h3>
+            Lewis, Dylan
+        </h3>
+        <div class='vitals'>
+            BIRTH 23 Aug 1915 • Salt Lake City, Salt Lake, Utah, USA
+        </div>
+        <div class='vitals'>
+            DEATH 1 Dec 1980 • San Diego, San Diego, California, USA
+        </div>
+    </a>
+</li>
+<li class='individual-card'>
+    <a href='https://www.ancestry.com/family-tree/person/tree/204223479/person/412679333479/facts' target='_blank'>
+        <h3>
+            Lewis, Gwen
+        </h3>
+        <div class='vitals'>
+            BIRTH 1940 • San Diego, San Diego, California, USA
+        </div>
+        <div class='vitals'>
+            DEATH 2010 • Los Angeles, Los Angeles, California, USA
+        </div>
+    </a>
+</li>
+        </ul>
+    </div>
 </body>
+
 </html>

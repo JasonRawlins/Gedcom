@@ -1,13 +1,91 @@
 <!DOCTYPE html>
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+
 <head>
-    <meta charset="utf-8" />
-    <title></title>
+    <meta charset='utf-8' />
+    <title>Gedcom.NET</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%h;
+            margin: 0;
+            background-color: #f4f4f4;
+            font-family: 'ui-serifed', 'Times New Roman', Times, serif;
+        }
+
+        .content {
+            width: 1000px;
+            height: 100vh;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            min-height: fit-content;
+        }
+
+        ul {
+            text-align: left;
+            list-style-type: none;
+            padding-left: 20px;
+        }
+
+        li.individual-card {
+            border: 1px dotted black;
+            padding: 10px;
+            width: 500px;
+            font: 14.5px / 1.33 ui-sans, Helvetica Neue, Arial, sans-serif;
+            margin-top: 5px;
+        }
+
+            li.individual-card:hover {
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            }
+
+            li.individual-card h3 {
+                font-size: 1.5em;
+            }
+
+            li.individual-card a {
+                text-decoration: none;
+                color: black;
+            }
+
+                li.individual-card a:hover {
+                    text-decoration: none;
+                }
+
+        header {
+            background-color: #4D4D4D;
+            color: white;
+            padding: 10px;
+        }
+
+        h1 {
+            font-size: 3em;
+            padding: 15px;
+            margin: 0;
+        }
+
+        .individual-card h3 {
+            font-size: 1.2em;
+            padding: 0px;
+            margin: 0px;
+        }
+    </style>
+
 </head>
+
 <body>
-    <ul>
-        {{INDIVIDUAL_LIST_ITEMS}}
-    </ul>
+    <div class='content'>
+        <header>
+            <h1>Gedcom.NET</h1>
+        </header>
+        <ul>
+            {{INDIVIDUAL_LIST_ITEMS}}
+        </ul>
+    </div>
 </body>
+
 </html>

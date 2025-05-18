@@ -1,5 +1,6 @@
 ﻿using Gedcom;
 using Gedcom.CLI;
+using Microsoft.CodeCoverage.Core.Reports.Coverage;
 using System.Text;
 
 namespace GedcomTests;
@@ -18,6 +19,12 @@ public class TestUtilities
         var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
         return new Gedcom.Gedcom(gedcomLines);
     }
+
+    //public static string GetImageBase64String()
+    //{
+    //    byte[] imageBytes = File.ReadAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "ancestry-logo-260x50.png"));
+    //    return Convert.ToBase64String(imageBytes);
+    //}
 }
 
 public class GedcomAssert
@@ -60,4 +67,3 @@ public class GedcomAssert
         Assert.IsTrue(AssertFunction(html), $"Called from {callingFunction}");
     }
 }
-

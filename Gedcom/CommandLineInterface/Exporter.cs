@@ -36,7 +36,6 @@ public class Exporter
     {
         var individualListItems = Gedcom.GetIndividualRecords().Select(ir => new IndividualListItem(ir)).ToList();
         return GetIndividualsHtml(individualListItems);
-
     }
 
     // Repository (REPO)
@@ -65,6 +64,11 @@ public class Exporter
         var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", string.Join(Environment.NewLine, individualLis));
 
         return finalHtml;
+    }
+
+    public string GetCliCommand()
+    {
+        return $"gedcom -i {Options.InputFilePath} -o {Options.OutputFilePath} -t {Options.RecordType} -f {Options.Format}";
     }
 
     public List<string> Errors
