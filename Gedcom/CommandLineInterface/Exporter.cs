@@ -8,8 +8,12 @@ public class Exporter
     public static string[] RecordTypes = [C.FAM, C.INDI, C.OBJE, C.NOTE, C.REPO, C.SOUR, C.SUBM];
     public static string[] OutputFormats = [C.JSON, C.LIST];
 
-    private Options Options { get; set; }
-    private Gedcom Gedcom { get; set; }
+    public Options Options { get; set; }
+    public Gedcom Gedcom { get; set; }
+
+    public Exporter(Gedcom gedcom) : this(gedcom, new Options())
+    {
+    }
 
     public Exporter(Gedcom gedcom, Options options)
     {

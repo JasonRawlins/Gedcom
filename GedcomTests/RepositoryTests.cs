@@ -17,60 +17,47 @@ public sealed class RepositoryTests
     [TestMethod]
     public void ExportRepositoriesJsonTest()
     {
-        var options = TestUtilities.CreateOptionsWithInputAndJsonOutput();
-        options.RecordType = C.REPO;
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.REPO });
+        GedcomAssert.RecordJson(exporter, exporter.RepositoryRecordsJson, AssertFunction);
 
-        var exporter = new Exporter(Gedcom, options);
-        GedcomAssert.ExporterIsValid(exporter);
-        var repositoryRecordsJson = exporter.RepositoryRecordsJson();
-
-        Assert.IsTrue(
-            repositoryRecordsJson.Contains(TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref)
-            && repositoryRecordsJson.Contains(TestTree.Repositories.FamilySearchLibrary.Xref));
+        bool AssertFunction(string json) =>
+            json.Contains(TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref)
+            && json.Contains(TestTree.Repositories.FamilySearchLibrary.Xref);
     }
 
     [TestMethod]
     public void ExportRepositoryJsonTest()
     {
-        var options = TestUtilities.CreateOptionsWithInputAndJsonOutput();
-        options.RecordType = C.REPO;
-        options.Xref = TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref;
+        var exporter = new Exporter(Gedcom, new Options() 
+        { 
+            RecordType = C.REPO,
+            Xref = TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref
+        });
 
-        var exporter = new Exporter(Gedcom, options);
-        GedcomAssert.ExporterIsValid(exporter);
-        var repositoryRecordJson = exporter.RepositoryRecordJson();
+        GedcomAssert.RecordJson(exporter, exporter.RepositoryRecordJson, AssertFunction);
 
-        Assert.IsTrue(
-            repositoryRecordJson.Contains(TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref)
-            && !repositoryRecordJson.Contains(TestTree.Repositories.FamilySearchLibrary.Xref));
+        bool AssertFunction(string json) =>
+            json.Contains(TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref)
+            && !json.Contains(TestTree.Repositories.FamilySearchLibrary.Xref);
     }
 
     [TestMethod]
     public void ExportNonExistingRepositoryJsonTest()
     {
-        var options = TestUtilities.CreateOptionsWithInputAndJsonOutput();
-        options.RecordType = C.REPO;
-        options.Xref = "INVALID_XREF";
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.REPO, Xref = "INVALID_XREF"});
+        GedcomAssert.RecordJson(exporter, exporter.RepositoryRecordJson, AssertFunction, assertValidExporter: false);
 
-        var exporter = new Exporter(Gedcom, options);
-        var repositoryRecordJson = exporter.RepositoryRecordJson();
-
-        Assert.IsTrue(string.IsNullOrWhiteSpace(repositoryRecordJson));
+        bool AssertFunction(string json) => string.IsNullOrWhiteSpace(json);
     }
 
     [TestMethod]
     public void QueryRepositoryJsonTest()
     {
-        var options = TestUtilities.CreateOptionsWithInputAndJsonOutput();
-        options.RecordType = C.REPO;
-        options.Query = "FamilySearch";
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.REPO, Query = "FamilySearch" });
+        GedcomAssert.RecordJson(exporter, exporter.RepositoryRecordsJson, AssertFunction);
 
-        var exporter = new Exporter(Gedcom, options);
-        GedcomAssert.ExporterIsValid(exporter);
-        var repositoryRecordsJson = exporter.RepositoryRecordsJson();
-
-        Assert.IsTrue(
-            repositoryRecordsJson.Contains(TestTree.Repositories.FamilySearchLibrary.Xref)
-            && !repositoryRecordsJson.Contains(TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref));
+        bool AssertFunction(string json) => 
+            json.Contains(TestTree.Repositories.FamilySearchLibrary.Xref)
+            && !json.Contains(TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref);
     }
 }
