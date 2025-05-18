@@ -6,8 +6,8 @@ public class IndividualListItem
 {
     public IndividualListItem(IndividualRecord individualRecord)
     {
-        Birth = new GedcomDate(individualRecord.Birth.Record);
-        Death = new GedcomDate(individualRecord.Death.Record);
+        Birth = individualRecord.Birth.GedcomDate;
+        Death = individualRecord.Death.GedcomDate;
         FullName = individualRecord.FullName;
         Given = individualRecord.Given;
         Surname = individualRecord.Surname;

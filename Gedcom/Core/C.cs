@@ -75,6 +75,7 @@ public static class C // Constants
     public const string GIVN = "GIVN"; // <NAME_PEICE_GIVEN> 
     public const string GRAD = "GRAD"; // <blank>
     public const string HEAD = "HEAD"; // <blank>
+    public const string HTML = "HTML"; // @<XREF:INDI>, <blank>
     public const string HUSB = "HUSB"; // @<XREF:INDI>, <blank>
     public const string INDI = "INDI"; // @XREF:INDI@ INDI
     public const string IDNO = "IDNO"; // <NATOINAL_ID_NUMBER>

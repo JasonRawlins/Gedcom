@@ -4,17 +4,14 @@ using GedcomTests.TestData;
 
 namespace GedcomTests;
 
-// The use of the word "Individual" in this class refers to a Gedcom "Individual" record, not
-// its normal meaning of "singular," "each," "one," etc. 
+// The use of the word "Individual" in this class refers to a Gedcom "Individual" (INDI) record,
+// not its normal meaning of "singular," "each," "one," etc. 
 [TestClass]
 public sealed class IndividualTests
 {
     public static Gedcom.Gedcom Gedcom { get; set; }
    
-    static IndividualTests()
-    {
-        Gedcom = TestUtilities.CreateGedcom();
-    }
+    static IndividualTests() => Gedcom = TestUtilities.CreateGedcom();
 
     [TestMethod]
     public void ExportIndividualsJsonTest()
@@ -77,4 +74,30 @@ public sealed class IndividualTests
             && json.Contains(TestTree.Individuals.MateoDavis.Xref)
             && !json.Contains(TestTree.Individuals.GwenLewis.Xref);
     }
+
+    [TestMethod]
+    public void ExportIndividualsHtmlTest()
+    {
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.INDI, Format = C.HTML });
+        GedcomAssert.RecordHtmlIsValid(exporter, exporter.IndividualsHtml, AssertFunction, nameof(ExportIndividualsHtmlTest));
+
+        bool AssertFunction (string html) =>
+            html.Contains(TestTree.Individuals.RobertDavis.Xref)
+            && html.Contains(TestTree.Individuals.RosaGarcia.Xref)
+            && html.Contains(TestTree.Individuals.MariaDavis.Xref)
+            && html.Contains(TestTree.Individuals.DylanLewis.Xref)
+            && html.Contains(TestTree.Individuals.GwenLewis.Xref)
+            && html.Contains(TestTree.Individuals.MateoDavis.Xref);
+    }
 }
+
+/*
+void WriteHtml(List<IndividualListItem> individualListItems)
+{
+    var htmlTemplate = Encoding.UTF8.GetString(Gedcom.Properties.Resources.IndividualsHtmlTemplate);
+    var individualLis = Html.CreateIndividualListItem(individualListItems, gedcom.Header.Source.Tree.AutomatedRecordId);
+    var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", string.Join(Environment.NewLine, individualLis));
+            
+    File.WriteAllText(options.OutputFilePath, finalHtml);
+}
+*/

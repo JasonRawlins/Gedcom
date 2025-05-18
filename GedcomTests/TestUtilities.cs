@@ -10,6 +10,7 @@ public class TestUtilities
     public static string GedcomNetTreeDirectory = Path.GetDirectoryName(GedcomNetTreeFullName) ?? "";
     public static string GedcomNetTreeOutputJsonFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.json");
     public static string GedcomNetTreeOutputTextFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.txt");
+    public static string GedcomNetTreeOutputHtmlFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.html");
 
     public static Gedcom.Gedcom CreateGedcom()
     {
@@ -39,9 +40,24 @@ public class GedcomAssert
             ExporterIsValid(exporter);
         }
 
-        var exportedJson = JsonExportFunction();
+        var json = JsonExportFunction();
 
-        Assert.IsTrue(AssertFunction(exportedJson), $"Called from {callingFunction}");
+        Assert.IsTrue(AssertFunction(json), $"Called from {callingFunction}");
+    }
+
+    public static void RecordHtmlIsValid(Exporter exporter, Func<string> HtmlExportFunction, Func<string, bool> AssertFunction, string callingFunction, bool assertValidExporter = true)
+    {
+        exporter.Options.InputFilePath = TestUtilities.GedcomNetTreeFullName;
+        exporter.Options.OutputFilePath = TestUtilities.GedcomNetTreeOutputHtmlFullName;
+
+        if (assertValidExporter)
+        {
+            ExporterIsValid(exporter);
+        }
+
+        var html = HtmlExportFunction();
+
+        Assert.IsTrue(AssertFunction(html), $"Called from {callingFunction}");
     }
 }
 

@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.RecordStructures;
+using Newtonsoft.Json;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Gedcom.CLI;
@@ -6,7 +8,7 @@ namespace Gedcom.CLI;
 public class Exporter
 {
     public static string[] RecordTypes = [C.FAM, C.INDI, C.OBJE, C.NOTE, C.REPO, C.SOUR, C.SUBM, C.GEDC /* GEDC is not a real top-level record type. It's used when the whole gedcom is exported. */];
-    public static string[] OutputFormats = [C.JSON, C.LIST];
+    public static string[] OutputFormats = [C.JSON, C.LIST, C.HTML];
 
     public Options Options { get; set; }
     public Gedcom Gedcom { get; set; }
@@ -30,13 +32,11 @@ public class Exporter
     // Individual (INDI)
     public string IndividualRecordJson() => GetRecordJson(Gedcom.GetIndividualRecord(Options.Xref, Options.Query));
     public string IndividualRecordsJson() => GetRecordsJson(Gedcom.GetIndividualRecords(Options.Query));
-
-    public List<IndividualListItem> IndividualRecordsList()
+    public string IndividualsHtml()
     {
-        var individualRecords = Gedcom.GetIndividualRecords();
-        var individualsList = individualRecords.Select(ir => new IndividualListItem(ir)).ToList();
+        var individualListItems = Gedcom.GetIndividualRecords().Select(ir => new IndividualListItem(ir)).ToList();
+        return GetIndividualsHtml(individualListItems);
 
-        return individualsList;
     }
 
     // Repository (REPO)
@@ -56,6 +56,15 @@ public class Exporter
     {
         if (recordStructures.Count() == 0) return "";
         return JsonConvert.SerializeObject(recordStructures);
+    }
+
+    private string GetIndividualsHtml(List<IndividualListItem> individualListItems)
+    {
+        var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.IndividualsHtmlTemplate);
+        var individualLis = Html.CreateIndividualLis(individualListItems, Gedcom.Header.Source.Tree.AutomatedRecordId);
+        var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", string.Join(Environment.NewLine, individualLis));
+
+        return finalHtml;
     }
 
     public List<string> Errors

@@ -1,6 +1,8 @@
 ﻿using CommandLine;
 using Gedcom;
 using Gedcom.CLI;
+using Gedcom.RecordStructures;
+using System.Text;
 
 public class Program
 {
@@ -32,13 +34,17 @@ public class Program
 
         if (options.RecordType.Equals(C.INDI))
         {
-            if (options.Format.Equals(C.LIST))
-            {
-                WriteList(exporter.IndividualRecordsList());
-            }
-            else if (options.Format.Equals(C.JSON))
+            if (options.Format.Equals(C.JSON))
             {
                 WriteJson(exporter.IndividualRecordsJson());
+            }
+            else if (options.Format.Equals(C.LIST))
+            {
+                //WriteList(exporter.IndividualListItems());
+            }
+            else if (options.Format.Equals(C.HTML))
+            {
+                WriteHtml(exporter.IndividualsHtml());
             }
 
             return;
@@ -74,6 +80,11 @@ public class Program
             }
 
             File.WriteAllLines(options.OutputFilePath, individualsList);
+        }
+
+        void WriteHtml(string html)
+        {        
+            File.WriteAllText(options.OutputFilePath, html);
         }
     }
 
