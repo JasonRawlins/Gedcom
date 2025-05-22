@@ -83,7 +83,7 @@ public static class C // Constants
     public const string JSON = "JSON"; 
     public const string LANG = "LANG"; // <LANGUAGE_PREFERENCE>, <LANGUAGE_OF_TEXT>
     public const string LATI = "LATI"; // <PLACE_LATITUDE>
-    public const string LIST = "LIST"; // Gedcom.NET CLI
+    public const string LIST = "LIST"; // GedcomNET CLI
     public const string LONG = "LONG"; // <PLACE_LONGITUDE>
     public const string MAP = "MAP"; // <blank>
     public const string MARB = "MARB"; // <blank>
@@ -147,4 +147,5 @@ public static class C // Constants
     public const string WILL = "WILL"; // <blank>
     public const string WWW = "WWW"; // <ADDRESS_WEB_PAGE>
     public const string XREF = "Xref";
+    public const string XSLX = "XSLX"; // For Excel export option.
 }

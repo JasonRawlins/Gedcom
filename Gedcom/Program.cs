@@ -58,12 +58,6 @@ public class Program
             }
         }
 
-        //if (Options.RecordType.Equals(C.SOUR))
-        //{
-        //    WriteAllText(exporter.SourceRecordsJson());
-        //    return;
-        //}
-
         void WriteJson(string recordJson)
         {
             Console.WriteLine(recordJson);

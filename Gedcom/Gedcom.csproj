@@ -7,13 +7,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="bin\Debug\net8.0\Resources\DeveloperTree.ged">
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-
-	<ItemGroup>
 	  <PackageReference Include="CommandLineParser" Version="2.9.1" />
+	  <PackageReference Include="DocumentFormat.OpenXml" Version="3.3.0" />
 	  <PackageReference Include="MSTest.TestFramework" Version="3.8.3" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
@@ -31,6 +26,10 @@
 	    <Generator>ResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="bin\Debug\net8.0\Resources\" />
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">

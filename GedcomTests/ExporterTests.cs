@@ -56,4 +56,12 @@ public sealed class ExporterTests
 
         Assert.IsTrue(options.Format == C.JSON, $"The default format should be {C.JSON}.");
     }
+
+    [TestMethod]
+    public void ExportXslxTest()
+    {
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.INDI, Format = C.XSLX });
+
+        exporter.IndividualsXslx();
+    }
 }
