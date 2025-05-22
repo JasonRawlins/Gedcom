@@ -41,7 +41,7 @@ public class Exporter
     public void IndividualsExcel()
     {
         var individualListItems = Gedcom.GetIndividualRecords().Select(ir => new IndividualListItem(ir)).ToList();
-        var excelWriter = new ExcelWriter(Options.InputFilePath, Options.OutputFilePath);
+        var excelWriter = new ExcelWriter(Options.InputFilePath, Options.OutputFilePath, Gedcom.Header.Source.Tree);
         excelWriter.CreateIndividualsExcelSheet(individualListItems);
     }
 
@@ -68,7 +68,7 @@ public class Exporter
     private string GetIndividualsHtml(List<IndividualListItem> individualListItems)
     {
         var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.IndividualsHtmlTemplate);
-        var individualLis = HtmlWriter.CreateIndividualLis(individualListItems, Gedcom.Header.Source.Tree.AutomatedRecordId);
+        var individualLis = HtmlWriter.CreateIndividualLis(individualListItems, Gedcom.Header.Source.Tree);
         var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", string.Join(Environment.NewLine, individualLis));
 
         return finalHtml;

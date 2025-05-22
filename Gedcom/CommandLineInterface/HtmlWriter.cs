@@ -1,8 +1,10 @@
-﻿namespace Gedcom.CLI;
+﻿using Gedcom.RecordStructures;
+
+namespace Gedcom.CLI;
 
 public static class HtmlWriter
 {
-   public static List<string> CreateIndividualLis(List<IndividualListItem> individualListItems, string TreeId)
+   public static List<string> CreateIndividualLis(List<IndividualListItem> individualListItems, HeaderTree tree)
     {
         individualListItems.Sort();
         var liList = new List<string>();
@@ -10,7 +12,7 @@ public static class HtmlWriter
         {
             liList.Add(
 $@"<li class='individual-card'>
-    <a href='https://www.ancestry.com/family-tree/person/tree/{TreeId}/person/{li.XrefId}/facts' target='_blank'>
+    <a href='{GenerateAncestryProfileLink(tree.AutomatedRecordId, li.XrefId)}' target='_blank'>
         <h3>
             {li.Surname}, {li.Given}
         </h3>
@@ -27,6 +29,6 @@ $@"<li class='individual-card'>
         return liList;
     }
 
-    public static string GenerateProfileLink(string treeId, string xref) =>
-        "https://www.ancestry.com/family-tree/person/tree/{treeId}/person/{xref}/facts";
+    public static string GenerateAncestryProfileLink(string treeId, string xref) =>
+        $"https://www.ancestry.com/family-tree/person/tree/{treeId}/person/{xref}/facts";
 }
