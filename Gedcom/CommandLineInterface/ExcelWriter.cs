@@ -7,16 +7,22 @@ namespace Gedcom.CommandLineInterface;
 
 public class ExcelWriter
 {
+    private string SourceFileFullName { get;  set; }
+    private string TargetFileFullName { get;  set; }
+
+    public ExcelWriter(string sourceFileFullName, string targetFileFullName)
+    {
+        SourceFileFullName = sourceFileFullName; 
+        TargetFileFullName = targetFileFullName;
+    }
+
     private WorkbookPart? WorkbookPart { get; set; }
 
     public void CreateIndividualsExcelSheet(List<IndividualListItem> individualListItems)
     {
-        string sourceFilePath = @"C:\temp\GedcomNET\Resources\GedcomNET.xlsx";
-        string targetFilePath = @"C:\temp\GedcomNET\Resources\GedcomNET-Changed.xlsx";
+        File.Copy(SourceFileFullName, TargetFileFullName, true);
 
-        File.Copy(sourceFilePath, targetFilePath, true);
-
-        using (SpreadsheetDocument spreadsheet = SpreadsheetDocument.Open(targetFilePath, true))
+        using (SpreadsheetDocument spreadsheet = SpreadsheetDocument.Open(TargetFileFullName, true))
         {
             WorkbookPart = spreadsheet.WorkbookPart;
             var templateSheet = WorkbookPart.Workbook.Descendants<Sheet>().FirstOrDefault(s => s.Name == "Template");
@@ -76,7 +82,6 @@ public class ExcelWriter
         {
             foreach (var cell in row.Elements<Cell>())
             {
-
                 string cellValue = GetCellValue(cell);
 
                 switch (cellValue)

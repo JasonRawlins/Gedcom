@@ -60,8 +60,14 @@ public sealed class ExporterTests
     [TestMethod]
     public void ExportXslxTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.INDI, Format = C.XSLX });
+        var exporter = new Exporter(Gedcom, new Options()
+        {
+            RecordType = C.INDI,
+            Format = C.XSLX,
+            InputFilePath = @"C:\temp\GedcomNET\Resources\GedcomNET.xlsx",
+            OutputFilePath = @"C:\temp\GedcomNET\Resources\GedcomNET-Changed.xlsx"
+        });
 
-        exporter.CreateIndividualsExcel();
+        exporter.IndividualsExcel();
     }
 }

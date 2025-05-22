@@ -38,10 +38,10 @@ public class Exporter
         return GetIndividualsHtml(individualListItems);
     }
 
-    public void CreateIndividualsExcel()
+    public void IndividualsExcel()
     {
         var individualListItems = Gedcom.GetIndividualRecords().Select(ir => new IndividualListItem(ir)).ToList();
-        var excelWriter = new ExcelWriter();
+        var excelWriter = new ExcelWriter(Options.InputFilePath, Options.OutputFilePath);
         excelWriter.CreateIndividualsExcelSheet(individualListItems);
     }
 
