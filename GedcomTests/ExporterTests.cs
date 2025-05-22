@@ -62,6 +62,6 @@ public sealed class ExporterTests
     {
         var exporter = new Exporter(Gedcom, new Options() { RecordType = C.INDI, Format = C.XSLX });
 
-        exporter.IndividualsXslx();
+        exporter.CreateIndividualsExcel();
     }
 }

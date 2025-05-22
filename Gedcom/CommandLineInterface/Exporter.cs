@@ -1,6 +1,4 @@
-﻿using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Spreadsheet;
+﻿using Gedcom.CommandLineInterface;
 using Newtonsoft.Json;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -40,10 +38,11 @@ public class Exporter
         return GetIndividualsHtml(individualListItems);
     }
 
-    public string IndividualsXslx()
+    public void CreateIndividualsExcel()
     {
         var individualListItems = Gedcom.GetIndividualRecords().Select(ir => new IndividualListItem(ir)).ToList();
-        return GetIndividualsXslx(individualListItems);
+        var excelWriter = new ExcelWriter();
+        excelWriter.CreateIndividualsExcelSheet(individualListItems);
     }
 
     // Repository (REPO)
@@ -73,115 +72,6 @@ public class Exporter
         var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", string.Join(Environment.NewLine, individualLis));
 
         return finalHtml;
-    }
-
-    private string GetIndividualsXslx(List<IndividualListItem> individualListItems)
-    {
-        string sourceFilePath = @"C:\temp\GedcomNET\Resources\GedcomNET.xlsx";
-        string targetFilePath = @"C:\temp\GedcomNET\Resources\GedcomNET-Changed.xlsx";
-
-        File.Copy(sourceFilePath, targetFilePath, true);
-
-        using (SpreadsheetDocument spreadsheet = SpreadsheetDocument.Open(targetFilePath, true))
-        {
-            var templateSheet = spreadsheet.WorkbookPart.Workbook.Descendants<Sheet>().FirstOrDefault(s => s.Name == "Template");
-            var worksheetPart = (WorksheetPart)spreadsheet.WorkbookPart.GetPartById(templateSheet.Id);
-            var sheetData = worksheetPart.Worksheet.Elements<SheetData>().First();
-
-            foreach (var individualListItem in individualListItems)
-            {
-                CreateSheet(spreadsheet.WorkbookPart, templateSheet, individualListItem);
-            }
-
-            worksheetPart.Worksheet.Save();
-            spreadsheet.Save();
-        }
-
-        return "";
-    }
-
-    private void CreateSheet(WorkbookPart workbookPart, Sheet templateSheet, IndividualListItem individualListItem)
-    {
-        var sourceSheetPart = (WorksheetPart)workbookPart.GetPartById(templateSheet.Id);
-        var newSheetPart = workbookPart.AddNewPart<WorksheetPart>();
-        newSheetPart.Worksheet = (Worksheet)sourceSheetPart.Worksheet.CloneNode(true);
-
-        var sheets = workbookPart.Workbook.GetFirstChild<Sheets>();
-        uint newSheetId = (uint)(sheets.ChildElements.Count + 1);
-
-        var newSheet = new Sheet()
-        {
-            Name = individualListItem.FullName,
-            SheetId = newSheetId,
-            Id = workbookPart.GetIdOfPart(newSheetPart)
-        };
-
-        sheets.Append(newSheet);
-
-        ReplaceAllDefinedNames(workbookPart, newSheet, individualListItem);
-    }
-
-    private static void ReplaceAllDefinedNames(WorkbookPart workbookPart, Sheet sheet, IndividualListItem individualListItem)
-    {
-        var worksheetPart = (WorksheetPart)workbookPart.GetPartById(sheet.Id);
-
-        foreach (var row in worksheetPart.Worksheet.Descendants<Row>())
-        {
-            foreach (var cell in row.Elements<Cell>())
-            {
-
-                string cellValue = GetCellValue(workbookPart, cell);
-
-                switch (cellValue)
-                {
-                    case "_GIVEN_":
-                        cell.CellValue = new CellValue(individualListItem.Given);
-                        break;
-                    case "_SURNAME_":
-                        cell.CellValue = new CellValue(individualListItem.Surname);
-                        break;
-                    case "_BIRTH_DATE_":
-                        cell.CellValue = new CellValue(individualListItem.Birth.DayMonthYear);
-                        break;
-                    case "_BIRTH_PLACE_":
-                        cell.CellValue = new CellValue(individualListItem.BirthPlace);
-                        break;
-                    case "_DEATH_DATE_":
-                        cell.CellValue = new CellValue(individualListItem.Death.DayMonthYear);
-                        break;
-                    case "_DEATH_PLACE_":
-                        cell.CellValue = new CellValue(individualListItem.DeathPlace);
-                        break;
-                    default:
-                        cell.CellValue = new CellValue("UNKNOWN TAG");
-                        break;
-
-                }
-
-                cell.DataType = new EnumValue<CellValues>(CellValues.String);
-            }
-        }
-    }
-
-    static string GetCellValue(WorkbookPart workbookPart, Cell cell)
-    {
-        if (cell.DataType != null && cell.DataType.Value == CellValues.SharedString)
-        {
-            return workbookPart.SharedStringTablePart.SharedStringTable.Elements<SharedStringItem>()
-                .ElementAt(int.Parse(cell.CellValue.Text)).InnerText;
-        }
-
-        return cell.CellValue?.Text ?? "";
-    }
-
-    private static class GedcomDefinedNames
-    {
-        public const string Given = "GIVEN";
-        public const string Surname = "SURNAME";
-        public const string BirthDate = "BIRTH_DATE";
-        public const string BirthPlace = "BIRTH_PLACE";
-        public const string DeathDate = "DEATH_DATE";
-        public const string DeathPlace = "DEATH_PLACE";
     }
 
     public string GetCliCommand()
