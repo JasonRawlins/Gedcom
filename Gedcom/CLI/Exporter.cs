@@ -39,8 +39,8 @@ public class Exporter(Gedcom gedcom, Options options)
     public byte[] IndividualsExcel()
     {
         var individualListItems = Gedcom.GetIndividualRecords().Select(ir => new IndividualListItem(ir)).ToList();
-        using var fileStream = new FileStream(Options.InputFilePath, FileMode.Open, FileAccess.ReadWrite);
-        var excelWriter = new ExcelWriter(Gedcom.Header.Source.Tree, fileStream);
+        using var templateFileStream = new FileStream(Options.InputFilePath, FileMode.Open, FileAccess.Read);
+        var excelWriter = new ExcelWriter(Gedcom.Header.Source.Tree, templateFileStream);
         return excelWriter.GetIndividuals(individualListItems);
     }
 

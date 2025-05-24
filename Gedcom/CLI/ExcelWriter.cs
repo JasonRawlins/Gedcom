@@ -13,28 +13,29 @@ public class ExcelWriter(HeaderTree headerTree, Stream templateStream) : IGedcom
 
     public byte[] GetIndividuals(List<IndividualListItem> individualListItems)
     {
-        using (var spreadsheet = SpreadsheetDocument.Open(TemplateStream, true))
+        // Opens the template spreadsheet then clones it into ouputXslxMemoryStream.
+        using var templateSpreadsheet = SpreadsheetDocument.Open(TemplateStream, false);
+        using var ouputXslxMemoryStream = new MemoryStream();
+        templateSpreadsheet.Clone(ouputXslxMemoryStream, true);
+
+        // Creates the output spreadsheet with the cloned template spreadsheet.
+        using var outputSpreadsheet = SpreadsheetDocument.Open(ouputXslxMemoryStream, true);
+        WorkbookPart = outputSpreadsheet.WorkbookPart;
+        var outputTemplateSheet = WorkbookPart.Workbook.Descendants<Sheet>().FirstOrDefault(s => s.Name.Equals("Template"));
+        var worksheetPart = (WorksheetPart)WorkbookPart.GetPartById(outputTemplateSheet.Id);
+        var sheetData = worksheetPart.Worksheet.Elements<SheetData>().First();
+
+        foreach (var individualListItem in individualListItems)
         {
-            WorkbookPart = spreadsheet.WorkbookPart;
-            var templateSheet = WorkbookPart.Workbook.Descendants<Sheet>().FirstOrDefault(s => s.Name == "Template");
-            var worksheetPart = (WorksheetPart)WorkbookPart.GetPartById(templateSheet.Id);
-            var sheetData = worksheetPart.Worksheet.Elements<SheetData>().First();
-
-            foreach (var individualListItem in individualListItems)
-            {
-                CreateSheet(templateSheet, individualListItem);
-            }
-
-            templateSheet.Remove();
-            WorkbookPart.DeletePart(worksheetPart);
-
-            spreadsheet.WorkbookPart.Workbook.Save();
-            spreadsheet.Save();
-
-            using var memoryStream = new MemoryStream();
-            spreadsheet.Clone(memoryStream);
-            return memoryStream.ToArray();
+            CreateSheet(outputTemplateSheet, individualListItem);
         }
+
+        outputTemplateSheet.Remove();
+        WorkbookPart.DeletePart(worksheetPart);
+        outputSpreadsheet.WorkbookPart.Workbook.Save();
+        outputSpreadsheet.Save();
+
+        return ouputXslxMemoryStream.ToArray();
     }
 
     private string GetCellValue(Cell cell)
@@ -48,9 +49,9 @@ public class ExcelWriter(HeaderTree headerTree, Stream templateStream) : IGedcom
         return cell.CellValue?.Text ?? "";
     }
 
-    private void CreateSheet(Sheet templateSheet, IndividualListItem individualListItem)
+    private void CreateSheet(Sheet outputTemplateSheet, IndividualListItem individualListItem)
     {
-        var sourceSheetPart = (WorksheetPart)WorkbookPart.GetPartById(templateSheet.Id);
+        var sourceSheetPart = (WorksheetPart)WorkbookPart.GetPartById(outputTemplateSheet.Id);
         var newSheetPart = WorkbookPart.AddNewPart<WorksheetPart>();
         newSheetPart.Worksheet = (Worksheet)sourceSheetPart.Worksheet.CloneNode(true);
 
@@ -77,7 +78,7 @@ public class ExcelWriter(HeaderTree headerTree, Stream templateStream) : IGedcom
         {
             foreach (var cell in row.Elements<Cell>())
             {
-                ReplaceDefinedNames(cell, individualListItem);              
+                ReplaceDefinedNames(cell, individualListItem);
             }
         }
     }
