@@ -2,7 +2,6 @@
 using Gedcom;
 using Gedcom.CLI;
 using System.Diagnostics;
-using System.Text;
 
 public class Program
 {

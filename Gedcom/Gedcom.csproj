@@ -31,8 +31,4 @@
 	<ItemGroup>
 	  <Folder Include="bin\Debug\net8.0\Resources\" />
 	</ItemGroup>
-
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="call &quot;$(ProjectDir)\PostBuildEvent.bat&quot; &quot;$(ProjectDir)Resources\FormattedDeveloperTree.ged&quot; &quot;$(TargetDir)Resources\DeveloperTree.ged&quot; &quot;$(ProjectDir)&quot;&quot;$(TargetDir)&quot;&#xD;&#xA;" />
-	</Target>
 </Project>
