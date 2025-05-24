@@ -18,7 +18,7 @@ public sealed class FamilyTests
     public void ExportFamiliesJsonTest()
     {
         var exporter = new Exporter(Gedcom, new Options() { RecordType = C.FAM });
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.FamilyRecordsJson, AssertFunction, nameof(ExportFamiliesJsonTest));
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.FamilyRecordsJson, AssertFunction);
 
         bool AssertFunction(string json) =>
             json.Contains(TestTree.Families.RobertAndRosaDavis.Xref)
@@ -34,7 +34,7 @@ public sealed class FamilyTests
             Xref = TestTree.Families.RobertAndRosaDavis.Xref
         });
 
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.FamilyRecordJson, AssertFunction, nameof(ExportFamilyJsonTest));
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.FamilyRecordJson, AssertFunction);
 
         bool AssertFunction(string json) =>
             json.Contains(TestTree.Families.RobertAndRosaDavis.Xref)
@@ -45,7 +45,7 @@ public sealed class FamilyTests
     public void ExportNonExistingFamilyJsonTest()
     {
         var exporter = new Exporter(Gedcom, new Options() { RecordType = C.FAM, Xref = "INVALID_XREF" });
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.FamilyRecordJson, AssertFunction, nameof(ExportNonExistingFamilyJsonTest), false);
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.FamilyRecordJson, AssertFunction, false);
 
         bool AssertFunction(string json) => string.IsNullOrWhiteSpace(json);
     }

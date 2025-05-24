@@ -17,9 +17,9 @@ public sealed class IndividualTests
     public void ExportIndividualsJsonTest()
     {
         var exporter = new Exporter(Gedcom, new Options() { RecordType = C.INDI });
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordsJson, AssertFunction, nameof(ExportIndividualsJsonTest));
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordsJson, AssertFunction);
 
-        bool AssertFunction(string json) => 
+        static bool AssertFunction(string json) => 
             json.Contains(TestTree.Individuals.RobertDavis.Xref)
             && json.Contains(TestTree.Individuals.RosaGarcia.Xref)
             && json.Contains(TestTree.Individuals.MariaDavis.Xref)
@@ -46,9 +46,9 @@ public sealed class IndividualTests
     public void ExportIndividualJsonTest()
     {
         var exporter = new Exporter(Gedcom, new Options() { RecordType = C.INDI, Xref = TestTree.Individuals.MariaDavis.Xref});
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordJson, AssertFunction, nameof(ExportIndividualJsonTest));
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordJson, AssertFunction);
 
-        bool AssertFunction(string json) => 
+        static bool AssertFunction(string json) => 
             json.Contains(TestTree.Individuals.MariaDavis.Xref)
                 && !(json.Contains(TestTree.Individuals.DylanLewis.Xref) || json.Contains(TestTree.Individuals.GwenLewis.Xref));
     }
@@ -57,18 +57,18 @@ public sealed class IndividualTests
     public void NonExistingIndividualJsonTest()
     {
         var exporter = new Exporter(Gedcom, new Options() { RecordType = C.INDI, Xref = "INVALID_XREF" });
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordJson, AssertFunction, nameof(NonExistingIndividualJsonTest), false);
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordJson, AssertFunction, false);
 
-        bool AssertFunction(string json) => string.IsNullOrWhiteSpace(json);
+        static bool AssertFunction(string json) => string.IsNullOrWhiteSpace(json);
     }
 
     [TestMethod]
     public void QueryIndividualsJsonTest()
     {
         var exporter = new Exporter(Gedcom, new Options() {  RecordType = C.INDI, Query = "Davis" });
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordsJson, AssertFunction, nameof(QueryIndividualsJsonTest));
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordsJson, AssertFunction);
 
-        bool AssertFunction(string json) =>
+        static bool AssertFunction(string json) =>
             json.Contains(TestTree.Individuals.RobertDavis.Xref)
             && json.Contains(TestTree.Individuals.MariaDavis.Xref)
             && json.Contains(TestTree.Individuals.MateoDavis.Xref)
@@ -79,14 +79,30 @@ public sealed class IndividualTests
     public void ExportIndividualsHtmlTest()
     {
         var exporter = new Exporter(Gedcom, new Options() { RecordType = C.INDI, Format = C.HTML });
-        GedcomAssert.RecordHtmlIsValid(exporter, exporter.IndividualsHtml, AssertFunction, nameof(ExportIndividualsHtmlTest));
+        GedcomAssert.RecordHtmlIsValid(exporter, exporter.IndividualsHtml, AssertFunction);
 
-        bool AssertFunction (string html) =>
+        static bool AssertFunction (string html) =>
             html.Contains(TestTree.Individuals.RobertDavis.XrefId)
             && html.Contains(TestTree.Individuals.RosaGarcia.XrefId)
             && html.Contains(TestTree.Individuals.MariaDavis.XrefId)
             && html.Contains(TestTree.Individuals.DylanLewis.XrefId)
             && html.Contains(TestTree.Individuals.GwenLewis.XrefId)
             && html.Contains(TestTree.Individuals.MateoDavis.XrefId);
+    }
+
+    [TestMethod]
+    public void ExportIndividualXslxTest()
+    {
+        var exporter = new Exporter(Gedcom, new Options()
+        {
+            RecordType = C.INDI,
+            Format = C.XSLX,
+            InputFilePath = @"C:\temp\GedcomNET\Resources\GedcomNET-template.xlsx",
+            OutputFilePath = @"C:\temp\GedcomNET\Resources\GedcomNET-output.xlsx"
+        });
+
+        var excelSheetBytes = exporter.IndividualsExcel();
+
+        File.WriteAllBytes(exporter.Options.OutputFilePath, excelSheetBytes);
     }
 }

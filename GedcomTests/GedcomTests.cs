@@ -18,7 +18,7 @@ public sealed class GedcomTests
     public void ExportGedcomAsJsonTest()
     {
         var exporter = new Exporter(Gedcom, new Options() { RecordType = C.GEDC });
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.GedcomJson, AssertFunction, nameof(ExportGedcomAsJsonTest));
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.GedcomJson, AssertFunction);
 
         bool AssertFunction(string json) => 
             json.Contains(TestTree.Individuals.RobertDavis.Xref)

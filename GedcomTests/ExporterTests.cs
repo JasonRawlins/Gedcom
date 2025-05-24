@@ -24,7 +24,7 @@ public sealed class ExporterTests
 
         var exporter = new Exporter(Gedcom, options);
 
-        Assert.IsTrue(exporter.Errors.Find(e => e.Contains(Exporter.ErrorMessages.InputFilePathIsRequired)) != null, "The input file path was invalid.");
+        Assert.IsNotNull(exporter.Errors.Find(e => e.Contains(Exporter.ErrorMessages.InputFilePathIsRequired)), "The input file path was invalid.");
     }
 
     [TestMethod]
@@ -38,7 +38,7 @@ public sealed class ExporterTests
 
         var exporter = new Exporter(Gedcom, options);
 
-        Assert.IsTrue(exporter.Errors.Find(e => e.Contains(Exporter.ErrorMessages.OutputFilePathIsRequired)) != null, "The output file path was invalid");
+        Assert.IsNotNull(exporter.Errors.Find(e => e.Contains(Exporter.ErrorMessages.OutputFilePathIsRequired)), "The output file path was invalid");
     }
 
     [TestMethod]
@@ -46,7 +46,7 @@ public sealed class ExporterTests
     {
         var exporter = new Exporter(Gedcom, new Options() { RecordType = "INVALID_RECORD_TYPE" });
 
-        Assert.IsTrue(exporter.Errors.Find(e => e.Contains(Exporter.ErrorMessages.InvalidRecordType)) != null, "Record type is invalid.");
+        Assert.IsNotNull(exporter.Errors.Find(e => e.Contains(Exporter.ErrorMessages.InvalidRecordType)), "Record type is invalid.");
     }
 
     [TestMethod]
@@ -54,20 +54,6 @@ public sealed class ExporterTests
     {
         var options = new Options();
 
-        Assert.IsTrue(options.Format == C.JSON, $"The default format should be {C.JSON}.");
-    }
-
-    [TestMethod]
-    public void ExportXslxTest()
-    {
-        var exporter = new Exporter(Gedcom, new Options()
-        {
-            RecordType = C.INDI,
-            Format = C.XSLX,
-            InputFilePath = @"C:\temp\GedcomNET\Resources\GedcomNET.xlsx",
-            OutputFilePath = @"C:\temp\GedcomNET\Resources\GedcomNET-Changed.xlsx"
-        });
-
-        exporter.IndividualsExcel();
+        Assert.AreEqual(C.JSON, options.Format, $"The default format should be {C.JSON}.");
     }
 }

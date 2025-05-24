@@ -1,6 +1,5 @@
 ﻿using Gedcom;
 using Gedcom.CLI;
-using Microsoft.CodeCoverage.Core.Reports.Coverage;
 using System.Text;
 
 namespace GedcomTests;
@@ -12,6 +11,7 @@ public class TestUtilities
     public static string GedcomNetTreeOutputJsonFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.json");
     public static string GedcomNetTreeOutputTextFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.txt");
     public static string GedcomNetTreeOutputHtmlFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.html");
+    public static string GedcomNetTreeOutputXslxFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET-template.xslx");
 
     public static Gedcom.Gedcom CreateGedcom()
     {
@@ -20,11 +20,13 @@ public class TestUtilities
         return new Gedcom.Gedcom(gedcomLines);
     }
 
-    //public static string GetImageBase64String()
-    //{
-    //    byte[] imageBytes = File.ReadAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "ancestry-logo-260x50.png"));
-    //    return Convert.ToBase64String(imageBytes);
-    //}
+    public static string GetImageBase64String()
+    {
+        // This function finds an image on disc and generates its Base64 string. I only use it to generate
+        // bytes that I can then embed in the css section of an html page. This has no internal use.
+        byte[] imageBytes = File.ReadAllBytes(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "ancestry-logo-260x50.png"));
+        return Convert.ToBase64String(imageBytes);
+    }
 }
 
 public class GedcomAssert
@@ -37,7 +39,7 @@ public class GedcomAssert
         }
     }
     
-    public static void RecordJsonIsValid(Exporter exporter, Func<string> JsonExportFunction, Func<string, bool> AssertFunction, string callingFunction, bool assertValidExporter = true)
+    public static void RecordJsonIsValid(Exporter exporter, Func<string> JsonExportFunction, Func<string, bool> AssertFunction, bool assertValidExporter = true)
     {
         exporter.Options.InputFilePath = TestUtilities.GedcomNetTreeFullName;
         exporter.Options.OutputFilePath = TestUtilities.GedcomNetTreeOutputJsonFullName;
@@ -49,10 +51,10 @@ public class GedcomAssert
 
         var json = JsonExportFunction();
 
-        Assert.IsTrue(AssertFunction(json), $"Called from {callingFunction}");
+        Assert.IsTrue(AssertFunction(json));
     }
 
-    public static void RecordHtmlIsValid(Exporter exporter, Func<string> HtmlExportFunction, Func<string, bool> AssertFunction, string callingFunction, bool assertValidExporter = true)
+    public static void RecordHtmlIsValid(Exporter exporter, Func<string> HtmlExportFunction, Func<string, bool> AssertFunction, bool assertValidExporter = true)
     {
         exporter.Options.InputFilePath = TestUtilities.GedcomNetTreeFullName;
         exporter.Options.OutputFilePath = TestUtilities.GedcomNetTreeOutputHtmlFullName;
@@ -64,6 +66,6 @@ public class GedcomAssert
 
         var html = HtmlExportFunction();
 
-        Assert.IsTrue(AssertFunction(html), $"Called from {callingFunction}");
+        Assert.IsTrue(AssertFunction(html));
     }
 }

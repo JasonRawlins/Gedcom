@@ -2,6 +2,7 @@
 using Gedcom;
 using Gedcom.CLI;
 using System.Diagnostics;
+using System.Text;
 
 public class Program
 {
@@ -58,21 +59,10 @@ public class Program
             }
         }
 
-        void WriteJson(string recordJson)
-        {
-            Console.WriteLine(recordJson);
-            File.WriteAllText(options.OutputFilePath, recordJson);
-        }
 
-        void WriteList(List<IndividualListItem> individualListItems)
+        void WriteJson(string json)
         {
-            var individualsList = individualListItems.Select(ili => ili.ToString());
-            foreach (var individualListItem in individualsList)
-            {
-                Console.WriteLine(individualListItem);
-            }
-
-            File.WriteAllLines(options.OutputFilePath, individualsList);
+            File.WriteAllText(options.OutputFilePath, json);
         }
 
         void WriteHtml(string html)

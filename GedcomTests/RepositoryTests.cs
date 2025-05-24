@@ -18,7 +18,7 @@ public sealed class RepositoryTests
     public void ExportRepositoriesJsonTest()
     {
         var exporter = new Exporter(Gedcom, new Options() { RecordType = C.REPO });
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.RepositoryRecordsJson, AssertFunction, nameof(ExportRepositoriesJsonTest));
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.RepositoryRecordsJson, AssertFunction);
 
         bool AssertFunction(string json) =>
             json.Contains(TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref)
@@ -34,7 +34,7 @@ public sealed class RepositoryTests
             Xref = TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref
         });
 
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.RepositoryRecordJson, AssertFunction, nameof(ExportRepositoryJsonTest));
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.RepositoryRecordJson, AssertFunction);
 
         bool AssertFunction(string json) =>
             json.Contains(TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref)
@@ -45,7 +45,7 @@ public sealed class RepositoryTests
     public void ExportNonExistingRepositoryJsonTest()
     {
         var exporter = new Exporter(Gedcom, new Options() { RecordType = C.REPO, Xref = "INVALID_XREF"});
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.RepositoryRecordJson, AssertFunction, nameof(ExportNonExistingRepositoryJsonTest), false);
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.RepositoryRecordJson, AssertFunction, false);
 
         bool AssertFunction(string json) => string.IsNullOrWhiteSpace(json);
     }
@@ -54,7 +54,7 @@ public sealed class RepositoryTests
     public void QueryRepositoryJsonTest()
     {
         var exporter = new Exporter(Gedcom, new Options() { RecordType = C.REPO, Query = "FamilySearch" });
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.RepositoryRecordsJson, AssertFunction, nameof(QueryRepositoryJsonTest));
+        GedcomAssert.RecordJsonIsValid(exporter, exporter.RepositoryRecordsJson, AssertFunction);
 
         bool AssertFunction(string json) => 
             json.Contains(TestTree.Repositories.FamilySearchLibrary.Xref)

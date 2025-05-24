@@ -1,31 +1,19 @@
 ﻿using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
-using Gedcom.CLI;
 using Gedcom.RecordStructures;
 
-namespace Gedcom.CommandLineInterface;
+namespace Gedcom.CLI;
 
-public class ExcelWriter
+public class ExcelWriter(HeaderTree headerTree, Stream templateStream) : IGedcomWriter
 {
-    private string SourceFileFullName { get; set; }
-    private string TargetFileFullName { get; set; }
-    private HeaderTree HeaderTree { get; set; }
-
-    public ExcelWriter(string sourceFileFullName, string targetFileFullName, HeaderTree headerTree)
-    {
-        HeaderTree = headerTree;
-        SourceFileFullName = sourceFileFullName;
-        TargetFileFullName = targetFileFullName;
-    }
-
+    private HeaderTree HeaderTree { get; set; } = headerTree;
+    private Stream TemplateStream { get; set; } = templateStream;
     private WorkbookPart? WorkbookPart { get; set; }
 
-    public void CreateIndividualsExcelSheet(List<IndividualListItem> individualListItems)
+    public byte[] GetIndividuals(List<IndividualListItem> individualListItems)
     {
-        File.Copy(SourceFileFullName, TargetFileFullName, true);
-
-        using (SpreadsheetDocument spreadsheet = SpreadsheetDocument.Open(TargetFileFullName, true))
+        using (var spreadsheet = SpreadsheetDocument.Open(TemplateStream, true))
         {
             WorkbookPart = spreadsheet.WorkbookPart;
             var templateSheet = WorkbookPart.Workbook.Descendants<Sheet>().FirstOrDefault(s => s.Name == "Template");
@@ -42,7 +30,22 @@ public class ExcelWriter
 
             spreadsheet.WorkbookPart.Workbook.Save();
             spreadsheet.Save();
+
+            using var memoryStream = new MemoryStream();
+            spreadsheet.Clone(memoryStream);
+            return memoryStream.ToArray();
         }
+    }
+
+    private string GetCellValue(Cell cell)
+    {
+        if (cell.DataType != null && cell.DataType.Value == CellValues.SharedString)
+        {
+            return WorkbookPart.SharedStringTablePart.SharedStringTable.Elements<SharedStringItem>()
+                .ElementAt(int.Parse(cell.CellValue.Text)).InnerText;
+        }
+
+        return cell.CellValue?.Text ?? "";
     }
 
     private void CreateSheet(Sheet templateSheet, IndividualListItem individualListItem)
@@ -66,17 +69,6 @@ public class ExcelWriter
         ReplaceAllDefinedNames(newSheet, individualListItem);
     }
 
-    private string GetCellValue(Cell cell)
-    {
-        if (cell.DataType != null && cell.DataType.Value == CellValues.SharedString)
-        {
-            return WorkbookPart.SharedStringTablePart.SharedStringTable.Elements<SharedStringItem>()
-                .ElementAt(int.Parse(cell.CellValue.Text)).InnerText;
-        }
-
-        return cell.CellValue?.Text ?? "";
-    }
-
     private void ReplaceAllDefinedNames(Sheet sheet, IndividualListItem individualListItem)
     {
         var worksheetPart = (WorksheetPart)WorkbookPart.GetPartById(sheet.Id);
@@ -94,39 +86,19 @@ public class ExcelWriter
     {
         string cellValue = GetCellValue(cell);
 
-        switch (cellValue)
+        cell.CellValue = cellValue switch
         {
-            case ContentTag.AncestryProfileLink:
-                cell.CellValue = new CellValue(HeaderTree.Name);
-                break;
-            case ContentTag.BirthDate:
-                cell.CellValue = new CellValue(individualListItem.Birth.DayMonthYear);
-                break;
-            case ContentTag.BirthPlace:
-                cell.CellValue = new CellValue(individualListItem.BirthPlace);
-                break;
-            case ContentTag.DeathDate:
-                cell.CellValue = new CellValue(individualListItem.Death.DayMonthYear);
-                break;
-            case ContentTag.DeathPlace:
-                cell.CellValue = new CellValue(individualListItem.DeathPlace);
-                break;
-            case ContentTag.FullName:
-                cell.CellValue = new CellValue(individualListItem.FullName);
-                break;
-            case ContentTag.Given:
-                cell.CellValue = new CellValue(individualListItem.Given);
-                break;
-            case ContentTag.Surname:
-                cell.CellValue = new CellValue(individualListItem.Surname);
-                break;
-            case ContentTag.TreeName:
-                cell.CellValue = new CellValue(HeaderTree.Name);
-                break;
-            default:
-                cell.CellValue = new CellValue(cellValue);
-                break;
-        }
+            ContentTag.AncestryProfileLink => new CellValue(HeaderTree.Name),
+            ContentTag.BirthDate => new CellValue(individualListItem.Birth.DayMonthYear),
+            ContentTag.BirthPlace => new CellValue(individualListItem.BirthPlace),
+            ContentTag.DeathDate => new CellValue(individualListItem.Death.DayMonthYear),
+            ContentTag.DeathPlace => new CellValue(individualListItem.DeathPlace),
+            ContentTag.FullName => new CellValue(individualListItem.FullName),
+            ContentTag.Given => new CellValue(individualListItem.Given),
+            ContentTag.Surname => new CellValue(individualListItem.Surname),
+            ContentTag.TreeName => new CellValue(HeaderTree.Name),
+            _ => new CellValue(cellValue),
+        };
 
         // cell.DateType() has to be placed after the cell.CellValue() lines above. I don't
         // know why order matters, but it throws an error if I don't.

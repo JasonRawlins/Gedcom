@@ -1,26 +1,19 @@
-﻿using Gedcom.CommandLineInterface;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Gedcom.CLI;
 
-public class Exporter
+public class Exporter(Gedcom gedcom, Options options)
 {
-    public static string[] RecordTypes = [C.FAM, C.INDI, C.OBJE, C.NOTE, C.REPO, C.SOUR, C.SUBM, C.GEDC /* GEDC is not a real top-level record type. It's used when the whole gedcom is exported. */];
-    public static string[] OutputFormats = [C.JSON, C.LIST, C.HTML, C.XSLX];
+    public static string[] RecordTypes => [C.FAM, C.INDI, C.OBJE, C.NOTE, C.REPO, C.SOUR, C.SUBM, C.GEDC /* GEDC is not a real top-level record type. It's used when the whole gedcom is exported. */];
+    public static string[] OutputFormats => [C.JSON, C.LIST, C.HTML, C.XSLX];
 
-    public Options Options { get; set; }
-    public Gedcom Gedcom { get; set; }
+    public Options Options { get; set; } = options ?? new Options();
+    public Gedcom Gedcom { get; set; } = gedcom;
 
     public Exporter(Gedcom gedcom) : this(gedcom, new Options())
     {
-    }
-
-    public Exporter(Gedcom gedcom, Options options)
-    {
-        Gedcom = gedcom;
-        Options = options ?? new Options();
     }
 
     public string GedcomJson() => JsonConvert.SerializeObject(Gedcom, JsonSettings.DefaultOptions);
@@ -35,14 +28,20 @@ public class Exporter
     public string IndividualsHtml()
     {
         var individualListItems = Gedcom.GetIndividualRecords().Select(ir => new IndividualListItem(ir)).ToList();
-        return GetIndividualsHtml(individualListItems);
+
+        var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.IndividualsHtmlTemplate);
+        var individualLis = HtmlWriter.CreateIndividualLis(individualListItems, Gedcom.Header.Source.Tree.AutomatedRecordId);
+        var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", string.Join(Environment.NewLine, individualLis));
+
+        return finalHtml;
     }
 
-    public void IndividualsExcel()
+    public byte[] IndividualsExcel()
     {
         var individualListItems = Gedcom.GetIndividualRecords().Select(ir => new IndividualListItem(ir)).ToList();
-        var excelWriter = new ExcelWriter(Options.InputFilePath, Options.OutputFilePath, Gedcom.Header.Source.Tree);
-        excelWriter.CreateIndividualsExcelSheet(individualListItems);
+        using var fileStream = new FileStream(Options.InputFilePath, FileMode.Open, FileAccess.ReadWrite);
+        var excelWriter = new ExcelWriter(Gedcom.Header.Source.Tree, fileStream);
+        return excelWriter.GetIndividuals(individualListItems);
     }
 
     // Repository (REPO)
@@ -53,25 +52,16 @@ public class Exporter
     public string SourceRecordJson() => GetRecordJson(Gedcom.GetSourceRecord(Options.Xref));
     public string SourceRecordsJson() => GetRecordsJson(Gedcom.GetSourceRecords(Options.Query));
 
-    private string GetRecordJson(RecordStructureBase recordStructure)
+    private static string GetRecordJson(RecordStructureBase recordStructure)
     {
         if (recordStructure.IsEmpty) return "";
         return JsonConvert.SerializeObject(recordStructure, JsonSettings.DefaultOptions);
     }
 
-    private string GetRecordsJson(IEnumerable<RecordStructureBase> recordStructures)
+    private static string GetRecordsJson(IEnumerable<RecordStructureBase> recordStructures)
     {
-        if (recordStructures.Count() == 0) return "";
+        if (!recordStructures.Any()) return "";
         return JsonConvert.SerializeObject(recordStructures, JsonSettings.DefaultOptions);
-    }
-
-    private string GetIndividualsHtml(List<IndividualListItem> individualListItems)
-    {
-        var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.IndividualsHtmlTemplate);
-        var individualLis = HtmlWriter.CreateIndividualLis(individualListItems, Gedcom.Header.Source.Tree);
-        var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", string.Join(Environment.NewLine, individualLis));
-
-        return finalHtml;
     }
 
     public string GetCliCommand()
