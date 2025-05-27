@@ -12,8 +12,8 @@ public class Options
         set => format = value;
     }
 
-    [Option('i', "input", Required = true, HelpText = "Input file path.")]
-    public string InputFilePath { get; set; } = "";
+    [Option('g', "ged", Required = true, HelpText = "Path to .ged file.")]
+    public string GedPath { get; set; } = "";
 
     [Option('o', "output", Required = true, HelpText = "Output file path.")]
     public string OutputFilePath { get; set; } = "";

@@ -2,7 +2,7 @@
   "profiles": {
     "Gedcom": {
       "commandName": "Project",
-      "commandLineArgs": "gedcom -i \"C:\\temp\\GedcomNET\\Resources\\GedcomNET-template.ged\" -o \"C:\\temp\\GedcomNET\\Resources\\GedcomNET-output.html\" -f html -t indi"
+      "commandLineArgs": "gedcom -g \"C:\\temp\\GedcomNET\\Resources\\GedcomNET.ged\" -o \"C:\\temp\\GedcomNET\\Resources\\GedcomNET-output.xslx\" -f xslx -t indi"
     }
   }
 }

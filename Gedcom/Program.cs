@@ -10,13 +10,11 @@ public class Program
         Parser.Default.ParseArguments<Options>(args)
             .WithParsed(RunOptions)
             .WithNotParsed(HandleParseError);
-
-        Console.ReadLine();
     }
 
     static void RunOptions(Options options)
     {
-        var gedcom = CreateGedcom(options.InputFilePath);
+        var gedcom = CreateGedcom(options.GedPath);
         var exporter = new Exporter(gedcom, options);
 
         if (exporter.Errors.Count > 0)
@@ -37,13 +35,13 @@ public class Program
             {
                 WriteJson(exporter.IndividualRecordsJson());
             }
-            else if (options.Format.Equals(C.LIST))
-            {
-                //WriteList(exporter.IndividualListItems());
-            }
             else if (options.Format.Equals(C.HTML))
             {
                 WriteHtml(exporter.IndividualsHtml());
+            }
+            else if (options.Format.Equals(C.XSLX))
+            {
+                File.WriteAllBytes(options.OutputFilePath, exporter.IndividualsExcel());
             }
 
             return;
@@ -57,7 +55,6 @@ public class Program
                 WriteJson(exporter.IndividualRecordJson());
             }
         }
-
 
         void WriteJson(string json)
         {

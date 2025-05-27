@@ -97,7 +97,7 @@ public sealed class IndividualTests
         {
             RecordType = C.INDI,
             Format = C.XSLX,
-            InputFilePath = @"C:\temp\GedcomNET\Resources\GedcomNET-template.xlsx",
+            GedPath = @"C:\temp\GedcomNET\Resources\GedcomNET.ged",
             OutputFilePath = @"C:\temp\GedcomNET\Resources\GedcomNET-output.xlsx"
         });
 

@@ -32,7 +32,7 @@ public sealed class ExporterTests
     {
         var options = new Options
         {
-            InputFilePath = TestUtilities.GedcomNetTreeFullName,
+            GedPath = TestUtilities.GedcomNetTreeFullName,
             RecordType = C.INDI
         };
 

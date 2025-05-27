@@ -39,8 +39,7 @@ public class Exporter(Gedcom gedcom, Options options)
     public byte[] IndividualsExcel()
     {
         var individualListItems = Gedcom.GetIndividualRecords().Select(ir => new IndividualListItem(ir)).ToList();
-        using var templateFileStream = new FileStream(Options.InputFilePath, FileMode.Open, FileAccess.Read);
-        var excelWriter = new ExcelWriter(Gedcom.Header.Source.Tree, templateFileStream);
+        var excelWriter = new ExcelWriter(Gedcom.Header.Source.Tree);
         return excelWriter.GetIndividuals(individualListItems);
     }
 
@@ -66,7 +65,7 @@ public class Exporter(Gedcom gedcom, Options options)
 
     public string GetCliCommand()
     {
-        return $"gedcom -i {Options.InputFilePath} -o {Options.OutputFilePath} -t {Options.RecordType} -f {Options.Format} -x {Options.Xref}";
+        return $"gedcom -i {Options.GedPath} -o {Options.OutputFilePath} -t {Options.RecordType} -f {Options.Format} -x {Options.Xref}";
     }
 
     public List<string> Errors
@@ -75,9 +74,9 @@ public class Exporter(Gedcom gedcom, Options options)
         {
             var argumentErrors = new List<string>();
 
-            if (!File.Exists(Options.InputFilePath))
+            if (!File.Exists(Options.GedPath))
             {
-                argumentErrors.Add($"{ErrorMessages.InputFilePathIsRequired} '{Options.InputFilePath}'");
+                argumentErrors.Add($"{ErrorMessages.InputFilePathIsRequired} '{Options.GedPath}'");
             }
 
             string directoryPath = System.IO.Path.GetDirectoryName(Options.OutputFilePath) ?? "";
