@@ -15,45 +15,42 @@ public class ExcelWriter : IGedcomWriter
 
     public byte[] GetIndividuals(List<IndividualListItem> individualListItems)
     {
-        using (var excelPackage = new ExcelPackage())
+        // Hard-coding the path to the template file for development. Once the template.xlsx
+        // is complete, this will come from project resources.
+        using var userTemplatePackage = new ExcelPackage(@"C:\temp\GedcomNET\Resources\GedcomNET-user-template.xlsx");
+        var templateSheet = userTemplatePackage.Workbook.Worksheets["Template"];
+        using var excelPackage = new ExcelPackage();
+
+        foreach (var individualListItem in individualListItems)
         {
-            foreach (var individualListItem in individualListItems) 
-            {
-                var worksheet = excelPackage.Workbook.Worksheets.Add(individualListItem.FullName);
-                worksheet.Cells["A1"].Value = HeaderTree.Name;
-                worksheet.Cells["A3"].Value = "Born";
-                worksheet.Cells["B3"].Value = $"{individualListItem.Birth.DayMonthYear} at {individualListItem.BirthPlace}";
-                worksheet.Cells["A4"].Value = "Death";
-                worksheet.Cells["B4"].Value = $"{individualListItem.Death.DayMonthYear} at {individualListItem.DeathPlace}";
+            excelPackage.Workbook.Worksheets.Add(individualListItem.FullName, templateSheet);
+            ReplaceDefinedNames(excelPackage.Workbook.Worksheets[individualListItem.FullName], individualListItem);
+        }
 
-            }
+     
 
-            return excelPackage.GetAsByteArray();
-        }       
+        return excelPackage.GetAsByteArray();
     }
 
-    //private void ReplaceDefinedNames(Cell cell, IndividualListItem individualListItem)
-    //{
-    //    string cellValue = GetCellValue(cell);
-
-    //    cell.CellValue = cellValue switch
-    //    {
-    //        ContentTag.AncestryProfileLink => new CellValue(HeaderTree.Name),
-    //        ContentTag.BirthDate => new CellValue(individualListItem.Birth.DayMonthYear),
-    //        ContentTag.BirthPlace => new CellValue(individualListItem.BirthPlace),
-    //        ContentTag.DeathDate => new CellValue(individualListItem.Death.DayMonthYear),
-    //        ContentTag.DeathPlace => new CellValue(individualListItem.DeathPlace),
-    //        ContentTag.FullName => new CellValue(individualListItem.FullName),
-    //        ContentTag.Given => new CellValue(individualListItem.Given),
-    //        ContentTag.Surname => new CellValue(individualListItem.Surname),
-    //        ContentTag.TreeName => new CellValue(HeaderTree.Name),
-    //        _ => new CellValue(cellValue),
-    //    };
-
-    //    // cell.DateType() has to be placed after the cell.CellValue() lines above. I don't
-    //    // know why order matters, but it throws an error if I don't.
-    //    cell.DataType = new EnumValue<CellValues>(CellValues.String);
-    //}
+    private void ReplaceDefinedNames(ExcelWorksheet worksheet, IndividualListItem individualListItem)
+    {
+        foreach (var cell in worksheet.Cells)
+        {
+            cell.Value = cell.Value switch
+            {
+                ContentTag.AncestryProfileLink => HeaderTree.Name,
+                ContentTag.BirthDate => individualListItem.Birth.DayMonthYear,
+                ContentTag.BirthPlace => individualListItem.BirthPlace,
+                ContentTag.DeathDate => individualListItem.Death.DayMonthYear,
+                ContentTag.DeathPlace => individualListItem.DeathPlace,
+                ContentTag.FullName => individualListItem.FullName,
+                ContentTag.Given => individualListItem.Given,
+                ContentTag.Surname => individualListItem.Surname,
+                ContentTag.TreeName => HeaderTree.Name,
+                _ => cell.Value,
+            };
+        }
+    }
 
     private static class ContentTag
     {

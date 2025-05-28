@@ -34,7 +34,7 @@ public class IndividualRecord : RecordStructureBase
 
     #region Convenience properties
 
-    public string FullName => $"{Given} {Surname}";
+    public string FullName => $"{Given}, {Surname}";
     public string Given => $"{PersonalNameStructures[0].Given}";
     public string Surname => $"{PersonalNameStructures[0].Surname}";
 
