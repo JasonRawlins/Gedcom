@@ -20,22 +20,36 @@ public class ExcelWriter : IGedcomWriter
         using var userTemplatePackage = new ExcelPackage(@"C:\temp\GedcomNET\Resources\GedcomNET-user-template.xlsx");
         var templateSheet = userTemplatePackage.Workbook.Worksheets["Template"];
         using var excelPackage = new ExcelPackage();
+        var targetSheet = excelPackage.Workbook.Worksheets.Add($"{HeaderTree.Name} individuals", templateSheet);
 
-        foreach (var individualListItem in individualListItems)
+        var templateRow = 2; // The row containing the template values
+
+        for (int i = 0; i < individualListItems.Count; i++)
         {
-            excelPackage.Workbook.Worksheets.Add(individualListItem.FullName, templateSheet);
-            ReplaceDefinedNames(excelPackage.Workbook.Worksheets[individualListItem.FullName], individualListItem);
+            var individualListItem = individualListItems[i];
+
+            var targetRow = templateRow + i + 1; // The row where the copied template should go
+
+            // Copy the template row to the next available row
+            targetSheet.Cells[templateRow, 1, templateRow, targetSheet.Dimension.End.Column]
+                .Copy(targetSheet.Cells[targetRow, 1]);
+
+            // Replace values in the copied row
+            ReplaceTemplateValues(targetSheet, individualListItem, targetRow);
         }
 
-     
+        targetSheet.DeleteRow(templateRow);
 
         return excelPackage.GetAsByteArray();
     }
 
-    private void ReplaceDefinedNames(ExcelWorksheet worksheet, IndividualListItem individualListItem)
+    private void ReplaceTemplateValues(ExcelWorksheet worksheet, IndividualListItem individualListItem, int rowNumber)
     {
-        foreach (var cell in worksheet.Cells)
+        // Loop through the cells in the row
+        for (int column = worksheet.Dimension.Start.Column; column <= worksheet.Dimension.End.Column; column++)
         {
+            var cell = worksheet.Cells[rowNumber, column];
+
             cell.Value = cell.Value switch
             {
                 ContentTag.AncestryProfileLink => HeaderTree.Name,
