@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(MapJsonConverter))]
 public class Map : RecordStructureBase
 {
@@ -30,12 +30,12 @@ internal class MapJson : GedcomJson
 {
     public MapJson(Map map)
     {
-        PlaceLatitude = JsonString(map.PlaceLatitude);
-        PlaceLongitude = JsonString(map.PlaceLongitude);
+        Latitude = JsonString(map.PlaceLatitude);
+        Longitude = JsonString(map.PlaceLongitude);
     }
 
-    public string? PlaceLatitude { get; set; }
-    public string? PlaceLongitude { get; set; }
+    public string? Latitude { get; set; }
+    public string? Longitude { get; set; }
 }
 
 #region MAP p. 39

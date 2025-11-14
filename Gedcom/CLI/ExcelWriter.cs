@@ -31,10 +31,8 @@ public class ExcelWriter : IGedcomWriter
             var targetRow = templateRow + i + 1; // The row where the copied template should go
 
             // Copy the template row to the next available row
-            targetSheet.Cells[templateRow, 1, templateRow, targetSheet.Dimension.End.Column]
-                .Copy(targetSheet.Cells[targetRow, 1]);
+            targetSheet.Cells[templateRow, 1, templateRow, targetSheet.Dimension.End.Column].Copy(targetSheet.Cells[targetRow, 1]);
 
-            // Replace values in the copied row
             ReplaceTemplateValues(targetSheet, individualListItem, targetRow);
         }
 

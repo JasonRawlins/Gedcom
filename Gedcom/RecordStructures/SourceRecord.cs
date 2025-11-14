@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(SourceRecordJsonConverter))]
 public class SourceRecord : RecordStructureBase
 {
@@ -47,13 +47,13 @@ internal class SourceRecordJson : GedcomJson
         CallNumber = JsonString(sourceRecord.CallNumber);
         ChangeDate = JsonRecord(sourceRecord.ChangeDate);
         MultimediaLinks = JsonList(sourceRecord.MultimediaLinks);
-        NoteStructures = JsonList(sourceRecord.NoteStructures);
-        SourceDescriptiveTitle = JsonRecord(sourceRecord.SourceDescriptiveTitle);
-        SourceFiledByEntry = JsonRecord(sourceRecord.SourceFiledByEntry);
-        SourceOriginator = JsonRecord(sourceRecord.SourceOriginator);
-        SourcePublicationFacts = JsonRecord(sourceRecord.SourcePublicationFacts);
-        SourceRecordData = JsonRecord(sourceRecord.SourceRecordData);
-        SourceRepositoryCitations = JsonList(sourceRecord.SourceRepositoryCitations);
+        Notes = JsonList(sourceRecord.NoteStructures);
+        DescriptiveTitle = JsonRecord(sourceRecord.SourceDescriptiveTitle);
+        FiledByEntry = JsonRecord(sourceRecord.SourceFiledByEntry);
+        Originator = JsonRecord(sourceRecord.SourceOriginator);
+        PublicationFacts = JsonRecord(sourceRecord.SourcePublicationFacts);
+        RecordData = JsonRecord(sourceRecord.SourceRecordData);
+        RepositoryCitations = JsonList(sourceRecord.SourceRepositoryCitations);
         TextFromSource = JsonRecord(sourceRecord.TextFromSource);
         UserReferenceNumbers = JsonList(sourceRecord.UserReferenceNumbers);
         Xref = sourceRecord.Xref;
@@ -63,13 +63,13 @@ internal class SourceRecordJson : GedcomJson
     public string? CallNumber { get; set; }
     public ChangeDate? ChangeDate { get; set; }
     public List<MultimediaLink>? MultimediaLinks { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
-    public NoteStructure? SourceDescriptiveTitle { get; set; }
-    public NoteStructure? SourceFiledByEntry { get; set; }
-    public NoteStructure? SourceOriginator { get; set; }
-    public NoteStructure? SourcePublicationFacts { get; set; }
-    public SourceRecordData? SourceRecordData { get; set; }
-    public List<SourceRepositoryCitation>? SourceRepositoryCitations { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
+    public NoteStructure? DescriptiveTitle { get; set; }
+    public NoteStructure? FiledByEntry { get; set; }
+    public NoteStructure? Originator { get; set; }
+    public NoteStructure? PublicationFacts { get; set; }
+    public SourceRecordData? RecordData { get; set; }
+    public List<SourceRepositoryCitation>? RepositoryCitations { get; set; }
     public NoteStructure? TextFromSource { get; set; }
     public List<UserReferenceNumber>? UserReferenceNumbers { get; set; }
     public string Xref { get; set; }

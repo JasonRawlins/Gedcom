@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(PersonalNameStructureJsonConverter))]
 public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
 {
@@ -40,24 +40,24 @@ internal class PersonalNameStructureJson : GedcomJson
     public PersonalNameStructureJson(PersonalNameStructure personalNameStructure)
     {
         Given = JsonString(personalNameStructure.Given);
-        NamePersonal = JsonString(personalNameStructure.NamePersonal);
-        NamePhoneticVariation = JsonRecord(personalNameStructure.NamePhoneticVariation);
-        NamePrefix = JsonString(personalNameStructure.NamePrefix);
-        NameRomanizedVariation = JsonRecord(personalNameStructure.NameRomanizedVariation);
-        NameSuffix = JsonString(personalNameStructure.NameSuffix);
-        NameType = JsonString(personalNameStructure.NameType);
+        Name = JsonString(personalNameStructure.NamePersonal);
+        PhoneticVariation = JsonRecord(personalNameStructure.NamePhoneticVariation);
+        Prefix = JsonString(personalNameStructure.NamePrefix);
+        RomanizedVariation = JsonRecord(personalNameStructure.NameRomanizedVariation);
+        Suffix = JsonString(personalNameStructure.NameSuffix);
+        Type = JsonString(personalNameStructure.NameType);
         Nickname = JsonString(personalNameStructure.Nickname);
         Surname = JsonString(personalNameStructure.Surname);
         SurnamePrefix = JsonString(personalNameStructure.SurnamePrefix);
     }
 
     public string? Given { get; set; }
-    public string? NamePersonal { get; set; }
-    public NameVariation? NamePhoneticVariation { get; set; }
-    public string? NamePrefix { get; set; }
-    public NameVariation? NameRomanizedVariation { get; set; }
-    public string? NameSuffix { get; set; }
-    public string? NameType { get; set; }
+    public string? Name { get; set; }
+    public NameVariation? PhoneticVariation { get; set; }
+    public string? Prefix { get; set; }
+    public NameVariation? RomanizedVariation { get; set; }
+    public string? Suffix { get; set; }
+    public string? Type { get; set; }
     public string? Nickname { get; set; }
     public string? Surname { get; set; }
     public string? SurnamePrefix { get; set; }

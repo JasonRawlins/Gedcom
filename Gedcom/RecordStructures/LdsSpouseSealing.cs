@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(LdsSpouseSealingJsonConverter))]
 public class LdsSpouseSealing : RecordStructureBase
 {
@@ -37,7 +37,7 @@ internal class LdsSpouseSealingJson : GedcomJson
     {
         DateLdsOrdinance = JsonString(ldsSpouseSealing.DateLdsOrdinance);
         LdsSpouseSealingDateStatus = JsonRecord(ldsSpouseSealing.LdsSpouseSealingDateStatus);
-        NoteStructures = JsonList(ldsSpouseSealing.NoteStructures);
+        Notes = JsonList(ldsSpouseSealing.NoteStructures);
         PlaceLivingOrdinance = JsonString(ldsSpouseSealing.PlaceLivingOrdinance);
         SourceCitations = JsonList(ldsSpouseSealing.SourceCitations);
         TempleCode = JsonString(ldsSpouseSealing.TempleCode);
@@ -45,7 +45,7 @@ internal class LdsSpouseSealingJson : GedcomJson
 
     public string? DateLdsOrdinance { get; set; }
     public LdsOrdinanceStatus? LdsSpouseSealingDateStatus { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
     public string? PlaceLivingOrdinance { get; set; }
     public List<SourceCitation>? SourceCitations { get; set; }
     public string? TempleCode { get; set; }

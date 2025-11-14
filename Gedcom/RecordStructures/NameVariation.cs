@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(NameVariationJsonConverter))]
 public class NameVariation : RecordStructureBase, IPersonalNamePieces
 {
@@ -38,8 +38,8 @@ internal class NameVariationJson : GedcomJson
     public NameVariationJson(NameVariation nameVariation)
     {
         Given = JsonString(nameVariation.Type);
-        NamePrefix = JsonString(nameVariation.Type);
-        NameSuffix = JsonString(nameVariation.Type);
+        Prefix = JsonString(nameVariation.Type);
+        Suffix = JsonString(nameVariation.Type);
         Nickname = JsonString(nameVariation.Type);
         Surname = JsonString(nameVariation.Type);
         SurnamePrefix = JsonString(nameVariation.Type);
@@ -48,8 +48,8 @@ internal class NameVariationJson : GedcomJson
 
 
     public string? Given { get; set; }
-    public string? NamePrefix { get; set; }
-    public string? NameSuffix { get; set; }
+    public string? Prefix { get; set; }
+    public string? Suffix { get; set; }
     public string? Nickname { get; set; }
     public string? Surname { get; set; }
     public string? SurnamePrefix { get; set; }

@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(PlaceStructureJsonConverter))]
 public class PlaceStructure : RecordStructureBase
 {
@@ -36,19 +36,19 @@ internal class PlaceStructureJson : GedcomJson
     public PlaceStructureJson(PlaceStructure placeStructure)
     {
         Map = JsonRecord(placeStructure.Map);
-        NoteStructures = JsonList(placeStructure.NoteStructures);
-        PlaceHierarchy = JsonString(placeStructure.PlaceHierarchy);
-        PlaceName = JsonString(placeStructure.PlaceName);
-        PlacePhoneticVariations = JsonList(placeStructure.PlacePhoneticVariations);
-        PlaceRomanizedVariations = JsonList(placeStructure.PlaceRomanizedVariations);
+        Notes = JsonList(placeStructure.NoteStructures);
+        Hierarchy = JsonString(placeStructure.PlaceHierarchy);
+        Name = JsonString(placeStructure.PlaceName);
+        PhoneticVariations = JsonList(placeStructure.PlacePhoneticVariations);
+        RomanizedVariations = JsonList(placeStructure.PlaceRomanizedVariations);
     }
 
     public Map? Map { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
-    public string? PlaceHierarchy { get; set; }
-    public string? PlaceName { get; set; }
-    public List<NameVariation>? PlacePhoneticVariations { get; set; }
-    public List<NameVariation>? PlaceRomanizedVariations { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
+    public string? Hierarchy { get; set; }
+    public string? Name { get; set; }
+    public List<NameVariation>? PhoneticVariations { get; set; }
+    public List<NameVariation>? RomanizedVariations { get; set; }
 }
 
 #region PLACE_STRUCTURE p. 38-39

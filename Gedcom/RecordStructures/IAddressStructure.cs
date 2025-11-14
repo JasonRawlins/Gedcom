@@ -1,6 +1,6 @@
 ﻿namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 public interface IAddressStructure
 {
     List<string> AddressEmails { get; }

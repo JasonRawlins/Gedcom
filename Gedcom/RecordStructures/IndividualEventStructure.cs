@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(IndividualEventStructureJsonConverter))]
 public class IndividualEventStructure : RecordStructureBase, IEventDetail
 {
@@ -105,15 +105,15 @@ internal class IndividualEventStructureJson : GedcomJson
 {
     public IndividualEventStructureJson(IndividualEventStructure individualEventStructure)
     {
-        AddressStructure = JsonRecord(individualEventStructure.AddressStructure);
+        Address = JsonRecord(individualEventStructure.AddressStructure);
         AgeAtEvent = JsonString(individualEventStructure.AgeAtEvent);
         CauseOfEvent = JsonString(individualEventStructure.CauseOfEvent);
-        DateValue = JsonString(individualEventStructure.DateValue);
+        Date = JsonString(individualEventStructure.DateValue);
         EventOrFactClassification = JsonString(individualEventStructure.EventOrFactClassification);
         GedcomDate = individualEventStructure.GedcomDate;
         MultimediaLinks = JsonList(individualEventStructure.MultimediaLinks);
-        NoteStructures = JsonList(individualEventStructure.NoteStructures);
-        PlaceStructure = JsonRecord(individualEventStructure.PlaceStructure);
+        Notes = JsonList(individualEventStructure.NoteStructures);
+        Place = JsonRecord(individualEventStructure.PlaceStructure);
         ReligiousAffiliation = JsonString(individualEventStructure.ReligiousAffiliation);
         ResponsibleAgency = JsonString(individualEventStructure.ResponsibleAgency);
         RestrictionNotice = JsonString(individualEventStructure.RestrictionNotice);
@@ -122,15 +122,15 @@ internal class IndividualEventStructureJson : GedcomJson
 
     }
 
-    public AddressStructure? AddressStructure { get; set; }
+    public AddressStructure? Address { get; set; }
     public string? AgeAtEvent { get; set; }
     public string? CauseOfEvent { get; set; }
-    public string? DateValue { get; set; }
+    public string? Date { get; set; }
     public string? EventOrFactClassification { get; set; }
     public GedcomDate GedcomDate { get; set; }
     public List<MultimediaLink>? MultimediaLinks { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
-    public PlaceStructure? PlaceStructure { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
+    public PlaceStructure? Place { get; set; }
     public string? ReligiousAffiliation { get; set; }
     public string? ResponsibleAgency { get; set; }
     public string? RestrictionNotice { get; set; }

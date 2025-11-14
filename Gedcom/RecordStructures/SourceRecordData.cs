@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(SourceRecordDataJsonConverter))]
 public class SourceRecordData : RecordStructureBase
 {
@@ -33,12 +33,12 @@ internal class SourceRecordDataJson : GedcomJson
     public SourceRecordDataJson(SourceRecordData sourceRecordData)
     {
         EventsRecorded = JsonList(sourceRecordData.EventsRecorded);
-        NoteStructures = JsonList(sourceRecordData.NoteStructures);
+        Notes = JsonList(sourceRecordData.NoteStructures);
         ResponsibleAgency = JsonString(sourceRecordData.ResponsibleAgency);
     }
 
     public List<SourceRecordEvent>? EventsRecorded { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
     public string? ResponsibleAgency { get; set; }
 }
 

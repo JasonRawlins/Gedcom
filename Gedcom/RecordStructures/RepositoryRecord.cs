@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(RepositoryRecordJsonConverter))]
 public class RepositoryRecord : RecordStructureBase, IAddressStructure
 {
@@ -41,29 +41,29 @@ internal class RepositoryRecordJson : GedcomJson
 {
     public RepositoryRecordJson(RepositoryRecord repositoryRecord)
     {
-        AddressEmails = JsonList(repositoryRecord.AddressEmails);
-        AddressFaxNumbers = JsonList(repositoryRecord.AddressFaxNumbers);
-        AddressStructure = JsonRecord(repositoryRecord.AddressStructure);
-        AddressWebPages = JsonList(repositoryRecord.AddressWebPages);
+        Emails = JsonList(repositoryRecord.AddressEmails);
+        FaxNumbers = JsonList(repositoryRecord.AddressFaxNumbers);
+        Address = JsonRecord(repositoryRecord.AddressStructure);
+        WebPages = JsonList(repositoryRecord.AddressWebPages);
         AutomatedRecordId = JsonString(repositoryRecord.AutomatedRecordId);
         CallNumber = JsonRecord(repositoryRecord.CallNumber);
         ChangeDate = JsonRecord(repositoryRecord.ChangeDate);
         Name = JsonString(repositoryRecord.Name);
-        NoteStructures = JsonList(repositoryRecord.NoteStructures);
+        Notes = JsonList(repositoryRecord.NoteStructures);
         PhoneNumbers = JsonList(repositoryRecord.PhoneNumbers);
         UserReferenceNumber = JsonRecord(repositoryRecord.UserReferenceNumber);
         Xref = repositoryRecord.Xref;
     }
 
-    public List<string>? AddressEmails { get; set; }
-    public List<string>? AddressFaxNumbers { get; set; }
-    public AddressStructure? AddressStructure { get; set; }
-    public List<string>? AddressWebPages { get; set; }
+    public List<string>? Emails { get; set; }
+    public List<string>? FaxNumbers { get; set; }
+    public AddressStructure? Address { get; set; }
+    public List<string>? WebPages { get; set; }
     public string? AutomatedRecordId { get; set; }
     public CallNumber? CallNumber { get; set; }
     public ChangeDate? ChangeDate { get; set; }
     public string? Name { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
     public List<string>? PhoneNumbers { get; set; }
     public UserReferenceNumber? UserReferenceNumber { get; set; }
     public string? Xref { get; set; }

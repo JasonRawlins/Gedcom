@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(SubmitterRecordJsonConverter))]
 public class SubmitterRecord : RecordStructureBase
 {
@@ -37,22 +37,22 @@ internal class SubmitterRecordJson : GedcomJson
 {
     public SubmitterRecordJson(SubmitterRecord submitterRecord)
     {
-        AddressStructure = JsonRecord(submitterRecord.AddressStructure);
+        Address = JsonRecord(submitterRecord.AddressStructure);
         AutomatedRecordId = JsonString(submitterRecord.AutomatedRecordId);
         ChangeDate = JsonRecord(submitterRecord.ChangeDate);
         LanguagePreferences = JsonList(submitterRecord.LanguagePreferences);
         MultimediaLinks = JsonList(submitterRecord.MultimediaLinks);
-        NoteStructures = JsonList(submitterRecord.NoteStructures);
+        Notes = JsonList(submitterRecord.NoteStructures);
         SubmitterName = JsonString(submitterRecord.SubmitterName);
         SubmitterRegisteredReferenceNumber = JsonString(submitterRecord.SubmitterRegisteredRfn);
     }
 
-    public AddressStructure? AddressStructure { get; set; }
+    public AddressStructure? Address { get; set; }
     public string? AutomatedRecordId { get; set; }
     public GedcomDate? ChangeDate { get; set; }
     public List<string>? LanguagePreferences { get; set; }
     public List<MultimediaLink>? MultimediaLinks { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
     public string? SubmitterName { get; set; }
     public string? SubmitterRegisteredReferenceNumber { get; set; }
 }

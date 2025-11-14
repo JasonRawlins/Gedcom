@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(FamilyEventDetailJsonConverter))]
 public class EventDetail : RecordStructureBase, IEventDetail
 {
@@ -41,26 +41,26 @@ internal class EventDetailJson : GedcomJson
 {
     public EventDetailJson(EventDetail eventDetail)
     {
-        AddressStructure = JsonRecord(eventDetail.AddressStructure);
+        Address = JsonRecord(eventDetail.AddressStructure);
         CauseOfEvent = JsonString(eventDetail.CauseOfEvent);
         DateValue = JsonString(eventDetail.DateValue);
         EventOrFactClassification = JsonString(eventDetail.EventOrFactClassification);
         MultimediaLinks = JsonList(eventDetail.MultimediaLinks);
-        NoteStructures = JsonList(eventDetail.NoteStructures);
-        PlaceStructure = JsonRecord(eventDetail.PlaceStructure);
+        Notes = JsonList(eventDetail.NoteStructures);
+        Place = JsonRecord(eventDetail.PlaceStructure);
         ReligiousAffiliation = JsonString(eventDetail.ReligiousAffiliation);
         ResponsibleAgency = JsonString(eventDetail.ResponsibleAgency);
         RestrictionNotice = JsonString(eventDetail.RestrictionNotice);
         SourceCitations = JsonList(eventDetail.SourceCitations);
     }
 
-    public AddressStructure? AddressStructure { get; set; }
+    public AddressStructure? Address { get; set; }
     public string? CauseOfEvent { get; set; }
     public string? DateValue { get; set; }
     public string? EventOrFactClassification { get; set; }
     public List<MultimediaLink>? MultimediaLinks { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
-    public PlaceStructure? PlaceStructure { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
+    public PlaceStructure? Place { get; set; }
     public string? ReligiousAffiliation { get; set; }
     public string? ResponsibleAgency { get; set; }
     public string? RestrictionNotice { get; set; }

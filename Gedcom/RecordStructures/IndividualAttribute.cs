@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(IndividualAttributeJsonConverter))]
 public class IndividualAttribute : RecordStructureBase
 {
@@ -30,10 +30,10 @@ internal class IndividualAttributeJson : GedcomJson
 {
     public IndividualAttributeJson(IndividualAttribute individualAttribute)
     {
-        IndividualEventDetail = JsonRecord(individualAttribute.IndividualEventDetail);
+        EventDetail = JsonRecord(individualAttribute.IndividualEventDetail);
     }
 
-    public IndividualEventDetail? IndividualEventDetail { get; set; }
+    public IndividualEventDetail? EventDetail { get; set; }
 }
 
 #region INDIVIDUAL_ATTRIBUTE p. 33

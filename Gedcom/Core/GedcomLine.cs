@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Gedcom;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 public class GedcomLine
 {
     public int Level { get; set; } = -1;
@@ -73,7 +73,7 @@ public class GedcomLine
     }
 
     // This will not produce a valid Gedcom line if indentLevel is > 0 because it adds 
-    // leading whitespace, which is invalid in The Gedcom Standard 5.1.1. It displays
+    // leading whitespace, which is invalid in The Gedcom Standard 5.5.1. It displays
     // the gedcom in a human-readable format.
     public string ToString(int indentLevel)
     {
