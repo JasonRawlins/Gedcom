@@ -10,13 +10,15 @@ public class Gedcom : RecordStructureBase
     public Gedcom(List<GedcomLine> gedcomLines)
     {
         // Level 0 records are the top-level records:
-        // FAM (Family),
-        // INDI (Individual),
-        // OBJE (Multimedia),
-        // NOTE (Note),
-        // REPO (Repository),
-        // SOUR (Source),
+        // FAM (Family)
+        // HEAD (Head)
+        // INDI (Individual)
+        // NOTE (Note)
+        // OBJE (Multimedia)
+        // REPO (Repository)
+        // SOUR (Source)
         // SUBM (Submitter)
+        // TRLR (Trailer)
         foreach (var level0Record in GetGedcomLinesForLevel(0, gedcomLines))
         {
             Record.Records.Add(new Record(level0Record));

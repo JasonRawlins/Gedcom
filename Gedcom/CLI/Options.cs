@@ -34,7 +34,7 @@ public class Options
         set => recordType = value;
     }    
 
-    [Option('x', "xref", Required = false, HelpText = "Record xref. (@I123@, @R456@, @S894, etc.")]
+    [Option('x', "xref", Required = false, HelpText = "Record xref. (@I123@, @R456@, @S894@, etc.")]
     public string Xref { get; set; } = "";
 }
 

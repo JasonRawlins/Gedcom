@@ -10,8 +10,7 @@ public class GedcomLine
     public string Tag { get; set; } = "";
 
     // See note 2 below about GedcomLine.Value relationship to an GedcomLine.Xref
-    // pointer (e.g. xrefIndi, xrefFAM, xrefOBJE, xrefNOTE, xrefREPO, xrefSOUR).
-    // Specifically, it emphasizes that a GedcomLine can only have a value or
+    // pointer. Specifically, it emphasizes that a GedcomLine can only have a value or
     // a pointer (Xref), not both. However in code there is no difference. Instead, 
     // GedcomLine.Xref will simply return GedcomLine.Value
     public string Value { get; set; } = "";
@@ -19,7 +18,7 @@ public class GedcomLine
 
     // This takes the text of a single line and parses it into a GedcomLine.
     // The format of a top-level record (level 0 record) is Level, Xref, and TAG: "0 @I1234567890@ INDI".
-    // For all other lines, the order is Level, Tag, Value: "1 NAME John /Doe/".
+    // For all other lines, the order is Level, Tag, Value (optional): (e.g. "1 NAME John /Doe/", "1 BIRT").
     public static GedcomLine Parse(string line)
     {
         var level = int.Parse(line.Substring(0, line.IndexOf(" ")));

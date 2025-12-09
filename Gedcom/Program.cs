@@ -25,7 +25,7 @@ public class Program
 
         if (options.RecordType.Equals(Tag.GEDC))
         {
-            WriteJson(exporter.GedcomJson());
+            WriteJson(exporter.GedcomJson(), options.OutputFilePath);
             return;
         }
 
@@ -33,11 +33,11 @@ public class Program
         {
             if (options.Format.Equals(C.JSON))
             {
-                WriteJson(exporter.IndividualRecordsJson());
+                WriteJson(exporter.IndividualRecordsJson(), options.OutputFilePath);
             }
             else if (options.Format.Equals(Tag.HTML))
             {
-                WriteHtml(exporter.IndividualsHtml());
+                WriteHtml(exporter.IndividualsHtml(), options.OutputFilePath);
             }
             else if (options.Format.Equals(C.XSLX))
             {
@@ -52,25 +52,27 @@ public class Program
         {
             if (options.RecordType.Equals(Tag.INDI))
             {
-                WriteJson(exporter.IndividualRecordJson());
+                WriteJson(exporter.IndividualRecordJson(), options.OutputFilePath);
             }
         }
 
-        void WriteJson(string json)
-        {
-            File.WriteAllText(options.OutputFilePath, json);
-        }
+       
+    }
 
-        void WriteHtml(string html)
-        {
-            File.WriteAllText(options.OutputFilePath, html);
+    static void WriteJson(string json, string outputFilePath)
+    {
+        File.WriteAllText(outputFilePath, json);
+    }
 
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = options.OutputFilePath,
-                UseShellExecute = true
-            });
-        }
+    static void WriteHtml(string html, string outputFilePath)
+    {
+        File.WriteAllText(outputFilePath, html);
+
+        Process.Start(new ProcessStartInfo
+        {
+            FileName = outputFilePath,
+            UseShellExecute = true
+        });
     }
 
     static void HandleParseError(IEnumerable<Error> errors)

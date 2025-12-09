@@ -30,7 +30,7 @@ public class Exporter(Gedcom gedcom, Options options)
         var individualListItems = Gedcom.GetIndividualRecords().Select(ir => new IndividualListItem(ir)).ToList();
 
         var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.IndividualsHtmlTemplate);
-        var individualLis = HtmlWriter.CreateIndividualLis(individualListItems, Gedcom.Header.Source.Tree.AutomatedRecordId);
+        var individualLis = HtmlWriter.CreateIndividualList(individualListItems, Gedcom.Header.Source.Tree.AutomatedRecordId);
         var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", string.Join(Environment.NewLine, individualLis));
 
         return finalHtml;
@@ -79,7 +79,7 @@ public class Exporter(Gedcom gedcom, Options options)
                 argumentErrors.Add($"{ErrorMessages.InputFilePathIsRequired} '{Options.GedPath}'");
             }
 
-            string directoryPath = System.IO.Path.GetDirectoryName(Options.OutputFilePath) ?? "";
+            string directoryPath = Path.GetDirectoryName(Options.OutputFilePath) ?? "";
             if (string.IsNullOrEmpty(directoryPath) || !Directory.Exists(directoryPath))
             {
                 argumentErrors.Add(ErrorMessages.OutputFilePathIsRequired);

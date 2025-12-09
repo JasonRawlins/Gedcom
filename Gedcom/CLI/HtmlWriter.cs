@@ -10,13 +10,13 @@ public class HtmlWriter(HeaderTree headerTree) : IGedcomWriter
     public byte[] GetIndividuals(List<IndividualListItem> individualListItems)
     {
         var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.IndividualsHtmlTemplate);
-        var individualLis = CreateIndividualLis(individualListItems, HeaderTree.AutomatedRecordId);
+        var individualLis = CreateIndividualList(individualListItems, HeaderTree.AutomatedRecordId);
         var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", string.Join(Environment.NewLine, individualLis));
 
         return Encoding.UTF8.GetBytes(finalHtml);
     }
 
-    public static List<string> CreateIndividualLis(List<IndividualListItem> individualListItems, string treeId)
+    public static List<string> CreateIndividualList(List<IndividualListItem> individualListItems, string treeId)
     {
         individualListItems.Sort();
         var liList = new List<string>();

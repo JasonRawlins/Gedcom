@@ -58,7 +58,6 @@ public static class Tag //
     public const string EDUC = "EDUC"; // <SCHOLASTIC_ACHIEVEMENT>
     public const string EMAIL = "EMAIL"; // <ADDRESS_EMAIL>
     public const string EMIG = "EMIG"; // <blank>
-    public const string Empty = "EMPTY"; // For the empty Record
     public const string ENDL = "ENDL"; // <blank>
     public const string ENGA = "ENGA"; // <blank>
     public const string EVEN = "EVEN"; // <EVENTS_RECORDED>, [<EVENT_DESCRIPTOR> | <NULL>] <EVENT_TYPE_CITED_FROM>, <blank>
