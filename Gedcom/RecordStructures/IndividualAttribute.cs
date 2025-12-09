@@ -9,7 +9,7 @@ public class IndividualAttribute : RecordStructureBase
     public IndividualAttribute() : base() { }
     public IndividualAttribute(Record record) : base(record) { }
 
-    public IndividualEventDetail IndividualEventDetail => First<IndividualEventDetail>(C.EVEN);
+    public IndividualEventDetail IndividualEventDetail => First<IndividualEventDetail>(Tag.EVEN);
 
     public override string ToString() => $"{Record.Value}";
 }

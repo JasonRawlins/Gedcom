@@ -9,9 +9,9 @@ public class AssociationStructure : RecordStructureBase
     public AssociationStructure() : base() { }
     public AssociationStructure(Record record) : base(record) { }
 
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public string RelationIsDescriptor => _(C.RELA);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.NOTE);
+    public string RelationIsDescriptor => _(Tag.RELA);
+    public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.SOUR);
 
     public override string ToString() => $"{Record.Value}, {RelationIsDescriptor}";
 }

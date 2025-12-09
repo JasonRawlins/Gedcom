@@ -9,8 +9,8 @@ public class HeaderGedcom : RecordStructureBase
     public HeaderGedcom() : base() { }
     public HeaderGedcom(Record record) : base(record) { }
 
-    public string GedcomForm => _(C.FORM);
-    public string VersionNumber => _(C.VERS);
+    public string GedcomForm => _(Tag.FORM);
+    public string VersionNumber => _(Tag.VERS);
 
     public override string ToString() => $"{Record.Value}, {VersionNumber}";
 }

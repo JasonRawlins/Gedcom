@@ -9,7 +9,7 @@ public class MultimediaFormat : RecordStructureBase
     public MultimediaFormat() : base() { }
     public MultimediaFormat(Record record) : base(record) { }
 
-    public string SourceMediaType => _(C.MEDI);
+    public string SourceMediaType => _(Tag.MEDI);
 
     public override string ToString() => $"{Record.Value}, {SourceMediaType}";
 }

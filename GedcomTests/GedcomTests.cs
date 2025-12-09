@@ -17,7 +17,7 @@ public sealed class GedcomTests
     [TestMethod]
     public void ExportGedcomAsJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.GEDC });
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.GEDC });
         GedcomAssert.RecordJsonIsValid(exporter, exporter.GedcomJson, AssertFunction);
 
         bool AssertFunction(string json) => 

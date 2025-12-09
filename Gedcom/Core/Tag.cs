@@ -1,9 +1,10 @@
 ﻿namespace Gedcom;
 
-public static class C // Constants
+/// <summary>
+/// A list of all native GEDCOM tags.
+/// </summary>
+public static class Tag // 
 {
-    public const string _ENV = "_ENV";
-    public const string _TREE = "_TREE";
     public const string ABBR = "ABBR"; // <SOURCE_FILED_BY_ENTRY>
     public const string ADDR = "ADDR"; // <ADDRESS_LINE>
     public const string ADOP = "ADOP"; // <blank>
@@ -80,7 +81,6 @@ public static class C // Constants
     public const string INDI = "INDI"; // @XREF:INDI@ INDI
     public const string IDNO = "IDNO"; // <NATOINAL_ID_NUMBER>
     public const string IMMI = "IMMI"; // <blank>
-    public const string JSON = "JSON"; 
     public const string LANG = "LANG"; // <LANGUAGE_PREFERENCE>, <LANGUAGE_OF_TEXT>
     public const string LATI = "LATI"; // <PLACE_LATITUDE>
     public const string LIST = "LIST"; // GedcomNET CLI
@@ -146,6 +146,4 @@ public static class C // Constants
     public const string WIFE = "WIFE"; // @<XREF:INDI>@, <blank>
     public const string WILL = "WILL"; // <blank>
     public const string WWW = "WWW"; // <ADDRESS_WEB_PAGE>
-    public const string XREF = "Xref";
-    public const string XSLX = "XSLX"; // For Excel export option.
 }

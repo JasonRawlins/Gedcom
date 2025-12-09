@@ -9,21 +9,21 @@ public class FamilyRecord : RecordStructureBase
     public FamilyRecord() : base() { }
     public FamilyRecord(Record record) : base(record) { }
 
-    public string AdoptedByWhichParent => _(C.ADOP);
-    public string AutomatedRecordNumber => _(C.RIN);
-    public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
-    public List<string> Children => List(r => r.Tag.Equals(C.CHIL)).Select(r => r.Value).ToList();
-    public string CountOfChildren => _(C.NCHI);
-    public List<FamilyEventStructure> FamilyEventStructures => List<FamilyEventStructure>(C.FAM);
-    public string Husband => _(C.HUSB);
+    public string AdoptedByWhichParent => _(Tag.ADOP);
+    public string AutomatedRecordNumber => _(Tag.RIN);
+    public ChangeDate ChangeDate => First<ChangeDate>(Tag.CHAN);
+    public List<string> Children => List(r => r.Tag.Equals(Tag.CHIL)).Select(r => r.Value).ToList();
+    public string CountOfChildren => _(Tag.NCHI);
+    public List<FamilyEventStructure> FamilyEventStructures => List<FamilyEventStructure>(Tag.FAM);
+    public string Husband => _(Tag.HUSB);
     // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
-    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public string RestrictionNotice => _(C.RESN);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
-    public string Submitter => _(C.SUBM);
-    public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
-    public string Wife => _(C.WIFE);
+    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.OBJE);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.NOTE);
+    public string RestrictionNotice => _(Tag.RESN);
+    public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.SOUR);
+    public string Submitter => _(Tag.SUBM);
+    public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(Tag.REFN);
+    public string Wife => _(Tag.WIFE);
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {Husband} and {Wife} with {Children.Count} children";

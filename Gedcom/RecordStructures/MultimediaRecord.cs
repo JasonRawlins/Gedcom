@@ -9,14 +9,14 @@ public class MultimediaRecord : RecordStructureBase
     public MultimediaRecord() : base() { }
     public MultimediaRecord(Record record) : base(record) { }
 
-    public string AutomatedRecordId => _(C.RIN);
-    public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
-    public string DescriptiveTitle => _(C.TITL);
-    public List<string> MultimediaFileReferenceNumbers => List(r => r.Tag.Equals(C.FILE)).Select(r => r.Value).ToList();
-    public MultimediaFormat MultimediaFormat => First<MultimediaFormat>(C.FORM);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
-    public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(C.REFN);
+    public string AutomatedRecordId => _(Tag.RIN);
+    public ChangeDate ChangeDate => First<ChangeDate>(Tag.CHAN);
+    public string DescriptiveTitle => _(Tag.TITL);
+    public List<string> MultimediaFileReferenceNumbers => List(r => r.Tag.Equals(Tag.FILE)).Select(r => r.Value).ToList();
+    public MultimediaFormat MultimediaFormat => First<MultimediaFormat>(Tag.FORM);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.NOTE);
+    public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.SOUR);
+    public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(Tag.REFN);
 
     public override string ToString() => $"{Record.Value}, {AutomatedRecordId}, {DescriptiveTitle}";
 }

@@ -9,7 +9,7 @@ public class HeaderTree : RecordStructureBase
     public HeaderTree() : base() { }
     public HeaderTree(Record record) : base(record) { }
 
-    public string AutomatedRecordId => _(C.RIN);
+    public string AutomatedRecordId => _(Tag.RIN);
     public string Name => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {Name}";

@@ -6,8 +6,8 @@ namespace Gedcom.CLI;
 
 public class Exporter(Gedcom gedcom, Options options)
 {
-    public static string[] RecordTypes => [C.FAM, C.INDI, C.OBJE, C.NOTE, C.REPO, C.SOUR, C.SUBM, C.GEDC /* GEDC is not a real top-level record type. It's used when the whole gedcom is exported. */];
-    public static string[] OutputFormats => [C.JSON, C.LIST, C.HTML, C.XSLX];
+    public static string[] RecordTypes => [Tag.FAM, Tag.INDI, Tag.OBJE, Tag.NOTE, Tag.REPO, Tag.SOUR, Tag.SUBM, Tag.GEDC /* GEDC is not a real top-level record type. It's used when the whole gedcom is exported. */];
+    public static string[] OutputFormats => [C.JSON, Tag.LIST, Tag.HTML, C.XSLX];
 
     public Options Options { get; set; } = options ?? new Options();
     public Gedcom Gedcom { get; set; } = gedcom;

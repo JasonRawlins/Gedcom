@@ -9,15 +9,15 @@ public class SubmissionRecord : RecordStructureBase
     public SubmissionRecord() : base() { }
     public SubmissionRecord(Record record) : base(record) { }
 
-    public string Submitter => _(C.SUBM);
-    public string NameOfFamilyFile => _(C.FAMF);
-    public string TempleCode => _(C.TEMP);
-    public string GenerationsOfAncestors => _(C.ANCE);
-    public string GenerationsOfDescendants => _(C.DESC);
-    public string OrdinanceProcessFlag => _(C.ORDI);
-    public string AutomatedRecordId => _(C.RIN);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
+    public string Submitter => _(Tag.SUBM);
+    public string NameOfFamilyFile => _(Tag.FAMF);
+    public string TempleCode => _(Tag.TEMP);
+    public string GenerationsOfAncestors => _(Tag.ANCE);
+    public string GenerationsOfDescendants => _(Tag.DESC);
+    public string OrdinanceProcessFlag => _(Tag.ORDI);
+    public string AutomatedRecordId => _(Tag.RIN);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.NOTE);
+    public ChangeDate ChangeDate => First<ChangeDate>(Tag.CHAN);
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {Submitter}";

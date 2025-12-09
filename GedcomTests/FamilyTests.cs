@@ -17,7 +17,7 @@ public sealed class FamilyTests
     [TestMethod]
     public void ExportFamiliesJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.FAM });
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.FAM });
         GedcomAssert.RecordJsonIsValid(exporter, exporter.FamilyRecordsJson, AssertFunction);
 
         bool AssertFunction(string json) =>
@@ -30,7 +30,7 @@ public sealed class FamilyTests
     {
         var exporter = new Exporter(Gedcom, new Options()
         {
-            RecordType = C.FAM,
+            RecordType = Tag.FAM,
             Xref = TestTree.Families.RobertAndRosaDavis.Xref
         });
 
@@ -44,7 +44,7 @@ public sealed class FamilyTests
     [TestMethod]
     public void ExportNonExistingFamilyJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.FAM, Xref = "INVALID_XREF" });
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.FAM, Xref = "INVALID_XREF" });
         GedcomAssert.RecordJsonIsValid(exporter, exporter.FamilyRecordJson, AssertFunction, false);
 
         bool AssertFunction(string json) => string.IsNullOrWhiteSpace(json);

@@ -9,11 +9,11 @@ public class HeaderSource : RecordStructureBase
     public HeaderSource() : base() { }
     public HeaderSource(Record record) : base(record) { }
 
-    public HeaderCorporation Corporation => First<HeaderCorporation>(C.CORP);
-    public HeaderData Data => First<HeaderData>(C.DATA);
-    public string NameOfProduct => _(C.NAME);
-    public HeaderTree Tree => First<HeaderTree>(C._TREE);
-    public string Version => _(C.VERS);
+    public HeaderCorporation Corporation => First<HeaderCorporation>(Tag.CORP);
+    public HeaderData Data => First<HeaderData>(Tag.DATA);
+    public string NameOfProduct => _(Tag.NAME);
+    public HeaderTree Tree => First<HeaderTree>(ExTag._TREE);
+    public string Version => _(Tag.VERS);
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {NameOfProduct}, {Version}";

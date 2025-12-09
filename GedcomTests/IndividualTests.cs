@@ -16,7 +16,7 @@ public sealed class IndividualTests
     [TestMethod]
     public void ExportIndividualsJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.INDI });
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.INDI });
         GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordsJson, AssertFunction);
 
         static bool AssertFunction(string json) => 
@@ -45,7 +45,7 @@ public sealed class IndividualTests
     [TestMethod]
     public void ExportIndividualJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.INDI, Xref = TestTree.Individuals.MariaDavis.Xref});
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.INDI, Xref = TestTree.Individuals.MariaDavis.Xref});
         GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordJson, AssertFunction);
 
         static bool AssertFunction(string json) => 
@@ -56,7 +56,7 @@ public sealed class IndividualTests
     [TestMethod]
     public void NonExistingIndividualJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.INDI, Xref = "INVALID_XREF" });
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.INDI, Xref = "INVALID_XREF" });
         GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordJson, AssertFunction, false);
 
         static bool AssertFunction(string json) => string.IsNullOrWhiteSpace(json);
@@ -65,7 +65,7 @@ public sealed class IndividualTests
     [TestMethod]
     public void QueryIndividualsJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() {  RecordType = C.INDI, Query = "Davis" });
+        var exporter = new Exporter(Gedcom, new Options() {  RecordType = Tag.INDI, Query = "Davis" });
         GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordsJson, AssertFunction);
 
         static bool AssertFunction(string json) =>
@@ -78,7 +78,7 @@ public sealed class IndividualTests
     [TestMethod]
     public void ExportIndividualsHtmlTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.INDI, Format = C.HTML });
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.INDI, Format = Tag.HTML });
         GedcomAssert.RecordHtmlIsValid(exporter, exporter.IndividualsHtml, AssertFunction);
 
         static bool AssertFunction (string html) =>
@@ -95,7 +95,7 @@ public sealed class IndividualTests
     {
         var exporter = new Exporter(Gedcom, new Options()
         {
-            RecordType = C.INDI,
+            RecordType = Tag.INDI,
             Format = C.XSLX,
             GedPath = @"C:\temp\GedcomNET\Resources\GedcomNET.ged",
             OutputFilePath = @"C:\temp\GedcomNET\Resources\GedcomNET-output.xlsx"

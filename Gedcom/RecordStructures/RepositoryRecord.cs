@@ -9,17 +9,17 @@ public class RepositoryRecord : RecordStructureBase, IAddressStructure
     public RepositoryRecord() : base() { }
     public RepositoryRecord(Record record) : base(record) { }
 
-    public List<string> AddressEmails => ListValues(C.EMAIL);
-    public List<string> AddressFaxNumbers => ListValues(C.FAX);
-    public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
-    public List<string> AddressWebPages => ListValues(C.WWW);
-    public string AutomatedRecordId => _(C.RIN);
-    public CallNumber CallNumber => First<CallNumber>(C.CALN);
-    public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
-    public string Name => _(C.NAME);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public List<string> PhoneNumbers => ListValues(C.PHON);
-    public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(C.REFN);
+    public List<string> AddressEmails => ListValues(Tag.EMAIL);
+    public List<string> AddressFaxNumbers => ListValues(Tag.FAX);
+    public AddressStructure AddressStructure => First<AddressStructure>(Tag.ADDR);
+    public List<string> AddressWebPages => ListValues(Tag.WWW);
+    public string AutomatedRecordId => _(Tag.RIN);
+    public CallNumber CallNumber => First<CallNumber>(Tag.CALN);
+    public ChangeDate ChangeDate => First<ChangeDate>(Tag.CHAN);
+    public string Name => _(Tag.NAME);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.NOTE);
+    public List<string> PhoneNumbers => ListValues(Tag.PHON);
+    public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(Tag.REFN);
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {Name}";

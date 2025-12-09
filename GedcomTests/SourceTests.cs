@@ -17,7 +17,7 @@ public sealed class SourceTests
     [TestMethod]
     public void ExportSourcesJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.SOUR });
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.SOUR });
         GedcomAssert.RecordJsonIsValid(exporter, exporter.SourceRecordsJson, AssertFunction);
 
         bool AssertFunction(string json) =>
@@ -30,7 +30,7 @@ public sealed class SourceTests
     {
         var exporter = new Exporter(Gedcom, new Options() 
         { 
-            RecordType = C.SOUR,
+            RecordType = Tag.SOUR,
             Xref = TestTree.Sources.GarciaFamilyBirths.Xref
         });
 
@@ -44,7 +44,7 @@ public sealed class SourceTests
     [TestMethod]
     public void ExportNonExistingSourceJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.SOUR, Xref = "INVALID_XREF"});
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.SOUR, Xref = "INVALID_XREF"});
         GedcomAssert.RecordJsonIsValid(exporter, exporter.SourceRecordJson, AssertFunction, false);
 
         bool AssertFunction(string json) => string.IsNullOrWhiteSpace(json);
@@ -53,7 +53,7 @@ public sealed class SourceTests
     [TestMethod]
     public void QuerySourceJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.SOUR, Query = "Autobiography of Robert Davis" });
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.SOUR, Query = "Autobiography of Robert Davis" });
         GedcomAssert.RecordJsonIsValid(exporter, exporter.SourceRecordsJson, AssertFunction);
 
         bool AssertFunction(string json) => 

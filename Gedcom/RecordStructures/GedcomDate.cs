@@ -46,7 +46,7 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
     }
     public int Month { get; set; }
     public string MonthName { get; set; } = "";
-    public string TimeValue => _(C.TIME);
+    public string TimeValue => _(Tag.TIME);
     public int Year { get; set; }
 
 

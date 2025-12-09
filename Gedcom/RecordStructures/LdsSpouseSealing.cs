@@ -9,12 +9,12 @@ public class LdsSpouseSealing : RecordStructureBase
     public LdsSpouseSealing() : base() { }
     public LdsSpouseSealing(Record record) : base(record) { }
 
-    public string DateLdsOrdinance => _(C.DATE);
-    public LdsOrdinanceStatus LdsSpouseSealingDateStatus => First<LdsOrdinanceStatus>(C.STAT);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public string PlaceLivingOrdinance => _(C.PLAC);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
-    public string TempleCode => _(C.TEMP);
+    public string DateLdsOrdinance => _(Tag.DATE);
+    public LdsOrdinanceStatus LdsSpouseSealingDateStatus => First<LdsOrdinanceStatus>(Tag.STAT);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.NOTE);
+    public string PlaceLivingOrdinance => _(Tag.PLAC);
+    public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.SOUR);
+    public string TempleCode => _(Tag.TEMP);
 
     public override string ToString() => $"{Record.Value}, {TempleCode}, {DateLdsOrdinance}";
 }

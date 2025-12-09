@@ -9,12 +9,12 @@ public class LdsIndividualOrdinance : RecordStructureBase
     public LdsIndividualOrdinance() : base() { }
     public LdsIndividualOrdinance(Record record) : base(record) { }
 
-    public string DateLdsOrdinance => _(C.DATE);
-    public LdsOrdinanceStatus LdsBaptismDateStatus => First<LdsOrdinanceStatus>(C.STAT);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public string PlaceLivingOrdinance => _(C.PLAC);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
-    public string TempleCode => _(C.TEMP);
+    public string DateLdsOrdinance => _(Tag.DATE);
+    public LdsOrdinanceStatus LdsBaptismDateStatus => First<LdsOrdinanceStatus>(Tag.STAT);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.NOTE);
+    public string PlaceLivingOrdinance => _(Tag.PLAC);
+    public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.SOUR);
+    public string TempleCode => _(Tag.TEMP);
 
     public override string ToString() => $"{Record.Value}, {TempleCode}, {PlaceLivingOrdinance}";
 }

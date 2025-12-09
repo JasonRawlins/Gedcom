@@ -1,19 +1,41 @@
 
 
 
+Gedcom line
+	0, 1, 2, 3, 4, 5
+Level 0 records
+	INDI, FAM, REPO, SOUR, NOTE, HEAD, TRLR, SUBM
+BIRT, DEAT
+Well known tags
+Other tags without a value
+PLAC
+Minimal gedcom
+	HEAD, INDI, TRLR
+INDI for Maria
+INDI for Maria indented
+GIVN Maria
+SURN Davis
+SEX
+Up to SURN, GIVN, NAME, INDI
+BIRT
+Up to 0 INDI
+BIRT DATE PLAC
+Full record so far
+HEAD, INDI line (Level 0 significant, value or xref, tag)
+1 NAME Maria, to INDI
+GIVN, SURN to NAME
+SEX to INDI
+BIRT to INDI
+DATE
+PLAC to BIRT
+TRLR
 
-Export to csv, xslx, docx
-Explore adding a small amount of javascript to the html file for common functions like filtering.
-Look into GitHub hosting and test running.
-readme CLI.
-readme Export formats.
-Use cases for cli.
 
 
 
 Backlog
 -------
-Make a Visual Studio addon that formats .ged files. There might already be one.
+
 
 
 

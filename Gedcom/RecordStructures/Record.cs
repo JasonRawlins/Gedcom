@@ -10,7 +10,7 @@ public class Record
     [JsonIgnore]
     public List<GedcomLine> GedcomLines { get; } = []; // The Gedcom lines of this record and all its child records.
     public List<Record> Records { get; } = []; // A collection of all parsed child records. 	
-    internal bool IsEmpty => Level == -1 && Tag.Equals(C.Empty) && Records.Count == 0;
+    internal bool IsEmpty => Level == -1 && Tag.Equals(global::Gedcom.Tag.Empty) && Records.Count == 0;
 
     public Record(List<GedcomLine> gedcomLines)
     {
@@ -62,7 +62,7 @@ public class Record
                 new GedcomLine
                 {
                     Level = -1,
-                    Tag = C.Empty,
+                    Tag = global::Gedcom.Tag.Empty,
                     Value = ""
                 }
             };

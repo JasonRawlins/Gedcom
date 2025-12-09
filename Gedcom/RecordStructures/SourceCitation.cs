@@ -9,12 +9,12 @@ public class SourceCitation : RecordStructureBase
     public SourceCitation() : base() { }
     public SourceCitation(Record record) : base(record) { }
 
-    public string CertaintyAssessment => _(C.QUAY);
-    public SourceCitationData Data => First<SourceCitationData>(C.DATA);
-    public EventTypeCitedFrom EventTypeCitedFrom => First<EventTypeCitedFrom>(C.EVEN);
-    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public string WhereWithinSource => _(C.PAGE);
+    public string CertaintyAssessment => _(Tag.QUAY);
+    public SourceCitationData Data => First<SourceCitationData>(Tag.DATA);
+    public EventTypeCitedFrom EventTypeCitedFrom => First<EventTypeCitedFrom>(Tag.EVEN);
+    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.OBJE);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.NOTE);
+    public string WhereWithinSource => _(Tag.PAGE);
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {WhereWithinSource}";

@@ -9,27 +9,27 @@ public class IndividualRecord : RecordStructureBase
     public IndividualRecord() { }
     public IndividualRecord(Record record) : base(record) { }
 
-    public List<string> Aliases => List(r => r.Tag.Equals(C.ALIA)).Select(r => r.Value).ToList();
-    public List<string> AncestorInterests => List(r => r.Tag.Equals(C.ANCI)).Select(r => r.Value).ToList();
-    public string AncestralFileNumber => _(C.AFN);
-    public List<AssociationStructure> AssociationStructures => List<AssociationStructure>(C.ASSO);
-    public string AutomatedRecordId => _(C.RIN);
-    public ChangeDate ChangeDate => First<ChangeDate>(C.CHAN);
-    public List<ChildToFamilyLink> ChildToFamilyLinks => List<ChildToFamilyLink>(C.FAMC);
-    public List<string> DescendantInterests => List(r => r.Tag.Equals(C.DESI)).Select(r => r.Value).ToList();
+    public List<string> Aliases => List(r => r.Tag.Equals(Tag.ALIA)).Select(r => r.Value).ToList();
+    public List<string> AncestorInterests => List(r => r.Tag.Equals(Tag.ANCI)).Select(r => r.Value).ToList();
+    public string AncestralFileNumber => _(Tag.AFN);
+    public List<AssociationStructure> AssociationStructures => List<AssociationStructure>(Tag.ASSO);
+    public string AutomatedRecordId => _(Tag.RIN);
+    public ChangeDate ChangeDate => First<ChangeDate>(Tag.CHAN);
+    public List<ChildToFamilyLink> ChildToFamilyLinks => List<ChildToFamilyLink>(Tag.FAMC);
+    public List<string> DescendantInterests => List(r => r.Tag.Equals(Tag.DESI)).Select(r => r.Value).ToList();
     public List<IndividualAttributeStructure> IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
     public List<IndividualEventStructure> IndividualEventStructures => List(IndividualEventStructure.IsIndividualEventStructure).Select(r => new IndividualEventStructure(r)).ToList();
-    public List<LdsIndividualOrdinance> LdsIndividualOrdinances => List<LdsIndividualOrdinance>(C.ORDI);
-    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public string PermanentRecordFileNumber => _(C.RFN);
-    public List<PersonalNameStructure> PersonalNameStructures => List<PersonalNameStructure>(C.NAME);
-    public string RestrictionNotice => _(C.RESN);
-    public string SexValue => _(C.SEX);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
-    public List<SpouseToFamilyLink> SpouseToFamilyLinks => List<SpouseToFamilyLink>(C.FAMS);
-    public string Submitter => _(C.SUBN);
-    public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(C.REFN);
+    public List<LdsIndividualOrdinance> LdsIndividualOrdinances => List<LdsIndividualOrdinance>(Tag.ORDI);
+    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.OBJE);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.NOTE);
+    public string PermanentRecordFileNumber => _(Tag.RFN);
+    public List<PersonalNameStructure> PersonalNameStructures => List<PersonalNameStructure>(Tag.NAME);
+    public string RestrictionNotice => _(Tag.RESN);
+    public string SexValue => _(Tag.SEX);
+    public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.SOUR);
+    public List<SpouseToFamilyLink> SpouseToFamilyLinks => List<SpouseToFamilyLink>(Tag.FAMS);
+    public string Submitter => _(Tag.SUBN);
+    public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(Tag.REFN);
     public string Xref => Record.Value;
 
     #region Convenience properties
@@ -42,8 +42,8 @@ public class IndividualRecord : RecordStructureBase
 
     #region Strongly-typed IndividualEventStructures
 
-    public IndividualEventStructure Birth => First<IndividualEventStructure>(C.BIRT);
-    public IndividualEventStructure Death => First<IndividualEventStructure>(C.DEAT);
+    public IndividualEventStructure Birth => First<IndividualEventStructure>(Tag.BIRT);
+    public IndividualEventStructure Death => First<IndividualEventStructure>(Tag.DEAT);
 
     #endregion
 

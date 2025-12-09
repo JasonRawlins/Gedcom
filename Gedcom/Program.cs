@@ -23,19 +23,19 @@ public class Program
             return;
         }
 
-        if (options.RecordType.Equals(C.GEDC))
+        if (options.RecordType.Equals(Tag.GEDC))
         {
             WriteJson(exporter.GedcomJson());
             return;
         }
 
-        if (options.RecordType.Equals(C.INDI))
+        if (options.RecordType.Equals(Tag.INDI))
         {
             if (options.Format.Equals(C.JSON))
             {
                 WriteJson(exporter.IndividualRecordsJson());
             }
-            else if (options.Format.Equals(C.HTML))
+            else if (options.Format.Equals(Tag.HTML))
             {
                 WriteHtml(exporter.IndividualsHtml());
             }
@@ -50,7 +50,7 @@ public class Program
         // Find a record by query.
         if (!string.IsNullOrEmpty(options.Xref))
         {
-            if (options.RecordType.Equals(C.INDI))
+            if (options.RecordType.Equals(Tag.INDI))
             {
                 WriteJson(exporter.IndividualRecordJson());
             }

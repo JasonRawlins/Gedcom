@@ -8,68 +8,68 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
 {
     public IndividualEventStructure() { }
     public IndividualEventStructure(Record record) : base(record) { }
-    public ChildToFamilyLink ChildToFamilyLink => First<ChildToFamilyLink>(C.FAMC);
-    public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
-    public string AgeAtEvent => _(C.AGE);
-    public string CauseOfEvent => _(C.CAUS);
-    public string DateValue => _(C.DATE);
-    public string EventOrFactClassification => _(C.TYPE);
+    public ChildToFamilyLink ChildToFamilyLink => First<ChildToFamilyLink>(global::Gedcom.Tag.FAMC);
+    public AddressStructure AddressStructure => First<AddressStructure>(global::Gedcom.Tag.ADDR);
+    public string AgeAtEvent => _(global::Gedcom.Tag.AGE);
+    public string CauseOfEvent => _(global::Gedcom.Tag.CAUS);
+    public string DateValue => _(global::Gedcom.Tag.DATE);
+    public string EventOrFactClassification => _(global::Gedcom.Tag.TYPE);
     public GedcomDate GedcomDate => GedcomDate.Parse(DateValue);
-    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(C.OBJE);
+    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(global::Gedcom.Tag.OBJE);
     public string Name
     {
         get
         {
             return Tag switch
             {
-                C.ADOP => "Adoption",
-                C.BAPL => "Baptism (LDS)",
-                C.BAPM => "Baptism",
-                C.BARM => "Bar Mitzvah",
-                C.BASM => "Bas Mitzvah",
-                C.BIRT => "Birth",
-                C.BLES => "Blessing",
-                C.BURI => "Burial",
-                C.CENS => "Census",
-                C.CHR => "Christening",
-                C.CHRA => "Christening (Adult)",
-                C.CONF => "Confirmation (LDS)",
-                C.CREM => "Cremation",
-                C.DEAT => "Death",
-                C.DIV => "Divorce",
-                C.DIVF => "Divorce Filed",
-                C.EMIG => "Emigration",
-                C.ENDL => "Endowment",
-                C.ENGA => "Engagement",
-                C.EVEN => "Event",
-                C.FCOM => "First Communion",
-                C.GRAD => "Graduation",
-                C.IMMI => "Immigration",
-                C.MARB => "Marriage Bann",
-                C.MARC => "Marriage Contract",
-                C.MARL => "Marriage License",
-                C.MARR => "Marriage",
-                C.MARS => "Marriage Settlement",
-                C.NATU => "Naturalization",
-                C.OCCU => "Occupations",
-                C.ORDI => "Ordinance",
-                C.ORDN => "Ordination",
-                C.PROB => "Probate",
-                C.RESI => "Residence",
-                C.RETI => "Retirement",
-                C.SLGC => "Sealing (Child)",
-                C.SLGS => "Sealing (Spouse)",
-                C.WILL => "Will",
+                global::Gedcom.Tag.ADOP => "Adoption",
+                global::Gedcom.Tag.BAPL => "Baptism (LDS)",
+                global::Gedcom.Tag.BAPM => "Baptism",
+                global::Gedcom.Tag.BARM => "Bar Mitzvah",
+                global::Gedcom.Tag.BASM => "Bas Mitzvah",
+                global::Gedcom.Tag.BIRT => "Birth",
+                global::Gedcom.Tag.BLES => "Blessing",
+                global::Gedcom.Tag.BURI => "Burial",
+                global::Gedcom.Tag.CENS => "Census",
+                global::Gedcom.Tag.CHR => "Christening",
+                global::Gedcom.Tag.CHRA => "Christening (Adult)",
+                global::Gedcom.Tag.CONF => "Confirmation (LDS)",
+                global::Gedcom.Tag.CREM => "Cremation",
+                global::Gedcom.Tag.DEAT => "Death",
+                global::Gedcom.Tag.DIV => "Divorce",
+                global::Gedcom.Tag.DIVF => "Divorce Filed",
+                global::Gedcom.Tag.EMIG => "Emigration",
+                global::Gedcom.Tag.ENDL => "Endowment",
+                global::Gedcom.Tag.ENGA => "Engagement",
+                global::Gedcom.Tag.EVEN => "Event",
+                global::Gedcom.Tag.FCOM => "First Communion",
+                global::Gedcom.Tag.GRAD => "Graduation",
+                global::Gedcom.Tag.IMMI => "Immigration",
+                global::Gedcom.Tag.MARB => "Marriage Bann",
+                global::Gedcom.Tag.MARC => "Marriage Contract",
+                global::Gedcom.Tag.MARL => "Marriage License",
+                global::Gedcom.Tag.MARR => "Marriage",
+                global::Gedcom.Tag.MARS => "Marriage Settlement",
+                global::Gedcom.Tag.NATU => "Naturalization",
+                global::Gedcom.Tag.OCCU => "Occupations",
+                global::Gedcom.Tag.ORDI => "Ordinance",
+                global::Gedcom.Tag.ORDN => "Ordination",
+                global::Gedcom.Tag.PROB => "Probate",
+                global::Gedcom.Tag.RESI => "Residence",
+                global::Gedcom.Tag.RETI => "Retirement",
+                global::Gedcom.Tag.SLGC => "Sealing (Child)",
+                global::Gedcom.Tag.SLGS => "Sealing (Spouse)",
+                global::Gedcom.Tag.WILL => "Will",
                 _ => Tag,
             };
         }
     }
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(C.NOTE);
-    public PlaceStructure PlaceStructure => First<PlaceStructure>(C.PLAC);
-    public string ReligiousAffiliation => _(C.RELI);
-    public string ResponsibleAgency => _(C.AGNC);
-    public string RestrictionNotice => _(C.RESN);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(C.SOUR);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(global::Gedcom.Tag.NOTE);
+    public PlaceStructure PlaceStructure => First<PlaceStructure>(global::Gedcom.Tag.PLAC);
+    public string ReligiousAffiliation => _(global::Gedcom.Tag.RELI);
+    public string ResponsibleAgency => _(global::Gedcom.Tag.AGNC);
+    public string RestrictionNotice => _(global::Gedcom.Tag.RESN);
+    public List<SourceCitation> SourceCitations => List<SourceCitation>(global::Gedcom.Tag.SOUR);
     public string Tag => Record.Tag;
 
     public static bool IsIndividualEventStructure(Record record)

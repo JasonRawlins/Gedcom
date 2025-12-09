@@ -20,14 +20,14 @@ public class NoteStructure : RecordStructureBase
         {
             var text = new StringBuilder();
             text.Append(Record.Value);
-            var contAndConc = Record.Records.Where(r => r.Tag.Equals(C.CONT) || r.Tag.Equals(C.CONC)).ToList();
+            var contAndConc = Record.Records.Where(r => r.Tag.Equals(Tag.CONT) || r.Tag.Equals(Tag.CONC)).ToList();
             contAndConc.ForEach(r => {
-                if (r.Tag.Equals(C.CONT))
+                if (r.Tag.Equals(Tag.CONT))
                 {
                     text.AppendLine(r.Value);
                 }
 
-                if (r.Tag.Equals(C.CONC))
+                if (r.Tag.Equals(Tag.CONC))
                 {
                     text.Append(r.Value);
                 }

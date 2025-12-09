@@ -9,11 +9,11 @@ public class HeaderCorporation : RecordStructureBase, IAddressStructure
     public HeaderCorporation() : base() { }
     public HeaderCorporation(Record record) : base(record) { }
 
-    public List<string> AddressEmails => ListValues(C.EMAIL);
-    public List<string> AddressFaxNumbers => ListValues(C.FAX);
-    public AddressStructure AddressStructure => First<AddressStructure>(C.ADDR);
-    public List<string> AddressWebPages => ListValues(C.WWW);
-    public List<string> PhoneNumbers => ListValues(C.PHON);
+    public List<string> AddressEmails => ListValues(Tag.EMAIL);
+    public List<string> AddressFaxNumbers => ListValues(Tag.FAX);
+    public AddressStructure AddressStructure => First<AddressStructure>(Tag.ADDR);
+    public List<string> AddressWebPages => ListValues(Tag.WWW);
+    public List<string> PhoneNumbers => ListValues(Tag.PHON);
 
     public override string ToString() => $"{Record.Value}, {AddressStructure.AddressLine}";
 }

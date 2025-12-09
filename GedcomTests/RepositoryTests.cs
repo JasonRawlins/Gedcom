@@ -17,7 +17,7 @@ public sealed class RepositoryTests
     [TestMethod]
     public void ExportRepositoriesJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.REPO });
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.REPO });
         GedcomAssert.RecordJsonIsValid(exporter, exporter.RepositoryRecordsJson, AssertFunction);
 
         bool AssertFunction(string json) =>
@@ -30,7 +30,7 @@ public sealed class RepositoryTests
     {
         var exporter = new Exporter(Gedcom, new Options() 
         { 
-            RecordType = C.REPO,
+            RecordType = Tag.REPO,
             Xref = TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref
         });
 
@@ -44,7 +44,7 @@ public sealed class RepositoryTests
     [TestMethod]
     public void ExportNonExistingRepositoryJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.REPO, Xref = "INVALID_XREF"});
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.REPO, Xref = "INVALID_XREF"});
         GedcomAssert.RecordJsonIsValid(exporter, exporter.RepositoryRecordJson, AssertFunction, false);
 
         bool AssertFunction(string json) => string.IsNullOrWhiteSpace(json);
@@ -53,7 +53,7 @@ public sealed class RepositoryTests
     [TestMethod]
     public void QueryRepositoryJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = C.REPO, Query = "FamilySearch" });
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.REPO, Query = "FamilySearch" });
         GedcomAssert.RecordJsonIsValid(exporter, exporter.RepositoryRecordsJson, AssertFunction);
 
         bool AssertFunction(string json) => 

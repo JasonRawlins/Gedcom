@@ -10,13 +10,13 @@ public class NameVariation : RecordStructureBase, IPersonalNamePieces
     public NameVariation(Record record) : base(record) { }
 
     public string FullName => $"{Given} {Surname}";
-    public string Given => _(C.GIVN);
-    public string NamePrefix => _(C.NPFX);
-    public string NameSuffix => _(C.NSFX);
-    public string Nickname => _(C.NICK);
-    public string Surname => _(C.SURN);
-    public string SurnamePrefix => _(C.SPFX);
-    public string Type => _(C.TYPE);
+    public string Given => _(Tag.GIVN);
+    public string NamePrefix => _(Tag.NPFX);
+    public string NameSuffix => _(Tag.NSFX);
+    public string Nickname => _(Tag.NICK);
+    public string Surname => _(Tag.SURN);
+    public string SurnamePrefix => _(Tag.SPFX);
+    public string Type => _(Tag.TYPE);
 
     public override string ToString() => $"{Record.Value}, {Type}, {FullName}";
 }

@@ -9,8 +9,8 @@ public class HeaderData : RecordStructureBase
     public HeaderData() : base() { }
     public HeaderData(Record record) : base(record) { }
 
-    public NoteStructure CopyrightSourceData => First<NoteStructure>(C.COPR);
-    public string PublicationDate => _(C.DATE);
+    public NoteStructure CopyrightSourceData => First<NoteStructure>(Tag.COPR);
+    public string PublicationDate => _(Tag.DATE);
 
     public override string ToString() => $"{Record.Value}, {PublicationDate}";
 }

@@ -19,7 +19,7 @@ public sealed class ExporterTests
         var options = new Options
         {
             OutputFilePath = TestUtilities.GedcomNetTreeOutputJsonFullName,
-            RecordType = C.INDI
+            RecordType = Tag.INDI
         };
 
         var exporter = new Exporter(Gedcom, options);
@@ -33,7 +33,7 @@ public sealed class ExporterTests
         var options = new Options
         {
             GedPath = TestUtilities.GedcomNetTreeFullName,
-            RecordType = C.INDI
+            RecordType = Tag.INDI
         };
 
         var exporter = new Exporter(Gedcom, options);

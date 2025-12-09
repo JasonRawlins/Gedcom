@@ -9,8 +9,8 @@ public class SourceCitationData : RecordStructureBase
     public SourceCitationData() : base() { }
     public SourceCitationData(Record record) : base(record) { }
 
-    public string EntryRecordingDate => _(C.DATE);
-    public List<NoteStructure> TextFromSources => List<NoteStructure>(C.TEXT);
+    public string EntryRecordingDate => _(Tag.DATE);
+    public List<NoteStructure> TextFromSources => List<NoteStructure>(Tag.TEXT);
 
     public override string ToString() => $"{Record.Value}, {EntryRecordingDate}";
 }
