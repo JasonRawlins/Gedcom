@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(IndividualRecordJsonConverter))]
 public class IndividualRecord : RecordStructureBase
 {
@@ -80,22 +80,22 @@ internal class IndividualRecordJson : GedcomJson
         Aliases = JsonList(individualRecord.Aliases);
         AncestorInterests = JsonList(individualRecord.AncestorInterests);
         AncestralFileNumber = JsonString(individualRecord.AncestralFileNumber);
-        AssociationStructures = JsonList(individualRecord.AssociationStructures);
+        Associations = JsonList(individualRecord.AssociationStructures);
         AutomatedRecordId = JsonString(individualRecord.AutomatedRecordId);
         Birth = JsonString($"{individualRecord.Birth.DateValue} at {individualRecord.Birth.PlaceStructure.PlaceName}");
         ChangeDate = JsonRecord(individualRecord.ChangeDate);
         ChildToFamilyLinks = JsonList(individualRecord.ChildToFamilyLinks);
         Death = JsonString($"{individualRecord.Death.DateValue} at {individualRecord.Death.PlaceStructure.PlaceName}");
         DescendantInterests = JsonList(individualRecord.DescendantInterests);
-        IndividualAttributeStructures = JsonList(individualRecord.IndividualAttributeStructures);
-        IndividualEventStructures = JsonList(individualRecord.IndividualEventStructures);
+        IndividualAttributes = JsonList(individualRecord.IndividualAttributeStructures);
+        IndividualEvents = JsonList(individualRecord.IndividualEventStructures);
         LdsIndividualOrdinances = JsonList(individualRecord.LdsIndividualOrdinances);
         MultimediaLinks = JsonList(individualRecord.MultimediaLinks);
-        NoteStructures = JsonList(individualRecord.NoteStructures);
+        Notes = JsonList(individualRecord.NoteStructures);
         PermanentRecordFileNumber = JsonString(individualRecord.PermanentRecordFileNumber);
-        PersonalNameStructures = JsonList(individualRecord.PersonalNameStructures);
+        PersonalNames = JsonList(individualRecord.PersonalNameStructures);
         RestrictionNotice = JsonString(individualRecord.RestrictionNotice);
-        SexValue = JsonString(individualRecord.SexValue);
+        Sex = JsonString(individualRecord.SexValue);
         SourceCitations = JsonList(individualRecord.SourceCitations);
         SpouseToFamilyLinks = JsonList(individualRecord.SpouseToFamilyLinks);
         Submitter = JsonString(individualRecord.Submitter);
@@ -106,27 +106,27 @@ internal class IndividualRecordJson : GedcomJson
     public List<string>? Aliases { get; set; }
     public List<string>? AncestorInterests { get; set; }
     public string? AncestralFileNumber { get; set; }
-    public List<AssociationStructure>? AssociationStructures { get; set; }
+    public List<AssociationStructure>? Associations { get; set; }
     public string? AutomatedRecordId { get; set; }
     public string? Birth { get; set; }
     public ChangeDate? ChangeDate { get; set; }
     public List<ChildToFamilyLink>? ChildToFamilyLinks { get; set; }
     public string? Death { get; set; }
     public List<string>? DescendantInterests { get; set; }
-    public string Given => PersonalNameStructures == null ? "" : PersonalNameStructures[0].Given;
-    public List<IndividualAttributeStructure>? IndividualAttributeStructures { get; set; }
-    public List<IndividualEventStructure>? IndividualEventStructures { get; set; }
+    public string Given => PersonalNames == null ? "" : PersonalNames[0].Given;
+    public List<IndividualAttributeStructure>? IndividualAttributes { get; set; }
+    public List<IndividualEventStructure>? IndividualEvents { get; set; }
     public List<LdsIndividualOrdinance>? LdsIndividualOrdinances { get; set; }
     public List<MultimediaLink>? MultimediaLinks { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
     public string? PermanentRecordFileNumber { get; set; }
-    public List<PersonalNameStructure>? PersonalNameStructures { get; set; }
+    public List<PersonalNameStructure>? PersonalNames { get; set; }
     public string? RestrictionNotice { get; set; }
-    public string? SexValue { get; set; }
+    public string? Sex { get; set; }
     public List<SourceCitation>? SourceCitations { get; set; }
     public List<SpouseToFamilyLink>? SpouseToFamilyLinks { get; set; }
     public string? Submitter { get; set; }
-    public string Surname => PersonalNameStructures == null ? "" : PersonalNameStructures[0].Surname;
+    public string Surname => PersonalNames == null ? "" : PersonalNames[0].Surname;
     public List<UserReferenceNumber>? UserReferenceNumbers { get; set; }
     public string? Xref { get; set; }
 }

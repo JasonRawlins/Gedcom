@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(MultimediaRecordJsonConverter))]
 public class MultimediaRecord : RecordStructureBase
 {
@@ -42,7 +42,7 @@ internal class MultimediaRecordJson : GedcomJson
         DescriptiveTitle = JsonString(multimediaRecord.DescriptiveTitle);
         MultimediaFileReferenceNumbers = JsonList(multimediaRecord.MultimediaFileReferenceNumbers);
         MultimediaFormat = JsonRecord(multimediaRecord.MultimediaFormat);
-        NoteStructures = JsonList(multimediaRecord.NoteStructures);
+        Notes = JsonList(multimediaRecord.NoteStructures);
         SourceCitations = JsonList(multimediaRecord.SourceCitations);
         UserReferenceNumber = JsonRecord(multimediaRecord.UserReferenceNumber);
     }
@@ -52,7 +52,7 @@ internal class MultimediaRecordJson : GedcomJson
     public string? DescriptiveTitle { get; set; }
     public List<string>? MultimediaFileReferenceNumbers { get; set; }
     public MultimediaFormat? MultimediaFormat { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
     public List<SourceCitation>? SourceCitations { get; set; }
     public UserReferenceNumber? UserReferenceNumber { get; set; }
 }

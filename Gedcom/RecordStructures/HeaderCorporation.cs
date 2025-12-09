@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(HeaderCorporationJsonConverter))]
 public class HeaderCorporation : RecordStructureBase, IAddressStructure
 {
@@ -34,17 +34,17 @@ internal class HeaderCorporationJson : GedcomJson
 {
     public HeaderCorporationJson(HeaderCorporation headerCorporation)
     {
-        AddressEmails = JsonList(headerCorporation.AddressEmails);
-        AddressFaxNumbers = JsonList(headerCorporation.AddressFaxNumbers);
-        AddressStructure = JsonRecord(headerCorporation.AddressStructure);
-        AddressWebPages = JsonList(headerCorporation.AddressWebPages);
+        Emails = JsonList(headerCorporation.AddressEmails);
+        FaxNumbers = JsonList(headerCorporation.AddressFaxNumbers);
+        Address = JsonRecord(headerCorporation.AddressStructure);
+        WebPages = JsonList(headerCorporation.AddressWebPages);
         PhoneNumbers = JsonList(headerCorporation.PhoneNumbers);
     }
 
-    public List<string>? AddressEmails { get; set; }
-    public List<string>? AddressFaxNumbers { get; set; }
-    public AddressStructure? AddressStructure { get; set; }
-    public List<string>? AddressWebPages { get; set; }
+    public List<string>? Emails { get; set; }
+    public List<string>? FaxNumbers { get; set; }
+    public AddressStructure? Address { get; set; }
+    public List<string>? WebPages { get; set; }
     public List<string>? PhoneNumbers { get; set; }
 }
 

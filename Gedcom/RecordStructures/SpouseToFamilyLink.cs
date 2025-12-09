@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(SpouseToFamilyLinkJsonConverter))]
 public class SpouseToFamilyLink : RecordStructureBase
 {
@@ -31,11 +31,11 @@ internal class SpouseToFamilyLinkJson : GedcomJson
 {
     public SpouseToFamilyLinkJson(SpouseToFamilyLink spouseToFamilyLink)
     {
-        NoteStructures = JsonList(spouseToFamilyLink.NoteStructures);
+        Notes = JsonList(spouseToFamilyLink.NoteStructures);
         Xref = spouseToFamilyLink.Xref;
     }
 
-    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
     public string Xref { get; set; }
 }
 

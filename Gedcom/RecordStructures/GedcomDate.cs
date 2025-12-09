@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 
 // Many dates in a ged file are missing or oddly formatted, or you may only have
 // part of the date e.g. "Mar 1889" (only month and year), "1943" (only year)
@@ -17,7 +17,7 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
     public string DateValue => Record.Value;
     public int Day { get; set; }
     
-    // Returns the GedcomDate in Ancestry format: dd MMM yyyy (e.g. "4 Aug 1983").
+    // Returns the GedcomDate in dmy format (e.g. "4 Aug 1983").
     public string DayMonthYear
     {
         get
@@ -182,7 +182,7 @@ internal class GedcomDateJson : GedcomJson
     public GedcomDateJson(GedcomDate gedcomDate)
     {
         Day = gedcomDate.Day;
-        DayMonthYear = gedcomDate.DayMonthYear;
+        DMY = gedcomDate.DayMonthYear;
         Month = gedcomDate.Month;
         MonthName = gedcomDate.MonthName;
         Time = gedcomDate.TimeValue;
@@ -190,7 +190,7 @@ internal class GedcomDateJson : GedcomJson
     }
 
     public int? Day { get; set; }
-    public string? DayMonthYear { get; set; }
+    public string? DMY { get; set; }
     public int? Month { get; set; }
     public string? MonthName { get; set; } = "";
     public string? Time { get; set; }

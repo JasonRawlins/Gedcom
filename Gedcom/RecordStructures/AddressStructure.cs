@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(AddressStructureJsonConverter))]
 public class AddressStructure : RecordStructureBase
 {
@@ -37,24 +37,24 @@ internal class AddressStructureJson : GedcomJson
 {
     public AddressStructureJson(AddressStructure addressStructure)
     {
-        AddressCity = JsonString(addressStructure.AddressCity);
-        AddressCountry = JsonString(addressStructure.AddressCountry);
-        AddressLine = JsonString(addressStructure.AddressLine);
-        AddressLine1 = JsonString(addressStructure.AddressLine1);
-        AddressLine2 = JsonString(addressStructure.AddressLine2);
-        AddressLine3 = JsonString(addressStructure.AddressLine3);
-        AddressPostCode = JsonString(addressStructure.AddressPostCode);
-        AddressState = JsonString(addressStructure.AddressState);
+        City = JsonString(addressStructure.AddressCity);
+        Country = JsonString(addressStructure.AddressCountry);
+        Line = JsonString(addressStructure.AddressLine);
+        Line1 = JsonString(addressStructure.AddressLine1);
+        Line2 = JsonString(addressStructure.AddressLine2);
+        Line3 = JsonString(addressStructure.AddressLine3);
+        PostalCode = JsonString(addressStructure.AddressPostCode);
+        State = JsonString(addressStructure.AddressState);
     }
 
-    public string? AddressCity { get; set; }
-    public string? AddressCountry { get; set; }
-    public string? AddressLine { get; set; }
-    public string? AddressLine1 { get; set; }
-    public string? AddressLine2 { get; set; }
-    public string? AddressLine3 { get; set; }
-    public string? AddressPostCode { get; set; }
-    public string? AddressState { get; set; }
+    public string? City { get; set; }
+    public string? Country { get; set; }
+    public string? Line { get; set; }
+    public string? Line1 { get; set; }
+    public string? Line2 { get; set; }
+    public string? Line3 { get; set; }
+    public string? PostalCode { get; set; }
+    public string? State { get; set; }
 }
 
 #region ADDRESS_STRUCTURE p. 31

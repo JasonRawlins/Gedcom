@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(FamilyEventStructureJsonConverter))]
 public class FamilyEventStructure : RecordStructureBase
 {
@@ -30,10 +30,10 @@ internal class FamilyEventStructureJson : GedcomJson
 {
     public FamilyEventStructureJson(FamilyEventStructure familyEventStructure)
     {
-        FamilyEventDetail = JsonRecord(familyEventStructure.FamilyEventDetail);
+        EventDetail = JsonRecord(familyEventStructure.FamilyEventDetail);
     }
 
-    public FamilyEventDetail? FamilyEventDetail { get; set; }
+    public FamilyEventDetail? EventDetail { get; set; }
 
 }
 

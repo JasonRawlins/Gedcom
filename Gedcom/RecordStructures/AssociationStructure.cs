@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(AssociationStructureJsonConverter))]
 public class AssociationStructure : RecordStructureBase
 {
@@ -32,12 +32,12 @@ internal class AssociationStructureJson : GedcomJson
 {
     public AssociationStructureJson(AssociationStructure associationStructure)
     {
-        NoteStructures = JsonList(associationStructure.NoteStructures);
+        Notes = JsonList(associationStructure.NoteStructures);
         RelationIsDescriptor = JsonString(associationStructure.RelationIsDescriptor);
         SourceCitations = JsonList(associationStructure.SourceCitations);
     }
 
-    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
     public string? RelationIsDescriptor { get; set; }
     public List<SourceCitation>? SourceCitations { get; set; }
 }

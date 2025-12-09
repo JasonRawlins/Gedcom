@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(ChangeDateJsonConverter))]
 public class ChangeDate : RecordStructureBase
 {
@@ -32,11 +32,11 @@ internal class ChangeDateJson : GedcomJson
     public ChangeDateJson(ChangeDate changeDate)
     {
         ChangeDate = JsonRecord(changeDate.GedcomDate);
-        NoteStructures = JsonList(changeDate.NoteStructures);
+        Notes = JsonList(changeDate.NoteStructures);
     }
 
     public GedcomDate? ChangeDate { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
 }
 
 #region CHANGE_DATE (CHAN) p. 31

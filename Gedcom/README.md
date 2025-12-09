@@ -202,7 +202,7 @@ class PersonalNameStructure : RecordStructureBase
 ```
 
 Notice that the properties of the RecordStructureBase classes find a subrecord's value using 
-tags. I've named all C# properties after their name in the The Gedcom Standard 5.1.1. For 
+tags. I've named all C# properties after their name in the The Gedcom Standard 5.5.1. For 
 example, C.FONE in C.cs has a comment next to it: <NAME_PHONETIC_VARIATION>. I've named the 
 property PersonalNameStructure.NamePhoneticVariation after this comment. I think properties 
 are named plainly enough that they don't need much more explanation.

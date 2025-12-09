@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(ChildToFamilyLinkJsonConverter))]
 public class ChildToFamilyLink : RecordStructureBase
 {
@@ -36,14 +36,14 @@ internal class ChildToFamilyLinkJson : GedcomJson
     {
         AdoptedByWhichParent = JsonString(childToFamilyLink.AdoptedByWhichParent);
         ChildLinkageStatus = JsonString(childToFamilyLink.ChildLinkageStatus);
-        NoteStructures = JsonList(childToFamilyLink.NoteStructures);
+        Notes = JsonList(childToFamilyLink.NoteStructures);
         PedigreeLinkageType = JsonString(childToFamilyLink.PedigreeLinkageType);
         Xref = JsonString(childToFamilyLink.Xref);
     }
 
     public string? AdoptedByWhichParent { get; set; }
     public string? ChildLinkageStatus { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
     public string? PedigreeLinkageType { get; set; }
     public string? Xref { get; set; }
 }
@@ -58,7 +58,7 @@ n FAMC @<XREF:FAM>@ {1:1} p.24
     +1 STAT <CHILD_LINKAGE_STATUS> {0:1} p.44
     +1 <<NOTE_STRUCTURE>> {0:M} p.37
 
-[Editor] Possible errata in The Gedcom Standard 5.1.1 The ADOP tag on page 34 
+[Editor] Possible errata in The Gedcom Standard 5.5.1 The ADOP tag on page 34 
 has an structure that looks like this: 
 
     n ADOP {1:1}

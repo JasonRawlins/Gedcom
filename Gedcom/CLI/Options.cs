@@ -39,7 +39,7 @@ public class Options
 }
 
 /*
-The Gedcom Standard 5.1.1. p. 17.
+The Gedcom Standard 5.5.1. p. 17.
 
 xref_ID:=
     (See pointer, page 16)

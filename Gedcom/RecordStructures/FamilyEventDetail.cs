@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(FamilyEventDetailJsonConverter))]
 public class FamilyEventDetail : RecordStructureBase
 {
@@ -17,7 +17,7 @@ public class FamilyEventDetail : RecordStructureBase
     also be used for cultural parallels to this, including nuclear families, marriage, cohabitation, fostering,
     adoption, and so on, regardless of the gender of the partners. 
     
-    I named these properties Husband and Wife because that is what the Gedcom Standard 5.1.1 calls them. 
+    I named these properties Husband and Wife because that is what the Gedcom Standard 5.5.1 calls them. 
     In Gedcom 7, Sex, gender, titles, and roles of partners should not be inferred based on the partner
     that the HUSB or WIFE structure points to. The individuals pointed to by the HUSB and WIFE are
     collectively referred to as "partners", "parents" or "spouses".

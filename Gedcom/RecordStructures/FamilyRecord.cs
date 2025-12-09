@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(FamilyRecordJsonConverter))]
 public class FamilyRecord : RecordStructureBase
 {
@@ -50,11 +50,11 @@ internal class FamilyRecordJson : GedcomJson
         ChangeDate = JsonRecord(familyRecord.ChangeDate);
         Children = JsonList(familyRecord.Children);
         CountOfChildren = JsonString(familyRecord.CountOfChildren);
-        FamilyEventStructures = JsonList(familyRecord.FamilyEventStructures);
+        FamilyEvents = JsonList(familyRecord.FamilyEventStructures);
         Husband = JsonString(familyRecord.Husband);
         // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
         MultimediaLinks = JsonList(familyRecord.MultimediaLinks);
-        NoteStructures = JsonList(familyRecord.NoteStructures);
+        Notes = JsonList(familyRecord.NoteStructures);
         RestrictionNotice = JsonString(familyRecord.RestrictionNotice);
         SourceCitations = JsonList(familyRecord.SourceCitations);
         Submitter = JsonString(familyRecord.Submitter);
@@ -69,11 +69,11 @@ internal class FamilyRecordJson : GedcomJson
     public ChangeDate? ChangeDate { get; set; }
     public List<string>? Children { get; set; }
     public string? CountOfChildren { get; set; }
-    public List<FamilyEventStructure>? FamilyEventStructures { get; set; }
+    public List<FamilyEventStructure>? FamilyEvents { get; set; }
     public string? Husband { get; set; }
     // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
     public List<MultimediaLink>? MultimediaLinks { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
     public string? RestrictionNotice { get; set; }
     public List<SourceCitation>? SourceCitations { get; set; }
     public string? Submitter { get; set; }

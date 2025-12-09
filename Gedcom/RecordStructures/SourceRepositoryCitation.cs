@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.1.1 documentation is at the end of this file.
+// The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(SourceRepositoryCitationJsonConverter))]
 public class SourceRepositoryCitation : RecordStructureBase
 {
@@ -32,11 +32,11 @@ internal class SourceRepositoryCitationJson : GedcomJson
     public SourceRepositoryCitationJson(SourceRepositoryCitation sourceRepositoryCitation)
     {
         CallNumbers = JsonList(sourceRepositoryCitation.CallNumbers);
-        NoteStructures = JsonList(sourceRepositoryCitation.NoteStructures);
+        Notes = JsonList(sourceRepositoryCitation.NoteStructures);
     }
 
     public List<CallNumber>? CallNumbers { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
 }
 
 #region SOURCE_REPOSITORY_CITATION p. 40
