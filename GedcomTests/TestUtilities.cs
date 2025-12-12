@@ -1,21 +1,20 @@
 ﻿using Gedcom;
 using Gedcom.CLI;
-using System.Text;
 
 namespace GedcomTests;
 
 public class TestUtilities
 {
-    public static string GedcomNetTreeFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.ged");
-    public static string GedcomNetTreeDirectory = Path.GetDirectoryName(GedcomNetTreeFullName) ?? "";
-    public static string GedcomNetTreeOutputJsonFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.json");
-    public static string GedcomNetTreeOutputTextFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.txt");
-    public static string GedcomNetTreeOutputHtmlFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.html");
-    public static string GedcomNetTreeOutputXslxFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET-template.xslx");
+    public static readonly string GedcomNetTreeFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.ged");
+    public static readonly string GedcomNetTreeDirectory = Path.GetDirectoryName(GedcomNetTreeFullName) ?? "";
+    public static readonly string GedcomNetTreeOutputJsonFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.json");
+    public static readonly string GedcomNetTreeOutputTextFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.txt");
+    public static readonly string GedcomNetTreeOutputHtmlFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.html");
+    public static readonly string GedcomNetTreeOutputXslxFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET-template.xslx");
 
     public static Gedcom.Gedcom CreateGedcom()
     {
-        var gedFileLines = Encoding.UTF8.GetString(Properties.Resources.GedcomNET).Split('\n');
+        var gedFileLines = File.ReadAllLines(GedcomNetTreeFullName); // Encoding.UTF8.GetString(Properties.Resources.GedcomNET).Split('\n');
         var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
         return new Gedcom.Gedcom(gedcomLines);
     }

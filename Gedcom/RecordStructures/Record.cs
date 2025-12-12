@@ -52,7 +52,7 @@ public class Record
         return false;
     }
 
-    // Gedcom.NET does not deal with null records. Instead, it uses an empty record instead of nulls.  
+    // Gedcom.NET does not deal with null records. Instead, it uses an empty record.  
     public static Record Empty
     {
         get

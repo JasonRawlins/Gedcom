@@ -20,9 +20,10 @@ public sealed class FamilyTests
         var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.FAM });
         GedcomAssert.RecordJsonIsValid(exporter, exporter.FamilyRecordsJson, AssertFunction);
 
-        bool AssertFunction(string json) =>
-            json.Contains(TestTree.Families.RobertAndRosaDavis.Xref)
-            && json.Contains(TestTree.Families.DylanAndMariaLewis.Xref);
+        static bool AssertFunction(string json) =>
+            json.Contains(TestTree.Families.DylanDavisAndFionaDouglas.Xref)
+            && json.Contains(TestTree.Families.JamesSmithAndSaraDavis.Xref)
+            && json.Contains(TestTree.Families.OwenDavisAndGwenJones.Xref);
     }
 
     [TestMethod]
@@ -31,14 +32,15 @@ public sealed class FamilyTests
         var exporter = new Exporter(Gedcom, new Options()
         {
             RecordType = Tag.FAM,
-            Xref = TestTree.Families.RobertAndRosaDavis.Xref
+            Xref = TestTree.Families.DylanDavisAndFionaDouglas.Xref
         });
 
         GedcomAssert.RecordJsonIsValid(exporter, exporter.FamilyRecordJson, AssertFunction);
 
-        bool AssertFunction(string json) =>
-            json.Contains(TestTree.Families.RobertAndRosaDavis.Xref)
-            && !json.Contains(TestTree.Families.DylanAndMariaLewis.Xref);
+        static bool AssertFunction(string json) =>
+            json.Contains(TestTree.Families.DylanDavisAndFionaDouglas.Xref)
+            && !json.Contains(TestTree.Families.JamesSmithAndSaraDavis.Xref)
+            && !json.Contains(TestTree.Families.OwenDavisAndGwenJones.Xref);
     }
 
     [TestMethod]
@@ -47,18 +49,6 @@ public sealed class FamilyTests
         var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.FAM, Xref = "INVALID_XREF" });
         GedcomAssert.RecordJsonIsValid(exporter, exporter.FamilyRecordJson, AssertFunction, false);
 
-        bool AssertFunction(string json) => string.IsNullOrWhiteSpace(json);
+        static bool AssertFunction(string json) => string.IsNullOrWhiteSpace(json);
     }
-
-    //TODO: This test may not be relevant since a Family(FAM) record only has pointers. 
-    //[TestMethod]
-    //public void QueryFamilyJsonTest()
-    //{
-    //    var exporter = new Exporter(Gedcom, new Options() { RecordType = C.FAM, Query = TestTree.Families.DylanAndMariaLewis.Xref });
-    //    GedcomAssert.RecordJsonIsValid(exporter, exporter.FamilyRecordsJson, AssertFunction, nameof(QueryFamilyJsonTest));
-
-    //    bool AssertFunction(string json) =>
-    //        json.Contains(TestTree.Families.DylanAndMariaLewis.Xref)
-    //        && !json.Contains(TestTree.Families.RobertAndRosaDavis.Xref);
-    //}
 }

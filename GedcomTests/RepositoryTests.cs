@@ -20,9 +20,7 @@ public sealed class RepositoryTests
         var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.REPO });
         GedcomAssert.RecordJsonIsValid(exporter, exporter.RepositoryRecordsJson, AssertFunction);
 
-        bool AssertFunction(string json) =>
-            json.Contains(TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref)
-            && json.Contains(TestTree.Repositories.FamilySearchLibrary.Xref);
+        bool AssertFunction(string json) => json.Contains(TestTree.Repositories.VitalRecordsRepository.Xref);
     }
 
     [TestMethod]
@@ -31,14 +29,12 @@ public sealed class RepositoryTests
         var exporter = new Exporter(Gedcom, new Options() 
         { 
             RecordType = Tag.REPO,
-            Xref = TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref
+            Xref = TestTree.Repositories.VitalRecordsRepository.Xref
         });
 
         GedcomAssert.RecordJsonIsValid(exporter, exporter.RepositoryRecordJson, AssertFunction);
 
-        bool AssertFunction(string json) =>
-            json.Contains(TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref)
-            && !json.Contains(TestTree.Repositories.FamilySearchLibrary.Xref);
+        static bool AssertFunction(string json) => json.Contains(TestTree.Repositories.VitalRecordsRepository.Xref);
     }
 
     [TestMethod]
@@ -47,17 +43,15 @@ public sealed class RepositoryTests
         var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.REPO, Xref = "INVALID_XREF"});
         GedcomAssert.RecordJsonIsValid(exporter, exporter.RepositoryRecordJson, AssertFunction, false);
 
-        bool AssertFunction(string json) => string.IsNullOrWhiteSpace(json);
+        static bool AssertFunction(string json) => string.IsNullOrWhiteSpace(json);
     }
 
     [TestMethod]
     public void QueryRepositoryJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.REPO, Query = "FamilySearch" });
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.REPO, Query = "Vital records" });
         GedcomAssert.RecordJsonIsValid(exporter, exporter.RepositoryRecordsJson, AssertFunction);
 
-        bool AssertFunction(string json) => 
-            json.Contains(TestTree.Repositories.FamilySearchLibrary.Xref)
-            && !json.Contains(TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref);
+        static bool AssertFunction(string json) => json.Contains(TestTree.Repositories.VitalRecordsRepository.Xref);
     }
 }

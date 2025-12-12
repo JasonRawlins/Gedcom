@@ -20,12 +20,13 @@ public sealed class IndividualTests
         GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordsJson, AssertFunction);
 
         static bool AssertFunction(string json) => 
-            json.Contains(TestTree.Individuals.RobertDavis.Xref)
-            && json.Contains(TestTree.Individuals.RosaGarcia.Xref)
-            && json.Contains(TestTree.Individuals.MariaDavis.Xref)
-            && json.Contains(TestTree.Individuals.DylanLewis.Xref)
-            && json.Contains(TestTree.Individuals.GwenLewis.Xref)
-            && json.Contains(TestTree.Individuals.MateoDavis.Xref);
+            json.Contains(TestTree.Individuals.DylanDavis.Xref)
+            && json.Contains(TestTree.Individuals.FionaDouglas.Xref)
+            && json.Contains(TestTree.Individuals.GwenJones.Xref)
+            && json.Contains(TestTree.Individuals.JamesSmith.Xref)
+            && json.Contains(TestTree.Individuals.MarySmith.Xref)
+            && json.Contains(TestTree.Individuals.OwenDavis.Xref)
+            && json.Contains(TestTree.Individuals.SaraDavis.Xref);
     }
 
     [TestMethod]
@@ -45,12 +46,18 @@ public sealed class IndividualTests
     [TestMethod]
     public void ExportIndividualJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.INDI, Xref = TestTree.Individuals.MariaDavis.Xref});
+        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.INDI, Xref = TestTree.Individuals.SaraDavis.Xref});
         GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordJson, AssertFunction);
 
         static bool AssertFunction(string json) => 
-            json.Contains(TestTree.Individuals.MariaDavis.Xref)
-                && !(json.Contains(TestTree.Individuals.DylanLewis.Xref) || json.Contains(TestTree.Individuals.GwenLewis.Xref));
+            json.Contains(TestTree.Individuals.SaraDavis.Xref)
+                && !(
+                json.Contains(TestTree.Individuals.DylanDavis.Xref) || 
+                json.Contains(TestTree.Individuals.FionaDouglas.Xref) || 
+                json.Contains(TestTree.Individuals.GwenJones.Xref) || 
+                json.Contains(TestTree.Individuals.JamesSmith.Xref) || 
+                json.Contains(TestTree.Individuals.MarySmith.Xref) ||
+                json.Contains(TestTree.Individuals.OwenDavis.Xref));
     }
 
     [TestMethod]
@@ -69,10 +76,9 @@ public sealed class IndividualTests
         GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordsJson, AssertFunction);
 
         static bool AssertFunction(string json) =>
-            json.Contains(TestTree.Individuals.RobertDavis.Xref)
-            && json.Contains(TestTree.Individuals.MariaDavis.Xref)
-            && json.Contains(TestTree.Individuals.MateoDavis.Xref)
-            && !json.Contains(TestTree.Individuals.GwenLewis.Xref);
+            json.Contains(TestTree.Individuals.DylanDavis.Xref)
+            && json.Contains(TestTree.Individuals.OwenDavis.Xref)
+            && json.Contains(TestTree.Individuals.SaraDavis.Xref);
     }
 
     [TestMethod]
@@ -82,17 +88,19 @@ public sealed class IndividualTests
         GedcomAssert.RecordHtmlIsValid(exporter, exporter.IndividualsHtml, AssertFunction);
 
         static bool AssertFunction (string html) =>
-            html.Contains(TestTree.Individuals.RobertDavis.XrefId)
-            && html.Contains(TestTree.Individuals.RosaGarcia.XrefId)
-            && html.Contains(TestTree.Individuals.MariaDavis.XrefId)
-            && html.Contains(TestTree.Individuals.DylanLewis.XrefId)
-            && html.Contains(TestTree.Individuals.GwenLewis.XrefId)
-            && html.Contains(TestTree.Individuals.MateoDavis.XrefId);
+            html.Contains(TestTree.Individuals.DylanDavis.XrefId)
+            && html.Contains(TestTree.Individuals.FionaDouglas.XrefId)
+            && html.Contains(TestTree.Individuals.GwenJones.XrefId)
+            && html.Contains(TestTree.Individuals.JamesSmith.XrefId)
+            && html.Contains(TestTree.Individuals.MarySmith.XrefId)
+            && html.Contains(TestTree.Individuals.OwenDavis.XrefId)
+            && html.Contains(TestTree.Individuals.SaraDavis.XrefId);
     }
 
     [TestMethod]
     public void ExportIndividualXslxTest()
     {
+        // This is an integration test.
         var exporter = new Exporter(Gedcom, new Options()
         {
             RecordType = Tag.INDI,

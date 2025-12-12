@@ -4,13 +4,14 @@ Create test family tree in Ancestry
 	Four generations
 	Second cousins
 	Multiple cultures
-	Non-nuclear families (e.g. adoption, polygamy, divorce etc.)
+	Non-nuclear families (e.g. adoption, polygamy, divorce, gay, etc.)
 	Incomplete families (e.g. missing parents)
 	
 
 
 Backlog
 -------
+Fix the Gedcom.Gedcom namespace issue.
 Make a Visual Studio addon that formats .ged files. There might already be one.
 Configure GitHub CI, test runner, and GitHub releases. 
 README

@@ -21,19 +21,22 @@ public sealed class GedcomTests
         GedcomAssert.RecordJsonIsValid(exporter, exporter.GedcomJson, AssertFunction);
 
         bool AssertFunction(string json) => 
-            json.Contains(TestTree.Individuals.RobertDavis.Xref)
-            && json.Contains(TestTree.Individuals.RosaGarcia.Xref)
-            && json.Contains(TestTree.Individuals.MariaDavis.Xref)
-            && json.Contains(TestTree.Individuals.DylanLewis.Xref)
-            && json.Contains(TestTree.Individuals.MateoDavis.Xref)
-            && json.Contains(TestTree.Individuals.GwenLewis.Xref)
-            && json.Contains(TestTree.Families.RobertAndRosaDavis.Xref)
-            && json.Contains(TestTree.Families.DylanAndMariaLewis.Xref)
-            && json.Contains(TestTree.Repositories.GarciaFamilyBookOfRemembrance.Xref)
-            && json.Contains(TestTree.Sources.GarciaFamilyBirths.Xref);
+            json.Contains(TestTree.Individuals.DylanDavis.Xref)
+            && json.Contains(TestTree.Individuals.FionaDouglas.Xref)
+            && json.Contains(TestTree.Individuals.GwenJones.Xref)
+            && json.Contains(TestTree.Individuals.JamesSmith.Xref)
+            && json.Contains(TestTree.Individuals.MarySmith.Xref)
+            && json.Contains(TestTree.Individuals.OwenDavis.Xref)
+            && json.Contains(TestTree.Individuals.SaraDavis.Xref)
+            && json.Contains(TestTree.Families.DylanDavisAndFionaDouglas.Xref)
+            && json.Contains(TestTree.Families.JamesSmithAndSaraDavis.Xref)
+            && json.Contains(TestTree.Families.OwenDavisAndGwenJones.Xref)
+            && json.Contains(TestTree.Repositories.VitalRecordsRepository.Xref)
+            && json.Contains(TestTree.Sources.VitalRecords.Xref);
     }
 
     //[TestMethod]
+    // Dummy test method used for generating a Base64 strings of images.
     //public void GetImageBase64String()
     //{
     //    var imageBase64String = TestUtilities.GetImageBase64String();
