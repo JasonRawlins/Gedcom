@@ -1,57 +1,47 @@
-﻿using Gedcom;
-using Gedcom.CLI;
+﻿using Gedcom.CLI;
 using GedcomTests.TestData;
 
 namespace GedcomTests;
 
 [TestClass]
-public sealed class RepositoryTests
+public class RepositoryTests
 {
-    public static Gedcom.Gedcom Gedcom { get; set; }
-   
-    static RepositoryTests()
+    private Exporter? Exporter;
+    [TestInitialize]
+    public void BeforeEach()
     {
-        Gedcom = TestUtilities.CreateGedcom();
-    }
-
-    [TestMethod]
-    public void ExportRepositoriesJsonTest()
-    {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.REPO });
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.RepositoryRecordsJson, AssertFunction);
-
-        bool AssertFunction(string json) => json.Contains(TestTree.Repositories.VitalRecordsRepository.Xref);
+        Exporter = new Exporter(TestUtilities.CreateGedcom());
     }
 
     [TestMethod]
     public void ExportRepositoryJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() 
-        { 
-            RecordType = Tag.REPO,
-            Xref = TestTree.Repositories.VitalRecordsRepository.Xref
-        });
+        var repositoryJson = Exporter!.GetRepositoryRecordJson(TestTree.Repositories.VitalRecordsRepository.Xref);
 
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.RepositoryRecordJson, AssertFunction);
+        Assert.IsTrue(repositoryJson.Contains(TestTree.Repositories.VitalRecordsRepository.Xref));
+    }
 
-        static bool AssertFunction(string json) => json.Contains(TestTree.Repositories.VitalRecordsRepository.Xref);
+    [TestMethod]
+    public void ExportRepositoriesJsonTest()
+    {
+        var repositoriesJson = Exporter!.GetRepositoryRecordsJson();
+
+        Assert.IsTrue(repositoriesJson.Contains(TestTree.Repositories.VitalRecordsRepository.Xref));
     }
 
     [TestMethod]
     public void ExportNonExistingRepositoryJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.REPO, Xref = "INVALID_XREF"});
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.RepositoryRecordJson, AssertFunction, false);
+        var repositoryJson = Exporter!.GetRepositoryRecordJson("INVALID_XREF");
 
-        static bool AssertFunction(string json) => string.IsNullOrWhiteSpace(json);
+        Assert.IsTrue(repositoryJson.Equals("{}"));
     }
 
     [TestMethod]
-    public void QueryRepositoryJsonTest()
+    public void QueryRepositoriesJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.REPO, Query = "Vital records" });
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.RepositoryRecordsJson, AssertFunction);
+        var repositoryJson = Exporter!.GetRepositoryRecordsJson("Vital records");
 
-        static bool AssertFunction(string json) => json.Contains(TestTree.Repositories.VitalRecordsRepository.Xref);
+        Assert.IsTrue(repositoryJson.Contains(TestTree.Repositories.VitalRecordsRepository.Xref));
     }
 }

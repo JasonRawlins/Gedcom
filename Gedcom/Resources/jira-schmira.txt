@@ -1,5 +1,6 @@
 Current
 -------
+Complete CLI options tests. All permutations.
 Create test family tree in Ancestry
 	Four generations
 	Second cousins

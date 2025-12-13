@@ -5,27 +5,27 @@ using System.Diagnostics;
 
 public class Program
 {
-    static void Main(string[] args)
+    private static void Main(string[] args)
     {
         Parser.Default.ParseArguments<Options>(args)
             .WithParsed(RunOptions)
             .WithNotParsed(HandleParseError);
     }
 
-    static void RunOptions(Options options)
+    private static void RunOptions(Options options)
     {
-        var gedcom = CreateGedcom(options.GedPath);
-        var exporter = new Exporter(gedcom, options);
-
-        if (exporter.Errors.Count > 0)
+        if (options.Errors.Count > 0)
         {
-            exporter.Errors.ForEach(ae => Console.WriteLine(ae));
+            options.Errors.ForEach(Console.WriteLine);           
             return;
         }
 
+        var gedcom = CreateGedcom(options.InputFilePath);
+        var exporter = new Exporter(gedcom);
+
         if (options.RecordType.Equals(Tag.GEDC))
         {
-            WriteJson(exporter.GedcomJson(), options.OutputFilePath);
+            WriteJson(exporter.GetGedcomJson(), options.OutputFilePath);
             return;
         }
 
@@ -33,11 +33,18 @@ public class Program
         {
             if (options.Format.Equals(C.JSON))
             {
-                WriteJson(exporter.IndividualRecordsJson(), options.OutputFilePath);
+                if (string.IsNullOrEmpty(options.Xref))
+                {
+                    WriteJson(exporter.GetIndividualsJson(options.Query), options.OutputFilePath);
+                }
+                else
+                {
+                    WriteJson(exporter.GetIndividualJson(options.Xref), options.OutputFilePath);
+                }
             }
             else if (options.Format.Equals(Tag.HTML))
             {
-                WriteHtml(exporter.IndividualsHtml(), options.OutputFilePath);
+                WriteHtml(exporter.GetIndividualsHtml(), options.OutputFilePath);
             }
             else if (options.Format.Equals(C.XSLX))
             {
@@ -52,32 +59,20 @@ public class Program
         {
             if (options.RecordType.Equals(Tag.INDI))
             {
-                WriteJson(exporter.IndividualRecordJson(), options.OutputFilePath);
+                if (string.IsNullOrEmpty(options.Xref))
+                {
+                    WriteJson(exporter.GetIndividualsJson(options.Xref), options.OutputFilePath);
+                }
+                else
+                {
+                    WriteJson(exporter.GetIndividualJson(options.Xref), options.OutputFilePath);
+                }
             }
         }
-
-       
     }
 
-    static void WriteJson(string json, string outputFilePath)
+    private static void HandleParseError(IEnumerable<Error> errors)
     {
-        File.WriteAllText(outputFilePath, json);
-    }
-
-    static void WriteHtml(string html, string outputFilePath)
-    {
-        File.WriteAllText(outputFilePath, html);
-
-        Process.Start(new ProcessStartInfo
-        {
-            FileName = outputFilePath,
-            UseShellExecute = true
-        });
-    }
-
-    static void HandleParseError(IEnumerable<Error> errors)
-    {
-        Console.WriteLine("Parsing failed for command line arguments");
         foreach (Error error in errors)
         {
             Console.WriteLine(error);
@@ -89,5 +84,21 @@ public class Program
         var gedFileLines = File.ReadAllLines(gedFullName);
         var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
         return new Gedcom.Gedcom(gedcomLines);
+    }
+
+    private static void WriteJson(string json, string outputFilePath)
+    {
+        File.WriteAllText(outputFilePath, json);
+    }
+
+    private static void WriteHtml(string html, string outputFilePath)
+    {
+        File.WriteAllText(outputFilePath, html);
+
+        Process.Start(new ProcessStartInfo
+        {
+            FileName = outputFilePath,
+            UseShellExecute = true
+        });
     }
 }

@@ -28,11 +28,11 @@ public class Gedcom : RecordStructureBase
     public Header Header => First<Header>(Tag.HEAD);
 
     // Family (FAM)
-    public FamilyRecord GetFamilyRecord(string xref, string query = "") => GetRecord<FamilyRecord>(Tag.FAM, xref, query);
+    public FamilyRecord GetFamilyRecord(string xref) => GetRecord<FamilyRecord>(xref);
     public List<FamilyRecord> GetFamilyRecords(string query = "") => GetRecords<FamilyRecord>(Tag.FAM, query);
 
     // Individual (INDI)
-    public IndividualRecord GetIndividualRecord(string xref, string query = "") => GetRecord<IndividualRecord>(Tag.INDI, xref, query);
+    public IndividualRecord GetIndividualRecord(string xref) => GetRecord<IndividualRecord>(xref);
     public List<IndividualRecord> GetIndividualRecords(string query = "") => GetRecords<IndividualRecord>(Tag.INDI, query);
 
     //public MultimediaRecord GetMultimediaRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(C.OBJE) && r.Value.Equals(xref)));
@@ -42,26 +42,18 @@ public class Gedcom : RecordStructureBase
     //public List<NoteRecord> GetNoteRecords() => Record.Records.Where(r => r.Tag.Equals(C.NOTE)).Select(r => new NoteRecord(r)).ToList();
 
     // Repository (REPO)
-    public RepositoryRecord GetRepositoryRecord(string xref, string query = "") => GetRecord<RepositoryRecord>(Tag.REPO, xref, query);
+    public RepositoryRecord GetRepositoryRecord(string xref) => GetRecord<RepositoryRecord>(xref);
     public List<RepositoryRecord> GetRepositoryRecords(string query = "") => GetRecords<RepositoryRecord>(Tag.REPO, query);
 
     // Source (SOUR)
-    public SourceRecord GetSourceRecord(string xref, string query = "") => GetRecord<SourceRecord>(Tag.SOUR, xref, query);
+    public SourceRecord GetSourceRecord(string xref) => GetRecord<SourceRecord>(xref);
     public List<SourceRecord> GetSourceRecords(string query = "") => GetRecords<SourceRecord>(Tag.SOUR, query);
 
     // Submitter (SUBM) TODO:
 
-    private T GetRecord<T>(string tag, string xref = "", string query = "") where T : RecordStructureBase, new()
-    {
-        var record = Single(r =>
-            r.Tag.Equals(tag)
-            && (!string.IsNullOrEmpty(xref) && r.Value.Equals(xref))
-            && r.IsQueryMatch(query));
+    private T GetRecord<T>(string xref) where T : RecordStructureBase, new() => CreateRecord<T>(Single(r => r.Value.Equals(xref)));
 
-        return CreateRecord<T>(record);
-    }
-
-    private List<T> GetRecords<T>(string tag, string query) where T : RecordStructureBase, new()
+    private List<T> GetRecords<T>(string tag, string query = "") where T : RecordStructureBase, new()
     {
         var records = Record.Records.Where(r =>
             r.Tag.Equals(tag)

@@ -1,33 +1,24 @@
 ﻿using Newtonsoft.Json;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Gedcom.CLI;
 
-public class Exporter(Gedcom gedcom, Options options)
+public class Exporter(Gedcom gedcom)
 {
-    public static string[] RecordTypes => [Tag.FAM, Tag.INDI, Tag.OBJE, Tag.NOTE, Tag.REPO, Tag.SOUR, Tag.SUBM, Tag.GEDC /* GEDC is not a real top-level record type. It's used when the whole gedcom is exported. */];
-    public static string[] OutputFormats => [C.JSON, Tag.LIST, Tag.HTML, C.XSLX];
-
-    public Options Options { get; set; } = options ?? new Options();
     public Gedcom Gedcom { get; set; } = gedcom;
 
-    public Exporter(Gedcom gedcom) : this(gedcom, new Options())
-    {
-    }
-
-    public string GedcomJson() => JsonConvert.SerializeObject(Gedcom, JsonSettings.DefaultOptions);
+    public string GetGedcomJson() => JsonConvert.SerializeObject(Gedcom, JsonSettings.DefaultOptions);
 
     // Family (FAM)
-    public string FamilyRecordJson() => GetRecordJson(Gedcom.GetFamilyRecord(Options.Xref, Options.Query));
-    public string FamilyRecordsJson() => GetRecordsJson(Gedcom.GetFamilyRecords(Options.Query));
+    public string GetFamilyRecordJson(string xref) => GetRecordJson(Gedcom.GetFamilyRecord(xref));
+    public string GetFamilyRecordsJson(string query = "") => GetRecordsJson(Gedcom.GetFamilyRecords(query));
 
-    // Individual (INDI)
-    public string IndividualRecordJson() => GetRecordJson(Gedcom.GetIndividualRecord(Options.Xref, Options.Query));
-    public string IndividualRecordsJson() => GetRecordsJson(Gedcom.GetIndividualRecords(Options.Query));
-    public string IndividualsHtml()
+    public string GetIndividualJson(string xref) => GetRecordJson(Gedcom.GetIndividualRecord(xref));
+    public string GetIndividualsJson(string query = "") => GetRecordsJson(Gedcom.GetIndividualRecords(query));
+
+    public string GetIndividualsHtml(string query = "")
     {
-        var individualListItems = Gedcom.GetIndividualRecords().Select(ir => new IndividualListItem(ir)).ToList();
+        var individualListItems = Gedcom.GetIndividualRecords(query).Select(ir => new IndividualListItem(ir)).ToList();
 
         var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.IndividualsHtmlTemplate);
         var individualLis = HtmlWriter.CreateIndividualList(individualListItems, Gedcom.Header.Source.Tree.AutomatedRecordId);
@@ -44,79 +35,22 @@ public class Exporter(Gedcom gedcom, Options options)
     }
 
     // Repository (REPO)
-    public string RepositoryRecordJson() => GetRecordJson(Gedcom.GetRepositoryRecord(Options.Xref));
-    public string RepositoryRecordsJson() => GetRecordsJson(Gedcom.GetRepositoryRecords(Options.Query));
+    public string GetRepositoryRecordJson(string xref) => GetRecordJson(Gedcom.GetRepositoryRecord(xref));
+    public string GetRepositoryRecordsJson(string query = "") => GetRecordsJson(Gedcom.GetRepositoryRecords(query));
 
     // Source (SOUR)
-    public string SourceRecordJson() => GetRecordJson(Gedcom.GetSourceRecord(Options.Xref));
-    public string SourceRecordsJson() => GetRecordsJson(Gedcom.GetSourceRecords(Options.Query));
+    public string GetSourceRecordJson(string xref) => GetRecordJson(Gedcom.GetSourceRecord(xref));
+    public string GetSourceRecordsJson(string query = "") => GetRecordsJson(Gedcom.GetSourceRecords(query));
 
     private static string GetRecordJson(RecordStructureBase recordStructure)
     {
-        if (recordStructure.IsEmpty) return "";
+        if (recordStructure.IsEmpty) return "{}";
         return JsonConvert.SerializeObject(recordStructure, JsonSettings.DefaultOptions);
     }
 
     private static string GetRecordsJson(IEnumerable<RecordStructureBase> recordStructures)
     {
-        if (!recordStructures.Any()) return "";
+        if (!recordStructures.Any()) return "{}";
         return JsonConvert.SerializeObject(recordStructures, JsonSettings.DefaultOptions);
-    }
-
-    public string GetCliCommand()
-    {
-        return $"gedcom -i {Options.GedPath} -o {Options.OutputFilePath} -t {Options.RecordType} -f {Options.Format} -x {Options.Xref}";
-    }
-
-    public List<string> Errors
-    {
-        get
-        {
-            var argumentErrors = new List<string>();
-
-            if (!File.Exists(Options.GedPath))
-            {
-                argumentErrors.Add($"{ErrorMessages.InputFilePathIsRequired} '{Options.GedPath}'");
-            }
-
-            string directoryPath = Path.GetDirectoryName(Options.OutputFilePath) ?? "";
-            if (string.IsNullOrEmpty(directoryPath) || !Directory.Exists(directoryPath))
-            {
-                argumentErrors.Add(ErrorMessages.OutputFilePathIsRequired);
-            }
-
-            if (!RecordTypes.Contains(Options.RecordType))
-            {
-                argumentErrors.Add($"{Options.RecordType} {ErrorMessages.InvalidRecordType}");
-            }
-
-            if (!OutputFormats.Contains(Options.Format))
-            {
-                argumentErrors.Add($"{Options.Format} {ErrorMessages.InvalidFormat}");
-            }
-
-            if (!string.IsNullOrEmpty(Options.Xref))
-            {
-                var isValidXref = Regex.IsMatch(Options.Xref, @"@.*@");
-                if (!isValidXref)
-                {
-                    // It looks like Ancestry is the one that prepends a letter to the xrefs based on 
-                    // type, like "I" for INDI xrefs ("@I234@"). This is not part of the standard.
-                    // See comment below on xref_ID for more details.
-                    argumentErrors.Add($"{Options.Xref} {ErrorMessages.InvalidXref}");
-                }
-            }
-
-            return argumentErrors;
-        }
-    }
-
-    public class ErrorMessages
-    {
-        public const string InputFilePathIsRequired = "Could not find the input file:";
-        public const string OutputFilePathIsRequired = "The output file path must refer to an existing directory.";
-        public const string InvalidRecordType = "is not a valid record type. (FAM, INDI, OBJE, NOTE, REPO, SOUR, SUBM)";
-        public const string InvalidFormat = "is not a valid export format. (JSON, LIST)";
-        public const string InvalidXref = "is not a valid xref.";
     }
 }

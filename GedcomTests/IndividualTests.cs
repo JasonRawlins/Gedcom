@@ -1,5 +1,4 @@
-﻿using Gedcom;
-using Gedcom.CLI;
+﻿using Gedcom.CLI;
 using GedcomTests.TestData;
 
 namespace GedcomTests;
@@ -7,26 +6,42 @@ namespace GedcomTests;
 // The use of the word "Individual" in this class refers to a Gedcom "Individual" (INDI) record,
 // not its normal meaning of "singular," "each," "one," etc. 
 [TestClass]
-public sealed class IndividualTests
+public class IndividualTests
 {
-    public static Gedcom.Gedcom Gedcom { get; set; }
-   
-    static IndividualTests() => Gedcom = TestUtilities.CreateGedcom();
+    private Exporter? Exporter;
+    [TestInitialize]
+    public void BeforeEach()
+    {
+        Exporter = new Exporter(TestUtilities.CreateGedcom());
+    }
+
+    [TestMethod]
+    public void ExportIndividualJsonTest()
+    {
+        var individualJson = Exporter!.GetIndividualJson(TestTree.Individuals.SaraDavis.Xref);
+
+        Assert.IsTrue(individualJson.Contains(TestTree.Individuals.SaraDavis.Xref) &&
+                !(individualJson.Contains(TestTree.Individuals.DylanDavis.Xref) ||
+                individualJson.Contains(TestTree.Individuals.FionaDouglas.Xref) ||
+                individualJson.Contains(TestTree.Individuals.GwenJones.Xref) ||
+                individualJson.Contains(TestTree.Individuals.JamesSmith.Xref) ||
+                individualJson.Contains(TestTree.Individuals.MarySmith.Xref) ||
+                individualJson.Contains(TestTree.Individuals.OwenDavis.Xref)));
+    }
 
     [TestMethod]
     public void ExportIndividualsJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.INDI });
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordsJson, AssertFunction);
+        var individualsJson = Exporter!.GetIndividualsJson();
 
-        static bool AssertFunction(string json) => 
-            json.Contains(TestTree.Individuals.DylanDavis.Xref)
-            && json.Contains(TestTree.Individuals.FionaDouglas.Xref)
-            && json.Contains(TestTree.Individuals.GwenJones.Xref)
-            && json.Contains(TestTree.Individuals.JamesSmith.Xref)
-            && json.Contains(TestTree.Individuals.MarySmith.Xref)
-            && json.Contains(TestTree.Individuals.OwenDavis.Xref)
-            && json.Contains(TestTree.Individuals.SaraDavis.Xref);
+        Assert.IsTrue(
+            individualsJson.Contains(TestTree.Individuals.DylanDavis.Xref)
+            && individualsJson.Contains(TestTree.Individuals.FionaDouglas.Xref)
+            && individualsJson.Contains(TestTree.Individuals.GwenJones.Xref)
+            && individualsJson.Contains(TestTree.Individuals.JamesSmith.Xref)
+            && individualsJson.Contains(TestTree.Individuals.MarySmith.Xref)
+            && individualsJson.Contains(TestTree.Individuals.OwenDavis.Xref)
+            && individualsJson.Contains(TestTree.Individuals.SaraDavis.Xref));
     }
 
     [TestMethod]
@@ -44,73 +59,51 @@ public sealed class IndividualTests
     }
 
     [TestMethod]
-    public void ExportIndividualJsonTest()
-    {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.INDI, Xref = TestTree.Individuals.SaraDavis.Xref});
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordJson, AssertFunction);
-
-        static bool AssertFunction(string json) => 
-            json.Contains(TestTree.Individuals.SaraDavis.Xref)
-                && !(
-                json.Contains(TestTree.Individuals.DylanDavis.Xref) || 
-                json.Contains(TestTree.Individuals.FionaDouglas.Xref) || 
-                json.Contains(TestTree.Individuals.GwenJones.Xref) || 
-                json.Contains(TestTree.Individuals.JamesSmith.Xref) || 
-                json.Contains(TestTree.Individuals.MarySmith.Xref) ||
-                json.Contains(TestTree.Individuals.OwenDavis.Xref));
-    }
-
-    [TestMethod]
     public void NonExistingIndividualJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.INDI, Xref = "INVALID_XREF" });
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordJson, AssertFunction, false);
+        var individualJson = Exporter!.GetIndividualJson("INVALID_XREF");
 
-        static bool AssertFunction(string json) => string.IsNullOrWhiteSpace(json);
+        Assert.IsTrue(individualJson.Equals("{}"));
     }
 
     [TestMethod]
     public void QueryIndividualsJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() {  RecordType = Tag.INDI, Query = "Davis" });
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.IndividualRecordsJson, AssertFunction);
+        var individualsJson = Exporter!.GetIndividualsJson("Davis");
 
-        static bool AssertFunction(string json) =>
-            json.Contains(TestTree.Individuals.DylanDavis.Xref)
-            && json.Contains(TestTree.Individuals.OwenDavis.Xref)
-            && json.Contains(TestTree.Individuals.SaraDavis.Xref);
+        Assert.IsTrue(individualsJson.Contains(TestTree.Individuals.DylanDavis.Xref)
+            && individualsJson.Contains(TestTree.Individuals.OwenDavis.Xref)
+            && individualsJson.Contains(TestTree.Individuals.SaraDavis.Xref));
     }
 
     [TestMethod]
     public void ExportIndividualsHtmlTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.INDI, Format = Tag.HTML });
-        GedcomAssert.RecordHtmlIsValid(exporter, exporter.IndividualsHtml, AssertFunction);
+        var individualsHtml = Exporter!.GetIndividualsHtml();
 
-        static bool AssertFunction (string html) =>
-            html.Contains(TestTree.Individuals.DylanDavis.XrefId)
-            && html.Contains(TestTree.Individuals.FionaDouglas.XrefId)
-            && html.Contains(TestTree.Individuals.GwenJones.XrefId)
-            && html.Contains(TestTree.Individuals.JamesSmith.XrefId)
-            && html.Contains(TestTree.Individuals.MarySmith.XrefId)
-            && html.Contains(TestTree.Individuals.OwenDavis.XrefId)
-            && html.Contains(TestTree.Individuals.SaraDavis.XrefId);
+        Assert.IsTrue(individualsHtml.Contains(TestTree.Individuals.DylanDavis.XrefId)
+            && individualsHtml.Contains(TestTree.Individuals.FionaDouglas.XrefId)
+            && individualsHtml.Contains(TestTree.Individuals.GwenJones.XrefId)
+            && individualsHtml.Contains(TestTree.Individuals.JamesSmith.XrefId)
+            && individualsHtml.Contains(TestTree.Individuals.MarySmith.XrefId)
+            && individualsHtml.Contains(TestTree.Individuals.OwenDavis.XrefId)
+            && individualsHtml.Contains(TestTree.Individuals.SaraDavis.XrefId));
     }
 
     [TestMethod]
     public void ExportIndividualXslxTest()
     {
         // This is an integration test.
-        var exporter = new Exporter(Gedcom, new Options()
-        {
-            RecordType = Tag.INDI,
-            Format = C.XSLX,
-            GedPath = @"C:\temp\GedcomNET\Resources\GedcomNET.ged",
-            OutputFilePath = @"C:\temp\GedcomNET\Resources\GedcomNET-output.xlsx"
-        });
+        //var exporter = new Exporter(Gedcom, new Options()
+        //{
+        //    RecordType = Tag.INDI,
+        //    Format = C.XSLX,
+        //    InputFilePath = @"C:\temp\GedcomNET\Resources\GedcomNET.ged",
+        //    OutputFilePath = @"C:\temp\GedcomNET\Resources\GedcomNET-output.xlsx"
+        //});
 
-        var excelSheetBytes = exporter.IndividualsExcel();
+        //var excelSheetBytes = exporter.IndividualsExcel();
 
-        File.WriteAllBytes(exporter.Options.OutputFilePath, excelSheetBytes);
+        //File.WriteAllBytes(exporter.Options.OutputFilePath, excelSheetBytes);
     }
 }

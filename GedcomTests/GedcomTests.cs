@@ -5,34 +5,32 @@ using GedcomTests.TestData;
 namespace GedcomTests;
 
 [TestClass]
-public sealed class GedcomTests
+public class GedcomTests
 {
-    private static Gedcom.Gedcom Gedcom { get; set; }
-
-    static GedcomTests()
+    private Exporter? Exporter;
+    [TestInitialize]
+    public void BeforeEach()
     {
-        Gedcom = TestUtilities.CreateGedcom();
+        Exporter = new Exporter(TestUtilities.CreateGedcom());
     }
 
     [TestMethod]
     public void ExportGedcomAsJsonTest()
     {
-        var exporter = new Exporter(Gedcom, new Options() { RecordType = Tag.GEDC });
-        GedcomAssert.RecordJsonIsValid(exporter, exporter.GedcomJson, AssertFunction);
+        var gedcJson = Exporter!.GetGedcomJson();
 
-        bool AssertFunction(string json) => 
-            json.Contains(TestTree.Individuals.DylanDavis.Xref)
-            && json.Contains(TestTree.Individuals.FionaDouglas.Xref)
-            && json.Contains(TestTree.Individuals.GwenJones.Xref)
-            && json.Contains(TestTree.Individuals.JamesSmith.Xref)
-            && json.Contains(TestTree.Individuals.MarySmith.Xref)
-            && json.Contains(TestTree.Individuals.OwenDavis.Xref)
-            && json.Contains(TestTree.Individuals.SaraDavis.Xref)
-            && json.Contains(TestTree.Families.DylanDavisAndFionaDouglas.Xref)
-            && json.Contains(TestTree.Families.JamesSmithAndSaraDavis.Xref)
-            && json.Contains(TestTree.Families.OwenDavisAndGwenJones.Xref)
-            && json.Contains(TestTree.Repositories.VitalRecordsRepository.Xref)
-            && json.Contains(TestTree.Sources.VitalRecords.Xref);
+        Assert.IsTrue(gedcJson.Contains(TestTree.Individuals.DylanDavis.Xref)
+            && gedcJson.Contains(TestTree.Individuals.FionaDouglas.Xref)
+            && gedcJson.Contains(TestTree.Individuals.GwenJones.Xref)
+            && gedcJson.Contains(TestTree.Individuals.JamesSmith.Xref)
+            && gedcJson.Contains(TestTree.Individuals.MarySmith.Xref)
+            && gedcJson.Contains(TestTree.Individuals.OwenDavis.Xref)
+            && gedcJson.Contains(TestTree.Individuals.SaraDavis.Xref)
+            && gedcJson.Contains(TestTree.Families.DylanDavisAndFionaDouglas.Xref)
+            && gedcJson.Contains(TestTree.Families.JamesSmithAndSaraDavis.Xref)
+            && gedcJson.Contains(TestTree.Families.OwenDavisAndGwenJones.Xref)
+            && gedcJson.Contains(TestTree.Repositories.VitalRecordsRepository.Xref)
+            && gedcJson.Contains(TestTree.Sources.VitalRecords.Xref));
     }
 
     //[TestMethod]
