@@ -75,14 +75,12 @@ public static class Tag //
     public const string GIVN = "GIVN"; // <NAME_PEICE_GIVEN> 
     public const string GRAD = "GRAD"; // <blank>
     public const string HEAD = "HEAD"; // <blank>
-    public const string HTML = "HTML"; // @<XREF:INDI>, <blank>
     public const string HUSB = "HUSB"; // @<XREF:INDI>, <blank>
     public const string INDI = "INDI"; // @XREF:INDI@ INDI
     public const string IDNO = "IDNO"; // <NATOINAL_ID_NUMBER>
     public const string IMMI = "IMMI"; // <blank>
     public const string LANG = "LANG"; // <LANGUAGE_PREFERENCE>, <LANGUAGE_OF_TEXT>
     public const string LATI = "LATI"; // <PLACE_LATITUDE>
-    public const string LIST = "LIST"; // GedcomNET CLI
     public const string LONG = "LONG"; // <PLACE_LONGITUDE>
     public const string MAP = "MAP"; // <blank>
     public const string MARB = "MARB"; // <blank>

@@ -5,16 +5,21 @@ namespace GedcomTests;
 
 public class TestUtilities
 {
-    public static readonly string GedcomNetTreeFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.ged");
-    public static readonly string GedcomNetTreeDirectory = Path.GetDirectoryName(GedcomNetTreeFullName) ?? "";
-    public static readonly string GedcomNetTreeOutputJsonFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.json");
-    public static readonly string GedcomNetTreeOutputTextFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.txt");
-    public static readonly string GedcomNetTreeOutputHtmlFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.html");
-    public static readonly string GedcomNetTreeOutputXslxFullName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET-template.xslx");
+    private static readonly string BaseDirectory = @"C:\temp\GedcomNET"; //Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.json");
+
+    public static readonly string GedcomFullName = Path.Combine(BaseDirectory, "Resources", "GedcomNET.ged");
+
+    public static readonly string ExcelTemplateFullName = Path.Combine(BaseDirectory, "Resources", "GedcomNET-template.xlsx");
+    //public static readonly string GedcomDirectory = Path.GetDirectoryName(GedcomFullName) ?? "";
+
+    public static readonly string ExcelFullName = Path.Combine(BaseDirectory, "TestOutput", "GedcomNET.xlsx");
+    public static readonly string HtmlFullName = Path.Combine(BaseDirectory, "TestOutput", "GedcomNET.html");
+    public static readonly string JsonFullName = Path.Combine(BaseDirectory, "TestOutput", "GedcomNET.json");
+    public static readonly string TextFullName = Path.Combine(BaseDirectory, "TestOutput", "GedcomNET.txt");
 
     public static Gedcom.Gedcom CreateGedcom()
     {
-        var gedFileLines = File.ReadAllLines(GedcomNetTreeFullName); // Encoding.UTF8.GetString(Properties.Resources.GedcomNET).Split('\n');
+        var gedFileLines = File.ReadAllLines(GedcomFullName); //GedcomNetTreeFullNameEncoding.UTF8.GetString(Properties.Resources.GedcomNET).Split('\n');
         var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
         return new Gedcom.Gedcom(gedcomLines);
     }

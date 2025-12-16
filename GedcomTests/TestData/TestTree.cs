@@ -132,6 +132,8 @@ public static class TestTree
     {
         public static readonly TestSource VitalRecords = new("@S976697667@", "Vital records");
     }
+
+    public const string InvalidXref = "INVALID_XREF";
 }
 
 public class TestIndividual(string xref, string given, string surname)
@@ -141,6 +143,8 @@ public class TestIndividual(string xref, string given, string surname)
     public string Given { get; set; } = given;
     public string Surname { get; set; } = surname;
     public string Xref { get; set; } = xref;
+
+    // The xref without the "@" and "I" characters.
     public string XrefId => Xref.Replace("@", "").Replace("I", "");
 }
 

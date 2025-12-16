@@ -2,7 +2,7 @@
   "profiles": {
     "Gedcom": {
       "commandName": "Project",
-      "commandLineArgs": "-p C:\\temp\\GedcomNet-params.json"
+      "commandLineArgs": "-p C:\\temp\\GedcomNET\\ResourcesGedcomNet-params.json"
     }
   }
 }

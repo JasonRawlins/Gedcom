@@ -37,7 +37,11 @@ public class NoteStructure : RecordStructureBase
         }
     }
 
-    public override string ToString() => Text.Substring(0, 64);
+    public override string ToString()
+    {
+        var lengthOfSubstring = Text.Length < 64 ? Text.Length : 64;
+        return Text.Substring(0, lengthOfSubstring);
+    }
 }
 
 internal class NoteStructureJsonConverter : JsonConverter<NoteStructure>

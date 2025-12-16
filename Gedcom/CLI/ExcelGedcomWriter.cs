@@ -1,26 +1,68 @@
-﻿using Gedcom.RecordStructures;
-using OfficeOpenXml;
+﻿using OfficeOpenXml;
 
 namespace Gedcom.CLI;
 
-public class ExcelWriter : IGedcomWriter
+public class ExcelGedcomWriter : IGedcomWriter
 {
-    private HeaderTree HeaderTree { get; set; }
+    private Gedcom Gedcom { get; set; }
 
-    public ExcelWriter(HeaderTree headerTree)
+    public ExcelGedcomWriter(Gedcom gedcom)
     {
-        HeaderTree = headerTree;
+        Gedcom = gedcom;
         ExcelPackage.License.SetNonCommercialOrganization("Gedcom.NET");
     }
 
-    public byte[] GetIndividuals(List<IndividualListItem> individualListItems)
+    public string GetIndividual(string xref)
     {
-        // Hard-coding the path to the template file for development. Once the template.xlsx
-        // is complete, this will come from project resources.
-        using var userTemplatePackage = new ExcelPackage(@"C:\temp\GedcomNET\Resources\GedcomNET-user-template.xlsx");
+        throw new NotImplementedException();
+    }
+
+    public string GetIndividuals(string query = "")
+    {
+        throw new NotImplementedException();
+    }
+
+    public string GetFamily(string xref)
+    {
+        throw new NotImplementedException();
+    }
+
+    public string GetFamilies(string query = "")
+    {
+        throw new NotImplementedException();
+    }
+
+    public string GetRepository(string xref)
+    {
+        throw new NotImplementedException();
+    }
+
+    public string GetRepositories(string query = "")
+    {
+        throw new NotImplementedException();
+    }
+
+    public string GetSource(string xref)
+    {
+        throw new NotImplementedException();
+    }
+
+    public string GetSources(string query = "")
+    {
+        throw new NotImplementedException();
+    }
+
+    public byte[] GetAsByteArray(string query = "")
+    {
+        var individualRecords = Gedcom.GetIndividualRecords(query);
+        var individualListItems = individualRecords.Select(ir => new IndividualListItem(ir)).ToList();
+
+        // Hard-coding the path to the template file for development.
+        // Once the template.xlsx is complete, this will come from project resources.
+        using var userTemplatePackage = new ExcelPackage(@"C:\temp\GedcomNET\Resources\GedcomNET-template.xlsx");
         var templateSheet = userTemplatePackage.Workbook.Worksheets["Template"];
         using var excelPackage = new ExcelPackage();
-        var targetSheet = excelPackage.Workbook.Worksheets.Add($"{HeaderTree.Name} individuals", templateSheet);
+        var targetSheet = excelPackage.Workbook.Worksheets.Add($"{Gedcom.Header.Source.Tree.Name} individuals", templateSheet);
 
         var templateRow = 2; // The row containing the template values
 
@@ -50,7 +92,7 @@ public class ExcelWriter : IGedcomWriter
 
             cell.Value = cell.Value switch
             {
-                ContentTag.AncestryProfileLink => HeaderTree.Name,
+                ContentTag.AncestryProfileLink => Gedcom.Header.Source.Tree.Name,
                 ContentTag.BirthDate => individualListItem.Birth.DayMonthYear,
                 ContentTag.BirthPlace => individualListItem.BirthPlace,
                 ContentTag.DeathDate => individualListItem.Death.DayMonthYear,
@@ -58,7 +100,7 @@ public class ExcelWriter : IGedcomWriter
                 ContentTag.FullName => individualListItem.FullName,
                 ContentTag.Given => individualListItem.Given,
                 ContentTag.Surname => individualListItem.Surname,
-                ContentTag.TreeName => HeaderTree.Name,
+                ContentTag.TreeName => Gedcom.Header.Source.Tree.Name,
                 _ => cell.Value,
             };
         }

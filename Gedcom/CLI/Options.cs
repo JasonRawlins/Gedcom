@@ -7,10 +7,10 @@ namespace Gedcom.CLI;
 public class Options
 {
     public static string[] RecordTypes => [Tag.FAM, Tag.INDI, Tag.OBJE, Tag.NOTE, Tag.REPO, Tag.SOUR, Tag.SUBM, Tag.GEDC /* GEDC is not a real top-level record type. It's used when the whole gedcom is exported. */];
-    public static string[] OutputFormats => [C.JSON, Tag.LIST, Tag.HTML, C.XSLX];
+    public static string[] OutputFormats => [C.JSON, C.Text, C.HTML, C.Excel];
 
     private string format = C.JSON;
-    [Option('f', "format", Required = false, HelpText = "Output format (json, list, html, xslx).")]
+    [Option('f', "format", Required = false, HelpText = "Output format (json, text, html, Excel).")]
     public string Format
     {
         get => format.ToUpper();
@@ -105,7 +105,6 @@ public class Options
             {
                 argumentErrors.Add(CliErrorMessages.FormatIsRequired);
             }
-
 
             if (!string.IsNullOrEmpty(Format) && !OutputFormats.Contains(Format.ToUpper()))
             {

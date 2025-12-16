@@ -18,7 +18,7 @@ public sealed class OptionsTests
     {
         var options = new Options
         {
-            OutputFilePath = TestUtilities.GedcomNetTreeOutputJsonFullName,
+            OutputFilePath = TestUtilities.JsonFullName,
             RecordType = Tag.INDI
         };
         
@@ -30,7 +30,7 @@ public sealed class OptionsTests
     {
         var options = new Options
         {
-            InputFilePath = TestUtilities.GedcomNetTreeFullName,
+            InputFilePath = TestUtilities.JsonFullName,
             RecordType = Tag.INDI
         };
 

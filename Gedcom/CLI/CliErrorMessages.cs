@@ -2,7 +2,7 @@
 
 public static class CliErrorMessages
 {
-    public const string FormatIsInvalid = "is not a valid export format. (html, json, list, xslx)";
+    public const string FormatIsInvalid = "is not a valid export format. (html, json, list, xlsx)";
     public const string FormatIsRequired = "Format is required.";
     public const string GedcomNetParamsFileIsInvalid = "The params file is invalid.";
     public const string GedcomNetParamsFileNotFound = "Could not find the params file.";
