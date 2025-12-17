@@ -1,6 +1,7 @@
 ﻿using CommandLine;
 using Gedcom;
 using Gedcom.CLI;
+using Gedcom.GedcomWriters;
 using System.Diagnostics;
 
 public class Program

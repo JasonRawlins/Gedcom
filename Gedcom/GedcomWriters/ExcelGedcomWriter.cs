@@ -1,6 +1,7 @@
-﻿using OfficeOpenXml;
+﻿using Gedcom.CLI;
+using OfficeOpenXml;
 
-namespace Gedcom.CLI;
+namespace Gedcom.GedcomWriters;
 
 public class ExcelGedcomWriter : IGedcomWriter
 {

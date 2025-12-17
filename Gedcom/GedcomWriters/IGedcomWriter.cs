@@ -1,6 +1,4 @@
-﻿using Gedcom.CLI;
-
-namespace Gedcom.CLI;
+﻿namespace Gedcom.GedcomWriters;
 
 public interface IGedcomWriter
 {

@@ -1,7 +1,8 @@
-﻿using Gedcom.RecordStructures;
+﻿using Gedcom.CLI;
+using Gedcom.RecordStructures;
 using System.Text;
 
-namespace Gedcom.CLI;
+namespace Gedcom.GedcomWriters;
 
 public class HtmlGedcomWriter(Gedcom gedcom) : IGedcomWriter
 {

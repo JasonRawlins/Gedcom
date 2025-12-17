@@ -1,4 +1,4 @@
-﻿using Gedcom.CLI;
+﻿using Gedcom.GedcomWriters;
 using GedcomTests.TestData;
 using System.Text;
 

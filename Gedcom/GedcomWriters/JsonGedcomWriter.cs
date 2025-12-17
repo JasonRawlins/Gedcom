@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Text;
 
-namespace Gedcom.CLI;
+namespace Gedcom.GedcomWriters;
 
 public class JsonGedcomWriter(Gedcom gedcom) : IGedcomWriter
 {

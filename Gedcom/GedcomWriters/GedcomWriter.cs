@@ -1,6 +1,7 @@
-﻿using Gedcom.RecordStructures;
+﻿using Gedcom.CLI;
+using Gedcom.RecordStructures;
 
-namespace Gedcom.CLI;
+namespace Gedcom.GedcomWriters;
 
 public class GedcomWriter
 {
