@@ -1,7 +1,6 @@
 Current
 -------
-Clean up branches
-Complete CLI options tests. All permutations.
+Write GedcomDate tests.
 Create test family tree in Ancestry
 	Four generations
 	Second cousins

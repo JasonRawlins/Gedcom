@@ -107,6 +107,26 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
         return monthNameVariations.Contains(possibleMonthName.ToUpper());
     }
 
+    private static string GetFullMonthName(int monthNumber)
+    {
+        return monthNumber switch
+        {
+            1 => "January",
+            2 => "February",
+            3 => "March",
+            4 => "April",
+            5 => "May",
+            6 => "June",
+            7 => "July",
+            8 => "August",
+            9 => "September",
+            10 => "October",
+            11 => "November",
+            12 => "December",
+            _ => ""
+        };
+    }
+
     // Many dates may not parse correctly with DateTime.Parse(). For example, if the date
     // only has a month and year, DateTime.Parse() will actually succeed but the day will be set
     // to 1. That's is invalid because it is a false date. That's why I have separated out day,
@@ -129,7 +149,7 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
         {
             gedcomDate.Day = parsedDate.Day;
             gedcomDate.Month = parsedDate.Month;
-            gedcomDate.MonthName = parsedDate.ToString("MMM");
+            gedcomDate.MonthName = GetFullMonthName(parsedDate.Month); // parsedDate.ToString("MMM");
             gedcomDate.Year = parsedDate.Year;
 
             return gedcomDate;
@@ -142,7 +162,7 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
             if (IsMonth(datePart))
             {
                 gedcomDate.Month = GetMonthNumber(datePart);
-                gedcomDate.MonthName = datePart;
+                gedcomDate.MonthName = GetFullMonthName(gedcomDate.Month);
             }
 
             if (int.TryParse(datePart, out var intDatePart))
