@@ -19,7 +19,7 @@ public sealed class OptionsTests
         var options = new Options
         {
             OutputFilePath = TestUtilities.JsonFullName,
-            RecordType = Tag.INDI
+            RecordType = Tag.Individual
         };
         
         Assert.IsNotNull(options.Errors.Find(e => e.Contains(CliErrorMessages.InputFilePathIsRequired)), "The input file path was invalid.");
@@ -31,7 +31,7 @@ public sealed class OptionsTests
         var options = new Options
         {
             InputFilePath = TestUtilities.JsonFullName,
-            RecordType = Tag.INDI
+            RecordType = Tag.Individual
         };
 
         Assert.IsNotNull(options.Errors.Find(e => e.Contains(CliErrorMessages.OutputFilePathIsRequired)), "The output file path was invalid");

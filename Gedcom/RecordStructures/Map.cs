@@ -8,8 +8,8 @@ public class Map : RecordStructureBase
 {
     public Map() : base() { }
     public Map(Record record) : base(record) { }
-    public string PlaceLatitude => _(Tag.LATI);
-    public string PlaceLongitude => _(Tag.LONG);
+    public string PlaceLatitude => _(Tag.Latitude);
+    public string PlaceLongitude => _(Tag.Longitude);
 
     public override string ToString() => $"{Record.Value}, {PlaceLatitude}, {PlaceLongitude}";
 }

@@ -9,16 +9,16 @@ public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
     public PersonalNameStructure() : base() { }
     public PersonalNameStructure(Record record) : base(record) { }
 
-    public string Given => _(Tag.GIVN);
+    public string Given => _(Tag.GivenName);
     public string NamePersonal => Record.Value; // The complete name, (e.g. John /Doe/)
-    public NameVariation NamePhoneticVariation => First<NameVariation>(Tag.FONE);
-    public string NamePrefix => _(Tag.NPFX);
-    public string NameSuffix => _(Tag.NSFX);
-    public NameVariation NameRomanizedVariation => First<NameVariation>(Tag.ROMN);
-    public string NameType => _(Tag.TYPE);
-    public string Nickname => _(Tag.NICK);
-    public string Surname => _(Tag.SURN);
-    public string SurnamePrefix => _(Tag.SPFX);
+    public NameVariation NamePhoneticVariation => First<NameVariation>(Tag.Phonetic);
+    public string NamePrefix => _(Tag.NamePrefix);
+    public string NameSuffix => _(Tag.NameSuffix);
+    public NameVariation NameRomanizedVariation => First<NameVariation>(Tag.Romanized);
+    public string NameType => _(Tag.Type);
+    public string Nickname => _(Tag.Nickname);
+    public string Surname => _(Tag.Surname);
+    public string SurnamePrefix => _(Tag.SurnamePrefix);
 
     public override string ToString() => $"{Record.Value}, {NamePersonal}";
 }

@@ -9,12 +9,12 @@ public class PlaceStructure : RecordStructureBase
     public PlaceStructure() : base() { }
     public PlaceStructure(Record record) : base(record) { }
 
-    public Map Map => First<Map>(Tag.MAP);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.NOTE);
-    public string PlaceHierarchy => _(Tag.FORM);
+    public Map Map => First<Map>(Tag.Map);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
+    public string PlaceHierarchy => _(Tag.Format);
     public string PlaceName => Record.Value;
-    public List<NameVariation> PlacePhoneticVariations => List<NameVariation>(Tag.FONE);
-    public List<NameVariation> PlaceRomanizedVariations => List<NameVariation>(Tag.ROMN);
+    public List<NameVariation> PlacePhoneticVariations => List<NameVariation>(Tag.Phonetic);
+    public List<NameVariation> PlaceRomanizedVariations => List<NameVariation>(Tag.Romanized);
 
     public override string ToString() => $"{Record.Value}, {PlaceName}";
 }

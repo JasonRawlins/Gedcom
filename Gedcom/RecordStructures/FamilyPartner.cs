@@ -9,7 +9,7 @@ public class FamilyPartner : RecordStructureBase
     public FamilyPartner() { }
     public FamilyPartner(Record record) { }
 
-    public string AgeAtEvent => Record.Records.FirstOrDefault(r => r.Tag.Equals(Tag.AGE))?.Value ?? "";
+    public string AgeAtEvent => Record.Records.FirstOrDefault(r => r.Tag.Equals(Tag.Age))?.Value ?? "";
     public string Name => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {Name}";

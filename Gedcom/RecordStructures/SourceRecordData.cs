@@ -9,9 +9,9 @@ public class SourceRecordData : RecordStructureBase
     public SourceRecordData() : base() { }
     public SourceRecordData(Record record) : base(record) { }
 
-    public List<SourceRecordEvent> EventsRecorded => List<SourceRecordEvent>(Tag.EVEN);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.NOTE);
-    public string ResponsibleAgency => _(Tag.AGNC);
+    public List<SourceRecordEvent> EventsRecorded => List<SourceRecordEvent>(Tag.Event);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
+    public string ResponsibleAgency => _(Tag.Agency);
 
     public override string ToString() => $"{Record.Value}, {ResponsibleAgency}";
 }

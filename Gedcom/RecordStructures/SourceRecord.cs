@@ -9,19 +9,19 @@ public class SourceRecord : RecordStructureBase
     public SourceRecord() : base() { }
     public SourceRecord(Record record) : base(record) { }
 
-    public string AutomatedRecordId => _(Tag.RIN);
-    public string CallNumber => _(Tag.CALN);
-    public ChangeDate ChangeDate => First<ChangeDate>(Tag.CHAN);
-    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.OBJE);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.NOTE);
-    public NoteStructure SourceDescriptiveTitle => First<NoteStructure>(Tag.TITL);
-    public NoteStructure SourceFiledByEntry => First<NoteStructure>(Tag.ABBR);
-    public NoteStructure SourceOriginator => First<NoteStructure>(Tag.AUTH);
-    public NoteStructure SourcePublicationFacts => First<NoteStructure>(Tag.PUBL);
-    public SourceRecordData SourceRecordData => First<SourceRecordData>(Tag.DATA);
-    public List<SourceRepositoryCitation> SourceRepositoryCitations => List<SourceRepositoryCitation>(Tag.REPO);
-    public NoteStructure TextFromSource => First<NoteStructure>(Tag.TEXT);
-    public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(Tag.REFN);
+    public string AutomatedRecordId => _(Tag.RecordIdNumber);
+    public string CallNumber => _(Tag.CallNumber);
+    public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
+    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
+    public NoteStructure SourceDescriptiveTitle => First<NoteStructure>(Tag.Title);
+    public NoteStructure SourceFiledByEntry => First<NoteStructure>(Tag.Abbreviation);
+    public NoteStructure SourceOriginator => First<NoteStructure>(Tag.Author);
+    public NoteStructure SourcePublicationFacts => First<NoteStructure>(Tag.Publication);
+    public SourceRecordData SourceRecordData => First<SourceRecordData>(Tag.Data);
+    public List<SourceRepositoryCitation> SourceRepositoryCitations => List<SourceRepositoryCitation>(Tag.Repository);
+    public NoteStructure TextFromSource => First<NoteStructure>(Tag.Text);
+    public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(Tag.Reference);
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {AutomatedRecordId}";

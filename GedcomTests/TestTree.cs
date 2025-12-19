@@ -11,8 +11,8 @@ public static class TestTree
             get
             {
                 var individual = new TestIndividual("@I272718948910@", "Dylan", "Davis");
-                individual.Events.Add(new(Tag.BIRT, "7 Jul 1930", "Wales"));
-                individual.Events.Add(new(Tag.DEAT, "7 Jul 1990", "Salt Lake City, Salt Lake, Utah, USA"));
+                individual.Events.Add(new(Tag.Birth, "7 Jul 1930", "Wales"));
+                individual.Events.Add(new(Tag.Death, "7 Jul 1990", "Salt Lake City, Salt Lake, Utah, USA"));
                 return individual;
             }
         }
@@ -22,8 +22,8 @@ public static class TestTree
             get
             {
                 var individual = new TestIndividual("@I272718947188@", "Fiona", "Douglas");
-                individual.Events.Add(new(Tag.BIRT, "7 Jul 1930", "Wales"));
-                individual.Events.Add(new(Tag.DEAT, "7 Jul 1990", "Salt Lake City, Salt Lake, Utah, USA"));
+                individual.Events.Add(new(Tag.Birth, "7 Jul 1930", "Wales"));
+                individual.Events.Add(new(Tag.Death, "7 Jul 1990", "Salt Lake City, Salt Lake, Utah, USA"));
                 return individual;
             }
         }
@@ -33,8 +33,8 @@ public static class TestTree
             get
             {
                 var individual = new TestIndividual("@I272718949767@", "Gwen", "Jones");
-                individual.Events.Add(new(Tag.BIRT, "6 Jun 1900", "Wales"));
-                individual.Events.Add(new(Tag.DEAT, "6 Jun 1960", ""));
+                individual.Events.Add(new(Tag.Birth, "6 Jun 1900", "Wales"));
+                individual.Events.Add(new(Tag.Death, "6 Jun 1960", ""));
                 return individual;
             }
         }
@@ -44,8 +44,8 @@ public static class TestTree
             get
             {
                 var individual = new TestIndividual("@I272718953593@", "James", "Smith");
-                individual.Events.Add(new(Tag.BIRT, "8 Aug 1960", "England"));
-                individual.Events.Add(new(Tag.DEAT, "8 Aug 2020", "Salt Lake City, Salt Lake, Utah, USA"));
+                individual.Events.Add(new(Tag.Birth, "8 Aug 1960", "England"));
+                individual.Events.Add(new(Tag.Death, "8 Aug 2020", "Salt Lake City, Salt Lake, Utah, USA"));
                 return individual;
             }
         }
@@ -55,7 +55,7 @@ public static class TestTree
             get
             {
                 var individual = new TestIndividual("@I272718954607@", "Mary", "Smith");
-                individual.Events.Add(new(Tag.BIRT, "9 Sep 1990", "Utah, USA"));
+                individual.Events.Add(new(Tag.Birth, "9 Sep 1990", "Utah, USA"));
                 return individual;
             }
         }
@@ -65,8 +65,8 @@ public static class TestTree
             get
             {
                 var individual = new TestIndividual("@I272718952211@", "Owen", "Davis");
-                individual.Events.Add(new(Tag.BIRT, "6 Jun 1900", "Wales"));
-                individual.Events.Add(new(Tag.DEAT, "6 Jun 1960", "Utah, USA"));
+                individual.Events.Add(new(Tag.Birth, "6 Jun 1900", "Wales"));
+                individual.Events.Add(new(Tag.Death, "6 Jun 1960", "Utah, USA"));
                 return individual;
             }
         }
@@ -76,8 +76,8 @@ public static class TestTree
             get
             {
                 var individual = new TestIndividual("@I272718947187@", "Sara", "Davis");
-                individual.Events.Add(new(Tag.BIRT, "8 Aug 1960", "Salt Lake City, Salt Lake, Utah, USA"));
-                individual.Events.Add(new(Tag.DEAT, "8 Aug 2020", "Salt Lake City, Salt Lake, Utah, USA"));
+                individual.Events.Add(new(Tag.Birth, "8 Aug 1960", "Salt Lake City, Salt Lake, Utah, USA"));
+                individual.Events.Add(new(Tag.Death, "8 Aug 2020", "Salt Lake City, Salt Lake, Utah, USA"));
                 return individual;
             }
         }
@@ -91,7 +91,7 @@ public static class TestTree
             {
                 var family = new TestFamily("@F1@", Individuals.DylanDavis, Individuals.FionaDouglas, [Individuals.SaraDavis])
                 {
-                    Marriage = new(Tag.MARR, "7 Jul 1955", "")
+                    Marriage = new(Tag.Marriage, "7 Jul 1955", "")
                 };
                 return family;
             }
@@ -104,7 +104,7 @@ public static class TestTree
             {
                 var family = new TestFamily("@F2@", Individuals.JamesSmith, Individuals.SaraDavis, [Individuals.MarySmith])
                 {
-                    Marriage = new(Tag.MARR, "8 Aug 1985", "")
+                    Marriage = new(Tag.Marriage, "8 Aug 1985", "")
                 };
                 return family;
             }
@@ -116,7 +116,7 @@ public static class TestTree
             {
                 var family = new TestFamily("@F3@", Individuals.OwenDavis, Individuals.GwenJones, [Individuals.DylanDavis])
                 {
-                    Marriage = new(Tag.MARR, "6 Jun 1925", "")
+                    Marriage = new(Tag.Marriage, "6 Jun 1925", "")
                 };
                 return family;
             }

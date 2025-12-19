@@ -9,9 +9,9 @@ public class MultimediaLink : RecordStructureBase
     public MultimediaLink() : base() { }
     public MultimediaLink(Record record) : base(record) { }
 
-    public string DescriptiveTitle => _(Tag.TITL);
-    public List<MultimediaFileReferenceNumber> MultimediaFileReferenceNumbers => List<MultimediaFileReferenceNumber>(Tag.FILE);
-    public string SourceMediaType => _(Tag.MEDI);
+    public string DescriptiveTitle => _(Tag.Title);
+    public List<MultimediaFileReferenceNumber> MultimediaFileReferenceNumbers => List<MultimediaFileReferenceNumber>(Tag.File);
+    public string SourceMediaType => _(Tag.Media);
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {SourceMediaType}, {DescriptiveTitle}";

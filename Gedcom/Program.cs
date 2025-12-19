@@ -39,7 +39,7 @@ public class Program
         var gedcom = CreateGedcom(options.InputFilePath);
         var gedcomWriter = GedcomWriter.Create(gedcom, options.Format);
 
-        if (options.RecordType.Equals(Tag.INDI))
+        if (options.RecordType.Equals(Tag.Individual))
         {
             var gedcomText = string.IsNullOrEmpty(options.Xref)
                 ? gedcomWriter.GetIndividuals()

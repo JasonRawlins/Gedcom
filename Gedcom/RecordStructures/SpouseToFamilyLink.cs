@@ -9,7 +9,7 @@ public class SpouseToFamilyLink : RecordStructureBase
     public SpouseToFamilyLink() : base() { }
     public SpouseToFamilyLink(Record record) : base(record) { }
 
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.NOTE);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}";

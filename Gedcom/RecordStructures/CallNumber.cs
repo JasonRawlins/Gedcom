@@ -9,7 +9,7 @@ public class CallNumber : RecordStructureBase
     public CallNumber() : base() { }
     public CallNumber(Record record) : base(record) { }
 
-    public string SourceMediaType => _(Tag.MEDI);
+    public string SourceMediaType => _(Tag.Media);
 
     public override string ToString() => $"{Record.Value}, {SourceMediaType}";
 }

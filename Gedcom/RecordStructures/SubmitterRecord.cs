@@ -9,14 +9,14 @@ public class SubmitterRecord : RecordStructureBase
     public SubmitterRecord() : base() { }
     public SubmitterRecord(Record record) : base(record) { }
 
-    public AddressStructure AddressStructure => First<AddressStructure>(Tag.ADDR);
-    public string AutomatedRecordId => _(Tag.RIN);
-    public GedcomDate ChangeDate => First<GedcomDate>(Tag.CHAN);
-    public List<string> LanguagePreferences => List(r => r.Tag.Equals(Tag.LANG)).Select(r => r.Value).ToList();
-    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.MEDI);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.NOTE);
-    public string SubmitterName => _(Tag.NAME);
-    public string SubmitterRegisteredRfn => _(Tag.RFN);
+    public AddressStructure AddressStructure => First<AddressStructure>(Tag.Address);
+    public string AutomatedRecordId => _(Tag.RecordIdNumber);
+    public GedcomDate ChangeDate => First<GedcomDate>(Tag.Change);
+    public List<string> LanguagePreferences => List(r => r.Tag.Equals(Tag.Language)).Select(r => r.Value).ToList();
+    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Media);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
+    public string SubmitterName => _(Tag.Name);
+    public string SubmitterRegisteredRfn => _(Tag.RecordFileNumber);
 
     public override string ToString() => $"{Record.Value}, {SubmitterName}";
 }

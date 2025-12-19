@@ -8,68 +8,68 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
 {
     public IndividualEventStructure() { }
     public IndividualEventStructure(Record record) : base(record) { }
-    public ChildToFamilyLink ChildToFamilyLink => First<ChildToFamilyLink>(global::Gedcom.Tag.FAMC);
-    public AddressStructure AddressStructure => First<AddressStructure>(global::Gedcom.Tag.ADDR);
-    public string AgeAtEvent => _(global::Gedcom.Tag.AGE);
-    public string CauseOfEvent => _(global::Gedcom.Tag.CAUS);
-    public string DateValue => _(global::Gedcom.Tag.DATE);
-    public string EventOrFactClassification => _(global::Gedcom.Tag.TYPE);
+    public ChildToFamilyLink ChildToFamilyLink => First<ChildToFamilyLink>(global::Gedcom.Tag.FamilyChild);
+    public AddressStructure AddressStructure => First<AddressStructure>(global::Gedcom.Tag.Address);
+    public string AgeAtEvent => _(global::Gedcom.Tag.Age);
+    public string CauseOfEvent => _(global::Gedcom.Tag.Cause);
+    public string DateValue => _(global::Gedcom.Tag.Date);
+    public string EventOrFactClassification => _(global::Gedcom.Tag.Type);
     public GedcomDate GedcomDate => GedcomDate.Parse(DateValue);
-    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(global::Gedcom.Tag.OBJE);
+    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(global::Gedcom.Tag.Object);
     public string Name
     {
         get
         {
             return Tag switch
             {
-                global::Gedcom.Tag.ADOP => "Adoption",
-                global::Gedcom.Tag.BAPL => "Baptism (LDS)",
-                global::Gedcom.Tag.BAPM => "Baptism",
-                global::Gedcom.Tag.BARM => "Bar Mitzvah",
-                global::Gedcom.Tag.BASM => "Bas Mitzvah",
-                global::Gedcom.Tag.BIRT => "Birth",
-                global::Gedcom.Tag.BLES => "Blessing",
-                global::Gedcom.Tag.BURI => "Burial",
-                global::Gedcom.Tag.CENS => "Census",
-                global::Gedcom.Tag.CHR => "Christening",
-                global::Gedcom.Tag.CHRA => "Christening (Adult)",
-                global::Gedcom.Tag.CONF => "Confirmation (LDS)",
-                global::Gedcom.Tag.CREM => "Cremation",
-                global::Gedcom.Tag.DEAT => "Death",
-                global::Gedcom.Tag.DIV => "Divorce",
-                global::Gedcom.Tag.DIVF => "Divorce Filed",
-                global::Gedcom.Tag.EMIG => "Emigration",
-                global::Gedcom.Tag.ENDL => "Endowment",
-                global::Gedcom.Tag.ENGA => "Engagement",
-                global::Gedcom.Tag.EVEN => "Event",
-                global::Gedcom.Tag.FCOM => "First Communion",
-                global::Gedcom.Tag.GRAD => "Graduation",
-                global::Gedcom.Tag.IMMI => "Immigration",
-                global::Gedcom.Tag.MARB => "Marriage Bann",
-                global::Gedcom.Tag.MARC => "Marriage Contract",
-                global::Gedcom.Tag.MARL => "Marriage License",
-                global::Gedcom.Tag.MARR => "Marriage",
-                global::Gedcom.Tag.MARS => "Marriage Settlement",
-                global::Gedcom.Tag.NATU => "Naturalization",
-                global::Gedcom.Tag.OCCU => "Occupations",
-                global::Gedcom.Tag.ORDI => "Ordinance",
-                global::Gedcom.Tag.ORDN => "Ordination",
-                global::Gedcom.Tag.PROB => "Probate",
-                global::Gedcom.Tag.RESI => "Residence",
-                global::Gedcom.Tag.RETI => "Retirement",
-                global::Gedcom.Tag.SLGC => "Sealing (Child)",
-                global::Gedcom.Tag.SLGS => "Sealing (Spouse)",
-                global::Gedcom.Tag.WILL => "Will",
+                global::Gedcom.Tag.Adoption => "Adoption",
+                global::Gedcom.Tag.BaptismLds => "Baptism (LDS)",
+                global::Gedcom.Tag.Baptism => "Baptism",
+                global::Gedcom.Tag.BarMitzvah => "Bar Mitzvah",
+                global::Gedcom.Tag.BasMitzvah => "Bas Mitzvah",
+                global::Gedcom.Tag.Birth => "Birth",
+                global::Gedcom.Tag.Blessing => "Blessing",
+                global::Gedcom.Tag.Burial => "Burial",
+                global::Gedcom.Tag.Census => "Census",
+                global::Gedcom.Tag.Christening => "Christening",
+                global::Gedcom.Tag.AdultChristening => "Christening (Adult)",
+                global::Gedcom.Tag.Confirmation => "Confirmation (LDS)",
+                global::Gedcom.Tag.Cremation => "Cremation",
+                global::Gedcom.Tag.Death => "Death",
+                global::Gedcom.Tag.Divorce => "Divorce",
+                global::Gedcom.Tag.DivorceFiled => "Divorce Filed",
+                global::Gedcom.Tag.Emigration => "Emigration",
+                global::Gedcom.Tag.Endowment => "Endowment",
+                global::Gedcom.Tag.Engagement => "Engagement",
+                global::Gedcom.Tag.Event => "Event",
+                global::Gedcom.Tag.FirstCommunion => "First Communion",
+                global::Gedcom.Tag.Graduation => "Graduation",
+                global::Gedcom.Tag.Immigration => "Immigration",
+                global::Gedcom.Tag.MarriageBann => "Marriage Bann",
+                global::Gedcom.Tag.MarriageContract => "Marriage Contract",
+                global::Gedcom.Tag.MarriageLicense => "Marriage License",
+                global::Gedcom.Tag.Marriage => "Marriage",
+                global::Gedcom.Tag.MarriageSettlement => "Marriage Settlement",
+                global::Gedcom.Tag.Naturalization => "Naturalization",
+                global::Gedcom.Tag.Occupation => "Occupations",
+                global::Gedcom.Tag.Ordinance => "Ordinance",
+                global::Gedcom.Tag.Ordination => "Ordination",
+                global::Gedcom.Tag.Probate => "Probate",
+                global::Gedcom.Tag.Residence => "Residence",
+                global::Gedcom.Tag.Retirement => "Retirement",
+                global::Gedcom.Tag.SealingChild => "Sealing (Child)",
+                global::Gedcom.Tag.SealingSpouse => "Sealing (Spouse)",
+                global::Gedcom.Tag.Will => "Will",
                 _ => Tag,
             };
         }
     }
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(global::Gedcom.Tag.NOTE);
-    public PlaceStructure PlaceStructure => First<PlaceStructure>(global::Gedcom.Tag.PLAC);
-    public string ReligiousAffiliation => _(global::Gedcom.Tag.RELI);
-    public string ResponsibleAgency => _(global::Gedcom.Tag.AGNC);
-    public string RestrictionNotice => _(global::Gedcom.Tag.RESN);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(global::Gedcom.Tag.SOUR);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(global::Gedcom.Tag.Note);
+    public PlaceStructure PlaceStructure => First<PlaceStructure>(global::Gedcom.Tag.Place);
+    public string ReligiousAffiliation => _(global::Gedcom.Tag.Religion);
+    public string ResponsibleAgency => _(global::Gedcom.Tag.Agency);
+    public string RestrictionNotice => _(global::Gedcom.Tag.Restriction);
+    public List<SourceCitation> SourceCitations => List<SourceCitation>(global::Gedcom.Tag.Source);
     public string Tag => Record.Tag;
 
     public static bool IsIndividualEventStructure(Record record)

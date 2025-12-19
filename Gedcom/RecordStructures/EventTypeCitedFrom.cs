@@ -9,7 +9,7 @@ public class EventTypeCitedFrom : RecordStructureBase
     public EventTypeCitedFrom() : base() { }
     public EventTypeCitedFrom(Record record) : base(record) { }
 
-    public string RoleInEvent => _(Tag.ROLE);
+    public string RoleInEvent => _(Tag.Role);
 
     public override string ToString() => $"{Record.Value}, {RoleInEvent}";
 }

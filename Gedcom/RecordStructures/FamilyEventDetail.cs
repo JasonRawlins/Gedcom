@@ -9,7 +9,7 @@ public class FamilyEventDetail : RecordStructureBase
     public FamilyEventDetail() : base() { }
     public FamilyEventDetail(Record record) : base(record) { }
 
-    public EventDetail EventDetail => First<EventDetail>(Tag.EVEN);
+    public EventDetail EventDetail => First<EventDetail>(Tag.Event);
 
     /*
     The FAM record was originally structured to represent families where a male HUSB (p.75) (husband or
@@ -22,8 +22,8 @@ public class FamilyEventDetail : RecordStructureBase
     that the HUSB or WIFE structure points to. The individuals pointed to by the HUSB and WIFE are
     collectively referred to as "partners", "parents" or "spouses".
     */
-    public FamilyPartner Husband => First<FamilyPartner>(Tag.HUSB);
-    public FamilyPartner Wife => First<FamilyPartner>(Tag.WIFE);
+    public FamilyPartner Husband => First<FamilyPartner>(Tag.Husband);
+    public FamilyPartner Wife => First<FamilyPartner>(Tag.Wife);
 
     public override string ToString() => $"{Record.Value}, {Husband.Name}, {Wife.Name}";
 }

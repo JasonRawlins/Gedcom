@@ -9,10 +9,10 @@ public class ChildToFamilyLink : RecordStructureBase
     public ChildToFamilyLink() : base() { }
     public ChildToFamilyLink(Record record) : base(record) { }
 
-    public string AdoptedByWhichParent => _(Tag.ADOP);
-    public string ChildLinkageStatus => _(Tag.STAT);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.NOTE);
-    public string PedigreeLinkageType => _(Tag.PEDI);
+    public string AdoptedByWhichParent => _(Tag.Adoption);
+    public string ChildLinkageStatus => _(Tag.Status);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
+    public string PedigreeLinkageType => _(Tag.Pedigree);
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {PedigreeLinkageType}";

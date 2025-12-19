@@ -9,18 +9,18 @@ public class EventDetail : RecordStructureBase, IEventDetail
     public EventDetail() : base() { }
     public EventDetail(Record record) : base(record) { }
 
-    public AddressStructure AddressStructure => First<AddressStructure>(Tag.ADDR);
-    public string CauseOfEvent => _(Tag.CAUS);
-    public string DateValue => _(Tag.DATE);
-    public string EventOrFactClassification => _(Tag.TYPE);
+    public AddressStructure AddressStructure => First<AddressStructure>(Tag.Address);
+    public string CauseOfEvent => _(Tag.Cause);
+    public string DateValue => _(Tag.Date);
+    public string EventOrFactClassification => _(Tag.Type);
     public GedcomDate GedcomDate => GedcomDate.Parse(DateValue);
-    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.OBJE);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.NOTE);
-    public PlaceStructure PlaceStructure => First<PlaceStructure>(Tag.PLAC);
-    public string ReligiousAffiliation => _(Tag.RELI);
-    public string ResponsibleAgency => _(Tag.AGNC);
-    public string RestrictionNotice => _(Tag.RESN);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.SOUR);
+    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
+    public PlaceStructure PlaceStructure => First<PlaceStructure>(Tag.Place);
+    public string ReligiousAffiliation => _(Tag.Religion);
+    public string ResponsibleAgency => _(Tag.Agency);
+    public string RestrictionNotice => _(Tag.Restriction);
+    public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.Source);
 
     public override string ToString() => $"{Record.Value}, {GedcomDate.DayMonthYear}";
 }

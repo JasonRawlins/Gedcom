@@ -9,18 +9,18 @@ public class Header : RecordStructureBase
     public Header() : base() { }
     public Header(Record record) : base(record) { }
     
-    public CharacterSet CharacterSet => First<CharacterSet>(Tag.CHAR);
-    public string CopyrightGedcomFile => _(Tag.COPR);
-    public string FileName => _(Tag.FILE);
-    public HeaderGedcom Gedcom => First<HeaderGedcom>(Tag.GEDC);
-    public NoteStructure GedcomContentDescription => First<NoteStructure>(Tag.NOTE);
-    public string LanguageOfText => _(Tag.LANG);
-    public string PlaceHierarchy => Record.Records.FirstOrDefault(r => r.Tag.Equals(Tag.PLAC))?.Records.First(r => r.Tag.Equals(Tag.FORM)).Value ?? "";
-    public string ReceivingSystemName => _(Tag.DEST);
-    public HeaderSource Source => First<HeaderSource>(Tag.SOUR);
-    public SubmissionRecord SubmissionRecord => First<SubmissionRecord>(Tag.SUBN);
-    public string Submitter => _(Tag.SUBM);
-    public GedcomDate TransmissionDate => First<GedcomDate>(Tag.DATE);
+    public CharacterSet CharacterSet => First<CharacterSet>(Tag.Character);
+    public string CopyrightGedcomFile => _(Tag.Copyright);
+    public string FileName => _(Tag.File);
+    public HeaderGedcom Gedcom => First<HeaderGedcom>(Tag.Gedcom);
+    public NoteStructure GedcomContentDescription => First<NoteStructure>(Tag.Note);
+    public string LanguageOfText => _(Tag.Language);
+    public string PlaceHierarchy => Record.Records.FirstOrDefault(r => r.Tag.Equals(Tag.Place))?.Records.First(r => r.Tag.Equals(Tag.Format)).Value ?? "";
+    public string ReceivingSystemName => _(Tag.Destination);
+    public HeaderSource Source => First<HeaderSource>(Tag.Source);
+    public SubmissionRecord SubmissionRecord => First<SubmissionRecord>(Tag.Submission);
+    public string Submitter => _(Tag.Submitter);
+    public GedcomDate TransmissionDate => First<GedcomDate>(Tag.Date);
 
     public override string ToString() => $"{Record.Value}, {Submitter}";
 }

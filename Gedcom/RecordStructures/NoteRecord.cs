@@ -9,9 +9,9 @@ public class NoteRecord : RecordStructureBase
     public NoteRecord() : base() { }
     public NoteRecord(Record record) : base(record) { }
 
-    public string AutomatedRecordId => _(Tag.RIN);
-    public ChangeDate ChangeDate => First<ChangeDate>(Tag.CHAN);
-    public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(Tag.REFN);
+    public string AutomatedRecordId => _(Tag.RecordIdNumber);
+    public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
+    public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(Tag.Reference);
 
     public override string ToString() => $"{Record.Value}, {AutomatedRecordId}";
 }

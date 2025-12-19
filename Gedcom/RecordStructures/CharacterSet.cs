@@ -9,7 +9,7 @@ public class CharacterSet : RecordStructureBase
     public CharacterSet() : base() { }
     public CharacterSet(Record record) : base(record) { }
 
-    public string VersionNumber => _(Tag.VERS);
+    public string VersionNumber => _(Tag.Version);
 
     public override string ToString() => $"{Record.Value}, {VersionNumber}";
 }
