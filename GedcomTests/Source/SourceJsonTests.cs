@@ -1,7 +1,6 @@
 ﻿using Gedcom.GedcomWriters;
-using GedcomTests.TestData;
 
-namespace GedcomTests;
+namespace GedcomTests.Source;
 
 [TestClass]
 public class SourceJsonTests

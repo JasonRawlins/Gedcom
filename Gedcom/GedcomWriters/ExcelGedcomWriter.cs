@@ -60,7 +60,7 @@ public class ExcelGedcomWriter : IGedcomWriter
 
         // Hard-coding the path to the template file for development.
         // Once the template.xlsx is complete, this will come from project resources.
-        using var userTemplatePackage = new ExcelPackage(@"C:\temp\GedcomNET\Resources\GedcomNET-template.xlsx");
+        using var userTemplatePackage = new ExcelPackage(new MemoryStream(Properties.Resources.GedcomXlsxTemplate));
         var templateSheet = userTemplatePackage.Workbook.Worksheets["Template"];
         using var excelPackage = new ExcelPackage();
         var targetSheet = excelPackage.Workbook.Worksheets.Add($"{Gedcom.Header.Source.Tree.Name} individuals", templateSheet);

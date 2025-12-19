@@ -1,0 +1,8 @@
+{
+  "format": "json",
+  "input": "C:\\temp\\GedcomNET\\Resources\\GedcomTestTree.ged",
+  "output": "C:\\temp\\GedcomNET\\Resources\\GedcomNET.json",
+  "query": "",
+  "recordType": "fam",
+  "xref": "@F1@"
+}

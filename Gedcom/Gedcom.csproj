@@ -30,5 +30,6 @@
 
 	<ItemGroup>
 	  <Folder Include="bin\Debug\net8.0\Resources\" />
+	  <Folder Include="ResourceFiles\" />
 	</ItemGroup>
 </Project>

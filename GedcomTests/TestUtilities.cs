@@ -1,17 +1,11 @@
 ﻿using Gedcom;
-using Gedcom.CLI;
+using System.Text;
 
 namespace GedcomTests;
 
 public class TestUtilities
 {
     private static readonly string BaseDirectory = @"C:\temp\GedcomNET"; //Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNET.json");
-
-    public static readonly string GedcomFullName = Path.Combine(BaseDirectory, "Resources", "GedcomNET.ged");
-
-    public static readonly string ExcelTemplateFullName = Path.Combine(BaseDirectory, "Resources", "GedcomNET-template.xlsx");
-    //public static readonly string GedcomDirectory = Path.GetDirectoryName(GedcomFullName) ?? "";
-
     public static readonly string ExcelFullName = Path.Combine(BaseDirectory, "TestOutput", "GedcomNET.xlsx");
     public static readonly string HtmlFullName = Path.Combine(BaseDirectory, "TestOutput", "GedcomNET.html");
     public static readonly string JsonFullName = Path.Combine(BaseDirectory, "TestOutput", "GedcomNET.json");
@@ -19,7 +13,7 @@ public class TestUtilities
 
     public static Gedcom.Gedcom CreateGedcom()
     {
-        var gedFileLines = File.ReadAllLines(GedcomFullName); //GedcomNetTreeFullNameEncoding.UTF8.GetString(Properties.Resources.GedcomNET).Split('\n');
+        var gedFileLines = Encoding.UTF8.GetString(Properties.Resources.GedcomTestTree).Split('\n');
         var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
         return new Gedcom.Gedcom(gedcomLines);
     }

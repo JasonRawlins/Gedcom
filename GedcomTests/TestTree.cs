@@ -1,6 +1,6 @@
 ﻿using Gedcom;
 
-namespace GedcomTests.TestData;
+namespace GedcomTests;
 
 public static class TestTree
 {

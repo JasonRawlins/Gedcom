@@ -1,8 +1,9 @@
 ﻿using Gedcom.GedcomWriters;
-using GedcomTests.TestData;
 
-namespace GedcomTests;
+namespace GedcomTests.Repository;
 
+// The use of the word "Repository" in this class refers to a Gedcom "Repository" (REPO) record,
+// not its normal meaning related to source control.
 [TestClass]
 public class RepositoryJsonTests
 {
