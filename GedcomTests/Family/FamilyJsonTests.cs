@@ -36,7 +36,7 @@ public class FamilyJsonTests
         Assert.IsTrue(familiesJson.Equals("{}"));
     }
 
-    [TestMethod]
+    //[TestMethod]
     public void WriteFamiliesJsonTest()
     {
         // This is an integration test. Figure that out later

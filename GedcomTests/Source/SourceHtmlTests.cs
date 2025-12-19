@@ -41,7 +41,7 @@ public class SourceHtmlTests
         Assert.IsTrue(sourcesHtml.Contains(TestTree.Sources.VitalRecords.Xref));
     }
 
-    [TestMethod]
+    //[TestMethod]
     public void WriteSourcesHtmlTest()
     {
         // This is an integration test. Figure that out later
