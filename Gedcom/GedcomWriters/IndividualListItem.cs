@@ -1,17 +1,17 @@
 ﻿using Gedcom.RecordStructures;
 
-namespace Gedcom.CLI;
+namespace Gedcom.GedcomWriters;
 
 public class IndividualListItem(IndividualRecord individualRecord) : IComparable<IndividualListItem>
 {
-    public GedcomDate Birth { get; set; } = individualRecord.Birth.GedcomDate;
-    public string BirthPlace { get; set; } = individualRecord.Birth.PlaceStructure.PlaceName;
-    public GedcomDate Death { get; set; } = individualRecord.Death.GedcomDate;
-    public string DeathPlace { get; set; } = individualRecord.Death.PlaceStructure.PlaceName;
-    public string FullName { get; set; } = individualRecord.FullName;
-    public string Given { get; set; } = individualRecord.Given;
-    public string Surname { get; set; } = individualRecord.Surname;
-    public string Xref { get; set; } = individualRecord.Xref;
+    public GedcomDate Birth { get; } = individualRecord.Birth.GedcomDate;
+    public string BirthPlace { get; } = individualRecord.Birth.PlaceStructure.PlaceName;
+    public GedcomDate Death { get; } = individualRecord.Death.GedcomDate;
+    public string DeathPlace { get; } = individualRecord.Death.PlaceStructure.PlaceName;
+    public string FullName { get; } = individualRecord.FullName;
+    public string Given { get; } = individualRecord.Given;
+    public string Surname { get; } = individualRecord.Surname;
+    public string Xref { get; } = individualRecord.Xref;
     public string XrefId => Xref.Replace("@", "").Replace("I", "");
 
     public int CompareTo(IndividualListItem? other)

@@ -1,13 +1,7 @@
 Current
 -------
 Write GedcomDate tests.
-Create test family tree in Ancestry
-	Four generations
-	Second cousins
-	Multiple cultures
-	Non-nuclear families (e.g. adoption, polygamy, divorce, gay, etc.)
-	Incomplete families (e.g. missing parents)
-	
+
 
 
 Backlog
