@@ -29,7 +29,27 @@ public class Gedcom : RecordStructureBase
 
     // Family (FAM)
     public FamilyRecord GetFamilyRecord(string xref) => GetRecord<FamilyRecord>(xref);
-    public FamilyRecord GetChildParentsFamilyRecord(string childXref) => GetFamilyRecords().First(fr => fr.Children.Contains(childXref));
+
+    // Given a child, find his or her parents.
+    public FamilyRecord GetFamilyRecordOfParents(string childXref)
+    {
+        var parentsFamily = GetFamilyRecords().FirstOrDefault(fr => fr.Children.Contains(childXref));
+
+        if (parentsFamily == null)
+            return Empty<FamilyRecord>();
+
+        return parentsFamily;
+    }
+
+    public FamilyRecord GetFamilyRecordWhereTheIndividualIsAParent(string individualXref)
+    {
+        var family = GetFamilyRecords().FirstOrDefault(fr => fr.Husband == individualXref || fr.Wife == individualXref);
+
+        if (family == null)
+            return Empty<FamilyRecord>();
+
+        return family;
+    }
 
     public List<FamilyRecord> GetFamilyRecords(string query = "") => GetRecords<FamilyRecord>(Tag.Family, query);
 

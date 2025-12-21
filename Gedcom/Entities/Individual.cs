@@ -4,7 +4,7 @@ namespace Gedcom.Entities
 {
     public class Individual(IndividualRecord individualRecord)
     {
-        private IndividualRecord IndividualRecord { get; } = individualRecord;
+        internal IndividualRecord IndividualRecord { get; } = individualRecord;
 
         public List<Individual> Children { get; set; } = [];
         public string Given => IndividualRecord.Given;

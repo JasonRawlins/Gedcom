@@ -4,7 +4,7 @@ namespace Gedcom.Entities;
 
 public class Family(FamilyRecord familyRecord)
 {
-    private FamilyRecord FamilyRecord { get; } = familyRecord;
+    internal FamilyRecord FamilyRecord { get; } = familyRecord;
 
     public List<Individual> Children { get; set; } = [];
     public Individual? Husband { get; set; }
