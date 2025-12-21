@@ -29,6 +29,8 @@ public class Gedcom : RecordStructureBase
 
     // Family (FAM)
     public FamilyRecord GetFamilyRecord(string xref) => GetRecord<FamilyRecord>(xref);
+    public FamilyRecord GetChildParentsFamilyRecord(string childXref) => GetFamilyRecords().First(fr => fr.Children.Contains(childXref));
+
     public List<FamilyRecord> GetFamilyRecords(string query = "") => GetRecords<FamilyRecord>(Tag.Family, query);
 
     // Individual (INDI)
