@@ -13,10 +13,10 @@ public class RepositoryRecord : RecordStructureBase, IAddressStructure
     public List<string> AddressFaxNumbers => ListValues(Tag.Facimilie);
     public AddressStructure AddressStructure => First<AddressStructure>(Tag.Address);
     public List<string> AddressWebPages => ListValues(Tag.Web);
-    public string AutomatedRecordId => _(Tag.RecordIdNumber);
+    public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
     public CallNumber CallNumber => First<CallNumber>(Tag.CallNumber);
     public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
-    public string Name => _(Tag.Name);
+    public string Name => GetValue(Tag.Name);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
     public List<string> PhoneNumbers => ListValues(Tag.Phone);
     public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(Tag.Reference);

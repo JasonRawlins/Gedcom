@@ -10,7 +10,7 @@ public class AssociationStructure : RecordStructureBase
     public AssociationStructure(Record record) : base(record) { }
 
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
-    public string RelationIsDescriptor => _(Tag.Relationship);
+    public string RelationIsDescriptor => GetValue(Tag.Relationship);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.Source);
 
     public override string ToString() => $"{Record.Value}, {RelationIsDescriptor}";

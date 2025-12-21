@@ -9,9 +9,9 @@ public class MultimediaRecord : RecordStructureBase
     public MultimediaRecord() : base() { }
     public MultimediaRecord(Record record) : base(record) { }
 
-    public string AutomatedRecordId => _(Tag.RecordIdNumber);
+    public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
     public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
-    public string DescriptiveTitle => _(Tag.Title);
+    public string DescriptiveTitle => GetValue(Tag.Title);
     public List<string> MultimediaFileReferenceNumbers => List(r => r.Tag.Equals(Tag.File)).Select(r => r.Value).ToList();
     public MultimediaFormat MultimediaFormat => First<MultimediaFormat>(Tag.Format);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);

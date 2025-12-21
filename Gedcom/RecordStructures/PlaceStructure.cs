@@ -11,7 +11,7 @@ public class PlaceStructure : RecordStructureBase
 
     public Map Map => First<Map>(Tag.Map);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
-    public string PlaceHierarchy => _(Tag.Format);
+    public string PlaceHierarchy => GetValue(Tag.Format);
     public string PlaceName => Record.Value;
     public List<NameVariation> PlacePhoneticVariations => List<NameVariation>(Tag.Phonetic);
     public List<NameVariation> PlaceRomanizedVariations => List<NameVariation>(Tag.Romanized);

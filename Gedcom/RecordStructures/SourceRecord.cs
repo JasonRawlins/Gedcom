@@ -9,8 +9,8 @@ public class SourceRecord : RecordStructureBase
     public SourceRecord() : base() { }
     public SourceRecord(Record record) : base(record) { }
 
-    public string AutomatedRecordId => _(Tag.RecordIdNumber);
-    public string CallNumber => _(Tag.CallNumber);
+    public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
+    public string CallNumber => GetValue(Tag.CallNumber);
     public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);

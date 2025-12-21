@@ -11,9 +11,9 @@ public class HeaderSource : RecordStructureBase
 
     public HeaderCorporation Corporation => First<HeaderCorporation>(Tag.Corporate);
     public HeaderData Data => First<HeaderData>(Tag.Data);
-    public string NameOfProduct => _(Tag.Name);
+    public string NameOfProduct => GetValue(Tag.Name);
     public HeaderTree Tree => First<HeaderTree>(ExTag._TREE);
-    public string Version => _(Tag.Version);
+    public string Version => GetValue(Tag.Version);
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {NameOfProduct}, {Version}";

@@ -9,14 +9,14 @@ public class AddressStructure : RecordStructureBase
     public AddressStructure() { }
     public AddressStructure(Record record) : base(record) { }
 
-    public string AddressCity => _(Tag.City);
-    public string AddressCountry => _(Tag.Country);
+    public string AddressCity => GetValue(Tag.City);
+    public string AddressCountry => GetValue(Tag.Country);
     public string AddressLine => Record.Value;
-    public string AddressLine1 => _(Tag.Address1);
-    public string AddressLine2 => _(Tag.Address2);
-    public string AddressLine3 => _(Tag.Address3);
-    public string AddressPostCode => _(Tag.PostalCode);
-    public string AddressState => _(Tag.State);
+    public string AddressLine1 => GetValue(Tag.Address1);
+    public string AddressLine2 => GetValue(Tag.Address2);
+    public string AddressLine3 => GetValue(Tag.Address3);
+    public string AddressPostCode => GetValue(Tag.PostalCode);
+    public string AddressState => GetValue(Tag.State);
 
     public override string ToString() => $"{Record.Value}, {AddressLine}";
 }

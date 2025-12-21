@@ -14,8 +14,7 @@ public class RecordStructureBase
     public RecordStructureBase(Record record) => Record = record;
     internal void SetRecord(Record record) => Record = record;
 
-    // The method "_" finds a child record value by tag name. 
-    protected string _(string tag) => First(tag).Value;
+    protected string GetValue(string tag) => First(tag).Value;
     protected Record First(string tag) => Record.Records.FirstOrDefault(r => r.Tag.Equals(tag)) ?? Record.Empty;
     protected Record Single(Func<Record, bool> predicate) => Record.Records.SingleOrDefault(predicate) ?? Record.Empty;
     protected List<Record> List(Func<Record, bool> predicate) => Record.Records.Where(predicate).ToList();

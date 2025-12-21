@@ -9,13 +9,13 @@ public class SubmissionRecord : RecordStructureBase
     public SubmissionRecord() : base() { }
     public SubmissionRecord(Record record) : base(record) { }
 
-    public string Submitter => _(Tag.Submitter);
-    public string NameOfFamilyFile => _(Tag.FamilyFile);
-    public string TempleCode => _(Tag.Temple);
-    public string GenerationsOfAncestors => _(Tag.Ancestors);
-    public string GenerationsOfDescendants => _(Tag.Descendants);
-    public string OrdinanceProcessFlag => _(Tag.Ordinance);
-    public string AutomatedRecordId => _(Tag.RecordIdNumber);
+    public string Submitter => GetValue(Tag.Submitter);
+    public string NameOfFamilyFile => GetValue(Tag.FamilyFile);
+    public string TempleCode => GetValue(Tag.Temple);
+    public string GenerationsOfAncestors => GetValue(Tag.Ancestors);
+    public string GenerationsOfDescendants => GetValue(Tag.Descendants);
+    public string OrdinanceProcessFlag => GetValue(Tag.Ordinance);
+    public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
     public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
     public string Xref => Record.Value;

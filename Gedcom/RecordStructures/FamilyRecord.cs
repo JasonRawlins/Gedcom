@@ -9,21 +9,21 @@ public class FamilyRecord : RecordStructureBase
     public FamilyRecord() : base() { }
     public FamilyRecord(Record record) : base(record) { }
 
-    public string AdoptedByWhichParent => _(Tag.Adoption);
-    public string AutomatedRecordNumber => _(Tag.RecordIdNumber);
+    public string AdoptedByWhichParent => GetValue(Tag.Adoption);
+    public string AutomatedRecordNumber => GetValue(Tag.RecordIdNumber);
     public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
     public List<string> Children => List(r => r.Tag.Equals(Tag.Child)).Select(r => r.Value).ToList();
-    public string CountOfChildren => _(Tag.ChildrenCount);
+    public string CountOfChildren => GetValue(Tag.ChildrenCount);
     public List<FamilyEventStructure> FamilyEventStructures => List<FamilyEventStructure>(Tag.Family);
-    public string Husband => _(Tag.Husband);
+    public string Husband => GetValue(Tag.Husband);
     // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
-    public string RestrictionNotice => _(Tag.Restriction);
+    public string RestrictionNotice => GetValue(Tag.Restriction);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.Source);
-    public string Submitter => _(Tag.Submitter);
+    public string Submitter => GetValue(Tag.Submitter);
     public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(Tag.Reference);
-    public string Wife => _(Tag.Wife);
+    public string Wife => GetValue(Tag.Wife);
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {Husband} and {Wife} with {Children.Count} children";

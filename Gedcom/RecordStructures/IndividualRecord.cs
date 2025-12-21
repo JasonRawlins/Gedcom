@@ -11,9 +11,9 @@ public class IndividualRecord : RecordStructureBase
 
     public List<string> Aliases => List(r => r.Tag.Equals(Tag.Alias)).Select(r => r.Value).ToList();
     public List<string> AncestorInterests => List(r => r.Tag.Equals(Tag.AncesInterest)).Select(r => r.Value).ToList();
-    public string AncestralFileNumber => _(Tag.AncestralFileNumber);
+    public string AncestralFileNumber => GetValue(Tag.AncestralFileNumber);
     public List<AssociationStructure> AssociationStructures => List<AssociationStructure>(Tag.Associates);
-    public string AutomatedRecordId => _(Tag.RecordIdNumber);
+    public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
     public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
     public List<ChildToFamilyLink> ChildToFamilyLinks => List<ChildToFamilyLink>(Tag.FamilyChild);
     public List<string> DescendantInterests => List(r => r.Tag.Equals(Tag.DescendantInterest)).Select(r => r.Value).ToList();
@@ -22,13 +22,13 @@ public class IndividualRecord : RecordStructureBase
     public List<LdsIndividualOrdinance> LdsIndividualOrdinances => List<LdsIndividualOrdinance>(Tag.Ordinance);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
-    public string PermanentRecordFileNumber => _(Tag.RecordFileNumber);
+    public string PermanentRecordFileNumber => GetValue(Tag.RecordFileNumber);
     public List<PersonalNameStructure> PersonalNameStructures => List<PersonalNameStructure>(Tag.Name);
-    public string RestrictionNotice => _(Tag.Restriction);
-    public string SexValue => _(Tag.Sex);
+    public string RestrictionNotice => GetValue(Tag.Restriction);
+    public string SexValue => GetValue(Tag.Sex);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.Source);
     public List<SpouseToFamilyLink> SpouseToFamilyLinks => List<SpouseToFamilyLink>(Tag.FamilySpouse);
-    public string Submitter => _(Tag.Submission);
+    public string Submitter => GetValue(Tag.Submission);
     public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(Tag.Reference);
     public string Xref => Record.Value;
 

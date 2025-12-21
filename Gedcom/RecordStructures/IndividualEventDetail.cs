@@ -9,7 +9,7 @@ public class IndividualEventDetail : RecordStructureBase
     public IndividualEventDetail() : base() { }
     public IndividualEventDetail(Record record) : base(record) { }
 
-    public string AgeAtEvent => _(Tag.Age);
+    public string AgeAtEvent => GetValue(Tag.Age);
 
     public override string ToString() => $"{Record.Value}, {AgeAtEvent}";
 }

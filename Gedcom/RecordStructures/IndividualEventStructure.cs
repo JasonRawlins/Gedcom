@@ -10,10 +10,10 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
     public IndividualEventStructure(Record record) : base(record) { }
     public ChildToFamilyLink ChildToFamilyLink => First<ChildToFamilyLink>(global::Gedcom.Tag.FamilyChild);
     public AddressStructure AddressStructure => First<AddressStructure>(global::Gedcom.Tag.Address);
-    public string AgeAtEvent => _(global::Gedcom.Tag.Age);
-    public string CauseOfEvent => _(global::Gedcom.Tag.Cause);
-    public string DateValue => _(global::Gedcom.Tag.Date);
-    public string EventOrFactClassification => _(global::Gedcom.Tag.Type);
+    public string AgeAtEvent => GetValue(global::Gedcom.Tag.Age);
+    public string CauseOfEvent => GetValue(global::Gedcom.Tag.Cause);
+    public string DateValue => GetValue(global::Gedcom.Tag.Date);
+    public string EventOrFactClassification => GetValue(global::Gedcom.Tag.Type);
     public GedcomDate GedcomDate => GedcomDate.Parse(DateValue);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(global::Gedcom.Tag.Object);
     public string Name
@@ -66,9 +66,9 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
     }
     public List<NoteStructure> NoteStructures => List<NoteStructure>(global::Gedcom.Tag.Note);
     public PlaceStructure PlaceStructure => First<PlaceStructure>(global::Gedcom.Tag.Place);
-    public string ReligiousAffiliation => _(global::Gedcom.Tag.Religion);
-    public string ResponsibleAgency => _(global::Gedcom.Tag.Agency);
-    public string RestrictionNotice => _(global::Gedcom.Tag.Restriction);
+    public string ReligiousAffiliation => GetValue(global::Gedcom.Tag.Religion);
+    public string ResponsibleAgency => GetValue(global::Gedcom.Tag.Agency);
+    public string RestrictionNotice => GetValue(global::Gedcom.Tag.Restriction);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(global::Gedcom.Tag.Source);
     public string Tag => Record.Tag;
 

@@ -10,7 +10,7 @@ public class HeaderData : RecordStructureBase
     public HeaderData(Record record) : base(record) { }
 
     public NoteStructure CopyrightSourceData => First<NoteStructure>(Tag.Copyright);
-    public string PublicationDate => _(Tag.Date);
+    public string PublicationDate => GetValue(Tag.Date);
 
     public override string ToString() => $"{Record.Value}, {PublicationDate}";
 }

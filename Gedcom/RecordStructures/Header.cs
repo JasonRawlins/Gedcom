@@ -10,16 +10,16 @@ public class Header : RecordStructureBase
     public Header(Record record) : base(record) { }
     
     public CharacterSet CharacterSet => First<CharacterSet>(Tag.Character);
-    public string CopyrightGedcomFile => _(Tag.Copyright);
-    public string FileName => _(Tag.File);
+    public string CopyrightGedcomFile => GetValue(Tag.Copyright);
+    public string FileName => GetValue(Tag.File);
     public HeaderGedcom Gedcom => First<HeaderGedcom>(Tag.Gedcom);
     public NoteStructure GedcomContentDescription => First<NoteStructure>(Tag.Note);
-    public string LanguageOfText => _(Tag.Language);
+    public string LanguageOfText => GetValue(Tag.Language);
     public string PlaceHierarchy => Record.Records.FirstOrDefault(r => r.Tag.Equals(Tag.Place))?.Records.First(r => r.Tag.Equals(Tag.Format)).Value ?? "";
-    public string ReceivingSystemName => _(Tag.Destination);
+    public string ReceivingSystemName => GetValue(Tag.Destination);
     public HeaderSource Source => First<HeaderSource>(Tag.Source);
     public SubmissionRecord SubmissionRecord => First<SubmissionRecord>(Tag.Submission);
-    public string Submitter => _(Tag.Submitter);
+    public string Submitter => GetValue(Tag.Submitter);
     public GedcomDate TransmissionDate => First<GedcomDate>(Tag.Date);
 
     public override string ToString() => $"{Record.Value}, {Submitter}";

@@ -11,7 +11,7 @@ public class SourceRecordData : RecordStructureBase
 
     public List<SourceRecordEvent> EventsRecorded => List<SourceRecordEvent>(Tag.Event);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
-    public string ResponsibleAgency => _(Tag.Agency);
+    public string ResponsibleAgency => GetValue(Tag.Agency);
 
     public override string ToString() => $"{Record.Value}, {ResponsibleAgency}";
 }

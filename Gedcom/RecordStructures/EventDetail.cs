@@ -10,16 +10,16 @@ public class EventDetail : RecordStructureBase, IEventDetail
     public EventDetail(Record record) : base(record) { }
 
     public AddressStructure AddressStructure => First<AddressStructure>(Tag.Address);
-    public string CauseOfEvent => _(Tag.Cause);
-    public string DateValue => _(Tag.Date);
-    public string EventOrFactClassification => _(Tag.Type);
+    public string CauseOfEvent => GetValue(Tag.Cause);
+    public string DateValue => GetValue(Tag.Date);
+    public string EventOrFactClassification => GetValue(Tag.Type);
     public GedcomDate GedcomDate => GedcomDate.Parse(DateValue);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
     public PlaceStructure PlaceStructure => First<PlaceStructure>(Tag.Place);
-    public string ReligiousAffiliation => _(Tag.Religion);
-    public string ResponsibleAgency => _(Tag.Agency);
-    public string RestrictionNotice => _(Tag.Restriction);
+    public string ReligiousAffiliation => GetValue(Tag.Religion);
+    public string ResponsibleAgency => GetValue(Tag.Agency);
+    public string RestrictionNotice => GetValue(Tag.Restriction);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.Source);
 
     public override string ToString() => $"{Record.Value}, {GedcomDate.DayMonthYear}";
