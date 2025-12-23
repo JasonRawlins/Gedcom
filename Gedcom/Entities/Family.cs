@@ -4,7 +4,7 @@ namespace Gedcom.Entities;
 
 public class Family(FamilyRecord familyRecord)
 {
-    internal FamilyRecord FamilyRecord { get; } = familyRecord;
+    private FamilyRecord FamilyRecord { get; } = familyRecord;
 
     public List<Individual> Children { get; set; } = [];
     public Individual? Husband { get; set; }
@@ -15,6 +15,7 @@ public class Family(FamilyRecord familyRecord)
     {
         var husbandName = "Unknown father";
         var wifeName = "Unknown mother";
+        var childrenList = " with no children";
 
         if (Husband != null)
         {
@@ -26,6 +27,11 @@ public class Family(FamilyRecord familyRecord)
             wifeName = $"{Wife.Given} {Wife.Surname}";
         }
 
-        return $"{husbandName} and {wifeName} ({Xref}) with {string.Join(", ", Children)}";
+        if (Children.Count > 0)
+        {
+            childrenList = $" with children {string.Join(", ", Children)}";
+        }
+
+        return $"{husbandName} and {wifeName} ({Xref}){childrenList}";
     }
 }
