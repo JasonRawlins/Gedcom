@@ -22,8 +22,19 @@ public static class TestTree
             get
             {
                 var individual = new TestIndividual("@I272718947188@", "Fiona", "Douglas");
-                individual.Events.Add(new(Tag.Birth, "7 Jul 1930", "Wales"));
+                individual.Events.Add(new(Tag.Birth, "7 Jul 1930", "Scotland"));
                 individual.Events.Add(new(Tag.Death, "7 Jul 1990", "Salt Lake City, Salt Lake, Utah, USA"));
+                return individual;
+            }
+        }
+
+        public static TestIndividual GarethDavis
+        {
+            get
+            {
+                var individual = new TestIndividual("@I272721732639@", "Garet", "Davis");
+                individual.Events.Add(new(Tag.Birth, "7 Jul 1934", "Wales"));
+                individual.Events.Add(new(Tag.Death, "7 Jul 1994", "Salt Lake City, Salt Lake, Utah, USA"));
                 return individual;
             }
         }
@@ -46,6 +57,17 @@ public static class TestTree
                 var individual = new TestIndividual("@I272718953593@", "James", "Smith");
                 individual.Events.Add(new(Tag.Birth, "8 Aug 1960", "England"));
                 individual.Events.Add(new(Tag.Death, "8 Aug 2020", "Salt Lake City, Salt Lake, Utah, USA"));
+                return individual;
+            }
+        }
+
+        public static TestIndividual MargaretDavis
+        {
+            get
+            {
+                var individual = new TestIndividual("@I272721726882@", "Margaret", "Davis");
+                individual.Events.Add(new(Tag.Birth, "7 Jul 1932", "Wales"));
+                individual.Events.Add(new(Tag.Death, "7 Jul 1992", "Salt Lake City, Salt Lake, Utah, USA"));
                 return individual;
             }
         }

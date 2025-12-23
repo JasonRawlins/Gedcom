@@ -13,8 +13,8 @@ public class TestUtilities
 
     public static Gedcom.Gedcom CreateGedcom()
     {
-        var gedFileLines = Encoding.UTF8.GetString(Properties.Resources.GedcomTestTree).Split('\n');
-        var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
+        var gedFileLines = Encoding.UTF8.GetString(Properties.Resources.GedcomNetTestTree).Split('\n');
+        var gedcomLines = gedFileLines.Where(l => !string.IsNullOrEmpty(l)).Select(GedcomLine.Parse).ToList();
         return new Gedcom.Gedcom(gedcomLines);
     }
 

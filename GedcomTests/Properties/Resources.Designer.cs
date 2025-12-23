@@ -63,9 +63,9 @@ namespace GedcomTests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] GedcomTestTree {
+        internal static byte[] GedcomNetTestTree {
             get {
-                object obj = ResourceManager.GetObject("GedcomTestTree", resourceCulture);
+                object obj = ResourceManager.GetObject("GedcomNetTestTree", resourceCulture);
                 return ((byte[])(obj));
             }
         }
