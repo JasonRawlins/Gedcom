@@ -57,11 +57,13 @@ public class Gedcom : RecordStructureBase
     public IndividualRecord GetIndividualRecord(string xref) => GetRecord<IndividualRecord>(xref);
     public List<IndividualRecord> GetIndividualRecords(string query = "") => GetRecords<IndividualRecord>(Tag.Individual, query);
 
-    //public MultimediaRecord GetMultimediaRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(C.OBJE) && r.Value.Equals(xref)));
-    //public List<MultimediaRecord> GetMultimediaRecords() => Record.Records.Where(r => r.Tag.Equals(C.OBJE)).Select(r => new MultimediaRecord(r)).ToList();
+    // Multimedia (OBJE)
+    public MultimediaRecord GetMultimediaRecord(string xref) => GetRecord<MultimediaRecord>(xref);
+    public List<MultimediaRecord> GetMultimediaRecords() => GetRecords<MultimediaRecord>(Tag.Object);
 
-    //public NoteRecord GetNoteRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(C.NOTE) && r.Value.Equals(xref)));
-    //public List<NoteRecord> GetNoteRecords() => Record.Records.Where(r => r.Tag.Equals(C.NOTE)).Select(r => new NoteRecord(r)).ToList();
+    // Note (NOTE)
+    public NoteRecord GetNoteRecord(string xref) => GetRecord<NoteRecord>(xref);
+    public List<NoteRecord> GetNoteRecords() => GetRecords<NoteRecord>(Tag.Note);
 
     // Repository (REPO)
     public RepositoryRecord GetRepositoryRecord(string xref) => GetRecord<RepositoryRecord>(xref);
@@ -72,8 +74,10 @@ public class Gedcom : RecordStructureBase
     public List<SourceRecord> GetSourceRecords(string query = "") => GetRecords<SourceRecord>(Tag.Source, query);
 
     // Submitter (SUBM) TODO:
+    public SubmitterRecord GetSubmitterRecord(string xref) => GetRecord<SubmitterRecord>(xref);
 
-    private T GetRecord<T>(string xref) where T : RecordStructureBase, new() => CreateRecord<T>(Single(r => r.Value.Equals(xref)));
+    private T GetRecord<T>(string xref) where T : RecordStructureBase, new() => 
+        CreateRecord<T>(Single(r => r.Value.Equals(xref) && r.Level == 0 && r.Tag != Tag.Header && r.Tag != Tag.Trailer));
 
     private List<T> GetRecords<T>(string tag, string query = "") where T : RecordStructureBase, new()
     {
@@ -91,8 +95,6 @@ public class Gedcom : RecordStructureBase
         return dynamic;
     }
 
-    public SubmitterRecord GetSubmitterRecord(string xref) => new(Record.Records.First(r => r.Tag.Equals(Tag.Submitter) && r.Value.Equals(xref)));
-    public List<SubmitterRecord> GetSubmitterRecords() => Record.Records.Where(r => r.Tag.Equals(Tag.Submitter)).Select(r => new SubmitterRecord(r)).ToList();
 
     // The explanation of this function is at the end of the file. 
     public static List<List<GedcomLine>> GetGedcomLinesForLevel(int level, List<GedcomLine> gedcomLines)

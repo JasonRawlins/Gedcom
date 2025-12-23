@@ -1,4 +1,5 @@
 ﻿using Gedcom.Entities;
+using Gedcom.RecordStructures;
 
 namespace Gedcom;
 
@@ -6,12 +7,11 @@ public class FamilyManager(Gedcom gedcom)
 {
     private readonly Gedcom Gedcom = gedcom;
     private readonly Dictionary<string, Individual> IndividualsCache = [];
+    private readonly Dictionary<string, Family> FamilyCache = [];
 
-    private Individual? GetOrCreateIndividual(string individualXref)
+    private Individual GetOrCreateIndividual(string individualXref)
     {
         var individualRecord = Gedcom.GetIndividualRecord(individualXref);
-        if (individualRecord.IsEmpty) 
-            return null;
 
         if (IndividualsCache.TryGetValue(individualXref, out var exisitingIndividual))
             return exisitingIndividual;
@@ -22,9 +22,34 @@ public class FamilyManager(Gedcom gedcom)
         return newIndividual;
     }
 
+    private Family GetOrCreateFamily(string familyXref)
+    {
+        if (FamilyCache.TryGetValue(familyXref, out var exisitingFamily))
+            return exisitingFamily;
+
+        var newFamilyRecord = Gedcom.GetFamilyRecord(familyXref);
+        var newFamily = new Family(newFamilyRecord);
+
+        var husbandIndividualRecord = Gedcom.GetIndividualRecord(newFamilyRecord.Husband);
+        if (!husbandIndividualRecord.IsEmpty)
+        {
+            newFamily.Husband = GetOrCreateIndividual(husbandIndividualRecord.Xref);
+        }
+
+        var wifeIndividualRecord = Gedcom.GetIndividualRecord(newFamilyRecord.Wife);
+        if (!wifeIndividualRecord.IsEmpty)
+        {
+            newFamily.Wife = GetOrCreateIndividual(wifeIndividualRecord.Xref);
+        }
+
+        FamilyCache[familyXref] = newFamily;
+
+        return newFamily;
+    }
+
     public Family CreateFamily(string familyXref, int generationsOfAncestors, int generationsOfDescendants)
     {
-        var family = CreateFamilyWithHusbandAndWife(familyXref);
+        var family = GetOrCreateFamily(familyXref);
 
         if (family.Husband != null)
         { 
@@ -41,26 +66,6 @@ public class FamilyManager(Gedcom gedcom)
         return family;
     }
 
-    private Family CreateFamilyWithHusbandAndWife(string familyXref)
-    {
-        var familyRecord = Gedcom.GetFamilyRecord(familyXref);
-        var family = new Family(familyRecord);
-
-        var husbandIndividualRecord = Gedcom.GetIndividualRecord(familyRecord.Husband);
-        if (!husbandIndividualRecord.IsEmpty)
-        {
-            family.Husband = GetOrCreateIndividual(husbandIndividualRecord.Xref);
-        }
-
-        var wifeIndividualRecord = Gedcom.GetIndividualRecord(familyRecord.Wife);
-        if (!wifeIndividualRecord.IsEmpty)
-        {
-            family.Wife = GetOrCreateIndividual(wifeIndividualRecord.Xref);
-        }
-
-        return family;
-    }
-
     private void LoadAncestors(Individual individual, int generationsOfAncestors)
     {
         if (generationsOfAncestors == 0)
@@ -70,7 +75,7 @@ public class FamilyManager(Gedcom gedcom)
 
         if (!parentsFamilyRecord.IsEmpty)
         {
-            var parentsFamily = CreateFamilyWithHusbandAndWife(parentsFamilyRecord.Xref);
+            var parentsFamily = GetOrCreateFamily(parentsFamilyRecord.Xref);
             individual.Parents = parentsFamily;
 
             if (parentsFamily.Husband != null)
@@ -108,7 +113,7 @@ public class FamilyManager(Gedcom gedcom)
             var childAsParentFamilyRecord = Gedcom.GetFamilyRecordWhereTheIndividualIsAParent(child.Xref);
             if (!childAsParentFamilyRecord.IsEmpty)
             {
-                var childAsParentFamily = CreateFamilyWithHusbandAndWife(childAsParentFamilyRecord.Xref);
+                var childAsParentFamily = GetOrCreateFamily(childAsParentFamilyRecord.Xref);
                 LoadDescendants(childAsParentFamily, generationsOfDescendants - 1);
             }
         }

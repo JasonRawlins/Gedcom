@@ -26,7 +26,12 @@ public class FamilyRecord : RecordStructureBase
     public string Wife => GetValue(Tag.Wife);
     public string Xref => Record.Value;
 
-    public override string ToString() => $"{Record.Value}, {Husband} and {Wife} with {Children.Count} children";
+    public override string ToString()
+    {
+        var childrenCountText = Children.Count == 1 ? "child" : "children";
+
+        return $"{Record.Value}, {Husband} and {Wife} with {Children.Count} {childrenCountText}";
+    }
 }
 
 internal class FamilyRecordJsonConverter : JsonConverter<FamilyRecord>
