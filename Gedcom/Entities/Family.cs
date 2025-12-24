@@ -11,6 +11,14 @@ public class Family(FamilyRecord familyRecord)
     public Individual? Wife { get; set; }
     public string Xref => FamilyRecord.Xref;
 
+    public void AddChild(Individual child)
+    {
+        if (!Children.Contains(child))
+        {
+            Children.Add(child);
+        }
+    }
+
     public override string ToString()
     {
         var husbandName = "Unknown father";

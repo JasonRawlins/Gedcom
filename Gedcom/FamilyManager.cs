@@ -108,7 +108,18 @@ public class FamilyManager(Gedcom gedcom)
         }
     }
 
-    private void LoadDescendants(Family family, int generationsOfDescendants)
+    public void LoadDescendants(Individual individual, int generationsOfDescendants)
+    {
+        if (generationsOfDescendants == 0)
+            return;
+
+        var familyRecord = Gedcom.GetFamilyRecordWhereTheIndividualIsAParent(individual.Xref);
+        var family = GetOrCreateFamily(familyRecord.Xref);
+
+        LoadDescendants(family, 1);
+    }
+
+    public void LoadDescendants(Family family, int generationsOfDescendants)
     {
         if (generationsOfDescendants == 0)
             return;
@@ -122,9 +133,9 @@ public class FamilyManager(Gedcom gedcom)
             if (child == null)
                 continue;
 
-            family.Husband?.Children.Add(child);
-            family.Wife?.Children.Add(child);
-            family.Children.Add(child);
+            family.Husband?.AddChild(child);
+            family.Wife?.AddChild(child);
+            family.AddChild(child);
             child.Parents = family;
 
             var childAsParentFamilyRecord = Gedcom.GetFamilyRecordWhereTheIndividualIsAParent(child.Xref);

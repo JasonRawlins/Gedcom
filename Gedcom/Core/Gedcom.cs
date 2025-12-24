@@ -33,6 +33,7 @@ public class Gedcom : RecordStructureBase
     // Given a child, find his or her parents.
     public FamilyRecord GetFamilyRecordOfParents(string childXref)
     {
+        var familyRecords = GetFamilyRecords();
         var parentsFamily = GetFamilyRecords().FirstOrDefault(fr => fr.Children.Contains(childXref));
 
         if (parentsFamily == null)

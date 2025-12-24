@@ -131,9 +131,24 @@ public class FamilyTests
     {
         var gedcom = TestUtilities.CreateGedcom();
         var familyManager = new Gedcom.FamilyManager(gedcom);
-        var family = familyManager.CreateFamily(TestFamilies.AnxinZhouAndMargaretDavis.Xref, 0, 0);
+        var sarahDavisFamily = familyManager.CreateFamily(TestFamilies.JamesSmithAndSaraDavis.Xref, 1, 0);
+        var sarahDavis = sarahDavisFamily.Wife!;
 
-        // Couple should be present
+        // Couple should be present.
+        Assert.AreEqual(TestIndividuals.JamesSmith.Xref, sarahDavisFamily.Husband!.Xref);
+        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, sarahDavisFamily.Wife!.Xref);
 
+        // Father should be present.
+        var fatherDylanDavis = sarahDavis.Parents!.Husband!;
+        familyManager.LoadSiblings(fatherDylanDavis);
+
+        // Aunt should be present.
+        var auntMargaretDavis = fatherDylanDavis.Siblings.Single(s => s.Xref == TestIndividuals.MargaretDavis.Xref);
+        familyManager.LoadDescendants(auntMargaretDavis, 1);
+
+        // First cousin should be present.
+        var cousinXiaohuiZhou = auntMargaretDavis.Children.FirstOrDefault(c => c.Xref == TestIndividuals.XiaohuiZhou.Xref);
+
+        Assert.IsNotNull(cousinXiaohuiZhou);
     }
 }
