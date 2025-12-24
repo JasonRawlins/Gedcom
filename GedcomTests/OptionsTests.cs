@@ -1,5 +1,6 @@
 ﻿using Gedcom;
 using Gedcom.CLI;
+using Gedcom.Core;
 
 namespace GedcomTests;
 

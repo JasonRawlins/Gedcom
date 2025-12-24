@@ -1,4 +1,5 @@
-﻿using Gedcom.GedcomWriters;
+﻿using Gedcom.Core;
+using Gedcom.GedcomWriters;
 using GedcomTests.TestEntities;
 
 namespace GedcomTests.Individual;
@@ -11,7 +12,7 @@ public class IndividualJsonTests
     [TestMethod]
     public void ExportIndividualJsonTest()
     {
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
+        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.JSON);
         var individualJson = jsonGedcomWriter.GetIndividual(TestIndividuals.SaraDavis.Xref);
 
         Assert.IsTrue(individualJson.Contains(TestIndividuals.SaraDavis.Xref) &&
@@ -26,7 +27,7 @@ public class IndividualJsonTests
     [TestMethod]
     public void ExportIndividualsJsonTest()
     {
-        var jsonGedcomWriter =  GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
+        var jsonGedcomWriter =  GedcomWriter.Create(TestUtilities.CreateGedcom(), C.JSON);
         var individualsJson = jsonGedcomWriter.GetIndividuals();
 
         Assert.IsTrue(individualsJson.Contains(TestIndividuals.SaraDavis.Xref) &&
@@ -41,7 +42,7 @@ public class IndividualJsonTests
     [TestMethod]
     public void NonExistingIndividualJsonTest()
     {
-        var jsonGedcomWriter =  GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
+        var jsonGedcomWriter =  GedcomWriter.Create(TestUtilities.CreateGedcom(), C.JSON);
         var individualJson = jsonGedcomWriter.GetIndividual(TestConstants.InvalidXref);
 
         Assert.IsTrue(individualJson.Equals("{}"));
@@ -63,7 +64,7 @@ public class IndividualJsonTests
     public void WriteIndividualsJsonTest()
     {
         // This is an integration test. Figure that out later
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
+        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.JSON);
 
         File.WriteAllText(TestUtilities.JsonFullName, jsonGedcomWriter.GetIndividuals());
     }

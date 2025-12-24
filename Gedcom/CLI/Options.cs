@@ -1,4 +1,5 @@
 ﻿using CommandLine;
+using Gedcom.Core;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 

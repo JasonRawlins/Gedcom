@@ -1,4 +1,5 @@
-﻿using Gedcom.GedcomWriters;
+﻿using Gedcom.Core;
+using Gedcom.GedcomWriters;
 using GedcomTests.TestEntities;
 
 namespace GedcomTests.Source;
@@ -9,7 +10,7 @@ public class SourceHtmlTests
     [TestMethod]
     public void ExportSourceHtmlTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.HTML);
         var sourceHtml = htmlGedcomWriter.GetSource(TestSources.VitalRecords.Xref);
 
         Assert.IsTrue(sourceHtml.Contains(TestSources.VitalRecords.Xref));
@@ -18,7 +19,7 @@ public class SourceHtmlTests
     [TestMethod]
     public void ExportSourcesHtmlTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.HTML);
         var sourcesHtml = htmlGedcomWriter.GetSources();
 
         Assert.IsTrue(sourcesHtml.Contains(TestSources.VitalRecords.Xref));
@@ -27,7 +28,7 @@ public class SourceHtmlTests
     [TestMethod]
     public void NonExistingSourceHtmlTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.HTML);
         var sourceHtml = htmlGedcomWriter.GetSource(TestConstants.InvalidXref);
 
         Assert.IsTrue(sourceHtml.Equals(""));
@@ -36,7 +37,7 @@ public class SourceHtmlTests
     [TestMethod]
     public void QuerySourcesHtmlTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.HTML);
         var sourcesHtml = htmlGedcomWriter.GetSources(TestSources.VitalRecords.Xref);
 
         Assert.IsTrue(sourcesHtml.Contains(TestSources.VitalRecords.Xref));
@@ -46,7 +47,7 @@ public class SourceHtmlTests
     public void WriteSourcesHtmlTest()
     {
         // This is an integration test. Figure that out later
-        var gedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
+        var gedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.HTML);
 
         File.WriteAllText(TestUtilities.HtmlFullName, gedcomWriter.GetSources());
     }

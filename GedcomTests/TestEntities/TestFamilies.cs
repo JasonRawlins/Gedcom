@@ -40,6 +40,34 @@ public class TestFamilies(Gedcom.Gedcom gedcom)
         }
     }
 
+    public static TestFamily CarwynDavisAndElizabethRhys
+    {
+        get
+        {
+            var testFamilies = new TestFamilies(TestUtilities.CreateGedcom());
+            var familyRecord = testFamilies.GetFamilyRecord(TestIndividuals.CarwynDavis, TestIndividuals.ElizabethRhys);
+            var family = new TestFamily(familyRecord.Xref, TestIndividuals.CarwynDavis, TestIndividuals.ElizabethRhys, [TestIndividuals.AnwenDavis])
+            {
+                Marriage = new(Tag.Marriage, "5 May 1895", "")
+            };
+            return family;
+        }
+    }
+
+    public static TestFamily CelynDavisAndAbigailBrown
+    {
+        get
+        {
+            var testFamilies = new TestFamilies(TestUtilities.CreateGedcom());
+            var familyRecord = testFamilies.GetFamilyRecord(TestIndividuals.CelynVaughn, TestIndividuals.AbigailBrown);
+            var family = new TestFamily(familyRecord.Xref, TestIndividuals.CelynVaughn, TestIndividuals.AbigailBrown, [TestIndividuals.JaredVaughn])
+            {
+                Marriage = new(Tag.Marriage, "7 Jul 1955", "")
+            };
+            return family;
+        }
+    }
+
     public static TestFamily DylanDavisAndFionaDouglas
     {
         get
@@ -61,6 +89,20 @@ public class TestFamilies(Gedcom.Gedcom gedcom)
             var testFamilies = new TestFamilies(TestUtilities.CreateGedcom());
             var familyRecord = testFamilies.GetFamilyRecord(TestIndividuals.JamesSmith, TestIndividuals.SaraDavis);
             var family = new TestFamily(familyRecord.Xref, TestIndividuals.JamesSmith, TestIndividuals.SaraDavis, [TestIndividuals.MarySmith])
+            {
+                Marriage = new(Tag.Marriage, "8 Aug 1985", "")
+            };
+            return family;
+        }
+    }
+
+    public static TestFamily LlewelynVaughnAndAnwenDavis
+    {
+        get
+        {
+            var testFamilies = new TestFamilies(TestUtilities.CreateGedcom());
+            var familyRecord = testFamilies.GetFamilyRecord(TestIndividuals.LlewelynVaughn, TestIndividuals.AnwenDavis);
+            var family = new TestFamily(familyRecord.Xref, TestIndividuals.LlewelynVaughn, TestIndividuals.AnwenDavis, [TestIndividuals.CelynVaughn])
             {
                 Marriage = new(Tag.Marriage, "8 Aug 1985", "")
             };

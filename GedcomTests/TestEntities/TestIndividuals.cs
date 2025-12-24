@@ -16,6 +16,28 @@ public class TestIndividual(string xref, string given, string surname)
 
 public class TestIndividuals
 {
+    public static TestIndividual AbigailBrown
+    {
+        get
+        {
+            var individual = new TestIndividual("@I272721828928@", "Abigail", "Brown");
+            individual.Events.Add(new(Tag.Birth, "7 JUL 1930", "England"));
+            individual.Events.Add(new(Tag.Death, "7 JUL 1990", "England"));
+            return individual;
+        }
+    }
+
+    public static TestIndividual AnwenDavis
+    {
+        get
+        {
+            var individual = new TestIndividual("@I272721827508@", "Anwen", "Davis");
+            individual.Events.Add(new(Tag.Birth, "6 JUN 1900", "Wales"));
+            individual.Events.Add(new(Tag.Death, "6 JUN 1960", "Wales"));
+            return individual;
+        }
+    }
+
     public static TestIndividual AnxinZhou
     {
         get
@@ -27,6 +49,28 @@ public class TestIndividuals
         }
     }
 
+    public static TestIndividual CarwynDavis
+    {
+        get
+        {
+            var individual = new TestIndividual("@I272721827103@", "Carwyn", "Davis");
+            individual.Events.Add(new(Tag.Birth, "5 May 1870", "Wales"));
+            individual.Events.Add(new(Tag.Death, "5 May 1870", "Wales"));
+            return individual;
+        }
+    }
+
+    public static TestIndividual CelynVaughn
+    {
+        get
+        {
+            var individual = new TestIndividual("@I272721828893@", "Celyn", "Vaughn");
+            individual.Events.Add(new(Tag.Birth, "7 JUL 1930", "Wales"));
+            individual.Events.Add(new(Tag.Death, "7 JUL 1990", "Wales"));
+            return individual;
+        }
+    }
+
     public static TestIndividual DylanDavis
     {
         get
@@ -34,6 +78,17 @@ public class TestIndividuals
             var individual = new TestIndividual("@I272718948910@", "Dylan", "Davis");
             individual.Events.Add(new(Tag.Birth, "7 Jul 1930", "Wales"));
             individual.Events.Add(new(Tag.Death, "7 Jul 1990", "Salt Lake City, Salt Lake, Utah, USA"));
+            return individual;
+        }
+    }
+
+    public static TestIndividual ElizabethRhys
+    {
+        get
+        {
+            var individual = new TestIndividual("@I272721827126@", "Elizabeth", "Rhys");
+            individual.Events.Add(new(Tag.Birth, "5 May 1870", "Wales"));
+            individual.Events.Add(new(Tag.Death, "5 May 1930", "Wales"));
             return individual;
         }
     }
@@ -71,6 +126,17 @@ public class TestIndividuals
         }
     }
 
+    public static TestIndividual JaredVaughn
+    {
+        get
+        {
+            var individual = new TestIndividual("@I272721829058@", "Jared", "Vaughn");
+            individual.Events.Add(new(Tag.Birth, "8 Aug 1960", "England"));
+            individual.Events.Add(new(Tag.Death, "8 Aug 2020", "England"));
+            return individual;
+        }
+    }
+
     public static TestIndividual JamesSmith
     {
         get
@@ -81,6 +147,19 @@ public class TestIndividuals
             return individual;
         }
     }
+
+
+    public static TestIndividual LlewelynVaughn
+    {
+        get
+        {
+            var individual = new TestIndividual("@I272721827546@", "Llewelyn", "Vaughn");
+            individual.Events.Add(new(Tag.Birth, "6 JUN 1900", "Wales"));
+            individual.Events.Add(new(Tag.Death, "6 JUN 1960", "Wales"));
+            return individual;
+        }
+    }
+
 
     public static TestIndividual MargaretDavis
     {

@@ -1,4 +1,5 @@
-﻿using Gedcom.GedcomWriters;
+﻿using Gedcom.Core;
+using Gedcom.GedcomWriters;
 using GedcomTests.TestEntities;
 
 namespace GedcomTests.Repository;
@@ -11,7 +12,7 @@ public class RepositoryJsonTests
     [TestMethod]
     public void ExportRepositoryJsonTest()
     {
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
+        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.JSON);
         var repositoryJson = jsonGedcomWriter.GetRepository(TestRepositories.VitalRecordsRepository.Xref);
 
         Assert.IsTrue(repositoryJson.Contains(TestRepositories.VitalRecordsRepository.Xref));
@@ -20,7 +21,7 @@ public class RepositoryJsonTests
     [TestMethod]
     public void ExportRepositoriesJsonTest()
     {
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
+        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.JSON);
         var repositoriesJson = jsonGedcomWriter.GetRepositories();
 
         Assert.IsTrue(repositoriesJson.Contains(TestRepositories.VitalRecordsRepository.Xref));
@@ -29,7 +30,7 @@ public class RepositoryJsonTests
     [TestMethod]
     public void ExportNonExistingRepositoryJsonTest()
     {
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
+        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.JSON);
         var repositoriesJson = jsonGedcomWriter.GetRepository(TestConstants.InvalidXref);
 
         Assert.IsTrue(repositoriesJson.Equals("{}"));
@@ -39,7 +40,7 @@ public class RepositoryJsonTests
     public void WriteRepositoriesJsonTest()
     {
         // This is an integration test. Figure that out later
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
+        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.JSON);
 
         File.WriteAllText(TestUtilities.JsonFullName, jsonGedcomWriter.GetRepositories());
     }
