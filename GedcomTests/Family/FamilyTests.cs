@@ -6,7 +6,7 @@ namespace GedcomTests.Family;
 public class FamilyTests
 {
     [TestMethod]
-    public void FamilyTest()
+    public void FamilyCoupleTest()
     {
         var gedcom = TestUtilities.CreateGedcom();
         var familyManager = new Gedcom.FamilyManager(gedcom);
@@ -91,19 +91,20 @@ public class FamilyTests
     {
         var gedcom = TestUtilities.CreateGedcom();
         var familyManager = new Gedcom.FamilyManager(gedcom);
-        var family = familyManager.CreateFamily(TestFamilies.OwenDavisAndGwenJones.Xref, 0, 2);
+        var owenAndGwenFamily = familyManager.CreateFamily(TestFamilies.OwenDavisAndGwenJones.Xref, 0, 2);
 
         // Couple should be present.
-        Assert.AreEqual(TestIndividuals.OwenDavis.Xref, family.Husband!.Xref);
-        Assert.AreEqual(TestIndividuals.GwenJones.Xref, family.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.OwenDavis.Xref, owenAndGwenFamily.Husband!.Xref);
+        Assert.AreEqual(TestIndividuals.GwenJones.Xref, owenAndGwenFamily.Wife!.Xref);
 
         // Parents should not be present.
-        Assert.IsNull(family.Husband!.Parents);
-        Assert.IsNull(family.Wife!.Parents);
+        Assert.IsNull(owenAndGwenFamily.Husband!.Parents);
+        Assert.IsNull(owenAndGwenFamily.Wife!.Parents);
 
         // Grandchild should be present.
-        var dylanDavis = family.Children.First(c => c.Xref == TestIndividuals.DylanDavis.Xref);
-        Assert.IsNotNull(dylanDavis.Children.FirstOrDefault(c => c.Xref == TestIndividuals.SaraDavis.Xref));
+        var sonDylanDavis = owenAndGwenFamily.Children.First(c => c.Xref == TestIndividuals.DylanDavis.Xref);
+        var granddaughterSaraDavis = sonDylanDavis.Children.FirstOrDefault(c => c.Xref == TestIndividuals.SaraDavis.Xref);
+        Assert.IsNotNull(granddaughterSaraDavis);
     }
 
     [TestMethod]
@@ -128,7 +129,6 @@ public class FamilyTests
         // Aunts and uncles should be present
         var auntMargaretDavis = fatherDylandDavis.Siblings.SingleOrDefault(s => s.Xref == TestIndividuals.MargaretDavis.Xref);
         var uncleGarethDavis = fatherDylandDavis.Siblings.SingleOrDefault(s => s.Xref == TestIndividuals.GarethDavis.Xref);
-
         Assert.IsNotNull(auntMargaretDavis);
         Assert.IsNotNull(uncleGarethDavis);
     }
@@ -153,8 +153,8 @@ public class FamilyTests
         familyManager.LoadDescendants(auntMargaretDavis, 1);
 
         // First cousin should be present.
-        var cousinXiaohuiZhou = auntMargaretDavis.Children.FirstOrDefault(c => c.Xref == TestIndividuals.XiaohuiZhou.Xref);
+        var firstCousinXiaohuiZhou = auntMargaretDavis.Children.FirstOrDefault(c => c.Xref == TestIndividuals.XiaohuiZhou.Xref);
 
-        Assert.IsNotNull(cousinXiaohuiZhou);
+        Assert.IsNotNull(firstCousinXiaohuiZhou);
     }
 }
