@@ -1,4 +1,5 @@
 ﻿using Gedcom.GedcomWriters;
+using GedcomTests.TestEntities;
 
 namespace GedcomTests.Source;
 
@@ -9,9 +10,9 @@ public class SourceJsonTests
     public void ExportSourceJsonTest()
     {
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
-        var sourceJson = jsonGedcomWriter.GetSource(TestTree.Sources.VitalRecords.Xref);
+        var sourceJson = jsonGedcomWriter.GetSource(TestSources.VitalRecords.Xref);
 
-        Assert.IsTrue(sourceJson.Contains(TestTree.Sources.VitalRecords.Xref));
+        Assert.IsTrue(sourceJson.Contains(TestSources.VitalRecords.Xref));
     }
 
     [TestMethod]
@@ -20,14 +21,14 @@ public class SourceJsonTests
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
         var sourcesJson = jsonGedcomWriter.GetSources();
 
-        Assert.IsTrue(sourcesJson.Contains(TestTree.Sources.VitalRecords.Xref));
+        Assert.IsTrue(sourcesJson.Contains(TestSources.VitalRecords.Xref));
     }
 
     [TestMethod]
     public void ExportNonExistingSourceJsonTest()
     {
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
-        var sourcesJson = jsonGedcomWriter.GetSource(TestTree.InvalidXref);
+        var sourcesJson = jsonGedcomWriter.GetSource(TestConstants.InvalidXref);
 
         Assert.IsTrue(sourcesJson.Equals("{}"));
     }

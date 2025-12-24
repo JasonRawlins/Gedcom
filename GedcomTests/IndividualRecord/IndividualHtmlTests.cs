@@ -1,4 +1,5 @@
 ﻿using Gedcom.GedcomWriters;
+using GedcomTests.TestEntities;
 using System.Text;
 
 namespace GedcomTests.Individual;
@@ -12,15 +13,15 @@ public class IndividualHtmlTests
     public void ExportIndividualJsonTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
-        var individualHtml = htmlGedcomWriter.GetIndividual(TestTree.Individuals.SaraDavis.Xref);
+        var individualHtml = htmlGedcomWriter.GetIndividual(TestIndividuals.SaraDavis.Xref);
 
-        Assert.IsTrue(individualHtml.Contains(TestTree.Individuals.SaraDavis.XrefId) &&
-                !(individualHtml.Contains(TestTree.Individuals.DylanDavis.XrefId) ||
-                individualHtml.Contains(TestTree.Individuals.FionaDouglas.XrefId) ||
-                individualHtml.Contains(TestTree.Individuals.GwenJones.XrefId) ||
-                individualHtml.Contains(TestTree.Individuals.JamesSmith.XrefId) ||
-                individualHtml.Contains(TestTree.Individuals.MarySmith.XrefId) ||
-                individualHtml.Contains(TestTree.Individuals.OwenDavis.XrefId)));
+        Assert.IsTrue(individualHtml.Contains(TestIndividuals.SaraDavis.XrefId) &&
+                !(individualHtml.Contains(TestIndividuals.DylanDavis.XrefId) ||
+                individualHtml.Contains(TestIndividuals.FionaDouglas.XrefId) ||
+                individualHtml.Contains(TestIndividuals.GwenJones.XrefId) ||
+                individualHtml.Contains(TestIndividuals.JamesSmith.XrefId) ||
+                individualHtml.Contains(TestIndividuals.MarySmith.XrefId) ||
+                individualHtml.Contains(TestIndividuals.OwenDavis.XrefId)));
     }
 
     [TestMethod]
@@ -29,20 +30,20 @@ public class IndividualHtmlTests
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
         var individualsHtml = htmlGedcomWriter.GetIndividuals();
 
-        Assert.IsTrue(individualsHtml.Contains(TestTree.Individuals.SaraDavis.XrefId) &&
-                individualsHtml.Contains(TestTree.Individuals.DylanDavis.XrefId) &&
-                individualsHtml.Contains(TestTree.Individuals.FionaDouglas.XrefId) &&
-                individualsHtml.Contains(TestTree.Individuals.GwenJones.XrefId) &&
-                individualsHtml.Contains(TestTree.Individuals.JamesSmith.XrefId) &&
-                individualsHtml.Contains(TestTree.Individuals.MarySmith.XrefId) &&
-                individualsHtml.Contains(TestTree.Individuals.OwenDavis.XrefId));
+        Assert.IsTrue(individualsHtml.Contains(TestIndividuals.SaraDavis.XrefId) &&
+                individualsHtml.Contains(TestIndividuals.DylanDavis.XrefId) &&
+                individualsHtml.Contains(TestIndividuals.FionaDouglas.XrefId) &&
+                individualsHtml.Contains(TestIndividuals.GwenJones.XrefId) &&
+                individualsHtml.Contains(TestIndividuals.JamesSmith.XrefId) &&
+                individualsHtml.Contains(TestIndividuals.MarySmith.XrefId) &&
+                individualsHtml.Contains(TestIndividuals.OwenDavis.XrefId));
     }
 
     [TestMethod]
     public void NonExistingIndividualJsonTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
-        var individualJson = htmlGedcomWriter.GetIndividual(TestTree.InvalidXref);
+        var individualJson = htmlGedcomWriter.GetIndividual(TestConstants.InvalidXref);
 
         Assert.IsTrue(individualJson.Equals(""));
     }
@@ -53,9 +54,9 @@ public class IndividualHtmlTests
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
         var individualsHtml = htmlGedcomWriter.GetIndividuals("Davis");
 
-        Assert.IsTrue(individualsHtml.Contains(TestTree.Individuals.DylanDavis.XrefId)
-            && individualsHtml.Contains(TestTree.Individuals.OwenDavis.XrefId)
-            && individualsHtml.Contains(TestTree.Individuals.SaraDavis.XrefId));
+        Assert.IsTrue(individualsHtml.Contains(TestIndividuals.DylanDavis.XrefId)
+            && individualsHtml.Contains(TestIndividuals.OwenDavis.XrefId)
+            && individualsHtml.Contains(TestIndividuals.SaraDavis.XrefId));
     }
 
     //[TestMethod]

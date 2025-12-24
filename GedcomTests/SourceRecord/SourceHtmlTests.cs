@@ -1,4 +1,5 @@
 ﻿using Gedcom.GedcomWriters;
+using GedcomTests.TestEntities;
 
 namespace GedcomTests.Source;
 
@@ -9,9 +10,9 @@ public class SourceHtmlTests
     public void ExportSourceHtmlTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
-        var sourceHtml = htmlGedcomWriter.GetSource(TestTree.Sources.VitalRecords.Xref);
+        var sourceHtml = htmlGedcomWriter.GetSource(TestSources.VitalRecords.Xref);
 
-        Assert.IsTrue(sourceHtml.Contains(TestTree.Sources.VitalRecords.Xref));
+        Assert.IsTrue(sourceHtml.Contains(TestSources.VitalRecords.Xref));
     }
 
     [TestMethod]
@@ -20,14 +21,14 @@ public class SourceHtmlTests
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
         var sourcesHtml = htmlGedcomWriter.GetSources();
 
-        Assert.IsTrue(sourcesHtml.Contains(TestTree.Sources.VitalRecords.Xref));
+        Assert.IsTrue(sourcesHtml.Contains(TestSources.VitalRecords.Xref));
     }
 
     [TestMethod]
     public void NonExistingSourceHtmlTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
-        var sourceHtml = htmlGedcomWriter.GetSource(TestTree.InvalidXref);
+        var sourceHtml = htmlGedcomWriter.GetSource(TestConstants.InvalidXref);
 
         Assert.IsTrue(sourceHtml.Equals(""));
     }
@@ -36,9 +37,9 @@ public class SourceHtmlTests
     public void QuerySourcesHtmlTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
-        var sourcesHtml = htmlGedcomWriter.GetSources(TestTree.Sources.VitalRecords.Xref);
+        var sourcesHtml = htmlGedcomWriter.GetSources(TestSources.VitalRecords.Xref);
 
-        Assert.IsTrue(sourcesHtml.Contains(TestTree.Sources.VitalRecords.Xref));
+        Assert.IsTrue(sourcesHtml.Contains(TestSources.VitalRecords.Xref));
     }
 
     //[TestMethod]

@@ -41,6 +41,8 @@ public class Gedcom : RecordStructureBase
         return parentsFamily;
     }
 
+    public FamilyRecord GetFamilyRecordByHusbandAndWife(string husbandXref, string wifeXref) => GetFamilyRecords().SingleOrDefault(f => f.Husband == husbandXref && f.Wife == wifeXref) ?? Empty<FamilyRecord>();
+
     public FamilyRecord GetFamilyRecordWhereTheIndividualIsAParent(string individualXref)
     {
         var family = GetFamilyRecords().FirstOrDefault(fr => fr.Husband == individualXref || fr.Wife == individualXref);

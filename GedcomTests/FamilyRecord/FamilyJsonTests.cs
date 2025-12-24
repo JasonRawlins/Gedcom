@@ -1,4 +1,5 @@
 ﻿using Gedcom.GedcomWriters;
+using GedcomTests.TestEntities;
 
 namespace GedcomTests.Family;
 
@@ -9,11 +10,11 @@ public class FamilyJsonTests
     public void ExportFamilyJsonTest()
     {
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
-        var familyJson = jsonGedcomWriter.GetFamily(TestTree.Families.DylanDavisAndFionaDouglas.Xref);
+        var familyJson = jsonGedcomWriter.GetFamily(TestFamilies.DylanDavisAndFionaDouglas.Xref);
 
-        Assert.IsTrue(familyJson.Contains(TestTree.Families.DylanDavisAndFionaDouglas.Xref)
-            && !familyJson.Contains(TestTree.Families.JamesSmithAndSaraDavis.Xref)
-            && !familyJson.Contains(TestTree.Families.OwenDavisAndGwenJones.Xref));
+        Assert.IsTrue(familyJson.Contains(TestFamilies.DylanDavisAndFionaDouglas.Xref)
+            && !familyJson.Contains(TestFamilies.JamesSmithAndSaraDavis.Xref)
+            && !familyJson.Contains(TestFamilies.OwenDavisAndGwenJones.Xref));
     }
 
     [TestMethod]
@@ -22,16 +23,16 @@ public class FamilyJsonTests
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
         var familiesJson = jsonGedcomWriter.GetFamilies();
 
-        Assert.IsTrue(familiesJson.Contains(TestTree.Families.DylanDavisAndFionaDouglas.Xref)
-            && familiesJson.Contains(TestTree.Families.JamesSmithAndSaraDavis.Xref)
-            && familiesJson.Contains(TestTree.Families.OwenDavisAndGwenJones.Xref));
+        Assert.IsTrue(familiesJson.Contains(TestFamilies.DylanDavisAndFionaDouglas.Xref)
+            && familiesJson.Contains(TestFamilies.JamesSmithAndSaraDavis.Xref)
+            && familiesJson.Contains(TestFamilies.OwenDavisAndGwenJones.Xref));
     }
 
     [TestMethod]
     public void ExportNonExistingFamilyJsonTest()
     {
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
-        var familiesJson = jsonGedcomWriter.GetFamily(TestTree.InvalidXref);
+        var familiesJson = jsonGedcomWriter.GetFamily(TestConstants.InvalidXref);
 
         Assert.IsTrue(familiesJson.Equals("{}"));
     }

@@ -1,4 +1,5 @@
 ﻿using Gedcom.GedcomWriters;
+using GedcomTests.TestEntities;
 
 namespace GedcomTests.Repository;
 
@@ -11,9 +12,9 @@ public class RepositoryJsonTests
     public void ExportRepositoryJsonTest()
     {
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
-        var repositoryJson = jsonGedcomWriter.GetRepository(TestTree.Repositories.VitalRecordsRepository.Xref);
+        var repositoryJson = jsonGedcomWriter.GetRepository(TestRepositories.VitalRecordsRepository.Xref);
 
-        Assert.IsTrue(repositoryJson.Contains(TestTree.Repositories.VitalRecordsRepository.Xref));
+        Assert.IsTrue(repositoryJson.Contains(TestRepositories.VitalRecordsRepository.Xref));
     }
 
     [TestMethod]
@@ -22,14 +23,14 @@ public class RepositoryJsonTests
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
         var repositoriesJson = jsonGedcomWriter.GetRepositories();
 
-        Assert.IsTrue(repositoriesJson.Contains(TestTree.Repositories.VitalRecordsRepository.Xref));
+        Assert.IsTrue(repositoriesJson.Contains(TestRepositories.VitalRecordsRepository.Xref));
     }
 
     [TestMethod]
     public void ExportNonExistingRepositoryJsonTest()
     {
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
-        var repositoriesJson = jsonGedcomWriter.GetRepository(TestTree.InvalidXref);
+        var repositoriesJson = jsonGedcomWriter.GetRepository(TestConstants.InvalidXref);
 
         Assert.IsTrue(repositoriesJson.Equals("{}"));
     }

@@ -19,18 +19,18 @@
 //    {
 //        var gedcJson = Exporter!.GetGedcomJson();
 
-//        Assert.IsTrue(gedcJson.Contains(TestTree.Individuals.DylanDavis.Xref)
-//            && gedcJson.Contains(TestTree.Individuals.FionaDouglas.Xref)
-//            && gedcJson.Contains(TestTree.Individuals.GwenJones.Xref)
-//            && gedcJson.Contains(TestTree.Individuals.JamesSmith.Xref)
-//            && gedcJson.Contains(TestTree.Individuals.MarySmith.Xref)
-//            && gedcJson.Contains(TestTree.Individuals.OwenDavis.Xref)
-//            && gedcJson.Contains(TestTree.Individuals.SaraDavis.Xref)
-//            && gedcJson.Contains(TestTree.Families.DylanDavisAndFionaDouglas.Xref)
-//            && gedcJson.Contains(TestTree.Families.JamesSmithAndSaraDavis.Xref)
-//            && gedcJson.Contains(TestTree.Families.OwenDavisAndGwenJones.Xref)
-//            && gedcJson.Contains(TestTree.Repositories.VitalRecordsRepository.Xref)
-//            && gedcJson.Contains(TestTree.Sources.VitalRecords.Xref));
+//        Assert.IsTrue(gedcJson.Contains(TestIndividuals.DylanDavis.Xref)
+//            && gedcJson.Contains(TestIndividuals.FionaDouglas.Xref)
+//            && gedcJson.Contains(TestIndividuals.GwenJones.Xref)
+//            && gedcJson.Contains(TestIndividuals.JamesSmith.Xref)
+//            && gedcJson.Contains(TestIndividuals.MarySmith.Xref)
+//            && gedcJson.Contains(TestIndividuals.OwenDavis.Xref)
+//            && gedcJson.Contains(TestIndividuals.SaraDavis.Xref)
+//            && gedcJson.Contains(TestFamilies.DylanDavisAndFionaDouglas.Xref)
+//            && gedcJson.Contains(TestFamilies.JamesSmithAndSaraDavis.Xref)
+//            && gedcJson.Contains(TestFamilies.OwenDavisAndGwenJones.Xref)
+//            && gedcJson.Contains(TestRepositories.VitalRecordsRepository.Xref)
+//            && gedcJson.Contains(TestSources.VitalRecords.Xref));
 //    }
 
 //    //[TestMethod]

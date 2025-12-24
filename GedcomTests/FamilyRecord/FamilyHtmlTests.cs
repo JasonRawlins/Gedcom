@@ -1,4 +1,5 @@
 ﻿using Gedcom.GedcomWriters;
+using GedcomTests.TestEntities;
 
 namespace GedcomTests.Family;
 
@@ -8,12 +9,13 @@ public class FamilyHtmlTests
     [TestMethod]
     public void ExportFamilyJsonTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
-        var familyHtml = htmlGedcomWriter.GetFamily(TestTree.Families.JamesSmithAndSaraDavis.Xref);
+        var gedcom = TestUtilities.CreateGedcom();
+        var htmlGedcomWriter = GedcomWriter.Create(gedcom, Gedcom.C.HTML);
+        var familyHtml = htmlGedcomWriter.GetFamily(TestFamilies.JamesSmithAndSaraDavis.Xref);
 
-        Assert.IsTrue(familyHtml.Contains(TestTree.Families.JamesSmithAndSaraDavis.Xref) &&
-                !(familyHtml.Contains(TestTree.Families.DylanDavisAndFionaDouglas.Xref) ||
-                familyHtml.Contains(TestTree.Families.OwenDavisAndGwenJones.Xref)));
+        Assert.IsTrue(familyHtml.Contains(TestFamilies.JamesSmithAndSaraDavis.Xref) &&
+                !(familyHtml.Contains(TestFamilies.DylanDavisAndFionaDouglas.Xref) ||
+                familyHtml.Contains(TestFamilies.OwenDavisAndGwenJones.Xref)));
     }
 
     [TestMethod]
@@ -22,16 +24,16 @@ public class FamilyHtmlTests
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
         var familiesHtml = htmlGedcomWriter.GetFamilies();
 
-        Assert.IsTrue(familiesHtml.Contains(TestTree.Families.JamesSmithAndSaraDavis.Xref) &&
-                familiesHtml.Contains(TestTree.Families.OwenDavisAndGwenJones.Xref) &&
-                familiesHtml.Contains(TestTree.Families.DylanDavisAndFionaDouglas.Xref));
+        Assert.IsTrue(familiesHtml.Contains(TestFamilies.JamesSmithAndSaraDavis.Xref) &&
+                familiesHtml.Contains(TestFamilies.OwenDavisAndGwenJones.Xref) &&
+                familiesHtml.Contains(TestFamilies.DylanDavisAndFionaDouglas.Xref));
     }
 
     [TestMethod]
     public void NonExistingFamilyJsonTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
-        var familyJson = htmlGedcomWriter.GetFamily(TestTree.InvalidXref);
+        var familyJson = htmlGedcomWriter.GetFamily(TestConstants.InvalidXref);
 
         Assert.IsTrue(familyJson.Equals(""));
     }
@@ -40,9 +42,9 @@ public class FamilyHtmlTests
     public void QueryFamiliesJsonTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
-        var familesHtml = htmlGedcomWriter.GetFamilies(TestTree.Families.JamesSmithAndSaraDavis.Xref);
+        var familesHtml = htmlGedcomWriter.GetFamilies(TestFamilies.JamesSmithAndSaraDavis.Xref);
 
-        Assert.IsTrue(familesHtml.Contains(TestTree.Families.JamesSmithAndSaraDavis.Xref));
+        Assert.IsTrue(familesHtml.Contains(TestFamilies.JamesSmithAndSaraDavis.Xref));
     }
 
     //[TestMethod]

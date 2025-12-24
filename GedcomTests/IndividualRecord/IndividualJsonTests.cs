@@ -1,4 +1,5 @@
 ﻿using Gedcom.GedcomWriters;
+using GedcomTests.TestEntities;
 
 namespace GedcomTests.Individual;
 
@@ -11,15 +12,15 @@ public class IndividualJsonTests
     public void ExportIndividualJsonTest()
     {
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
-        var individualJson = jsonGedcomWriter.GetIndividual(TestTree.Individuals.SaraDavis.Xref);
+        var individualJson = jsonGedcomWriter.GetIndividual(TestIndividuals.SaraDavis.Xref);
 
-        Assert.IsTrue(individualJson.Contains(TestTree.Individuals.SaraDavis.Xref) &&
-                !(individualJson.Contains(TestTree.Individuals.DylanDavis.Xref) ||
-                individualJson.Contains(TestTree.Individuals.FionaDouglas.Xref) ||
-                individualJson.Contains(TestTree.Individuals.GwenJones.Xref) ||
-                individualJson.Contains(TestTree.Individuals.JamesSmith.Xref) ||
-                individualJson.Contains(TestTree.Individuals.MarySmith.Xref) ||
-                individualJson.Contains(TestTree.Individuals.OwenDavis.Xref)));
+        Assert.IsTrue(individualJson.Contains(TestIndividuals.SaraDavis.Xref) &&
+                !(individualJson.Contains(TestIndividuals.DylanDavis.Xref) ||
+                individualJson.Contains(TestIndividuals.FionaDouglas.Xref) ||
+                individualJson.Contains(TestIndividuals.GwenJones.Xref) ||
+                individualJson.Contains(TestIndividuals.JamesSmith.Xref) ||
+                individualJson.Contains(TestIndividuals.MarySmith.Xref) ||
+                individualJson.Contains(TestIndividuals.OwenDavis.Xref)));
     }
 
     [TestMethod]
@@ -28,20 +29,20 @@ public class IndividualJsonTests
         var jsonGedcomWriter =  GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
         var individualsJson = jsonGedcomWriter.GetIndividuals();
 
-        Assert.IsTrue(individualsJson.Contains(TestTree.Individuals.SaraDavis.Xref) &&
-                individualsJson.Contains(TestTree.Individuals.DylanDavis.Xref) &&
-                individualsJson.Contains(TestTree.Individuals.FionaDouglas.Xref) &&
-                individualsJson.Contains(TestTree.Individuals.GwenJones.Xref) &&
-                individualsJson.Contains(TestTree.Individuals.JamesSmith.Xref) &&
-                individualsJson.Contains(TestTree.Individuals.MarySmith.Xref) &&
-                individualsJson.Contains(TestTree.Individuals.OwenDavis.Xref));
+        Assert.IsTrue(individualsJson.Contains(TestIndividuals.SaraDavis.Xref) &&
+                individualsJson.Contains(TestIndividuals.DylanDavis.Xref) &&
+                individualsJson.Contains(TestIndividuals.FionaDouglas.Xref) &&
+                individualsJson.Contains(TestIndividuals.GwenJones.Xref) &&
+                individualsJson.Contains(TestIndividuals.JamesSmith.Xref) &&
+                individualsJson.Contains(TestIndividuals.MarySmith.Xref) &&
+                individualsJson.Contains(TestIndividuals.OwenDavis.Xref));
     }
 
     [TestMethod]
     public void NonExistingIndividualJsonTest()
     {
         var jsonGedcomWriter =  GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.JSON);
-        var individualJson = jsonGedcomWriter.GetIndividual(TestTree.InvalidXref);
+        var individualJson = jsonGedcomWriter.GetIndividual(TestConstants.InvalidXref);
 
         Assert.IsTrue(individualJson.Equals("{}"));
     }
@@ -53,9 +54,9 @@ public class IndividualJsonTests
         var jsonGedcomWriter = new JsonGedcomWriter(gedcom);
         var individualsJson = jsonGedcomWriter.GetIndividuals("Davis");
 
-        Assert.IsTrue(individualsJson.Contains(TestTree.Individuals.DylanDavis.Xref)
-            && individualsJson.Contains(TestTree.Individuals.OwenDavis.Xref)
-            && individualsJson.Contains(TestTree.Individuals.SaraDavis.Xref));
+        Assert.IsTrue(individualsJson.Contains(TestIndividuals.DylanDavis.Xref)
+            && individualsJson.Contains(TestIndividuals.OwenDavis.Xref)
+            && individualsJson.Contains(TestIndividuals.SaraDavis.Xref));
     }
 
     //[TestMethod]

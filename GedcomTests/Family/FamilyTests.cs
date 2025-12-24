@@ -1,4 +1,6 @@
-﻿namespace GedcomTests.Family;
+﻿using GedcomTests.TestEntities;
+
+namespace GedcomTests.Family;
 
 [TestClass]
 public class FamilyTests
@@ -9,11 +11,11 @@ public class FamilyTests
         var gedcom = TestUtilities.CreateGedcom();
         var familyManager = new Gedcom.FamilyManager(gedcom);
 
-        var family = familyManager.CreateFamily(TestTree.Families.JamesSmithAndSaraDavis.Xref, 0, 0);
+        var family = familyManager.CreateFamily(TestFamilies.JamesSmithAndSaraDavis.Xref, 0, 0);
 
         // Husband and wife should be present.
-        Assert.AreEqual(TestTree.Individuals.JamesSmith.Xref, family.Husband!.Xref);
-        Assert.AreEqual(TestTree.Individuals.SaraDavis.Xref, family.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.JamesSmith.Xref, family.Husband!.Xref);
+        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, family.Wife!.Xref);
 
         // Children should not be present.
         Assert.IsTrue(family.Children.Count == 0);
@@ -24,16 +26,15 @@ public class FamilyTests
     {
         var gedcom = TestUtilities.CreateGedcom();
         var familyManager = new Gedcom.FamilyManager(gedcom);
-
-        var family = familyManager.CreateFamily(TestTree.Families.JamesSmithAndSaraDavis.Xref, 1, 0);
+        var family = familyManager.CreateFamily(TestFamilies.JamesSmithAndSaraDavis.Xref, 1, 0);
 
         // Couple should be present.
-        Assert.AreEqual(TestTree.Individuals.JamesSmith.Xref, family.Husband!.Xref);
-        Assert.AreEqual(TestTree.Individuals.SaraDavis.Xref, family.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.JamesSmith.Xref, family.Husband!.Xref);
+        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, family.Wife!.Xref);
 
         // Wife's parents should be present
-        Assert.AreEqual(TestTree.Individuals.DylanDavis.Xref, family.Wife!.Parents!.Husband!.Xref);
-        Assert.AreEqual(TestTree.Individuals.FionaDouglas.Xref, family.Wife!.Parents!.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.DylanDavis.Xref, family.Wife!.Parents!.Husband!.Xref);
+        Assert.AreEqual(TestIndividuals.FionaDouglas.Xref, family.Wife!.Parents!.Wife!.Xref);
 
         // Children should not be present.
         Assert.AreEqual(family.Children.Count, 0);
@@ -44,17 +45,16 @@ public class FamilyTests
     {
         var gedcom = TestUtilities.CreateGedcom();
         var familyManager = new Gedcom.FamilyManager(gedcom);
-
-        var family = familyManager.CreateFamily(TestTree.Families.JamesSmithAndSaraDavis.Xref, 2, 0);
+        var family = familyManager.CreateFamily(TestFamilies.JamesSmithAndSaraDavis.Xref, 2, 0);
 
         // Couple should be present.
-        Assert.AreEqual(TestTree.Individuals.JamesSmith.Xref, family.Husband!.Xref);
-        Assert.AreEqual(TestTree.Individuals.SaraDavis.Xref, family.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.JamesSmith.Xref, family.Husband!.Xref);
+        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, family.Wife!.Xref);
 
         // Grandparents should be present.
         var dylanDavis = family.Wife.Parents!.Husband;
-        Assert.AreEqual(TestTree.Individuals.OwenDavis.Xref, dylanDavis!.Parents!.Husband!.Xref);
-        Assert.AreEqual(TestTree.Individuals.GwenJones.Xref, dylanDavis!.Parents!.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.OwenDavis.Xref, dylanDavis!.Parents!.Husband!.Xref);
+        Assert.AreEqual(TestIndividuals.GwenJones.Xref, dylanDavis!.Parents!.Wife!.Xref);
 
         // Children should not be present.
         Assert.AreEqual(family.Children.Count, 0);
@@ -65,19 +65,18 @@ public class FamilyTests
     {
         var gedcom = TestUtilities.CreateGedcom();
         var familyManager = new Gedcom.FamilyManager(gedcom);
-
-        var family = familyManager.CreateFamily(TestTree.Families.OwenDavisAndGwenJones.Xref, 0, 1);
+        var family = familyManager.CreateFamily(TestFamilies.OwenDavisAndGwenJones.Xref, 0, 1);
 
         // Couple should be present.
-        Assert.AreEqual(TestTree.Individuals.OwenDavis.Xref, family.Husband!.Xref);
-        Assert.AreEqual(TestTree.Individuals.GwenJones.Xref, family.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.OwenDavis.Xref, family.Husband!.Xref);
+        Assert.AreEqual(TestIndividuals.GwenJones.Xref, family.Wife!.Xref);
 
         // Parents should not be present.
         Assert.IsNull(family.Husband!.Parents);
         Assert.IsNull(family.Wife!.Parents);
 
         // Child should be present.
-        var dylanDavis = family.Children.FirstOrDefault(c => c.Xref == TestTree.Individuals.DylanDavis.Xref);
+        var dylanDavis = family.Children.FirstOrDefault(c => c.Xref == TestIndividuals.DylanDavis.Xref);
         Assert.IsNotNull(dylanDavis);
     }
 
@@ -86,20 +85,19 @@ public class FamilyTests
     {
         var gedcom = TestUtilities.CreateGedcom();
         var familyManager = new Gedcom.FamilyManager(gedcom);
-
-        var family = familyManager.CreateFamily(TestTree.Families.OwenDavisAndGwenJones.Xref, 0, 2);
+        var family = familyManager.CreateFamily(TestFamilies.OwenDavisAndGwenJones.Xref, 0, 2);
 
         // Couple should be present.
-        Assert.AreEqual(TestTree.Individuals.OwenDavis.Xref, family.Husband!.Xref);
-        Assert.AreEqual(TestTree.Individuals.GwenJones.Xref, family.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.OwenDavis.Xref, family.Husband!.Xref);
+        Assert.AreEqual(TestIndividuals.GwenJones.Xref, family.Wife!.Xref);
 
         // Parents should not be present.
         Assert.IsNull(family.Husband!.Parents);
         Assert.IsNull(family.Wife!.Parents);
 
         // Grandchild should be present.
-        var dylanDavis = family.Children.First(c => c.Xref == TestTree.Individuals.DylanDavis.Xref);
-        Assert.IsNotNull(dylanDavis.Children.FirstOrDefault(c => c.Xref == TestTree.Individuals.SaraDavis.Xref));
+        var dylanDavis = family.Children.First(c => c.Xref == TestIndividuals.DylanDavis.Xref);
+        Assert.IsNotNull(dylanDavis.Children.FirstOrDefault(c => c.Xref == TestIndividuals.SaraDavis.Xref));
     }
 
     [TestMethod]
@@ -107,25 +105,35 @@ public class FamilyTests
     {
         var gedcom = TestUtilities.CreateGedcom();
         var familyManager = new Gedcom.FamilyManager(gedcom);
-
-        var family = familyManager.CreateFamily(TestTree.Families.JamesSmithAndSaraDavis.Xref, 1, 0);
+        var family = familyManager.CreateFamily(TestFamilies.JamesSmithAndSaraDavis.Xref, 1, 0);
 
         // Couple should be present.
-        Assert.AreEqual(TestTree.Individuals.JamesSmith.Xref, family.Husband!.Xref);
-        Assert.AreEqual(TestTree.Individuals.SaraDavis.Xref, family.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.JamesSmith.Xref, family.Husband!.Xref);
+        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, family.Wife!.Xref);
 
         // Wife's parents should be present
         var parentsFamily = family.Wife!.Parents;
-        Assert.AreEqual(TestTree.Individuals.DylanDavis.Xref, parentsFamily!.Husband!.Xref);
-        Assert.AreEqual(TestTree.Individuals.FionaDouglas.Xref, parentsFamily!.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.DylanDavis.Xref, parentsFamily!.Husband!.Xref);
+        Assert.AreEqual(TestIndividuals.FionaDouglas.Xref, parentsFamily!.Wife!.Xref);
 
         familyManager.LoadSiblings(parentsFamily.Husband);
 
         // Aunts and uncles should be present
-        var auntMargaretDavis = parentsFamily.Husband.Siblings.SingleOrDefault(s => s.Xref == TestTree.Individuals.MargaretDavis.Xref);
-        var uncleGarethDavis = parentsFamily.Husband.Siblings.SingleOrDefault(s => s.Xref == TestTree.Individuals.GarethDavis.Xref);
+        var auntMargaretDavis = parentsFamily.Husband.Siblings.SingleOrDefault(s => s.Xref == TestIndividuals.MargaretDavis.Xref);
+        var uncleGarethDavis = parentsFamily.Husband.Siblings.SingleOrDefault(s => s.Xref == TestIndividuals.GarethDavis.Xref);
 
         Assert.IsNotNull(auntMargaretDavis);
         Assert.IsNotNull(uncleGarethDavis);
+    }
+
+    [TestMethod]
+    public void FamilyWithCousinsTest()
+    {
+        var gedcom = TestUtilities.CreateGedcom();
+        var familyManager = new Gedcom.FamilyManager(gedcom);
+        var family = familyManager.CreateFamily(TestFamilies.AnxinZhouAndMargaretDavis.Xref, 0, 0);
+
+        // Couple should be present
+
     }
 }

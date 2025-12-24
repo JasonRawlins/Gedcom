@@ -1,4 +1,5 @@
 ﻿using Gedcom.GedcomWriters;
+using GedcomTests.TestEntities;
 
 namespace GedcomTests.Repository;
 
@@ -11,9 +12,9 @@ public class RepositoryHtmlTests
     public void ExportRepositoryHtmlTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
-        var repositoryHtml = htmlGedcomWriter.GetRepository(TestTree.Repositories.VitalRecordsRepository.Xref);
+        var repositoryHtml = htmlGedcomWriter.GetRepository(TestRepositories.VitalRecordsRepository.Xref);
 
-        Assert.IsTrue(repositoryHtml.Contains(TestTree.Repositories.VitalRecordsRepository.Xref));
+        Assert.IsTrue(repositoryHtml.Contains(TestRepositories.VitalRecordsRepository.Xref));
     }
 
     [TestMethod]
@@ -22,14 +23,14 @@ public class RepositoryHtmlTests
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
         var repositoriesHtml = htmlGedcomWriter.GetRepositories();
 
-        Assert.IsTrue(repositoriesHtml.Contains(TestTree.Repositories.VitalRecordsRepository.Xref));
+        Assert.IsTrue(repositoriesHtml.Contains(TestRepositories.VitalRecordsRepository.Xref));
     }
 
     [TestMethod]
     public void NonExistingRepositoryHtmlTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
-        var repositoryHtml = htmlGedcomWriter.GetRepository(TestTree.InvalidXref);
+        var repositoryHtml = htmlGedcomWriter.GetRepository(TestConstants.InvalidXref);
 
         Assert.IsTrue(repositoryHtml.Equals(""));
     }
@@ -38,9 +39,9 @@ public class RepositoryHtmlTests
     public void QueryRepositoriesHtmlTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.HTML);
-        var repositoriesHtml = htmlGedcomWriter.GetRepositories(TestTree.Repositories.VitalRecordsRepository.Xref);
+        var repositoriesHtml = htmlGedcomWriter.GetRepositories(TestRepositories.VitalRecordsRepository.Xref);
 
-        Assert.IsTrue(repositoriesHtml.Contains(TestTree.Repositories.VitalRecordsRepository.Xref));
+        Assert.IsTrue(repositoriesHtml.Contains(TestRepositories.VitalRecordsRepository.Xref));
     }
 
     //[TestMethod]
