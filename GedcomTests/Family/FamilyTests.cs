@@ -134,7 +134,7 @@ public class FamilyTests
     }
 
     [TestMethod]
-    public void FamilyWithCousinsTest()
+    public void FamilyWithFirstCousinsTest()
     {
         var gedcom = TestUtilities.CreateGedcom();
         var familyManager = new Gedcom.FamilyManager(gedcom);
@@ -156,5 +156,11 @@ public class FamilyTests
         var firstCousinXiaohuiZhou = auntMargaretDavis.Children.FirstOrDefault(c => c.Xref == TestIndividuals.XiaohuiZhou.Xref);
 
         Assert.IsNotNull(firstCousinXiaohuiZhou);
+    }
+
+    [TestMethod]
+    public void FamilyWithSecondCousinsTest()
+    {
+
     }
 }
