@@ -11,14 +11,14 @@ public class FamilyTests
         var gedcom = TestUtilities.CreateGedcom();
         var familyManager = new Gedcom.FamilyManager(gedcom);
 
-        var family = familyManager.CreateFamily(TestFamilies.JamesSmithAndSaraDavis.Xref, 0, 0);
+        var jamesAndSaraFamily = familyManager.CreateFamily(TestFamilies.JamesSmithAndSaraDavis.Xref, 0, 0);
 
         // Husband and wife should be present.
-        Assert.AreEqual(TestIndividuals.JamesSmith.Xref, family.Husband!.Xref);
-        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, family.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.JamesSmith.Xref, jamesAndSaraFamily.Husband!.Xref);
+        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, jamesAndSaraFamily.Wife!.Xref);
 
         // Children should not be present.
-        Assert.IsTrue(family.Children.Count == 0);
+        Assert.AreEqual(0, jamesAndSaraFamily.Children.Count);
     }
 
     [TestMethod]
@@ -26,18 +26,21 @@ public class FamilyTests
     {
         var gedcom = TestUtilities.CreateGedcom();
         var familyManager = new Gedcom.FamilyManager(gedcom);
-        var family = familyManager.CreateFamily(TestFamilies.JamesSmithAndSaraDavis.Xref, 1, 0);
+        var saraFamily = familyManager.CreateFamily(TestFamilies.JamesSmithAndSaraDavis.Xref, 1, 0);
 
         // Couple should be present.
-        Assert.AreEqual(TestIndividuals.JamesSmith.Xref, family.Husband!.Xref);
-        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, family.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.JamesSmith.Xref, saraFamily.Husband!.Xref);
+        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, saraFamily.Wife!.Xref);
+
+        var fatherDylanDavis = saraFamily.Wife!.Parents!.Husband!;
+        var motherFionaDouglas = saraFamily.Wife!.Parents!.Wife!;
 
         // Wife's parents should be present
-        Assert.AreEqual(TestIndividuals.DylanDavis.Xref, family.Wife!.Parents!.Husband!.Xref);
-        Assert.AreEqual(TestIndividuals.FionaDouglas.Xref, family.Wife!.Parents!.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.DylanDavis.Xref, fatherDylanDavis.Xref);
+        Assert.AreEqual(TestIndividuals.FionaDouglas.Xref, motherFionaDouglas.Xref);
 
         // Children should not be present.
-        Assert.AreEqual(family.Children.Count, 0);
+        Assert.AreEqual(0, saraFamily.Children.Count);
     }
 
     [TestMethod]
@@ -45,19 +48,22 @@ public class FamilyTests
     {
         var gedcom = TestUtilities.CreateGedcom();
         var familyManager = new Gedcom.FamilyManager(gedcom);
-        var family = familyManager.CreateFamily(TestFamilies.JamesSmithAndSaraDavis.Xref, 2, 0);
+        var saraFamily = familyManager.CreateFamily(TestFamilies.JamesSmithAndSaraDavis.Xref, 2, 0);
 
         // Couple should be present.
-        Assert.AreEqual(TestIndividuals.JamesSmith.Xref, family.Husband!.Xref);
-        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, family.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.JamesSmith.Xref, saraFamily.Husband!.Xref);
+        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, saraFamily.Wife!.Xref);
+
+        var fatherDylanDavis = saraFamily.Wife.Parents!.Husband!;
+        var grandfatherOwenDavis = fatherDylanDavis.Parents!.Husband!;
+        var grandMotherGwenJones = fatherDylanDavis.Parents!.Wife!;
 
         // Grandparents should be present.
-        var dylanDavis = family.Wife.Parents!.Husband;
-        Assert.AreEqual(TestIndividuals.OwenDavis.Xref, dylanDavis!.Parents!.Husband!.Xref);
-        Assert.AreEqual(TestIndividuals.GwenJones.Xref, dylanDavis!.Parents!.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.OwenDavis.Xref, grandfatherOwenDavis.Xref);
+        Assert.AreEqual(TestIndividuals.GwenJones.Xref, grandMotherGwenJones.Xref);
 
         // Children should not be present.
-        Assert.AreEqual(family.Children.Count, 0);
+        Assert.AreEqual(0, saraFamily.Children.Count);
     }
 
     [TestMethod]
@@ -65,19 +71,19 @@ public class FamilyTests
     {
         var gedcom = TestUtilities.CreateGedcom();
         var familyManager = new Gedcom.FamilyManager(gedcom);
-        var family = familyManager.CreateFamily(TestFamilies.OwenDavisAndGwenJones.Xref, 0, 1);
+        var owenAndGwenFamily = familyManager.CreateFamily(TestFamilies.OwenDavisAndGwenJones.Xref, 0, 1);
 
         // Couple should be present.
-        Assert.AreEqual(TestIndividuals.OwenDavis.Xref, family.Husband!.Xref);
-        Assert.AreEqual(TestIndividuals.GwenJones.Xref, family.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.OwenDavis.Xref, owenAndGwenFamily.Husband!.Xref);
+        Assert.AreEqual(TestIndividuals.GwenJones.Xref, owenAndGwenFamily.Wife!.Xref);
 
         // Parents should not be present.
-        Assert.IsNull(family.Husband!.Parents);
-        Assert.IsNull(family.Wife!.Parents);
+        Assert.IsNull(owenAndGwenFamily.Husband!.Parents);
+        Assert.IsNull(owenAndGwenFamily.Wife!.Parents);
 
         // Child should be present.
-        var dylanDavis = family.Children.FirstOrDefault(c => c.Xref == TestIndividuals.DylanDavis.Xref);
-        Assert.IsNotNull(dylanDavis);
+        var sonDylanDavis = owenAndGwenFamily.Children.FirstOrDefault(c => c.Xref == TestIndividuals.DylanDavis.Xref);
+        Assert.IsNotNull(sonDylanDavis);
     }
 
     [TestMethod]
@@ -105,22 +111,23 @@ public class FamilyTests
     {
         var gedcom = TestUtilities.CreateGedcom();
         var familyManager = new Gedcom.FamilyManager(gedcom);
-        var family = familyManager.CreateFamily(TestFamilies.JamesSmithAndSaraDavis.Xref, 1, 0);
+        var saraFamily = familyManager.CreateFamily(TestFamilies.JamesSmithAndSaraDavis.Xref, 1, 0);
 
         // Couple should be present.
-        Assert.AreEqual(TestIndividuals.JamesSmith.Xref, family.Husband!.Xref);
-        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, family.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.JamesSmith.Xref, saraFamily.Husband!.Xref);
+        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, saraFamily.Wife!.Xref);
 
         // Wife's parents should be present
-        var parentsFamily = family.Wife!.Parents;
-        Assert.AreEqual(TestIndividuals.DylanDavis.Xref, parentsFamily!.Husband!.Xref);
-        Assert.AreEqual(TestIndividuals.FionaDouglas.Xref, parentsFamily!.Wife!.Xref);
+        var fatherDylandDavis = saraFamily.Wife!.Parents!.Husband!;
+        var motherFionaDouglas = saraFamily.Wife!.Parents!.Wife!;
+        Assert.AreEqual(TestIndividuals.DylanDavis.Xref, fatherDylandDavis.Xref);
+        Assert.AreEqual(TestIndividuals.FionaDouglas.Xref, motherFionaDouglas.Xref);
 
-        familyManager.LoadSiblings(parentsFamily.Husband);
+        familyManager.LoadSiblings(fatherDylandDavis);
 
         // Aunts and uncles should be present
-        var auntMargaretDavis = parentsFamily.Husband.Siblings.SingleOrDefault(s => s.Xref == TestIndividuals.MargaretDavis.Xref);
-        var uncleGarethDavis = parentsFamily.Husband.Siblings.SingleOrDefault(s => s.Xref == TestIndividuals.GarethDavis.Xref);
+        var auntMargaretDavis = fatherDylandDavis.Siblings.SingleOrDefault(s => s.Xref == TestIndividuals.MargaretDavis.Xref);
+        var uncleGarethDavis = fatherDylandDavis.Siblings.SingleOrDefault(s => s.Xref == TestIndividuals.GarethDavis.Xref);
 
         Assert.IsNotNull(auntMargaretDavis);
         Assert.IsNotNull(uncleGarethDavis);
@@ -131,15 +138,14 @@ public class FamilyTests
     {
         var gedcom = TestUtilities.CreateGedcom();
         var familyManager = new Gedcom.FamilyManager(gedcom);
-        var sarahDavisFamily = familyManager.CreateFamily(TestFamilies.JamesSmithAndSaraDavis.Xref, 1, 0);
-        var sarahDavis = sarahDavisFamily.Wife!;
+        var saraDavisFamily = familyManager.CreateFamily(TestFamilies.JamesSmithAndSaraDavis.Xref, 1, 0);
 
         // Couple should be present.
-        Assert.AreEqual(TestIndividuals.JamesSmith.Xref, sarahDavisFamily.Husband!.Xref);
-        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, sarahDavisFamily.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.JamesSmith.Xref, saraDavisFamily.Husband!.Xref);
+        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, saraDavisFamily.Wife!.Xref);
 
         // Father should be present.
-        var fatherDylanDavis = sarahDavis.Parents!.Husband!;
+        var fatherDylanDavis = saraDavisFamily.Wife!.Parents!.Husband!;
         familyManager.LoadSiblings(fatherDylanDavis);
 
         // Aunt should be present.
