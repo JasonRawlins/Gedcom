@@ -9,8 +9,8 @@ public class SourceRepositoryCitation : RecordStructureBase
     public SourceRepositoryCitation() : base() { }
     public SourceRepositoryCitation(Record record) : base(record) { }
 
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
     public List<CallNumber> CallNumbers => List<CallNumber>(Tag.CallNumber);
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
 
     public override string ToString() => $"{Record.Value}";
 }

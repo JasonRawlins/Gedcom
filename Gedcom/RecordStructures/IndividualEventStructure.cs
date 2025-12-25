@@ -8,6 +8,7 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
 {
     public IndividualEventStructure() { }
     public IndividualEventStructure(Record record) : base(record) { }
+
     public ChildToFamilyLink ChildToFamilyLink => First<ChildToFamilyLink>(global::Gedcom.Tag.FamilyChild);
     public AddressStructure AddressStructure => First<AddressStructure>(global::Gedcom.Tag.Address);
     public string AgeAtEvent => GetValue(global::Gedcom.Tag.Age);

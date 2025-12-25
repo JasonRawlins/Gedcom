@@ -41,7 +41,7 @@ public static class Tag
     public const string Concatenation = "CONC"; // {Concatenation} Concatenate to previous line without a space or carriage return.
     public const string Confirmation = "CONF"; // {Confirmation} <blank>
     public const string ConfirmationLds = "CONL"; // {Confirmation LDS} <blank>
-    public const string Continued = "CONT"; // {Continued} Concatenate to previous line with a carriage return or new line. Check spec.
+    public const string Continue = "CONT"; // {Continued} Concatenate to previous line with a carriage return or new line. Check spec.
     public const string Copyright = "COPR"; // {Copyright} <COPYRIGHT_GEDCOM_FILE>, <COPYRIGHT_SOURCE_DATA>
     public const string Corporate = "CORP"; // {Corporate} <NAME_OF_BUSINESS>
     public const string Cremation = "CREM"; // {Cremation} <blank>

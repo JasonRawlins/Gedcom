@@ -10,7 +10,7 @@ public class SourceCitation : RecordStructureBase
     public SourceCitation(Record record) : base(record) { }
 
     public string CertaintyAssessment => GetValue(Tag.QualityOfData);
-    public SourceCitationData Data => First<SourceCitationData>(Tag.Data);
+    public SourceCitationData SourceCitationData => First<SourceCitationData>(Tag.Data);
     public EventTypeCitedFrom EventTypeCitedFrom => First<EventTypeCitedFrom>(Tag.Event);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
@@ -37,7 +37,7 @@ internal class SourceCitationJson : GedcomJson
     public SourceCitationJson(SourceCitation sourceCitation)
     {
         CertaintyAssessment = JsonString(sourceCitation.CertaintyAssessment);
-        Data = JsonRecord(sourceCitation.Data);
+        Data = JsonRecord(sourceCitation.SourceCitationData);
         EventTypeCitedFrom = JsonRecord(sourceCitation.EventTypeCitedFrom);
         MultimediaLinks = JsonList(sourceCitation.MultimediaLinks);
         Notes = JsonList(sourceCitation.NoteStructures.Select(ns => ns.Text).ToList());

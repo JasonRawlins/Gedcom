@@ -20,9 +20,9 @@ public class NoteStructure : RecordStructureBase
         {
             var text = new StringBuilder();
             text.Append(Record.Value);
-            var contAndConc = Record.Records.Where(r => r.Tag.Equals(Tag.Continued) || r.Tag.Equals(Tag.Concatenation)).ToList();
-            contAndConc.ForEach(r => {
-                if (r.Tag.Equals(Tag.Continued))
+            var continueOrConcatenate = Record.Records.Where(r => r.Tag.Equals(Tag.Continue) || r.Tag.Equals(Tag.Concatenation)).ToList();
+            continueOrConcatenate.ForEach(r => {
+                if (r.Tag.Equals(Tag.Continue))
                 {
                     text.AppendLine(r.Value);
                 }

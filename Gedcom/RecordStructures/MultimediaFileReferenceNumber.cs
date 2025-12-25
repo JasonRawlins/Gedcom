@@ -9,7 +9,7 @@ public class MultimediaFileReferenceNumber : RecordStructureBase
     public MultimediaFileReferenceNumber() { }
     public MultimediaFileReferenceNumber(Record record) : base(record) { }
 
-    public MultimediaFormat MultiMediaFormat => First<MultimediaFormat>(Tag.Format);
+    public MultimediaFormat MultimediaFormat => First<MultimediaFormat>(Tag.Format);
 
     public override string ToString() => $"{Record.Value}";
 }
@@ -30,7 +30,7 @@ internal class MultimediaFileReferenceNumberJson : GedcomJson
 {
     public MultimediaFileReferenceNumberJson(MultimediaFileReferenceNumber multimediaFileReferenceNumber)
     {
-        MultiMediaFormat = JsonRecord(multimediaFileReferenceNumber.MultiMediaFormat);
+        MultiMediaFormat = JsonRecord(multimediaFileReferenceNumber.MultimediaFormat);
     }
 
     public MultimediaFormat? MultiMediaFormat { get; set; }
