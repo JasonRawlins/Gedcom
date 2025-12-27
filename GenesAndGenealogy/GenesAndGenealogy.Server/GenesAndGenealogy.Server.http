@@ -1,6 +1,6 @@
 @GenesAndGenealogy.Server_HostAddress = http://localhost:5059
 
-GET {{GenesAndGenealogy.Server_HostAddress}}/weatherforecast/
+GET {{GenesAndGenealogy.Server_HostAddress}}/gedcom/
 Accept: application/json
 
 ###

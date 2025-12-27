@@ -1,37 +1,32 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
+import { ProfileModel } from '../view-models/ProfileModel';
+import { GedcomService } from './gedcom.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: false,
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  providers: [GedcomService]
 })
 export class AppComponent implements OnInit {
-  public forecasts: WeatherForecast[] = [];
+  public profile?: ProfileModel;
 
-  constructor(private http: HttpClient) {}
-
-  ngOnInit() {
-    this.getForecasts();
+  constructor(private gedcomService: GedcomService) {
   }
 
-  getForecasts() {
-    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
-      (result) => {
-        this.forecasts = result;
+  ngOnInit() {
+    this.getProfile("@I272718947187@");
+  }
+
+  getProfile(indiXref: string) {
+    this.gedcomService.getProfile(indiXref).subscribe(
+      (profileModel) => {
+        this.profile = profileModel;
       },
       (error) => {
         console.error(error);
-      }
-    );
+      });
   }
 
   title = 'genesandgenealogy.client';
