@@ -107,22 +107,22 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
         return monthNameVariations.Contains(possibleMonthName.ToUpper());
     }
 
-    private static string GetFullMonthName(int monthNumber)
+    private static string GetFullMonthName(int monthNumber, bool useFullName = false)
     {
         return monthNumber switch
         {
-            1 => "January",
-            2 => "February",
-            3 => "March",
-            4 => "April",
-            5 => "May",
-            6 => "June",
-            7 => "July",
-            8 => "August",
-            9 => "September",
-            10 => "October",
-            11 => "November",
-            12 => "December",
+            1 => useFullName ? "January" : "Jan",
+            2 => useFullName ? "February" : "Feb",
+            3 => useFullName ? "March" : "Mar",
+            4 => useFullName ? "April" : "Apr",
+            5 => useFullName ? "May" : "May",
+            6 => useFullName ? "June" : "Jun",
+            7 => useFullName ? "July" : "Jul",
+            8 => useFullName ? "August" : "Aug",
+            9 => useFullName ? "September" : "Sep",
+            10 => useFullName ? "October" : "Oct",
+            11 => useFullName ? "November" : "Nov",
+            12 => useFullName ? "December" : "Dec",
             _ => ""
         };
     }
