@@ -3,7 +3,7 @@
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(SourceRecordJsonConverter))]
+[JsonConverter(typeof(SourceJsonConverter))]
 public class SourceRecord : RecordStructureBase
 {
     public SourceRecord() : base() { }
@@ -27,7 +27,7 @@ public class SourceRecord : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {AutomatedRecordId}";
 }
 
-internal class SourceRecordJsonConverter : JsonConverter<SourceRecord>
+internal class SourceJsonConverter : JsonConverter<SourceRecord>
 {
     public override SourceRecord? ReadJson(JsonReader reader, Type objectType, SourceRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
@@ -35,21 +35,21 @@ internal class SourceRecordJsonConverter : JsonConverter<SourceRecord>
     {
         if (sourceRecord == null) throw new ArgumentNullException(nameof(sourceRecord));
 
-        serializer.Serialize(writer, new SourceRecordJson(sourceRecord));
+        serializer.Serialize(writer, new SourceJson(sourceRecord));
     }
 }
 
-internal class SourceRecordJson : GedcomJson
+internal class SourceJson : GedcomJson
 {
-    public SourceRecordJson(SourceRecord sourceRecord)
+    public SourceJson(SourceRecord sourceRecord)
     {
         AutomatedRecordId = JsonString(sourceRecord.AutomatedRecordId);
         CallNumber = JsonString(sourceRecord.CallNumber);
         ChangeDate = JsonRecord(sourceRecord.ChangeDate);
-        MultimediaLinks = JsonList(sourceRecord.MultimediaLinks);
-        Notes = JsonList(sourceRecord.NoteStructures);
         DescriptiveTitle = JsonRecord(sourceRecord.SourceDescriptiveTitle);
         FiledByEntry = JsonRecord(sourceRecord.SourceFiledByEntry);
+        MultimediaLinks = JsonList(sourceRecord.MultimediaLinks);
+        Notes = JsonList(sourceRecord.NoteStructures);
         Originator = JsonRecord(sourceRecord.SourceOriginator);
         PublicationFacts = JsonRecord(sourceRecord.SourcePublicationFacts);
         RecordData = JsonRecord(sourceRecord.SourceRecordData);
@@ -62,10 +62,10 @@ internal class SourceRecordJson : GedcomJson
     public string? AutomatedRecordId { get; set; }
     public string? CallNumber { get; set; }
     public ChangeDate? ChangeDate { get; set; }
-    public List<MultimediaLink>? MultimediaLinks { get; set; }
-    public List<NoteStructure>? Notes { get; set; }
     public NoteStructure? DescriptiveTitle { get; set; }
     public NoteStructure? FiledByEntry { get; set; }
+    public List<MultimediaLink>? MultimediaLinks { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
     public NoteStructure? Originator { get; set; }
     public NoteStructure? PublicationFacts { get; set; }
     public SourceRecordData? RecordData { get; set; }

@@ -34,18 +34,18 @@ internal class HeaderCorporationJson : GedcomJson
 {
     public HeaderCorporationJson(HeaderCorporation headerCorporation)
     {
+        Address = JsonRecord(headerCorporation.AddressStructure);
         Emails = JsonList(headerCorporation.AddressEmails);
         FaxNumbers = JsonList(headerCorporation.AddressFaxNumbers);
-        Address = JsonRecord(headerCorporation.AddressStructure);
-        WebPages = JsonList(headerCorporation.AddressWebPages);
         PhoneNumbers = JsonList(headerCorporation.PhoneNumbers);
+        WebPages = JsonList(headerCorporation.AddressWebPages);
     }
 
+    public AddressStructure? Address { get; set; }
     public List<string>? Emails { get; set; }
     public List<string>? FaxNumbers { get; set; }
-    public AddressStructure? Address { get; set; }
-    public List<string>? WebPages { get; set; }
     public List<string>? PhoneNumbers { get; set; }
+    public List<string>? WebPages { get; set; }
 }
 
 #region HeaderCorporation p. 23

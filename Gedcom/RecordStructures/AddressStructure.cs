@@ -3,7 +3,7 @@
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(AddressStructureJsonConverter))]
+[JsonConverter(typeof(AddressJsonConverter))]
 public class AddressStructure : RecordStructureBase
 {
     public AddressStructure() { }
@@ -21,7 +21,7 @@ public class AddressStructure : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {AddressLine}";
 }
 
-internal class AddressStructureJsonConverter : JsonConverter<AddressStructure>
+internal class AddressJsonConverter : JsonConverter<AddressStructure>
 {
     public override AddressStructure? ReadJson(JsonReader reader, Type objectType, AddressStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
@@ -29,13 +29,13 @@ internal class AddressStructureJsonConverter : JsonConverter<AddressStructure>
     {
         if (addressStructure == null) throw new ArgumentNullException(nameof(addressStructure));
 
-        serializer.Serialize(writer, new AddressStructureJson(addressStructure));
+        serializer.Serialize(writer, new AddressJson(addressStructure));
     }
 }
 
-internal class AddressStructureJson : GedcomJson
+internal class AddressJson : GedcomJson
 {
-    public AddressStructureJson(AddressStructure addressStructure)
+    public AddressJson(AddressStructure addressStructure)
     {
         City = JsonString(addressStructure.AddressCity);
         Country = JsonString(addressStructure.AddressCountry);

@@ -45,6 +45,7 @@ internal class EventDetailJson : GedcomJson
         CauseOfEvent = JsonString(eventDetail.CauseOfEvent);
         DateValue = JsonString(eventDetail.DateValue);
         EventOrFactClassification = JsonString(eventDetail.EventOrFactClassification);
+        GedcomDate = JsonRecord(eventDetail.GedcomDate);
         MultimediaLinks = JsonList(eventDetail.MultimediaLinks);
         Notes = JsonList(eventDetail.NoteStructures);
         Place = JsonRecord(eventDetail.PlaceStructure);
@@ -58,6 +59,7 @@ internal class EventDetailJson : GedcomJson
     public string? CauseOfEvent { get; set; }
     public string? DateValue { get; set; }
     public string? EventOrFactClassification { get; set; }
+    public GedcomDate GedcomDate { get; set; }
     public List<MultimediaLink>? MultimediaLinks { get; set; }
     public List<NoteStructure>? Notes { get; set; }
     public PlaceStructure? Place { get; set; }

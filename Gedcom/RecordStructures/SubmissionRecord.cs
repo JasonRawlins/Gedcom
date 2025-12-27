@@ -3,27 +3,27 @@
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(SubmissionRecordJsonConverter))]
+[JsonConverter(typeof(SubmissionJsonConverter))]
 public class SubmissionRecord : RecordStructureBase
 {
     public SubmissionRecord() : base() { }
     public SubmissionRecord(Record record) : base(record) { }
 
-    public string Submitter => GetValue(Tag.Submitter);
-    public string NameOfFamilyFile => GetValue(Tag.FamilyFile);
-    public string TempleCode => GetValue(Tag.Temple);
+    public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
+    public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
     public string GenerationsOfAncestors => GetValue(Tag.Ancestors);
     public string GenerationsOfDescendants => GetValue(Tag.Descendants);
-    public string OrdinanceProcessFlag => GetValue(Tag.Ordinance);
-    public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
+    public string NameOfFamilyFile => GetValue(Tag.FamilyFile);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
-    public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
+    public string OrdinanceProcessFlag => GetValue(Tag.Ordinance);
+    public string Submitter => GetValue(Tag.Submitter);
+    public string TempleCode => GetValue(Tag.Temple);
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {Submitter}";
 }
 
-internal class SubmissionRecordJsonConverter : JsonConverter<SubmissionRecord>
+internal class SubmissionJsonConverter : JsonConverter<SubmissionRecord>
 {
     public override SubmissionRecord? ReadJson(JsonReader reader, Type objectType, SubmissionRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
@@ -31,19 +31,20 @@ internal class SubmissionRecordJsonConverter : JsonConverter<SubmissionRecord>
     {
         if (submissionRecord == null) throw new ArgumentNullException(nameof(submissionRecord));
 
-        serializer.Serialize(writer, new SubmissionRecordJson(submissionRecord));
+        serializer.Serialize(writer, new SubmissionJson(submissionRecord));
     }
 }
 
-internal class SubmissionRecordJson : GedcomJson
+internal class SubmissionJson : GedcomJson
 {
-    public SubmissionRecordJson(SubmissionRecord submissionRecord)
+    public SubmissionJson(SubmissionRecord submissionRecord)
     {
         AutomatedRecordId = JsonString(submissionRecord.AutomatedRecordId);
         ChangeDate = JsonRecord(submissionRecord.ChangeDate);
         GenerationsOfAncestors = JsonString(submissionRecord.GenerationsOfAncestors);
         GenerationsOfDescendants = JsonString(submissionRecord.GenerationsOfDescendants);
         NameOfFamilyFile = JsonString(submissionRecord.NameOfFamilyFile);
+        Notes = JsonList(submissionRecord.NoteStructures);
         OrdinanceProcessFlag = JsonString(submissionRecord.OrdinanceProcessFlag);
         Submitter = JsonString(submissionRecord.Submitter);
         TempleCode = JsonString(submissionRecord.TempleCode);
@@ -55,7 +56,7 @@ internal class SubmissionRecordJson : GedcomJson
     public string? GenerationsOfAncestors { get; set; }
     public string? GenerationsOfDescendants { get; set; }
     public string? NameOfFamilyFile { get; set; }
-    public List<NoteStructure>? NoteStructures { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
     public string? OrdinanceProcessFlag { get; set; }
     public string? Submitter { get; set; }
     public string? TempleCode { get; set; }

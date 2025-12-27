@@ -3,7 +3,7 @@
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(SourceRecordDataJsonConverter))]
+[JsonConverter(typeof(SourceDataJsonConverter))]
 public class SourceRecordData : RecordStructureBase
 {
     public SourceRecordData() : base() { }
@@ -16,7 +16,7 @@ public class SourceRecordData : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {ResponsibleAgency}";
 }
 
-internal class SourceRecordDataJsonConverter : JsonConverter<SourceRecordData>
+internal class SourceDataJsonConverter : JsonConverter<SourceRecordData>
 {
     public override SourceRecordData? ReadJson(JsonReader reader, Type objectType, SourceRecordData? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
@@ -24,13 +24,13 @@ internal class SourceRecordDataJsonConverter : JsonConverter<SourceRecordData>
     {
         if (sourceRecordData == null) throw new ArgumentNullException(nameof(sourceRecordData));
 
-        serializer.Serialize(writer, new SourceRecordDataJson(sourceRecordData));
+        serializer.Serialize(writer, new SourceDataJson(sourceRecordData));
     }
 }
 
-internal class SourceRecordDataJson : GedcomJson
+internal class SourceDataJson : GedcomJson
 {
-    public SourceRecordDataJson(SourceRecordData sourceRecordData)
+    public SourceDataJson(SourceRecordData sourceRecordData)
     {
         EventsRecorded = JsonList(sourceRecordData.EventsRecorded);
         Notes = JsonList(sourceRecordData.NoteStructures);

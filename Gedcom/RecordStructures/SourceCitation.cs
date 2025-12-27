@@ -10,10 +10,10 @@ public class SourceCitation : RecordStructureBase
     public SourceCitation(Record record) : base(record) { }
 
     public string CertaintyAssessment => GetValue(Tag.QualityOfData);
-    public SourceCitationData SourceCitationData => First<SourceCitationData>(Tag.Data);
     public EventTypeCitedFrom EventTypeCitedFrom => First<EventTypeCitedFrom>(Tag.Event);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
+    public SourceCitationData SourceCitationData => First<SourceCitationData>(Tag.Data);
     public string WhereWithinSource => GetValue(Tag.Page);
     public string Xref => Record.Value;
 

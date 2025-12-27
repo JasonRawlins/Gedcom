@@ -3,7 +3,7 @@
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(SubmitterRecordJsonConverter))]
+[JsonConverter(typeof(SubmitterJsonConverter))]
 public class SubmitterRecord : RecordStructureBase
 {
     public SubmitterRecord() : base() { }
@@ -21,7 +21,7 @@ public class SubmitterRecord : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {SubmitterName}";
 }
 
-internal class SubmitterRecordJsonConverter : JsonConverter<SubmitterRecord>
+internal class SubmitterJsonConverter : JsonConverter<SubmitterRecord>
 {
     public override SubmitterRecord? ReadJson(JsonReader reader, Type objectType, SubmitterRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
@@ -29,13 +29,13 @@ internal class SubmitterRecordJsonConverter : JsonConverter<SubmitterRecord>
     {
         if (submitterRecord == null) throw new ArgumentNullException(nameof(submitterRecord));
 
-        serializer.Serialize(writer, new SubmitterRecordJson(submitterRecord));
+        serializer.Serialize(writer, new SubmitterJson(submitterRecord));
     }
 }
 
-internal class SubmitterRecordJson : GedcomJson
+internal class SubmitterJson : GedcomJson
 {
-    public SubmitterRecordJson(SubmitterRecord submitterRecord)
+    public SubmitterJson(SubmitterRecord submitterRecord)
     {
         Address = JsonRecord(submitterRecord.AddressStructure);
         AutomatedRecordId = JsonString(submitterRecord.AutomatedRecordId);

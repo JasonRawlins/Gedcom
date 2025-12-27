@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(NoteStructureJsonConverter))]
+[JsonConverter(typeof(NoteJsonConverter))]
 public class NoteStructure : RecordStructureBase
 {
     public NoteStructure() : base() { }
@@ -44,7 +44,7 @@ public class NoteStructure : RecordStructureBase
     }
 }
 
-internal class NoteStructureJsonConverter : JsonConverter<NoteStructure>
+internal class NoteJsonConverter : JsonConverter<NoteStructure>
 {
     public override NoteStructure? ReadJson(JsonReader reader, Type objectType, NoteStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
@@ -52,13 +52,13 @@ internal class NoteStructureJsonConverter : JsonConverter<NoteStructure>
     {
         if (noteStructure == null) throw new ArgumentNullException(nameof(noteStructure));
 
-        serializer.Serialize(writer, new NoteStructureJson(noteStructure));
+        serializer.Serialize(writer, new NoteJson(noteStructure));
     }
 }
 
-internal class NoteStructureJson : GedcomJson
+internal class NoteJson : GedcomJson
 {
-    public NoteStructureJson(NoteStructure noteStructure)
+    public NoteJson(NoteStructure noteStructure)
     {
         Text = noteStructure.Text;
     }

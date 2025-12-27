@@ -3,7 +3,7 @@
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(FamilyRecordJsonConverter))]
+[JsonConverter(typeof(FamilyJsonConverter))]
 public class FamilyRecord : RecordStructureBase
 {
     public FamilyRecord() : base() { }
@@ -34,7 +34,7 @@ public class FamilyRecord : RecordStructureBase
     }
 }
 
-internal class FamilyRecordJsonConverter : JsonConverter<FamilyRecord>
+internal class FamilyJsonConverter : JsonConverter<FamilyRecord>
 {
     public override FamilyRecord? ReadJson(JsonReader reader, Type objectType, FamilyRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
@@ -42,13 +42,13 @@ internal class FamilyRecordJsonConverter : JsonConverter<FamilyRecord>
     {
         if (familyRecord == null) throw new ArgumentNullException(nameof(familyRecord));
 
-        serializer.Serialize(writer, new FamilyRecordJson(familyRecord));
+        serializer.Serialize(writer, new FamilyJson(familyRecord));
     }
 }
 
-internal class FamilyRecordJson : GedcomJson
+internal class FamilyJson : GedcomJson
 {
-    public FamilyRecordJson(FamilyRecord familyRecord)
+    public FamilyJson(FamilyRecord familyRecord)
     {
         AdoptedByWhichParent = JsonString(familyRecord.AdoptedByWhichParent);
         AutomatedRecordNumber = JsonString(familyRecord.AutomatedRecordNumber);

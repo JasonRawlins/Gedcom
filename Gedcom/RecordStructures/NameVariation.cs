@@ -38,9 +38,9 @@ internal class NameVariationJson : GedcomJson
     public NameVariationJson(NameVariation nameVariation)
     {
         Given = JsonString(nameVariation.Type);
+        Nickname = JsonString(nameVariation.Type);
         Prefix = JsonString(nameVariation.Type);
         Suffix = JsonString(nameVariation.Type);
-        Nickname = JsonString(nameVariation.Type);
         Surname = JsonString(nameVariation.Type);
         SurnamePrefix = JsonString(nameVariation.Type);
         Type = JsonString(nameVariation.Type);
@@ -48,9 +48,9 @@ internal class NameVariationJson : GedcomJson
 
 
     public string? Given { get; set; }
+    public string? Nickname { get; set; }
     public string? Prefix { get; set; }
     public string? Suffix { get; set; }
-    public string? Nickname { get; set; }
     public string? Surname { get; set; }
     public string? SurnamePrefix { get; set; }
     public string? Type { get; set; }

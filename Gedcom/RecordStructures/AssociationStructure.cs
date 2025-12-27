@@ -3,7 +3,7 @@
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(AssociationStructureJsonConverter))]
+[JsonConverter(typeof(AssociationJsonConverter))]
 public class AssociationStructure : RecordStructureBase
 {
     public AssociationStructure() : base() { }
@@ -16,7 +16,7 @@ public class AssociationStructure : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {RelationIsDescriptor}";
 }
 
-internal class AssociationStructureJsonConverter : JsonConverter<AssociationStructure>
+internal class AssociationJsonConverter : JsonConverter<AssociationStructure>
 {
     public override AssociationStructure? ReadJson(JsonReader reader, Type objectType, AssociationStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
@@ -24,13 +24,13 @@ internal class AssociationStructureJsonConverter : JsonConverter<AssociationStru
     {
         if (associationStructure == null) throw new ArgumentNullException(nameof(associationStructure));
 
-        serializer.Serialize(writer, new AssociationStructureJson(associationStructure));
+        serializer.Serialize(writer, new AssociationJson(associationStructure));
     }
 }
 
-internal class AssociationStructureJson : GedcomJson
+internal class AssociationJson : GedcomJson
 {
-    public AssociationStructureJson(AssociationStructure associationStructure)
+    public AssociationJson(AssociationStructure associationStructure)
     {
         Notes = JsonList(associationStructure.NoteStructures);
         RelationIsDescriptor = JsonString(associationStructure.RelationIsDescriptor);

@@ -3,7 +3,7 @@
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(MultimediaRecordJsonConverter))]
+[JsonConverter(typeof(MultimediaJsonConverter))]
 public class MultimediaRecord : RecordStructureBase
 {
     public MultimediaRecord() : base() { }
@@ -21,7 +21,7 @@ public class MultimediaRecord : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {AutomatedRecordId}, {DescriptiveTitle}";
 }
 
-internal class MultimediaRecordJsonConverter : JsonConverter<MultimediaRecord>
+internal class MultimediaJsonConverter : JsonConverter<MultimediaRecord>
 {
     public override MultimediaRecord? ReadJson(JsonReader reader, Type objectType, MultimediaRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
@@ -29,13 +29,13 @@ internal class MultimediaRecordJsonConverter : JsonConverter<MultimediaRecord>
     {
         if (multimediaRecord == null) throw new ArgumentNullException(nameof(multimediaRecord));
 
-        serializer.Serialize(writer, new MultimediaRecordJson(multimediaRecord));
+        serializer.Serialize(writer, new MultimediaJson(multimediaRecord));
     }
 }
 
-internal class MultimediaRecordJson : GedcomJson
+internal class MultimediaJson : GedcomJson
 {
-    public MultimediaRecordJson(MultimediaRecord multimediaRecord)
+    public MultimediaJson(MultimediaRecord multimediaRecord)
     {
         AutomatedRecordId = JsonString(multimediaRecord.AutomatedRecordId);
         ChangeDate = JsonRecord(multimediaRecord.ChangeDate);

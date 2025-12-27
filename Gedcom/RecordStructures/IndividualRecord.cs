@@ -3,7 +3,7 @@
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(IndividualRecordJsonConverter))]
+[JsonConverter(typeof(IndividualJsonConverter))]
 public class IndividualRecord : RecordStructureBase
 {
     public IndividualRecord() { }
@@ -61,7 +61,7 @@ public class IndividualRecord : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {PersonalNameStructures.First().NamePersonal}, {SexValue}";
 }
 
-internal class IndividualRecordJsonConverter : JsonConverter<IndividualRecord>
+internal class IndividualJsonConverter : JsonConverter<IndividualRecord>
 {
     public override IndividualRecord? ReadJson(JsonReader reader, Type objectType, IndividualRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
@@ -69,13 +69,13 @@ internal class IndividualRecordJsonConverter : JsonConverter<IndividualRecord>
     {
         if (individualRecord == null) throw new ArgumentNullException(nameof(individualRecord));
 
-        serializer.Serialize(writer, new IndividualRecordJson(individualRecord));
+        serializer.Serialize(writer, new IndividualJson(individualRecord));
     }
 }
 
-internal class IndividualRecordJson : GedcomJson
+internal class IndividualJson : GedcomJson
 {
-    public IndividualRecordJson(IndividualRecord individualRecord)
+    public IndividualJson(IndividualRecord individualRecord)
     {
         Aliases = JsonList(individualRecord.Aliases);
         AncestorInterests = JsonList(individualRecord.AncestorInterests);

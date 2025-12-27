@@ -201,16 +201,18 @@ internal class GedcomDateJson : GedcomJson
 {
     public GedcomDateJson(GedcomDate gedcomDate)
     {
+        DateValue = gedcomDate.DateValue;
         Day = gedcomDate.Day;
-        DMY = gedcomDate.DayMonthYear;
+        Dmy = gedcomDate.DayMonthYear;
         Month = gedcomDate.Month;
         MonthName = gedcomDate.MonthName;
         Time = gedcomDate.TimeValue;
         Year = gedcomDate.Year;
     }
 
+    public string DateValue { get; set; } // The raw, un-parsed data value.
     public int? Day { get; set; }
-    public string? DMY { get; set; }
+    public string? Dmy { get; set; }
     public int? Month { get; set; }
     public string? MonthName { get; set; } = "";
     public string? Time { get; set; }

@@ -3,75 +3,74 @@
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(IndividualEventStructureJsonConverter))]
+[JsonConverter(typeof(IndividualEventJsonConverter))]
 public class IndividualEventStructure : RecordStructureBase, IEventDetail
 {
     public IndividualEventStructure() { }
     public IndividualEventStructure(Record record) : base(record) { }
 
-    public ChildToFamilyLink ChildToFamilyLink => First<ChildToFamilyLink>(global::Gedcom.Tag.FamilyChild);
-    public AddressStructure AddressStructure => First<AddressStructure>(global::Gedcom.Tag.Address);
-    public string AgeAtEvent => GetValue(global::Gedcom.Tag.Age);
-    public string CauseOfEvent => GetValue(global::Gedcom.Tag.Cause);
-    public string DateValue => GetValue(global::Gedcom.Tag.Date);
-    public string EventOrFactClassification => GetValue(global::Gedcom.Tag.Type);
+    public AddressStructure AddressStructure => First<AddressStructure>(Tag.Address);
+    public string AgeAtEvent => GetValue(Tag.Age);
+    public string CauseOfEvent => GetValue(Tag.Cause);
+    public ChildToFamilyLink ChildToFamilyLink => First<ChildToFamilyLink>(Tag.FamilyChild);
+    public string DateValue => GetValue(Tag.Date);
+    public string EventOrFactClassification => GetValue(Tag.Type);
     public GedcomDate GedcomDate => GedcomDate.Parse(DateValue);
-    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(global::Gedcom.Tag.Object);
+    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
     public string Name
     {
         get
         {
-            return Tag switch
+            return Record.Tag switch
             {
-                global::Gedcom.Tag.Adoption => "Adoption",
-                global::Gedcom.Tag.BaptismLds => "Baptism (LDS)",
-                global::Gedcom.Tag.Baptism => "Baptism",
-                global::Gedcom.Tag.BarMitzvah => "Bar Mitzvah",
-                global::Gedcom.Tag.BasMitzvah => "Bas Mitzvah",
-                global::Gedcom.Tag.Birth => "Birth",
-                global::Gedcom.Tag.Blessing => "Blessing",
-                global::Gedcom.Tag.Burial => "Burial",
-                global::Gedcom.Tag.Census => "Census",
-                global::Gedcom.Tag.Christening => "Christening",
-                global::Gedcom.Tag.AdultChristening => "Christening (Adult)",
-                global::Gedcom.Tag.Confirmation => "Confirmation (LDS)",
-                global::Gedcom.Tag.Cremation => "Cremation",
-                global::Gedcom.Tag.Death => "Death",
-                global::Gedcom.Tag.Divorce => "Divorce",
-                global::Gedcom.Tag.DivorceFiled => "Divorce Filed",
-                global::Gedcom.Tag.Emigration => "Emigration",
-                global::Gedcom.Tag.Endowment => "Endowment",
-                global::Gedcom.Tag.Engagement => "Engagement",
-                global::Gedcom.Tag.Event => "Event",
-                global::Gedcom.Tag.FirstCommunion => "First Communion",
-                global::Gedcom.Tag.Graduation => "Graduation",
-                global::Gedcom.Tag.Immigration => "Immigration",
-                global::Gedcom.Tag.MarriageBann => "Marriage Bann",
-                global::Gedcom.Tag.MarriageContract => "Marriage Contract",
-                global::Gedcom.Tag.MarriageLicense => "Marriage License",
-                global::Gedcom.Tag.Marriage => "Marriage",
-                global::Gedcom.Tag.MarriageSettlement => "Marriage Settlement",
-                global::Gedcom.Tag.Naturalization => "Naturalization",
-                global::Gedcom.Tag.Occupation => "Occupations",
-                global::Gedcom.Tag.Ordinance => "Ordinance",
-                global::Gedcom.Tag.Ordination => "Ordination",
-                global::Gedcom.Tag.Probate => "Probate",
-                global::Gedcom.Tag.Residence => "Residence",
-                global::Gedcom.Tag.Retirement => "Retirement",
-                global::Gedcom.Tag.SealingChild => "Sealing (Child)",
-                global::Gedcom.Tag.SealingSpouse => "Sealing (Spouse)",
-                global::Gedcom.Tag.Will => "Will",
-                _ => Tag,
+                Tag.Adoption => "Adoption",
+                Tag.BaptismLds => "Baptism (LDS)",
+                Tag.Baptism => "Baptism",
+                Tag.BarMitzvah => "Bar Mitzvah",
+                Tag.BasMitzvah => "Bas Mitzvah",
+                Tag.Birth => "Birth",
+                Tag.Blessing => "Blessing",
+                Tag.Burial => "Burial",
+                Tag.Census => "Census",
+                Tag.Christening => "Christening",
+                Tag.AdultChristening => "Christening (Adult)",
+                Tag.Confirmation => "Confirmation (LDS)",
+                Tag.Cremation => "Cremation",
+                Tag.Death => "Death",
+                Tag.Divorce => "Divorce",
+                Tag.DivorceFiled => "Divorce Filed",
+                Tag.Emigration => "Emigration",
+                Tag.Endowment => "Endowment",
+                Tag.Engagement => "Engagement",
+                Tag.Event => "Event",
+                Tag.FirstCommunion => "First Communion",
+                Tag.Graduation => "Graduation",
+                Tag.Immigration => "Immigration",
+                Tag.MarriageBann => "Marriage Bann",
+                Tag.MarriageContract => "Marriage Contract",
+                Tag.MarriageLicense => "Marriage License",
+                Tag.Marriage => "Marriage",
+                Tag.MarriageSettlement => "Marriage Settlement",
+                Tag.Naturalization => "Naturalization",
+                Tag.Occupation => "Occupations",
+                Tag.Ordinance => "Ordinance",
+                Tag.Ordination => "Ordination",
+                Tag.Probate => "Probate",
+                Tag.Residence => "Residence",
+                Tag.Retirement => "Retirement",
+                Tag.SealingChild => "Sealing (Child)",
+                Tag.SealingSpouse => "Sealing (Spouse)",
+                Tag.Will => "Will",
+                _ => Record.Tag,
             };
         }
     }
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(global::Gedcom.Tag.Note);
-    public PlaceStructure PlaceStructure => First<PlaceStructure>(global::Gedcom.Tag.Place);
-    public string ReligiousAffiliation => GetValue(global::Gedcom.Tag.Religion);
-    public string ResponsibleAgency => GetValue(global::Gedcom.Tag.Agency);
-    public string RestrictionNotice => GetValue(global::Gedcom.Tag.Restriction);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(global::Gedcom.Tag.Source);
-    public string Tag => Record.Tag;
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
+    public PlaceStructure PlaceStructure => First<PlaceStructure>(Tag.Place);
+    public string ReligiousAffiliation => GetValue(Tag.Religion);
+    public string ResponsibleAgency => GetValue(Tag.Agency);
+    public string RestrictionNotice => GetValue(Tag.Restriction);
+    public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.Source);
 
     public static bool IsIndividualEventStructure(Record record)
     {
@@ -90,7 +89,7 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
     public override string ToString() => $"{Record.Value}, {ResponsibleAgency}";
 }
 
-internal class IndividualEventStructureJsonConverter : JsonConverter<IndividualEventStructure>
+internal class IndividualEventJsonConverter : JsonConverter<IndividualEventStructure>
 {
     public override IndividualEventStructure? ReadJson(JsonReader reader, Type objectType, IndividualEventStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
@@ -98,13 +97,13 @@ internal class IndividualEventStructureJsonConverter : JsonConverter<IndividualE
     {
         if (individualEventStructure == null) throw new ArgumentNullException(nameof(individualEventStructure));
 
-        serializer.Serialize(writer, new IndividualEventStructureJson(individualEventStructure));
+        serializer.Serialize(writer, new IndividualEventJson(individualEventStructure));
     }
 }
 
-internal class IndividualEventStructureJson : GedcomJson
+internal class IndividualEventJson : GedcomJson
 {
-    public IndividualEventStructureJson(IndividualEventStructure individualEventStructure)
+    public IndividualEventJson(IndividualEventStructure individualEventStructure)
     {
         Address = JsonRecord(individualEventStructure.AddressStructure);
         AgeAtEvent = JsonString(individualEventStructure.AgeAtEvent);
@@ -119,7 +118,7 @@ internal class IndividualEventStructureJson : GedcomJson
         ResponsibleAgency = JsonString(individualEventStructure.ResponsibleAgency);
         RestrictionNotice = JsonString(individualEventStructure.RestrictionNotice);
         SourceCitations = JsonList(individualEventStructure.SourceCitations);
-        Tag = JsonString(individualEventStructure.Tag);
+        Tag = JsonString(individualEventStructure.Record.Tag);
 
     }
 

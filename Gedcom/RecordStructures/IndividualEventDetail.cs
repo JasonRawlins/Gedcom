@@ -34,7 +34,6 @@ internal class IndividualEventDetailJson : GedcomJson
     }
 
     public string? AgeAtEvent { get; set; }
-
 }
 
 #region INDIVIDUAL_EVENT_DETAIL p. 34

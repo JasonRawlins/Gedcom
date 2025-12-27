@@ -3,7 +3,7 @@
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(RepositoryRecordJsonConverter))]
+[JsonConverter(typeof(RepositoryJsonConverter))]
 public class RepositoryRecord : RecordStructureBase, IAddressStructure
 {
     public RepositoryRecord() : base() { }
@@ -25,7 +25,7 @@ public class RepositoryRecord : RecordStructureBase, IAddressStructure
     public override string ToString() => $"{Record.Value}, {Name}";
 }
 
-internal class RepositoryRecordJsonConverter : JsonConverter<RepositoryRecord>
+internal class RepositoryJsonConverter : JsonConverter<RepositoryRecord>
 {
     public override RepositoryRecord? ReadJson(JsonReader reader, Type objectType, RepositoryRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
@@ -33,39 +33,39 @@ internal class RepositoryRecordJsonConverter : JsonConverter<RepositoryRecord>
     {
         if (repositoryRecord == null) throw new ArgumentNullException(nameof(repositoryRecord));
 
-        serializer.Serialize(writer, new RepositoryRecordJson(repositoryRecord));
+        serializer.Serialize(writer, new RepositoryJson(repositoryRecord));
     }
 }
 
-internal class RepositoryRecordJson : GedcomJson
+internal class RepositoryJson : GedcomJson
 {
-    public RepositoryRecordJson(RepositoryRecord repositoryRecord)
+    public RepositoryJson(RepositoryRecord repositoryRecord)
     {
-        Emails = JsonList(repositoryRecord.AddressEmails);
-        FaxNumbers = JsonList(repositoryRecord.AddressFaxNumbers);
         Address = JsonRecord(repositoryRecord.AddressStructure);
-        WebPages = JsonList(repositoryRecord.AddressWebPages);
         AutomatedRecordId = JsonString(repositoryRecord.AutomatedRecordId);
         CallNumber = JsonRecord(repositoryRecord.CallNumber);
         ChangeDate = JsonRecord(repositoryRecord.ChangeDate);
+        Emails = JsonList(repositoryRecord.AddressEmails);
+        FaxNumbers = JsonList(repositoryRecord.AddressFaxNumbers);       
         Name = JsonString(repositoryRecord.Name);
         Notes = JsonList(repositoryRecord.NoteStructures);
         PhoneNumbers = JsonList(repositoryRecord.PhoneNumbers);
         UserReferenceNumber = JsonRecord(repositoryRecord.UserReferenceNumber);
+        WebPages = JsonList(repositoryRecord.AddressWebPages);
         Xref = repositoryRecord.Xref;
     }
 
-    public List<string>? Emails { get; set; }
-    public List<string>? FaxNumbers { get; set; }
     public AddressStructure? Address { get; set; }
-    public List<string>? WebPages { get; set; }
     public string? AutomatedRecordId { get; set; }
     public CallNumber? CallNumber { get; set; }
     public ChangeDate? ChangeDate { get; set; }
+    public List<string>? Emails { get; set; }
+    public List<string>? FaxNumbers { get; set; }
     public string? Name { get; set; }
     public List<NoteStructure>? Notes { get; set; }
     public List<string>? PhoneNumbers { get; set; }
     public UserReferenceNumber? UserReferenceNumber { get; set; }
+    public List<string>? WebPages { get; set; }
     public string? Xref { get; set; }
 }
 

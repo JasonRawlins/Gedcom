@@ -1,16 +1,16 @@
-﻿using Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 public interface IEventDetail
 {
+    AddressStructure AddressStructure { get; }
+    string CauseOfEvent { get; }
     string EventOrFactClassification { get; }
     GedcomDate GedcomDate { get; }
-    PlaceStructure PlaceStructure { get; }
-    AddressStructure AddressStructure { get; }
-    string ResponsibleAgency { get; }
-    string ReligiousAffiliation { get; }
-    string CauseOfEvent { get; }
-    string RestrictionNotice { get; }
-    List<NoteStructure> NoteStructures { get; }
-    List<SourceCitation> SourceCitations { get; }
     List<MultimediaLink> MultimediaLinks { get; }
+    List<NoteStructure> NoteStructures { get; }
+    PlaceStructure PlaceStructure { get; }
+    string ReligiousAffiliation { get; }
+    string ResponsibleAgency { get; }
+    string RestrictionNotice { get; }
+    List<SourceCitation> SourceCitations { get; }
 }

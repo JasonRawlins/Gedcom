@@ -3,7 +3,7 @@
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(FamilyEventStructureJsonConverter))]
+[JsonConverter(typeof(FamilyEventJsonConverter))]
 public class FamilyEventStructure : RecordStructureBase
 {
     public FamilyEventStructure() { }
@@ -14,7 +14,7 @@ public class FamilyEventStructure : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {FamilyEventDetail.Husband}, {FamilyEventDetail.Wife}";
 }
 
-internal class FamilyEventStructureJsonConverter : JsonConverter<FamilyEventStructure>
+internal class FamilyEventJsonConverter : JsonConverter<FamilyEventStructure>
 {
     public override FamilyEventStructure? ReadJson(JsonReader reader, Type objectType, FamilyEventStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
@@ -22,18 +22,18 @@ internal class FamilyEventStructureJsonConverter : JsonConverter<FamilyEventStru
     {
         if (familyEventStructure == null) throw new ArgumentNullException(nameof(familyEventStructure));
 
-        serializer.Serialize(writer, new FamilyEventStructureJson(familyEventStructure));
+        serializer.Serialize(writer, new FamilyEventJson(familyEventStructure));
     }
 }
 
-internal class FamilyEventStructureJson : GedcomJson
+internal class FamilyEventJson : GedcomJson
 {
-    public FamilyEventStructureJson(FamilyEventStructure familyEventStructure)
+    public FamilyEventJson(FamilyEventStructure familyEventStructure)
     {
-        EventDetail = JsonRecord(familyEventStructure.FamilyEventDetail);
+        FamilyEventDetail = JsonRecord(familyEventStructure.FamilyEventDetail);
     }
 
-    public FamilyEventDetail? EventDetail { get; set; }
+    public FamilyEventDetail? FamilyEventDetail { get; set; }
 
 }
 

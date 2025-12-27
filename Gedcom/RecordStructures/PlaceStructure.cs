@@ -3,7 +3,7 @@
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(PlaceStructureJsonConverter))]
+[JsonConverter(typeof(PlaceJsonConverter))]
 public class PlaceStructure : RecordStructureBase
 {
     public PlaceStructure() : base() { }
@@ -19,7 +19,7 @@ public class PlaceStructure : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {PlaceName}";
 }
 
-internal class PlaceStructureJsonConverter : JsonConverter<PlaceStructure>
+internal class PlaceJsonConverter : JsonConverter<PlaceStructure>
 {
     public override PlaceStructure? ReadJson(JsonReader reader, Type objectType, PlaceStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
@@ -27,26 +27,26 @@ internal class PlaceStructureJsonConverter : JsonConverter<PlaceStructure>
     {
         if (placeStructure == null) throw new ArgumentNullException(nameof(placeStructure));
 
-        serializer.Serialize(writer, new PlaceStructureJson(placeStructure));
+        serializer.Serialize(writer, new PlaceJson(placeStructure));
     }
 }
 
-internal class PlaceStructureJson : GedcomJson
+internal class PlaceJson : GedcomJson
 {
-    public PlaceStructureJson(PlaceStructure placeStructure)
+    public PlaceJson(PlaceStructure placeStructure)
     {
-        Map = JsonRecord(placeStructure.Map);
-        Notes = JsonList(placeStructure.NoteStructures);
         Hierarchy = JsonString(placeStructure.PlaceHierarchy);
+        Map = JsonRecord(placeStructure.Map);
         Name = JsonString(placeStructure.PlaceName);
+        Notes = JsonList(placeStructure.NoteStructures);
         PhoneticVariations = JsonList(placeStructure.PlacePhoneticVariations);
         RomanizedVariations = JsonList(placeStructure.PlaceRomanizedVariations);
     }
 
-    public Map? Map { get; set; }
-    public List<NoteStructure>? Notes { get; set; }
     public string? Hierarchy { get; set; }
+    public Map? Map { get; set; }
     public string? Name { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
     public List<NameVariation>? PhoneticVariations { get; set; }
     public List<NameVariation>? RomanizedVariations { get; set; }
 }
