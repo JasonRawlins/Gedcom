@@ -1,0 +1,9 @@
+.profile-header {
+  display: flex;
+  padding: 15px;
+  justify-content: center;
+}
+
+.portrait img {
+  height: 120px;
+}

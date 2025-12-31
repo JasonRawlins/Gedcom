@@ -7,7 +7,7 @@ export interface IndividualModel {
   death: EventModel;
   given: string;
   personalName: string;
-  sexValue: string;
+  sex: string;
   submitter: string;
   surname: string;
   xref: string;

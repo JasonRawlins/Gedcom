@@ -12,7 +12,7 @@ public class IndividualModel
         FullName = $"{Given} {Surname}";
         Given = individualRecord.PersonalNameStructures[0].Given;
         PersonalName = individualRecord.PersonalNameStructures[0].NamePersonal;
-        SexValue = individualRecord.SexValue;
+        Sex = individualRecord.SexValue;
         Submitter = individualRecord.Submitter;
         Surname = individualRecord.PersonalNameStructures[0].Surname;
         TreeId = treeModel.AutomatedRecordId;
@@ -33,7 +33,7 @@ public class IndividualModel
     public string FullName { get; set; }
     public string Given { get; set; }
     public string PersonalName { get; set; }
-    public string SexValue { get; set; }
+    public string Sex { get; set; }
     public string Submitter { get; set; }
     public string Surname { get; set; }
     private string TreeId { get; set; }

@@ -1,0 +1,17 @@
+<div class="profile-header">
+  <div class="portrait">
+    <img *ngIf="individual?.sex === 'F'" class="rounded" src="../images/silhouette-female.jpeg" alt="A silhouette of an unknown woman's head and shoulders." />
+    <img *ngIf="individual?.sex === 'M'" class="rounded" src="../images/silhouette-male.jpeg" alt="A silhouette of an unknown man's head and shoulders." />
+  </div>
+  <div class="vital-information">
+    <h1>
+      {{individual?.given}} {{individual?.surname}}
+    </h1>
+    <div>
+      <strong>BIRTH</strong> {{individual?.birth?.date?.dayMonthYear}} • {{individual?.birth?.place?.name}}
+    </div>
+    <div>
+      <strong>DEATH</strong> {{individual?.death?.date?.dayMonthYear}} • {{individual?.death?.place?.name}}
+    </div>
+  </div>
+</div>

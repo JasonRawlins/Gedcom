@@ -81,13 +81,15 @@ header.row {
     justify-content: center;
 }
 
+.portrait img {
+    height: 120px;
+}
+
 img.rounded {
     border-radius: 5px;
 }
 
-.portrait img {
-    height: 120px;
-}
+
 
 .spouse-portrait {
     display: flex;
@@ -122,4 +124,16 @@ img.rounded {
 
 .details {
     flex: 1;
+}
+
+.card-action {
+    display: flex;
+    align-items: flex-start;
+}
+
+.card-action button {
+    border: none;
+    background-color: #ccc;
+    border-radius: 20px;
+    padding: 5px 15px;
 }

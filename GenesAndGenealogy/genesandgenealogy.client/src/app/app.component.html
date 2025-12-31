@@ -1,10 +1,7 @@
-<h1 id="tableLabel"></h1>
-
-<div *ngIf="profile">
-  <h1>
-    <a href="{{profile.individual.ancestryLink}}" target="_blank">
-      {{profile.individual.given}} {{profile.individual.surname}}
-    </a>
-  </h1>
+<div class="page">
+  <header class="row">Genes and Genealogy</header>
+  <div class="row row-2" *ngIf="profile">
+   <app-profile-header [individual]="profile.individual"></app-profile-header>
+  </div>
 </div>
 

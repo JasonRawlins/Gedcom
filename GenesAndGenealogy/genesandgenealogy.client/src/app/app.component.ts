@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileModel } from '../view-models/ProfileModel';
 import { GedcomService } from './gedcom.service';
+import { ProfileHeaderComponent } from './profile-header/profile-header.component';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getProfile("@I272718947187@");
+    this.getProfile("@I272718948910@");
   }
 
   getProfile(indiXref: string) {
