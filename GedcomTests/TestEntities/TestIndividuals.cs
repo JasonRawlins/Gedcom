@@ -82,6 +82,17 @@ public class TestIndividuals
         }
     }
 
+    public static TestIndividual EithneLynch
+    {
+        get
+        {
+            var individual = new TestIndividual("@I272723846975@", "Eithne", "Lynch");
+            individual.Events.Add(new(Tag.Birth, "7 Jul 1930", "Ireland"));
+            individual.Events.Add(new(Tag.Death, "7 Jul 1990", "Ireland"));
+            return individual;
+        }
+    }
+
     public static TestIndividual ElizabethRhys
     {
         get

@@ -1,7 +1,8 @@
 <div class="page">
   <header class="row">Genes and Genealogy</header>
   <div class="row row-2" *ngIf="profile">
-   <app-profile-header [individual]="profile.individual"></app-profile-header>
+    <app-profile-header [individual]="profile.individual"></app-profile-header>
+    <app-facts [individual]="profile.individual"></app-facts>
   </div>
 </div>
 

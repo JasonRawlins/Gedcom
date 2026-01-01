@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileModel } from '../view-models/ProfileModel';
 import { GedcomService } from './gedcom.service';
-import { ProfileHeaderComponent } from './profile-header/profile-header.component';
 
 @Component({
   selector: 'app-root',

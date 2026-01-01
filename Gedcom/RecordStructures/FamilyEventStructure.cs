@@ -3,13 +3,16 @@
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
+// This class is not being used in code. See Note 1 in FamilyRecord.cs for the reason.
+// It is being left in because it mirrors the structure from the specification. This
+// discrepancy may be a misunderstanding on my part.
 [JsonConverter(typeof(FamilyEventJsonConverter))]
 public class FamilyEventStructure : RecordStructureBase
 {
     public FamilyEventStructure() { }
     public FamilyEventStructure(Record record) : base(record) { }
 
-    public FamilyEventDetail FamilyEventDetail => First<FamilyEventDetail>(Record.Tag);
+    public FamilyEventDetail FamilyEventDetail => First<FamilyEventDetail>(Tag.Date);
 
     public override string ToString() => $"{Record.Value}, {FamilyEventDetail.Husband}, {FamilyEventDetail.Wife}";
 }

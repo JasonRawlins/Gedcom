@@ -9,7 +9,7 @@ public class FamilyEventDetail : RecordStructureBase
     public FamilyEventDetail() : base() { }
     public FamilyEventDetail(Record record) : base(record) { }
 
-    public EventDetail EventDetail => First<EventDetail>(Tag.Event);
+    public EventDetail EventDetail => First<EventDetail>(Tag.Marriage);
 
     /*
     The FAM record was originally structured to represent families where a male HUSB (p.75) (husband or
@@ -24,6 +24,7 @@ public class FamilyEventDetail : RecordStructureBase
     */
     public FamilyPartner Husband => First<FamilyPartner>(Tag.Husband);
     public FamilyPartner Wife => First<FamilyPartner>(Tag.Wife);
+    public EventDetail Marriage => First<EventDetail>(Tag.Marriage);
 
     public override string ToString() => $"{Record.Value}, {Husband.Name}, {Wife.Name}";
 }
@@ -46,12 +47,14 @@ internal class FamilyEventDetailJson : GedcomJson
     {
         EventDetail = JsonRecord(familyEventDetail.EventDetail);
         Husband = JsonRecord(familyEventDetail.Husband);
+        Marriage = JsonRecord(familyEventDetail.Marriage);
         Wife = JsonRecord(familyEventDetail.Wife);
     }
 
     public EventDetail? EventDetail { get; set; }
     public FamilyPartner? Husband { get; set; }
     public FamilyPartner? Wife { get; set; }
+    public EventDetail? Marriage { get; set; }
 }
 
 #region FAMILY_EVENT_DETAIL p. 32

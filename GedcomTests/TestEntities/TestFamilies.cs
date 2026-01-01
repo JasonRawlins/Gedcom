@@ -13,6 +13,7 @@ public class TestFamily(string xref, TestIndividual husband, TestIndividual wife
     public List<TestIndividual> Children { get; set; } = [];
     public TestIndividual Husband { get; set; } = husband;
     public TestEvent? Marriage { get; set; }
+    public TestEvent? Divorce { get; set; }
     public TestIndividual Wife { get; set; } = wife;
     public string Xref { get; set; } = xref;
 }
@@ -23,7 +24,7 @@ public class TestFamilies(Gedcom.Gedcom gedcom)
 
     // Unfortunately, family records exported from Ancestry.com do not have deterministic xrefs.
     // They will have to be retrieved at runtime. This may create concurrency issues when 
-    // running tests. Those issues will have to be resolved when they pop up.
+    // running tests. Those issues will have to be resolved when they come up.
     public FamilyRecord GetFamilyRecord(TestIndividual husband, TestIndividual wife) => Gedcom.GetFamilyRecordByHusbandAndWife(husband.Xref, wife.Xref);
 
     public static TestFamily AnxinZhouAndMargaretDavis
@@ -63,6 +64,21 @@ public class TestFamilies(Gedcom.Gedcom gedcom)
             var family = new TestFamily(familyRecord.Xref, TestIndividuals.CelynVaughn, TestIndividuals.AbigailBrown, [TestIndividuals.JaredVaughn])
             {
                 Marriage = new(Tag.Marriage, "7 Jul 1955", "")
+            };
+            return family;
+        }
+    }
+
+    public static TestFamily DylanDavisAndEithneLynch
+    {
+        get
+        {
+            var testFamilies = new TestFamilies(TestUtilities.CreateGedcom());
+            var familyRecord = testFamilies.GetFamilyRecord(TestIndividuals.DylanDavis, TestIndividuals.EithneLynch);
+            var family = new TestFamily(familyRecord.Xref, TestIndividuals.DylanDavis, TestIndividuals.EithneLynch)
+            {
+                Marriage = new(Tag.Marriage, "7 Jul 1950", "Ireland"),
+                Divorce = new(Tag.Divorce, "7 Jul 1953", "Ireland")
             };
             return family;
         }

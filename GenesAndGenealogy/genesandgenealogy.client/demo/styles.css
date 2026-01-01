@@ -17,39 +17,7 @@ ul {
     padding: 0;
 }
 
-/* Page rows */
-.page {
-    display: grid;
-    grid-template-rows: auto auto 1fr;
-    min-height: 100vh;
-}
 
-.row {
-    padding: 1rem;
-}
-
-header.row {
-    font-size: 24px;
-}
-
-.row-2 {
-    background: #555;
-    color: #fff;
-}
-
-.row-3 {
-    background: #ccc;
-}
-
-/* Three-column layout */
-.columns {
-    display: flex;
-    width: 100%;
-}
-
-.column {
-    padding: 1rem;
-}
 
 .card {
     border: 1px solid #ccc;
@@ -63,17 +31,6 @@ header.row {
     margin-left: 50px;
 }
 
-.timeline {
-    flex: 0 0 40%;
-}
-
-.sources {
-    flex: 0 0 30%;
-}
-
-.relationships {
-    flex: 0 0 30%;
-}
 
 .profile-info {
     display: flex;
@@ -98,16 +55,7 @@ img.rounded {
     margin-top: 10px;
 }
 
-.vital-information {
-    float: left;
-    margin-left: 15px;
-}
 
-.vital-information h1 {
-    font-family: "Times New Roman", Times, serif;
-    margin: 0;
-    padding: 0;
-}
 
 .icon-details {
     display: flex;

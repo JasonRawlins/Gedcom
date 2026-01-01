@@ -14,9 +14,13 @@ public class FamilyRecord : RecordStructureBase
     public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
     public List<string> Children => List(r => r.Tag.Equals(Tag.Child)).Select(r => r.Value).ToList();
     public string CountOfChildren => GetValue(Tag.ChildrenCount);
-    public List<FamilyEventStructure> FamilyEventStructures => List<FamilyEventStructure>(Tag.Family);
+    public EventDetail Divorce => First<EventDetail>(Tag.Divorce);
+    public List<EventDetail> EventDetails => [Divorce, Marriage];
+    // See note 1 below about why FamilyEventStructures is commented out.
+    // public List<FamilyEventStructure> FamilyEventStructures => List<FamilyEventStructure>(Tag.Marriage);
     public string Husband => GetValue(Tag.Husband);
     // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
+    public EventDetail Marriage => First<EventDetail>(Tag.Marriage);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
     public string RestrictionNotice => GetValue(Tag.Restriction);
@@ -55,9 +59,12 @@ internal class FamilyJson : GedcomJson
         ChangeDate = JsonRecord(familyRecord.ChangeDate);
         Children = JsonList(familyRecord.Children);
         CountOfChildren = JsonString(familyRecord.CountOfChildren);
-        FamilyEvents = JsonList(familyRecord.FamilyEventStructures);
+        Divorce = JsonRecord(familyRecord.Divorce);
+        Events = JsonList(familyRecord.EventDetails);
+        //FamilyEvents = JsonList(familyRecord.FamilyEventStructures);
         Husband = JsonString(familyRecord.Husband);
         // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
+        Marriage = JsonRecord(familyRecord.Marriage);
         MultimediaLinks = JsonList(familyRecord.MultimediaLinks);
         Notes = JsonList(familyRecord.NoteStructures);
         RestrictionNotice = JsonString(familyRecord.RestrictionNotice);
@@ -74,9 +81,11 @@ internal class FamilyJson : GedcomJson
     public ChangeDate? ChangeDate { get; set; }
     public List<string>? Children { get; set; }
     public string? CountOfChildren { get; set; }
-    public List<FamilyEventStructure>? FamilyEvents { get; set; }
+    public EventDetail? Divorce { get; set; }
+    public List<EventDetail>? Events { get; set; }
     public string? Husband { get; set; }
     // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
+    public EventDetail? Marriage { get; set; }
     public List<MultimediaLink>? MultimediaLinks { get; set; }
     public List<NoteStructure>? Notes { get; set; }
     public string? RestrictionNotice { get; set; }
@@ -117,5 +126,35 @@ assumes that the HUSB/father is male and WIFE/mother is female.
 
 The preferred order of the CHILdren pointers within a FAMily structure is chronological by birth.
 
+
+Note 1: Why FamilyEventStructures is commented out (2026-01-01)
+I am leaving this property in because it mirrors the structure of specification. However, it 
+doesn't seem to match the gedcom file exported from Ancestry. For example, below is the expected 
+structure based on the specification:
+
+0 @F1@ FAM                          <FAMILY_RECORD>
+    1 HUSB @I1@
+    1 WIFE @I2@
+    1 CHIL @I3@
+    1 MARR                          <FAMILY_EVENT_STRUCTURE>
+        ? MISSING                   <FAMILY_EVENT_DETAIL>             
+            2 DATE 7 Jul 1955       <EVENT_DETAIL>
+            2 SOUR @S1@
+                3 PAGE Marriage
+
+But the structure that is exported from Ancestry looks like this: 
+
+0 @F1@ FAM
+    1 HUSB @I1@
+    1 WIFE @I2@
+    1 MARR
+        2 DATE 1 Jan 1900
+        2 SOUR @S1@
+            3 PAGE Marriage
+
+Notice the missing FAMILY_EVENT_DETAIL. In practice, the MARR tag is the actual EVENT_DETAIL. 
+This may be a misunderstanding on my part, but in code I will be treating family events like
+MARR and DIV as an EVENT_DETAIL instead of a FAMILY_EVENT_STRUCTURE.
+            
  */
 #endregion

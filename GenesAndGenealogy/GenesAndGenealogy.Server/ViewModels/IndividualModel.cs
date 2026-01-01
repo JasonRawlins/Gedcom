@@ -9,6 +9,7 @@ public class IndividualModel
         AutomatedRecordId = individualRecord.AutomatedRecordId;
         Birth = new EventModel(individualRecord.Birth);
         Death = new EventModel(individualRecord.Death);
+        Events = individualRecord.IndividualEventStructures.Select(ies => new EventModel(ies)).ToList();
         FullName = $"{Given} {Surname}";
         Given = individualRecord.PersonalNameStructures[0].Given;
         PersonalName = individualRecord.PersonalNameStructures[0].NamePersonal;
@@ -30,6 +31,7 @@ public class IndividualModel
     public string AutomatedRecordId { get; set; }
     public EventModel Birth { get; set; }
     public EventModel Death { get; set; }
+    public List<EventModel> Events { get; set; }
     public string FullName { get; set; }
     public string Given { get; set; }
     public string PersonalName { get; set; }
