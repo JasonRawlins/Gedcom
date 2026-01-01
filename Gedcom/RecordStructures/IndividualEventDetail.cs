@@ -1,48 +1,48 @@
-﻿using Newtonsoft.Json;
+﻿//using Newtonsoft.Json;
 
-namespace Gedcom.RecordStructures;
+//namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(IndividualEventDetailJsonConverter))]
-public class IndividualEventDetail : RecordStructureBase
-{
-    public IndividualEventDetail() : base() { }
-    public IndividualEventDetail(Record record) : base(record) { }
+//// The Gedcom Standard 5.5.1 documentation is at the end of this file.
+//[JsonConverter(typeof(IndividualEventDetailJsonConverter))]
+//public class IndividualEventDetail : RecordStructureBase
+//{
+//    public IndividualEventDetail() : base() { }
+//    public IndividualEventDetail(Record record) : base(record) { }
 
-    public string AgeAtEvent => GetValue(Tag.Age);
+//    public string AgeAtEvent => GetValue(Tag.Age);
 
-    public override string ToString() => $"{Record.Value}, {AgeAtEvent}";
-}
+//    public override string ToString() => $"{Record.Value}, {AgeAtEvent}";
+//}
 
-internal class IndividualEventDetailJsonConverter : JsonConverter<IndividualEventDetail>
-{
-    public override IndividualEventDetail? ReadJson(JsonReader reader, Type objectType, IndividualEventDetail? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+//internal class IndividualEventDetailJsonConverter : JsonConverter<IndividualEventDetail>
+//{
+//    public override IndividualEventDetail? ReadJson(JsonReader reader, Type objectType, IndividualEventDetail? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, IndividualEventDetail? individualEventDetail, JsonSerializer serializer)
-    {
-        if (individualEventDetail == null) throw new ArgumentNullException(nameof(individualEventDetail));
+//    public override void WriteJson(JsonWriter writer, IndividualEventDetail? individualEventDetail, JsonSerializer serializer)
+//    {
+//        if (individualEventDetail == null) throw new ArgumentNullException(nameof(individualEventDetail));
 
-        serializer.Serialize(writer, new IndividualEventDetailJson(individualEventDetail));
-    }
-}
+//        serializer.Serialize(writer, new IndividualEventDetailJson(individualEventDetail));
+//    }
+//}
 
-internal class IndividualEventDetailJson : GedcomJson
-{
-    public IndividualEventDetailJson(IndividualEventDetail individualEventDetail)
-    {
-        AgeAtEvent = JsonString(individualEventDetail.AgeAtEvent);
-    }
+//internal class IndividualEventDetailJson : GedcomJson
+//{
+//    public IndividualEventDetailJson(IndividualEventDetail individualEventDetail)
+//    {
+//        AgeAtEvent = JsonString(individualEventDetail.AgeAtEvent);
+//    }
 
-    public string? AgeAtEvent { get; set; }
-}
+//    public string? AgeAtEvent { get; set; }
+//}
 
-#region INDIVIDUAL_EVENT_DETAIL p. 34
-/* 
+//#region INDIVIDUAL_EVENT_DETAIL p. 34
+///* 
 
-INDIVIDUAL_EVENT_DETAIL:=
+//INDIVIDUAL_EVENT_DETAIL:=
 
-n <<EVENT_DETAIL>> {1:1} p.32
-n AGE <AGE_AT_EVENT> {0:1} p.42
+//n <<EVENT_DETAIL>> {1:1} p.32
+//n AGE <AGE_AT_EVENT> {0:1} p.42
 
-*/
-#endregion
+//*/
+//#endregion

@@ -14,13 +14,11 @@ public class FamilyRecord : RecordStructureBase
     public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
     public List<string> Children => List(r => r.Tag.Equals(Tag.Child)).Select(r => r.Value).ToList();
     public string CountOfChildren => GetValue(Tag.ChildrenCount);
-    public EventDetail Divorce => First<EventDetail>(Tag.Divorce);
-    public List<EventDetail> EventDetails => [Divorce, Marriage];
-    // See note 1 below about why FamilyEventStructures is commented out.
-    // public List<FamilyEventStructure> FamilyEventStructures => List<FamilyEventStructure>(Tag.Marriage);
+    public FamilyEventStructure Divorce => First<FamilyEventStructure>(Tag.Divorce);
+    public List<FamilyEventStructure> FamilyEventStructures => List(FamilyEventStructure.IsFamilyEventStructure).Select(r => new FamilyEventStructure(r)).ToList();
     public string Husband => GetValue(Tag.Husband);
     // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
-    public EventDetail Marriage => First<EventDetail>(Tag.Marriage);
+    public FamilyEventStructure Marriage => First<FamilyEventStructure>(Tag.Marriage);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
     public string RestrictionNotice => GetValue(Tag.Restriction);
@@ -60,8 +58,7 @@ internal class FamilyJson : GedcomJson
         Children = JsonList(familyRecord.Children);
         CountOfChildren = JsonString(familyRecord.CountOfChildren);
         Divorce = JsonRecord(familyRecord.Divorce);
-        Events = JsonList(familyRecord.EventDetails);
-        //FamilyEvents = JsonList(familyRecord.FamilyEventStructures);
+        Events = JsonList(familyRecord.FamilyEventStructures);
         Husband = JsonString(familyRecord.Husband);
         // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
         Marriage = JsonRecord(familyRecord.Marriage);
@@ -81,11 +78,11 @@ internal class FamilyJson : GedcomJson
     public ChangeDate? ChangeDate { get; set; }
     public List<string>? Children { get; set; }
     public string? CountOfChildren { get; set; }
-    public EventDetail? Divorce { get; set; }
-    public List<EventDetail>? Events { get; set; }
+    public FamilyEventStructure? Divorce { get; set; }
+    public List<FamilyEventStructure>? Events { get; set; }
     public string? Husband { get; set; }
     // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
-    public EventDetail? Marriage { get; set; }
+    public FamilyEventStructure? Marriage { get; set; }
     public List<MultimediaLink>? MultimediaLinks { get; set; }
     public List<NoteStructure>? Notes { get; set; }
     public string? RestrictionNotice { get; set; }

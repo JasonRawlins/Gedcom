@@ -18,8 +18,8 @@ public class FamilyRecordTests
         Assert.AreEqual("7 Jul 1953", familyRecord.Divorce.GedcomDate.DayMonthYear);
 
         // The marriage and divorce should also be in the EventDetails list.
-        Assert.IsNotNull(familyRecord.EventDetails.Single(ed => ed.GedcomDate.DayMonthYear.Equals("7 Jul 1950")));
-        Assert.IsNotNull(familyRecord.EventDetails.Single(ed => ed.GedcomDate.DayMonthYear.Equals("7 Jul 1953")));
+        Assert.IsNotNull(familyRecord.FamilyEventStructures.Single(ed => ed.GedcomDate.DayMonthYear.Equals("7 Jul 1950")));
+        Assert.IsNotNull(familyRecord.FamilyEventStructures.Single(ed => ed.GedcomDate.DayMonthYear.Equals("7 Jul 1953")));
     }
 }
 

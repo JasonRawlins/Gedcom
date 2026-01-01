@@ -17,7 +17,7 @@ public class IndividualRecord : RecordStructureBase
     public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
     public List<ChildToFamilyLink> ChildToFamilyLinks => List<ChildToFamilyLink>(Tag.FamilyChild);
     public List<string> DescendantInterests => List(r => r.Tag.Equals(Tag.DescendantInterest)).Select(r => r.Value).ToList();
-    public List<IndividualAttributeStructure> IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
+    //public List<IndividualAttributeStructure> IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
     public List<IndividualEventStructure> IndividualEventStructures => List(IndividualEventStructure.IsIndividualEventStructure).Select(r => new IndividualEventStructure(r)).ToList();
     public List<LdsIndividualOrdinance> LdsIndividualOrdinances => List<LdsIndividualOrdinance>(Tag.Ordinance);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
@@ -87,8 +87,8 @@ internal class IndividualJson : GedcomJson
         ChildToFamilyLinks = JsonList(individualRecord.ChildToFamilyLinks);
         Death = JsonString($"{individualRecord.Death.DateValue} at {individualRecord.Death.PlaceStructure.PlaceName}");
         DescendantInterests = JsonList(individualRecord.DescendantInterests);
-        IndividualAttributes = JsonList(individualRecord.IndividualAttributeStructures);
-        IndividualEvents = JsonList(individualRecord.IndividualEventStructures);
+        //IndividualAttributes = JsonList(individualRecord.IndividualAttributeStructures);
+        Events = JsonList(individualRecord.IndividualEventStructures);
         LdsIndividualOrdinances = JsonList(individualRecord.LdsIndividualOrdinances);
         MultimediaLinks = JsonList(individualRecord.MultimediaLinks);
         Notes = JsonList(individualRecord.NoteStructures);
@@ -114,8 +114,8 @@ internal class IndividualJson : GedcomJson
     public string? Death { get; set; }
     public List<string>? DescendantInterests { get; set; }
     public string Given => PersonalNames == null ? "" : PersonalNames[0].Given;
-    public List<IndividualAttributeStructure>? IndividualAttributes { get; set; }
-    public List<IndividualEventStructure>? IndividualEvents { get; set; }
+    //public List<IndividualAttributeStructure>? IndividualAttributes { get; set; }
+    public List<IndividualEventStructure>? Events { get; set; }
     public List<LdsIndividualOrdinance>? LdsIndividualOrdinances { get; set; }
     public List<MultimediaLink>? MultimediaLinks { get; set; }
     public List<NoteStructure>? Notes { get; set; }

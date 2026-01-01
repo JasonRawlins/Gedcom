@@ -1,5 +1,4 @@
-import { FamilyEventDetail } from './FamilyEventDetail';
+import { EventDetail } from './EventDetail';
 
-export interface FamilyEvent {
-  familyEventDetail: FamilyEventDetail;
+export interface FamilyEvent extends EventDetail {
 }

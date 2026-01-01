@@ -13,8 +13,8 @@
 3 ADDR 1300 West Traverse Parkway
 4 CONT Lehi, UT  84043
 4 CONT USA
-1 DATE 24 Dec 2025
-2 TIME 05:36:36
+1 DATE 1 Jan 2026
+2 TIME 10:01:59
 1 GEDC
 2 VERS 5.5.1
 2 FORM LINEAGE-LINKED
@@ -27,7 +27,7 @@
 2 SURN Davis
 1 SEX F
 1 FAMC @F1@
-1 FAMS @F6@
+1 FAMS @F7@
 1 BIRT
 2 DATE 8 Aug 1960
 2 PLAC Salt Lake City, Salt Lake, Utah, USA
@@ -53,7 +53,8 @@
 2 GIVN Dylan
 2 SURN Davis
 1 SEX M
-1 FAMC @F4@
+1 FAMC @F5@
+1 FAMS @F2@
 1 FAMS @F1@
 1 BIRT
 2 DATE 7 Jul 1930
@@ -62,13 +63,38 @@
 2 DATE 7 Jul 1990
 2 PLAC Salt Lake City, Salt Lake, Utah, USA
 1 SOUR @S976697667@
-2 PAGE Marriage
+2 PAGE Marriage certificate
+2 DATA
+3 DATE 7 Jul 1955
+3 TEXT Dylan Davis and Fiona Douglas were married by a priest in Scotland.
+3 WWW https://www.nrscotland.gov.uk/
+2 NOTE Witnessed by their parents.
+1 SOUR @S977046020@
+2 PAGE Marriage certificate
+2 DATA
+3 DATE 7 Jul 1950
+3 TEXT Dylan Davis and Eithne Lynch were married by a priest  in Ireland.
+3 WWW https://nationalarchives.ie/
+2 NOTE Witnessed by their friends.
+1 SOUR @S977046024@
+2 PAGE Divorce certificate
+2 DATA
+3 DATE 7 Jul 1953
+3 TEXT Dylan Davis divorced Eithne Lynch.
+3 WWW https://nationalarchives.ie/
+2 NOTE Witnessed by clerk.
+1 SOUR @S977046068@
+2 PAGE p. 5
+2 DATA
+3 DATE 7 Jul 1950
+3 TEXT Announcing the marriage of Dylan Davis and Eithne Lynch
+2 NOTE To be held at the local church.
 0 @I272718949767@ INDI
 1 NAME Gwen /Jones/
 2 GIVN Gwen
 2 SURN Jones
 1 SEX F
-1 FAMS @F4@
+1 FAMS @F5@
 1 BIRT
 2 DATE 6 Jun 1900
 2 PLAC Wales
@@ -79,8 +105,8 @@
 2 GIVN Owen
 2 SURN Davis
 1 SEX M
-1 FAMC @F5@
-1 FAMS @F4@
+1 FAMC @F6@
+1 FAMS @F5@
 1 BIRT
 2 DATE 6 Jun 1900
 2 PLAC Wales
@@ -93,7 +119,7 @@
 2 GIVN James
 2 SURN Smith
 1 SEX M
-1 FAMS @F6@
+1 FAMS @F7@
 1 BIRT
 2 DATE 8 Aug 1960
 2 PLAC England
@@ -105,7 +131,7 @@
 2 GIVN Mary
 2 SURN Smith
 1 SEX F
-1 FAMC @F6@
+1 FAMC @F7@
 1 BIRT
 2 DATE 9 Sep 1990
 2 PLAC Utah, USA
@@ -114,8 +140,8 @@
 2 GIVN Margaret
 2 SURN Davis
 1 SEX F
-1 FAMC @F4@
-1 FAMS @F2@
+1 FAMC @F5@
+1 FAMS @F3@
 1 BIRT
 2 DATE 7 Jul 1932
 2 PLAC Wales
@@ -127,7 +153,7 @@
 2 GIVN Gareth
 2 SURN Davis
 1 SEX M
-1 FAMC @F4@
+1 FAMC @F5@
 1 BIRT
 2 DATE 7 Jul 1934
 2 PLAC Wales
@@ -139,7 +165,7 @@
 2 GIVN 安信 (Ānxìn)
 2 SURN 周 (Zhōu)
 1 SEX M
-1 FAMS @F2@
+1 FAMS @F3@
 1 BIRT
 2 DATE 7 Jul 1932
 2 PLAC China
@@ -151,7 +177,7 @@
 2 GIVN 晓慧 (Xiǎo huì)
 2 SURN 周 (Zhōu)
 1 SEX F
-1 FAMC @F2@
+1 FAMC @F3@
 1 BIRT
 2 DATE 8 Aug 1962
 2 PLAC China
@@ -163,7 +189,7 @@
 2 GIVN Carwyn
 2 SURN Davis
 1 SEX M
-1 FAMS @F5@
+1 FAMS @F6@
 1 BIRT
 2 DATE 5 May 1870
 2 PLAC Wales
@@ -175,7 +201,7 @@
 2 GIVN Elizabeth
 2 SURN Rhys
 1 SEX F
-1 FAMS @F5@
+1 FAMS @F6@
 1 BIRT
 2 DATE 5 May 1870
 2 PLAC Wales
@@ -187,8 +213,8 @@
 2 GIVN Anwen
 2 SURN Davis
 1 SEX F
-1 FAMC @F5@
-1 FAMS @F7@
+1 FAMC @F6@
+1 FAMS @F8@
 1 BIRT
 2 DATE 6 Jun 1900
 2 PLAC Wales
@@ -200,7 +226,7 @@
 2 GIVN Llewelyn
 2 SURN Vaughn
 1 SEX M
-1 FAMS @F7@
+1 FAMS @F8@
 1 BIRT
 2 DATE 6 Jun 1900
 2 PLAC Wales
@@ -212,8 +238,8 @@
 2 GIVN Celyn
 2 SURN Vaughn
 1 SEX M
-1 FAMC @F7@
-1 FAMS @F3@
+1 FAMC @F8@
+1 FAMS @F4@
 1 BIRT
 2 DATE 7 Jul 1930
 2 PLAC Wales
@@ -225,7 +251,7 @@
 2 GIVN Abigail
 2 SURN Brown
 1 SEX F
-1 FAMS @F3@
+1 FAMS @F4@
 1 BIRT
 2 DATE 7 Jul 1930
 2 PLAC England
@@ -237,36 +263,86 @@
 2 GIVN Jared
 2 SURN Vaughn
 1 SEX M
-1 FAMC @F3@
+1 FAMC @F4@
 1 BIRT
 2 DATE 8 Aug 1960
 2 PLAC England
 1 DEAT
 2 DATE 8 Aug 2020
 2 PLAC England
+0 @I272723846975@ INDI
+1 NAME Eithne /Lynch/
+2 GIVN Eithne
+2 SURN Lynch
+1 SEX F
+1 FAMS @F2@
+1 BIRT
+2 DATE 7 Jul 1930
+2 PLAC Ireland
+1 DEAT
+2 DATE 7 Jul 1990
+2 PLAC Ireland
 0 @F1@ FAM
 1 HUSB @I272718948910@
 1 WIFE @I272718947188@
 1 CHIL @I272718947187@
 1 MARR
 2 DATE 7 Jul 1955
+2 PLAC Scotland
 2 SOUR @S976697667@
-3 PAGE Marriage
+3 PAGE Marriage certificate
+3 DATA
+4 DATE 7 Jul 1955
+4 TEXT Dylan Davis and Fiona Douglas were married by a priest in Scotland.
+4 WWW https://www.nrscotland.gov.uk/
+3 NOTE Witnessed by their parents.
+2 NOTE Dylan Davis married Fiona Douglas in Scotland.
 0 @F2@ FAM
+1 HUSB @I272718948910@
+1 WIFE @I272723846975@
+1 MARR
+2 DATE 7 Jul 1950
+2 PLAC Ireland
+2 SOUR @S977046020@
+3 PAGE Marriage certificate
+3 DATA
+4 DATE 7 Jul 1950
+4 TEXT Dylan Davis and Eithne Lynch were married by a priest  in Ireland.
+4 WWW https://nationalarchives.ie/
+3 NOTE Witnessed by their friends.
+2 SOUR @S977046068@
+3 PAGE p. 5
+3 DATA
+4 DATE 7 Jul 1950
+4 TEXT Announcing the marriage of Dylan Davis and Eithne Lynch
+3 NOTE To be held at the local church.
+2 NOTE Dylan Davis married Eithne Lynch in Ireland.
+1 DIV
+2 DATE 7 Jul 1953
+2 PLAC Ireland
+2 SOUR @S977046024@
+3 PAGE Divorce certificate
+3 DATA
+4 DATE 7 Jul 1953
+4 TEXT Dylan Davis divorced Eithne Lynch.
+4 WWW https://nationalarchives.ie/
+3 NOTE Witnessed by clerk.
+2 NOTE Dylan Davis divorced Eithne Lynch.
+0 @F3@ FAM
 1 HUSB @I272721746853@
 1 WIFE @I272721726882@
 1 CHIL @I272721748631@
 1 MARR
 2 DATE 7 Jul 1957
 2 PLAC China
-0 @F3@ FAM
+0 @F4@ FAM
 1 HUSB @I272721828893@
 1 WIFE @I272721828928@
 1 CHIL @I272721829058@
 1 MARR
 2 DATE 7 Jul 1955
 2 PLAC England
-0 @F4@ FAM
+0 @F5@ FAM
 1 HUSB @I272718952211@
 1 WIFE @I272718949767@
 1 CHIL @I272718948910@
@@ -276,7 +352,7 @@
 2 DATE 6 Jun 1925
 2 SOUR @S976697667@
 3 PAGE Marriage
-0 @F5@ FAM
+0 @F6@ FAM
 1 HUSB @I272721827103@
 1 WIFE @I272721827126@
 1 CHIL @I272718952211@
@@ -284,7 +360,7 @@
 1 MARR
 2 DATE 5 May 1895
 2 PLAC Wales
-0 @F6@ FAM
+0 @F7@ FAM
 1 HUSB @I272718953593@
 1 WIFE @I272718947187@
 1 CHIL @I272718954607@
@@ -293,7 +369,7 @@
 2 SOUR @S976697667@
 3 PAGE Marriage
 2 NOTE Marriage
-0 @F7@ FAM
+0 @F8@ FAM
 1 HUSB @I272721827546@
 1 WIFE @I272721827508@
 1 CHIL @I272721828893@
@@ -301,9 +377,24 @@
 2 DATE 6 Jun 1925
 2 PLAC Wales
 0 @S976697667@ SOUR
-1 TITL Vital records
+1 TITL Marriage records of Scotland
 1 REPO @R856097590@
+0 @S977046020@ SOUR
+1 TITL Marriage records of Ireland
+1 REPO @R856108551@
+0 @S977046024@ SOUR
+1 TITL Divorce records of Ireland
+1 REPO @R856108551@
+0 @S977046068@ SOUR
+1 TITL Wedding announcement
+1 REPO @R856108552@
 0 @R856097590@ REPO
-1 NAME Vital records repository
+1 NAME Vital records of Scotland repository
+1 ADDR <line />
+0 @R856108551@ REPO
+1 NAME Vital records of Ireland repository
+1 ADDR <line />
+0 @R856108552@ REPO
+1 NAME Irish newspapers
 1 ADDR <line />
 0 TRLR

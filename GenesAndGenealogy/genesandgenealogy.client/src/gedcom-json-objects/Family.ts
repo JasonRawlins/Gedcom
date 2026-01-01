@@ -11,9 +11,11 @@ export interface Family {
   changeDate: ChangeDate;
   children: string[];
   countOfChildren: string;
+  divorce: FamilyEvent;
   familyEventStructures: FamilyEvent[];
   husband: string;
   // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
+  marriage: FamilyEvent;
   multimediaLinks: MultimediaLink[];
   notes: Note[];
   restrictionNotice: string;

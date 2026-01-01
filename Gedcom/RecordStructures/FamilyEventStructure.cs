@@ -3,18 +3,38 @@
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-// This class is not being used in code. See Note 1 in FamilyRecord.cs for the reason.
-// It is being left in because it mirrors the structure from the specification. This
-// discrepancy may be a misunderstanding on my part.
 [JsonConverter(typeof(FamilyEventJsonConverter))]
-public class FamilyEventStructure : RecordStructureBase
+public class FamilyEventStructure : RecordStructureBase, IEventDetail
 {
     public FamilyEventStructure() { }
     public FamilyEventStructure(Record record) : base(record) { }
 
-    public FamilyEventDetail FamilyEventDetail => First<FamilyEventDetail>(Tag.Date);
+    public AddressStructure AddressStructure => First<AddressStructure>(Tag.Address);
+    public string AgeAtEvent => GetValue(Tag.Age);
+    public string CauseOfEvent => GetValue(Tag.Cause);
+    public string DateValue => GetValue(Tag.Date);
+    public string EventOrFactClassification => GetValue(Tag.Type);
+    public GedcomDate GedcomDate => GedcomDate.Parse(DateValue);
+    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
 
-    public override string ToString() => $"{Record.Value}, {FamilyEventDetail.Husband}, {FamilyEventDetail.Wife}";
+    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
+    public PlaceStructure PlaceStructure => First<PlaceStructure>(Tag.Place);
+    public string ReligiousAffiliation => GetValue(Tag.Religion);
+    public string ResponsibleAgency => GetValue(Tag.Agency);
+    public string RestrictionNotice => GetValue(Tag.Restriction);
+    public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.Source);
+
+    public static bool IsFamilyEventStructure(Record record)
+    {
+        var familyEventTags = new string[]
+        {
+            "ANUL", "CENS", "DIV", "DIVF", "ENGA", "MARB", "MARC", "MARR", "MARL", "MARS", "RESI"
+        };
+
+        return familyEventTags.Contains(record.Tag);
+    }
+
+    public override string ToString() => $"{Record}";
 }
 
 internal class FamilyEventJsonConverter : JsonConverter<FamilyEventStructure>
@@ -33,10 +53,36 @@ internal class FamilyEventJson : GedcomJson
 {
     public FamilyEventJson(FamilyEventStructure familyEventStructure)
     {
-        FamilyEventDetail = JsonRecord(familyEventStructure.FamilyEventDetail);
+        Address = JsonRecord(familyEventStructure.AddressStructure);
+        AgeAtEvent = JsonString(familyEventStructure.AgeAtEvent);
+        CauseOfEvent = JsonString(familyEventStructure.CauseOfEvent);
+        Date = JsonString(familyEventStructure.DateValue);
+        EventOrFactClassification = JsonString(familyEventStructure.EventOrFactClassification);
+        GedcomDate = familyEventStructure.GedcomDate;
+        MultimediaLinks = JsonList(familyEventStructure.MultimediaLinks);
+        Notes = JsonList(familyEventStructure.NoteStructures);
+        Place = JsonRecord(familyEventStructure.PlaceStructure);
+        ReligiousAffiliation = JsonString(familyEventStructure.ReligiousAffiliation);
+        ResponsibleAgency = JsonString(familyEventStructure.ResponsibleAgency);
+        RestrictionNotice = JsonString(familyEventStructure.RestrictionNotice);
+        SourceCitations = JsonList(familyEventStructure.SourceCitations);
+        Tag = JsonString(familyEventStructure.Record.Tag);
     }
 
-    public FamilyEventDetail? FamilyEventDetail { get; set; }
+    public AddressStructure? Address { get; set; }
+    public string? AgeAtEvent { get; set; }
+    public string? CauseOfEvent { get; set; }
+    public string? Date { get; set; }
+    public string? EventOrFactClassification { get; set; }
+    public GedcomDate GedcomDate { get; set; }
+    public List<MultimediaLink>? MultimediaLinks { get; set; }
+    public List<NoteStructure>? Notes { get; set; }
+    public PlaceStructure? Place { get; set; }
+    public string? ReligiousAffiliation { get; set; }
+    public string? ResponsibleAgency { get; set; }
+    public string? RestrictionNotice { get; set; }
+    public List<SourceCitation>? SourceCitations { get; set; }
+    public string? Tag { get; set; }
 
 }
 

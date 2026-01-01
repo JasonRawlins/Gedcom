@@ -1,8 +1,7 @@
 import { Association } from "./Association";
 import { ChangeDate } from "./ChangeDate";
 import { ChildToFamilyLink } from "./ChildToFamilyLink";
-import { IndividualAttributeStructure } from "./IndividualAttributeStructure";
-import { IndividualEvent } from "./IndividualEventStructure";
+import { IndividualEventStructure } from "./IndividualEvent";
 import { LdsIndividualOrdinance } from "./LdsIndividualOrdinance";
 import { MultimediaLink } from "./MultimediaLink";
 import { Note } from "./Note";
@@ -20,8 +19,7 @@ export interface Individual {
   changeDate: ChangeDate;
   childToFamilyLinks: ChildToFamilyLink[];
   descendantInterests: string[];
-  individualAttributeStructures: IndividualAttributeStructure[];
-  individualEventStructures: IndividualEvent[];
+  individualEventStructures: IndividualEventStructure[];
   ldsIndividualOrdinances: LdsIndividualOrdinance[];
   multimediaLinks: MultimediaLink[];
   notes: Note[];
