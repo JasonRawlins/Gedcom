@@ -16,6 +16,27 @@ public class FamilyEventStructure : RecordStructureBase, IEventDetail
     public string EventOrFactClassification => GetValue(Tag.Type);
     public GedcomDate GedcomDate => GedcomDate.Parse(DateValue);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
+    public string Name
+    {
+        get
+        {
+            return Record.Tag switch
+            {
+                Tag.Annulment => "Annulment",
+                Tag.Census => "Census",
+                Tag.Divorce => "Divorce",
+                Tag.DivorceFiled => "Divorce Filed",
+                Tag.Engagement => "Engagement",
+                Tag.MarriageBann => "Marriage Bann",
+                Tag.MarriageContract => "Marriage Contract",
+                Tag.Marriage => "Marriage",
+                Tag.MarriageLicense => "Marriage License",
+                Tag.MarriageSettlement => "Marriage Settlement",
+                Tag.Residence => "Residence",
+                _ => Record.Tag,
+            };
+        }
+    }
 
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
     public PlaceStructure PlaceStructure => First<PlaceStructure>(Tag.Place);
@@ -28,7 +49,17 @@ public class FamilyEventStructure : RecordStructureBase, IEventDetail
     {
         var familyEventTags = new string[]
         {
-            "ANUL", "CENS", "DIV", "DIVF", "ENGA", "MARB", "MARC", "MARR", "MARL", "MARS", "RESI"
+                Tag.Annulment,
+                Tag.Census,
+                Tag.Divorce,
+                Tag.DivorceFiled,
+                Tag.Engagement,
+                Tag.MarriageBann,
+                Tag.MarriageContract,
+                Tag.Marriage,
+                Tag.MarriageLicense,
+                Tag.MarriageSettlement,
+                Tag.Residence
         };
 
         return familyEventTags.Contains(record.Tag);

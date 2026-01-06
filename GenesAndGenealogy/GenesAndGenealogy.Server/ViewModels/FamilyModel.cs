@@ -4,7 +4,8 @@ public class FamilyModel
 {
     public FamilyModel(IndividualModel partner1, IndividualModel partner2)
     {
-        Children = new List<IndividualModel>();
+        Children = [];
+        Events = [];
         Partner1 = partner1;
         Partner2 = partner2;
     }
@@ -14,7 +15,13 @@ public class FamilyModel
         Children = children;
     }
 
+    public FamilyModel(IndividualModel partner1, IndividualModel partner2, List<IndividualModel> children, List<EventModel> events) : this(partner1, partner2, children)
+    {
+        Events = events;
+    }
+
     public List<IndividualModel> Children { get; set; }
+    public List<EventModel> Events { get; set; }
     public IndividualModel Partner1 { get; set; }
     public IndividualModel Partner2 { get; set; }
 

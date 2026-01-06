@@ -14,7 +14,7 @@
 4 CONT Lehi, UT  84043
 4 CONT USA
 1 DATE 6 Jan 2026
-2 TIME 05:31:38
+2 TIME 08:01:29
 1 GEDC
 2 VERS 5.5.1
 2 FORM LINEAGE-LINKED
@@ -52,17 +52,139 @@
 1 NAME Dylan /Davis/
 2 GIVN Dylan
 2 SURN Davis
+2 SOUR @S977046024@
+3 PAGE Divorce certificate
+3 DATA
+4 DATE 7 Jul 1953
+4 TEXT Dylan Davis divorced Eithne Lynch.
+4 WWW https://nationalarchives.ie/
+3 NOTE Witnessed by clerk.
+2 SOUR @S977046068@
+3 PAGE Wedding announcements p. 5
+3 DATA
+4 DATE 7 Jul 1950
+4 TEXT Announcing the marriage of Dylan Davis and Eithne Lynch
+3 NOTE To be held at the local church.
+2 SOUR @S977151991@
+3 PAGE Death announcements p. 10
+3 DATA
+4 DATE 7 Jul 1990
+4 TEXT Dylan Davis died of cholera in the local hospital.
+3 NOTE Please donate to the local school instead of sending flowers.
+2 SOUR @S977152005@
+3 PAGE Plot 1-A
+3 DATA
+4 DATE 7 Jul 1990
+4 TEXT Here lies Dylan Davis, husband and father. 
+2 SOUR @S977152012@
+3 PAGE Election results
+3 DATA
+4 DATE 7 Jul 1980
+4 TEXT Dylan Davis was elected councillor
+3 NOTE To take office on October 7, 1980
 1 SEX M
+2 SOUR @S977046024@
+3 PAGE Divorce certificate
+3 DATA
+4 DATE 7 Jul 1953
+4 TEXT Dylan Davis divorced Eithne Lynch.
+4 WWW https://nationalarchives.ie/
+3 NOTE Witnessed by clerk.
+2 SOUR @S977046068@
+3 PAGE Wedding announcements p. 5
+3 DATA
+4 DATE 7 Jul 1950
+4 TEXT Announcing the marriage of Dylan Davis and Eithne Lynch
+3 NOTE To be held at the local church.
+2 SOUR @S977151991@
+3 PAGE Death announcements p. 10
+3 DATA
+4 DATE 7 Jul 1990
+4 TEXT Dylan Davis died of cholera in the local hospital.
+3 NOTE Please donate to the local school instead of sending flowers.
+2 SOUR @S977152005@
+3 PAGE Plot 1-A
+3 DATA
+4 DATE 7 Jul 1990
+4 TEXT Here lies Dylan Davis, husband and father. 
+2 SOUR @S977152012@
+3 PAGE Election results
+3 DATA
+4 DATE 7 Jul 1980
+4 TEXT Dylan Davis was elected councillor
+3 NOTE To take office on October 7, 1980
 1 FAMC @F5@
 1 FAMS @F2@
 1 FAMS @F1@
 1 BIRT
 2 DATE 7 Jul 1930
-2 PLAC Wales
+2 PLAC Merthyr Tydfil, Glamorgan, Wales
+2 SOUR @S977151991@
+3 PAGE Death announcements p. 10
+3 DATA
+4 DATE 7 Jul 1990
+4 TEXT Dylan Davis died of cholera in the local hospital.
+3 NOTE Please donate to the local school instead of sending flowers.
+2 SOUR @S977152005@
+3 PAGE Plot 1-A
+3 DATA
+4 DATE 7 Jul 1990
+4 TEXT Here lies Dylan Davis, husband and father. 
 2 NOTE Dylan was born at home in Wales.
+1 RESI
+2 DATE 7 Jul 1930
+2 PLAC Merthyr Tydfil, Glamorgan, Wales
+2 SOUR @S977152012@
+3 PAGE Election results
+3 DATA
+4 DATE 7 Jul 1980
+4 TEXT Dylan Davis was elected councillor
+3 NOTE To take office on October 7, 1980
+2 NOTE 123 Cedar Way. Address on birth certificate.
+1 EDUC Aberystwyth University
+2 DATE 7 Jul 1948
+2 PLAC Aberystwyth, Cardiganshire, Wales
+2 SOUR @S977151981@
+3 PAGE Department of History and Welsh History
+1 GRAD
+2 DATE 7 Jul 1952
+2 PLAC Aberystwyth, Cardiganshire, Wales
+2 SOUR @S977151981@
+3 PAGE Department of History and Welsh History
+2 NOTE Bachelor's degree with honours in Welsh history.
+1 OCCU Publishing
+2 DATE 7 Jul 1960
+2 PLAC Cardiff, Glamorgan, Wales
+1 RESI
+2 DATE 7 Jul 1960
+2 PLAC Cardiff, Glamorgan, Wales
+2 SOUR @S977151969@
+3 PAGE 123 Caroline Street
+2 NOTE 123 Caroline Street
+1 _ELEC
+2 DATE 7 Jul 1980
+2 PLAC Cardiff, Glamorgan, Wales
+2 SOUR @S977152012@
+3 PAGE Election results
+3 DATA
+4 DATE 7 Jul 1980
+4 TEXT Dylan Davis was elected councillor
+3 NOTE To take office on October 7, 1980
+2 NOTE Elected councillor for city advisory board.
 1 DEAT
 2 DATE 7 Jul 1990
 2 PLAC Salt Lake City, Salt Lake, Utah, USA
+2 SOUR @S977151991@
+3 PAGE Death announcements p. 10
+3 DATA
+4 DATE 7 Jul 1990
+4 TEXT Dylan Davis died of cholera in the local hospital.
+3 NOTE Please donate to the local school instead of sending flowers.
+2 SOUR @S977152005@
+3 PAGE Plot 1-A
+3 DATA
+4 DATE 7 Jul 1990
+4 TEXT Here lies Dylan Davis, husband and father. 
 2 NOTE Dylan died of cholera.
 1 SOUR @S976697667@
 2 PAGE Marriage certificate
@@ -91,6 +213,27 @@
 3 DATE 7 Jul 1950
 3 TEXT Announcing the marriage of Dylan Davis and Eithne Lynch
 2 NOTE To be held at the local church.
+1 SOUR @S977151969@
+2 PAGE 123 Caroline Street
+1 SOUR @S977151981@
+2 PAGE Department of History and Welsh History
+1 SOUR @S977151991@
+2 PAGE Death announcements p. 10
+2 DATA
+3 DATE 7 Jul 1990
+3 TEXT Dylan Davis died of cholera in the local hospital.
+2 NOTE Please donate to the local school instead of sending flowers.
+1 SOUR @S977152005@
+2 PAGE Plot 1-A
+2 DATA
+3 DATE 7 Jul 1990
+3 TEXT Here lies Dylan Davis, husband and father. 
+1 SOUR @S977152012@
+2 PAGE Election results
+2 DATA
+3 DATE 7 Jul 1980
+3 TEXT Dylan Davis was elected councillor
+2 NOTE To take office on October 7, 1980
 0 @I272718949767@ INDI
 1 NAME Gwen /Jones/
 2 GIVN Gwen
@@ -298,6 +441,11 @@
 4 TEXT Dylan Davis and Fiona Douglas were married by a priest in Scotland.
 4 WWW https://www.nrscotland.gov.uk/
 3 NOTE Witnessed by their parents.
+2 SOUR @S977152005@
+3 PAGE Plot 1-A
+3 DATA
+4 DATE 7 Jul 1990
+4 TEXT Here lies Dylan Davis, husband and father. 
 2 NOTE Dylan Davis married Fiona Douglas in Scotland.
 0 @F2@ FAM
 1 HUSB @I272718948910@
@@ -388,8 +536,23 @@
 1 TITL Divorce records of Ireland
 1 REPO @R856108551@
 0 @S977046068@ SOUR
-1 TITL Wedding announcement
+1 TITL Wedding announcements
 1 REPO @R856108552@
+0 @S977151969@ SOUR
+1 TITL Welsh title deeds source
+1 REPO @R856111490@
+0 @S977151981@ SOUR
+1 TITL Aberystwyth University 
+1 REPO @R856111492@
+0 @S977151991@ SOUR
+1 TITL Death announcements
+1 REPO @R856111493@
+0 @S977152005@ SOUR
+1 TITL Welsh graveyards
+1 REPO @R856111494@
+0 @S977152012@ SOUR
+1 TITL Welsh city records
+1 REPO @R856111495@
 0 @R856097590@ REPO
 1 NAME Vital records of Scotland repository
 1 ADDR <line />
@@ -398,5 +561,20 @@
 1 ADDR <line />
 0 @R856108552@ REPO
 1 NAME Irish newspapers
+1 ADDR <line />
+0 @R856111490@ REPO
+1 NAME HM Land Registry repository
+1 ADDR <line />
+0 @R856111492@ REPO
+1 NAME Welsh higher education repository
+1 ADDR <line />
+0 @R856111493@ REPO
+1 NAME Welsh newspapers
+1 ADDR <line />
+0 @R856111494@ REPO
+1 NAME Graveyard records
+1 ADDR <line />
+0 @R856111495@ REPO
+1 NAME Welsh political registry
 1 ADDR <line />
 0 TRLR

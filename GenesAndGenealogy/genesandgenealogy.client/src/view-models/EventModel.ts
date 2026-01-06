@@ -15,6 +15,11 @@ export interface EventModel {
   responsibleAgency: string;
   restrictionNotice: string;
   //sourceCitations: SourceCitation[];
-  tag: string;
+  type: EventModelType;
+}
+
+export enum EventModelType {
+  Family,
+  Individual
 }
 

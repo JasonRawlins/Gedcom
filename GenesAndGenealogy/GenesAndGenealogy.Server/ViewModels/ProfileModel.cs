@@ -2,9 +2,8 @@ namespace GenesAndGenealogy.Server.ViewModels;
 
 public class ProfileModel
 {
-    public ProfileModel(TreeModel treeModel, IndividualModel individualModule, List<FamilyModel> familyModels, List<EventModel> eventModels, List<RepositoryModel> repositories, List<SourceModel> sources)
+    public ProfileModel(TreeModel treeModel, IndividualModel individualModule, List<FamilyModel> familyModels, List<RepositoryModel> repositories, List<SourceModel> sources)
     {
-        Events = eventModels;
         Families = familyModels;
         Individual = individualModule;
         Repositories = repositories;
@@ -12,7 +11,6 @@ public class ProfileModel
         Sources = sources;
     }
 
-    public List<EventModel> Events { get; set; }
     public List<FamilyModel> Families { get; set; }
     public IndividualModel Individual { get; set; }
     public List<RepositoryModel> Repositories { get; set; }

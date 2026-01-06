@@ -18,7 +18,7 @@ namespace GenesAndGenealogy.Server.Controllers
         {
             _logger = logger;
 
-            var gedFileLines = Encoding.UTF8.GetString(Properties.Resources.GedcomNetTestTree).Split('\n');
+            var gedFileLines = Encoding.UTF8.GetString(Properties.Resources.GedcomNetTestTree).Split("\r\n");
             var gedcomLines = gedFileLines.Where(l => !string.IsNullOrEmpty(l)).Select(GedcomLine.Parse).ToList();
             Gedcom = new Gedcom.Gedcom(gedcomLines);
         }
@@ -41,12 +41,21 @@ namespace GenesAndGenealogy.Server.Controllers
             var individualRecord = Gedcom.GetIndividualRecord(indiXref);
             var familyModels = GetFamilyModels(individualRecord);
             var individualModel = new IndividualModel(individualRecord, TreeModel);
-            var eventModels = individualRecord.IndividualEventStructures
-                .OrderBy(ies => ies.GedcomDate)
-                .Select(ies => new EventModel(ies)).ToList();
+
+            foreach (var familyModel in familyModels)
+            {
+                individualModel.Events.AddRange(familyModel.Events);
+            }
+
+            individualModel.Events.Sort();
+
+            //var groupedEvents = individualModel.Events
+            //    .GroupBy(e => e.Date.Year)
+            //    .Select(g => new { Year = g.Key, Events = g.ToList() });
+
             var repositories = Gedcom.GetRepositoryRecords().Select(r => new RepositoryModel(r)).ToList();
             var sources = Gedcom.GetSourceRecords().Select(r => new SourceModel(r)).ToList();
-            var profileModel = new ProfileModel(TreeModel, individualModel, familyModels, eventModels, repositories, sources);
+            var profileModel = new ProfileModel(TreeModel, individualModel, familyModels, repositories, sources);
 
             return profileModel;
         }
@@ -81,7 +90,15 @@ namespace GenesAndGenealogy.Server.Controllers
                     children.Add(new IndividualModel(childIndividualRecord, TreeModel));
                 }
 
-                familyModels.Add(new FamilyModel(partner1, partner2, children));
+                var events = new List<EventModel>();
+                foreach (var familyEventStructure in familyRecord.FamilyEventStructures)
+                {
+                    events.Add(new EventModel(familyEventStructure));
+                }
+
+                var familyModel = new FamilyModel(partner1, partner2, children, events);
+
+                familyModels.Add(familyModel);
             }
 
             return familyModels;
