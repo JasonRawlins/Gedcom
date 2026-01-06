@@ -13,8 +13,8 @@
 3 ADDR 1300 West Traverse Parkway
 4 CONT Lehi, UT  84043
 4 CONT USA
-1 DATE 1 Jan 2026
-2 TIME 10:01:59
+1 DATE 6 Jan 2026
+2 TIME 05:31:38
 1 GEDC
 2 VERS 5.5.1
 2 FORM LINEAGE-LINKED
@@ -59,9 +59,11 @@
 1 BIRT
 2 DATE 7 Jul 1930
 2 PLAC Wales
+2 NOTE Dylan was born at home in Wales.
 1 DEAT
 2 DATE 7 Jul 1990
 2 PLAC Salt Lake City, Salt Lake, Utah, USA
+2 NOTE Dylan died of cholera.
 1 SOUR @S976697667@
 2 PAGE Marriage certificate
 2 DATA
@@ -84,7 +86,7 @@
 3 WWW https://nationalarchives.ie/
 2 NOTE Witnessed by clerk.
 1 SOUR @S977046068@
-2 PAGE p. 5
+2 PAGE Wedding announcements p. 5
 2 DATA
 3 DATE 7 Jul 1950
 3 TEXT Announcing the marriage of Dylan Davis and Eithne Lynch
@@ -311,7 +313,7 @@
 4 WWW https://nationalarchives.ie/
 3 NOTE Witnessed by their friends.
 2 SOUR @S977046068@
-3 PAGE p. 5
+3 PAGE Wedding announcements p. 5
 3 DATA
 4 DATE 7 Jul 1950
 4 TEXT Announcing the marriage of Dylan Davis and Eithne Lynch

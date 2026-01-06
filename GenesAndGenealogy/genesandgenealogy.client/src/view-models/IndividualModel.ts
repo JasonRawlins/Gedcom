@@ -5,6 +5,7 @@ export interface IndividualModel {
   automatedRecordId: string;
   birth: EventModel;
   death: EventModel;
+  events: EventModel[];
   given: string;
   personalName: string;
   sex: string;

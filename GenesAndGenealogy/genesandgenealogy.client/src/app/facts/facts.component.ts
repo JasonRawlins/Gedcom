@@ -4,10 +4,10 @@ import { IndividualModel } from '../../view-models/IndividualModel';
 @Component({
   selector: 'app-facts',
   standalone: false,
-  templateUrl: './app-facts.component.html',
-  styleUrl: './app-facts.component.css'
+  templateUrl: './facts.component.html',
+  styleUrl: './facts.component.css'
 })
-export class AppFactsComponent {
+export class FactsComponent {
   @Input() individual!: IndividualModel;
 
 }
