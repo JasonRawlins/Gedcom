@@ -54,8 +54,17 @@ namespace GenesAndGenealogy.Server.Controllers
             //    .Select(g => new { Year = g.Key, Events = g.ToList() });
 
             var repositories = Gedcom.GetRepositoryRecords().Select(r => new RepositoryModel(r)).ToList();
-            var sources = Gedcom.GetSourceRecords().Select(r => new SourceModel(r)).ToList();
-            var profileModel = new ProfileModel(TreeModel, individualModel, familyModels, repositories, sources);
+
+            var sources = new List<SourceModel>();
+            foreach (var sourceCitation in individualRecord.SourceCitations)
+            {
+                var sourceRecord = Gedcom.GetSourceRecord(sourceCitation.Xref);
+                sources.Add(new SourceModel(sourceRecord));
+            }
+
+            var sortedSources = sources.OrderBy(s => s.Title).ToList();
+
+            var profileModel = new ProfileModel(TreeModel, individualModel, familyModels, repositories, sortedSources);
 
             return profileModel;
         }

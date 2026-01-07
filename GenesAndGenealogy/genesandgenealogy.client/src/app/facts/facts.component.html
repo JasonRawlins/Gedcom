@@ -3,22 +3,7 @@
     <app-timeline [events]="individual.events"></app-timeline>
   </div>
   <div class="column sources">
-    <h3>Sources</h3>
-    <ul>
-      <li class="card">
-        <div class="icon-details">
-          <div class="icon">
-            <img class="rounded" src="images/source.jpg" alt="A file icon" />
-          </div>
-          <div class="details">
-            Vital information
-          </div>
-          <div class="card-action">
-            <button>View</button>
-          </div>
-        </div>
-      </li>
-    </ul>
+    <app-sources [sources]="sources"></app-sources>
   </div>
   <div class="column relationships">
     <h3>Relationships</h3>

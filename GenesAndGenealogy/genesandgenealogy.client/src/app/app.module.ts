@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { ProfileHeaderComponent } from './profile-header/profile-header.component';
 import { FactsComponent } from './facts/facts.component';
 import { TimelineComponent } from './timeline/timeline.component';
+import { SourcesComponent } from './sources/sources.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProfileHeaderComponent,
     FactsComponent,
-    TimelineComponent
+    TimelineComponent,
+    SourcesComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

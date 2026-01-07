@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
     this.gedcomService.getProfile(indiXref).subscribe(
       (profileModel) => {
         this.profile = profileModel;
+        console.log(profileModel.sources);
       },
       (error) => {
         console.error(error);

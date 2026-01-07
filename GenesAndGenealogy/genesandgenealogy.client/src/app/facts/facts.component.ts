@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IndividualModel } from '../../view-models/IndividualModel';
+import { SourceModel } from '../../view-models/SourceModel';
 
 @Component({
   selector: 'app-facts',
@@ -9,5 +10,5 @@ import { IndividualModel } from '../../view-models/IndividualModel';
 })
 export class FactsComponent {
   @Input() individual!: IndividualModel;
-
+  @Input() sources!: SourceModel[];
 }

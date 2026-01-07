@@ -1,3 +1,4 @@
+
 export interface PlaceModel {
   name: string;
   hierarchy: string;
