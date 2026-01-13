@@ -1,4 +1,3 @@
-<h3>Tree</h3>
 <ul *ngIf="individuals">
   <li *ngFor="let individual of individuals">
     <a [routerLink]="['/profile', individual.xref]">{{individual.fullName}}</a>

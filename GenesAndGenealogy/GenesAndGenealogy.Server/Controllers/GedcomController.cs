@@ -2,6 +2,7 @@ using Gedcom;
 using Gedcom.RecordStructures;
 using GenesAndGenealogy.Server.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileSystemGlobbing;
 using System.Text;
 
 namespace GenesAndGenealogy.Server.Controllers
@@ -38,11 +39,6 @@ namespace GenesAndGenealogy.Server.Controllers
             var individualRecord = Gedcom.GetIndividualRecord(individualXref);
             var individualModel = new IndividualModel(individualRecord, TreeModel);
 
-            var parentsFamilyRecord = Gedcom.GetFamilyRecordOfParents(individualRecord.Xref);
-            var father = new IndividualModel(Gedcom.GetIndividualRecord(parentsFamilyRecord.Husband), TreeModel);
-            var mother = new IndividualModel(Gedcom.GetIndividualRecord(parentsFamilyRecord.Wife), TreeModel);
-            var parents = new FamilyModel(father, mother);
-
             var familyModels = GetFamilyModels(individualRecord);
 
             foreach (var familyModel in familyModels)
@@ -67,9 +63,33 @@ namespace GenesAndGenealogy.Server.Controllers
 
             var sortedSources = sources.OrderBy(s => s.Title).ToList();
 
-            var profileModel = new ProfileModel(TreeModel, individualModel, parents, familyModels, repositories, sortedSources);
+            var profileModel = new ProfileModel(TreeModel, individualModel, familyModels, repositories, sortedSources);
 
-            return profileModel;
+            var parentsFamilyRecord = Gedcom.GetFamilyRecordOfParents(individualRecord.Xref);
+            if (!parentsFamilyRecord.IsEmpty)
+            {
+                var fatherIndividualRecord = Gedcom.GetIndividualRecord(parentsFamilyRecord.Husband);
+                IndividualModel? father = null;
+                if (!fatherIndividualRecord.IsEmpty)
+                {
+                    father = new IndividualModel(fatherIndividualRecord, TreeModel);
+                }
+
+                var motherIndividualRecord = Gedcom.GetIndividualRecord(parentsFamilyRecord.Wife);
+                IndividualModel? mother = null;
+                if (!motherIndividualRecord.IsEmpty)
+                {
+                    mother = new IndividualModel(motherIndividualRecord, TreeModel);
+                }
+
+                profileModel.Parents = new FamilyModel(father, mother);
+            }
+            else
+            {
+                profileModel.Parents = new FamilyModel(null, null);
+            }
+
+                return profileModel;
         }
 
         [HttpGet("individual/{individualXref}/families/")]

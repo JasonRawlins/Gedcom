@@ -30,6 +30,11 @@ img.rounded {
   padding: 1rem;
 }
 
+  .card:hover {
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+  }
+
 .icon-details {
   display: flex;
   align-items: center;

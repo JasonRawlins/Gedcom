@@ -1,14 +1,19 @@
-<div class="card" [ngClass]="{ 'child': isChild }">
+<div class="card" *ngIf="individual" [routerLink]="['/profile', individual.xref]" [ngClass]="{ 'child': isChild }">
   <div class="icon-details">
     <div class="icon">
-      <img class="rounded" src="images/silhouette-male.jpeg" alt="A file icon" />
+      <img *ngIf="sex === 'M'" class="rounded" src="images/silhouette-male.jpeg" alt="A silhouette of a man's portrait'" />
+      <img *ngIf="sex === 'F'" class="rounded" src="images/silhouette-female.jpeg" alt="A silhouette of a woman's portrait'" />
     </div>
-    <div class="details">
-      <div><strong>{{individual.fullName}}</strong></div>
-      <div>{{individual.birth.date.year}}-{{individual.death.date.year}}</div>
+    <div><strong>{{individual.fullName}}</strong></div>
+    <div>{{individual.birth.date.year}}-{{individual.death.date.year}}</div>
+  </div>
+</div>
+<div class="card" *ngIf="!individual" [ngClass]="{ 'child': isChild }">
+  <div class="icon-details">
+    <div class="icon">
+      <img class="rounded" src="images/silhouette-unknown.jpeg" alt="A silhouette of a unknown person's portrait'" />
     </div>
-    <div class="card-action">
-      <button>Edit</button>
-    </div>
+    <div *ngIf="sex === 'M'"><strong>Unknown father</strong></div>
+    <div *ngIf="sex === 'F'"><strong>Unknown mother</strong></div>
   </div>
 </div>

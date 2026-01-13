@@ -8,6 +8,7 @@ import { IndividualModel } from '../../view-models/IndividualModel';
   styleUrl: './relationship-card.component.css'
 })
 export class RelationshipCardComponent {
-  @Input() individual!: IndividualModel;
+  @Input() individual?: IndividualModel;
   @Input() isChild!: boolean;
+  @Input() sex!: string;
 }

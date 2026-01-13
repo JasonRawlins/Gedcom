@@ -2,14 +2,14 @@
 <div>
   Parents
 </div>
-<app-relationship-card [individual]="parents.husband"></app-relationship-card>
-<app-relationship-card [individual]="parents.wife"></app-relationship-card>
+<app-relationship-card [individual]="parents.husband" [sex]="'M'"></app-relationship-card>
+<app-relationship-card [individual]="parents.wife" [sex]="'F'"></app-relationship-card>
 <div *ngFor="let family of families">
   <div *ngIf="family.children.length === 0">Spouse</div>
   <div *ngIf="family.children.length > 0">Spouse and children</div>
-  <app-relationship-card [individual]="family.husband" *ngIf="family.husband.xref !== individualXref"></app-relationship-card>
-  <app-relationship-card [individual]="family.wife" *ngIf="family.wife.xref !== individualXref"></app-relationship-card>
+  <app-relationship-card [individual]="family?.husband" [sex]="'M'" *ngIf="family?.husband?.xref !== individualXref"></app-relationship-card>
+  <app-relationship-card [individual]="family?.wife" [sex]="'F'" *ngIf="family?.wife?.xref !== individualXref"></app-relationship-card>
   <div *ngFor="let child of family.children">
-    <app-relationship-card [individual]="child" [isChild]="true"></app-relationship-card>
+    <app-relationship-card [individual]="child" [sex]="child.sex" [isChild]="true"></app-relationship-card>
   </div>
 </div>
