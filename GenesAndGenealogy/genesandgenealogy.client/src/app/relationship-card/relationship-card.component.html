@@ -1,8 +1,8 @@
 <div class="card" *ngIf="individual" [routerLink]="['/profile', individual.xref]" [ngClass]="{ 'child': isChild }">
   <div class="icon-details">
     <div class="icon">
-      <img *ngIf="sex === 'M'" class="rounded" src="images/silhouette-male.jpeg" alt="A silhouette of a man's portrait'" />
-      <img *ngIf="sex === 'F'" class="rounded" src="images/silhouette-female.jpeg" alt="A silhouette of a woman's portrait'" />
+      <img *ngIf="sex === 'M'" class="rounded" src="images/silhouette-male.jpg" alt="A silhouette of a man's portrait'" />
+      <img *ngIf="sex === 'F'" class="rounded" src="images/silhouette-female.jpg" alt="A silhouette of a woman's portrait'" />
     </div>
     <div><strong>{{individual.fullName}}</strong></div>
     <div>{{individual.birth.date.year}}-{{individual.death.date.year}}</div>
@@ -11,7 +11,7 @@
 <div class="card" *ngIf="!individual" [ngClass]="{ 'child': isChild }">
   <div class="icon-details">
     <div class="icon">
-      <img class="rounded" src="images/silhouette-unknown.jpeg" alt="A silhouette of a unknown person's portrait'" />
+      <img class="rounded" src="images/silhouette-unknown.jpg" alt="A silhouette of a unknown person's portrait'" />
     </div>
     <div *ngIf="sex === 'M'"><strong>Unknown father</strong></div>
     <div *ngIf="sex === 'F'"><strong>Unknown mother</strong></div>
