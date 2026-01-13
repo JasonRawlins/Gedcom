@@ -6,6 +6,7 @@ import { TreeModel } from "./TreeModel";
 export interface ProfileModel {
   families: FamilyModel[];
   individual: IndividualModel;
+  parents: FamilyModel;
   sources: SourceModel[];
   tree: TreeModel;
 }

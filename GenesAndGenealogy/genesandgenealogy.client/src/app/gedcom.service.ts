@@ -14,12 +14,12 @@ export class GedcomService {
     return this.http.get<IndividualModel[]>("/gedcom/individuals");
   }
 
-  getProfile(indiXref: string) {
-    return this.http.get<ProfileModel>(`/gedcom/profile/${indiXref}`);
+  getProfile(individualXref: string) {
+    return this.http.get<ProfileModel>(`/gedcom/profile/${individualXref}`);
   }
 
-  getIndividualFamilies(famXref: string) {
-    return this.http.get<FamilyModel[]>(`/gedcom/individual/${famXref}/families`);
+  getIndividualFamilies(individualXref: string) {
+    return this.http.get<FamilyModel[]>(`/gedcom/individual/${individualXref}/families`);
   }
 
   getFamily(famXref: string) {

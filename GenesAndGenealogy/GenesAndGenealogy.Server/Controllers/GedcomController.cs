@@ -29,18 +29,21 @@ namespace GenesAndGenealogy.Server.Controllers
             return Gedcom.GetIndividualRecords().Select(ir => new IndividualModel(ir, TreeModel));
         }
 
-        [HttpGet("individual")]
-        public List<IndividualModel> GetIndividuals()
-        {
-            return Gedcom.GetIndividualRecords().Select(ir => new IndividualModel(ir, TreeModel)).ToList();
-        }
+        [HttpGet("individuals")]
+        public List<IndividualModel> GetIndividuals() => Gedcom.GetIndividualRecords().Select(ir => new IndividualModel(ir, TreeModel)).ToList();
 
-        [HttpGet("profile/{indiXref}")]
-        public ProfileModel GetProfile(string indiXref)
+        [HttpGet("profile/{individualXref}")]
+        public ProfileModel GetProfile(string individualXref)
         {
-            var individualRecord = Gedcom.GetIndividualRecord(indiXref);
-            var familyModels = GetFamilyModels(individualRecord);
+            var individualRecord = Gedcom.GetIndividualRecord(individualXref);
             var individualModel = new IndividualModel(individualRecord, TreeModel);
+
+            var parentsFamilyRecord = Gedcom.GetFamilyRecordOfParents(individualRecord.Xref);
+            var father = new IndividualModel(Gedcom.GetIndividualRecord(parentsFamilyRecord.Husband), TreeModel);
+            var mother = new IndividualModel(Gedcom.GetIndividualRecord(parentsFamilyRecord.Wife), TreeModel);
+            var parents = new FamilyModel(father, mother);
+
+            var familyModels = GetFamilyModels(individualRecord);
 
             foreach (var familyModel in familyModels)
             {
@@ -64,15 +67,15 @@ namespace GenesAndGenealogy.Server.Controllers
 
             var sortedSources = sources.OrderBy(s => s.Title).ToList();
 
-            var profileModel = new ProfileModel(TreeModel, individualModel, familyModels, repositories, sortedSources);
+            var profileModel = new ProfileModel(TreeModel, individualModel, parents, familyModels, repositories, sortedSources);
 
             return profileModel;
         }
 
-        [HttpGet("individual/{xrefINDI}/families/")]
-        public List<FamilyModel> GetIndividualFamilies(string xrefINDI)
+        [HttpGet("individual/{individualXref}/families/")]
+        public List<FamilyModel> GetIndividualFamilies(string individualXref)
         {
-            return GetFamilyModels(Gedcom.GetIndividualRecord(xrefINDI));
+            return GetFamilyModels(Gedcom.GetIndividualRecord(individualXref));
         }
 
         private List<FamilyModel> GetFamilyModels(IndividualRecord individualRecord)
@@ -89,8 +92,8 @@ namespace GenesAndGenealogy.Server.Controllers
 
             foreach (var familyRecord in familyRecords)
             {
-                var partner1 = new IndividualModel(Gedcom.GetIndividualRecord(familyRecord.Husband), TreeModel);
-                var partner2 = new IndividualModel(Gedcom.GetIndividualRecord(familyRecord.Wife), TreeModel);
+                var husband = new IndividualModel(Gedcom.GetIndividualRecord(familyRecord.Husband), TreeModel);
+                var wife = new IndividualModel(Gedcom.GetIndividualRecord(familyRecord.Wife), TreeModel);
                 var children = new List<IndividualModel>();
 
                 foreach (var childXref in familyRecord.Children)
@@ -105,7 +108,11 @@ namespace GenesAndGenealogy.Server.Controllers
                     events.Add(new EventModel(familyEventStructure));
                 }
 
-                var familyModel = new FamilyModel(partner1, partner2, children, events);
+                var familyModel = new FamilyModel(husband, wife)
+                {
+                    Children = children,
+                    Events = events
+                };
 
                 familyModels.Add(familyModel);
             }

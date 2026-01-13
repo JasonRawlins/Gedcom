@@ -1,0 +1,14 @@
+<div class="card" [ngClass]="{ 'child': isChild }">
+  <div class="icon-details">
+    <div class="icon">
+      <img class="rounded" src="images/silhouette-male.jpeg" alt="A file icon" />
+    </div>
+    <div class="details">
+      <div><strong>{{individual.fullName}}</strong></div>
+      <div>{{individual.birth.date.year}}-{{individual.death.date.year}}</div>
+    </div>
+    <div class="card-action">
+      <button>Edit</button>
+    </div>
+  </div>
+</div>

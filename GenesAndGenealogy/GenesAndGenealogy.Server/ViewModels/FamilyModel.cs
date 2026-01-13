@@ -1,29 +1,12 @@
 namespace GenesAndGenealogy.Server.ViewModels;
 
-public class FamilyModel
+public class FamilyModel(IndividualModel husband, IndividualModel wife)
 {
-    public FamilyModel(IndividualModel partner1, IndividualModel partner2)
-    {
-        Children = [];
-        Events = [];
-        Partner1 = partner1;
-        Partner2 = partner2;
-    }
+    public List<IndividualModel> Children { get; set; } = [];
+    public List<EventModel> Events { get; set; } = [];
+    public IndividualModel Husband { get; set; } = husband;
+    public FamilyModel? Parents { get; set; }
+    public IndividualModel Wife { get; set; } = wife;
 
-    public FamilyModel(IndividualModel partner1, IndividualModel partner2, List<IndividualModel> children) : this(partner1, partner2)
-    {
-        Children = children;
-    }
-
-    public FamilyModel(IndividualModel partner1, IndividualModel partner2, List<IndividualModel> children, List<EventModel> events) : this(partner1, partner2, children)
-    {
-        Events = events;
-    }
-
-    public List<IndividualModel> Children { get; set; }
-    public List<EventModel> Events { get; set; }
-    public IndividualModel Partner1 { get; set; }
-    public IndividualModel Partner2 { get; set; }
-
-    public override string ToString() => $"{Partner1.FullName}, {Partner2.FullName} with {Children.Count} children)";
+    public override string ToString() => $"{Husband.FullName}, {Wife.FullName} with {Children.Count} children)";
 }

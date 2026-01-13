@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileModel } from '../view-models/ProfileModel';
 import { GedcomService } from './gedcom.service';
+import { IndividualModel } from '../view-models/IndividualModel';
+import { ProfileModel } from '../view-models/ProfileModel';
 
 @Component({
   selector: 'app-root',
@@ -11,19 +12,26 @@ import { GedcomService } from './gedcom.service';
 })
 export class AppComponent implements OnInit {
   public profile?: ProfileModel;
+  public individuals?: IndividualModel[];
 
   constructor(private gedcomService: GedcomService) {
   }
 
   ngOnInit() {
     this.getProfile("@I272718948910@");
+    //this.gedcomService.getIndividuals().subscribe(
+    //  (individuals) => {
+    //    this.individuals = individuals;
+    //  },
+    //  (error) => {
+    //    console.error(error);
+    //  });
   }
 
-  getProfile(indiXref: string) {
-    this.gedcomService.getProfile(indiXref).subscribe(
+  getProfile(individualXref: string) {
+    this.gedcomService.getProfile(individualXref).subscribe(
       (profileModel) => {
         this.profile = profileModel;
-        console.log(profileModel.sources);
       },
       (error) => {
         console.error(error);

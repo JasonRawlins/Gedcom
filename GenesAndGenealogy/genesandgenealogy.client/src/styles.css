@@ -29,3 +29,20 @@ img.rounded {
   margin-bottom: 10px;
   padding: 1rem;
 }
+
+.icon-details {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon img {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  display: block;
+}
+
+.details {
+  flex: 1;
+}

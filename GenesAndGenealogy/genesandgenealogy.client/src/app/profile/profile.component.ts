@@ -2,11 +2,11 @@ import { Component, Input } from '@angular/core';
 import { ProfileModel } from '../../view-models/ProfileModel';
 
 @Component({
-  selector: 'app-facts',
+  selector: 'app-profile',
   standalone: false,
-  templateUrl: './facts.component.html',
-  styleUrl: './facts.component.css'
+  templateUrl: './profile.component.html',
+  styleUrl: './profile.component.css'
 })
-export class FactsComponent {
+export class ProfileComponent {
   @Input() profile!: ProfileModel;
 }

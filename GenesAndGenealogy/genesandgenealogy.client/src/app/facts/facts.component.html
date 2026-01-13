@@ -1,64 +1,11 @@
 <main class="columns">
   <div class="column timeline">
-    <app-timeline [events]="individual.events"></app-timeline>
+    <app-timeline [events]="profile.individual.events"></app-timeline>
   </div>
   <div class="column sources">
-    <app-sources [sources]="sources"></app-sources>
+    <app-sources [sources]="profile.sources"></app-sources>
   </div>
   <div class="column relationships">
-    <h3>Relationships</h3>
-    <div>
-      Parents
-    </div>
-    <div class="card">
-      <div class="icon-details">
-        <div class="icon">
-          <img class="rounded" src="images/silhouette male.jpeg" alt="A file icon" />
-        </div>
-        <div class="details">
-          <div><strong>Dylan Davis</strong></div>
-          <div>1930-1990</div>
-        </div>
-        <div class="card-action">
-          <button>Edit</button>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="icon-details">
-        <div class="icon">
-          <img class="rounded" src="images/silhouette female.jpeg" alt="A file icon" />
-        </div>
-        <div class="details">
-          <div><strong>Fiona Douglas</strong></div>
-          <div>1930-1990</div>
-        </div>
-      </div>
-    </div>
-    <div>
-      Spouse and children
-    </div>
-    <div class="card">
-      <div class="icon-details">
-        <div class="icon">
-          <img class="rounded" src="images/silhouette male.jpeg" alt="A file icon" />
-        </div>
-        <div class="details">
-          <div><strong>James Smith</strong></div>
-          <div>1960-2020</div>
-        </div>
-      </div>
-    </div>
-    <div class="card child">
-      <div class="icon-details">
-        <div class="icon">
-          <img class="rounded" src="images/silhouette female.jpeg" alt="A file icon" />
-        </div>
-        <div class="details">
-          <div><strong>Mary Smith</strong></div>
-          <div>1990-</div>
-        </div>
-      </div>
-    </div>
+    <app-relationships [individualXref]="profile.individual.xref" [families]="profile.families" [parents]="profile.parents"></app-relationships>
   </div>
 </main>

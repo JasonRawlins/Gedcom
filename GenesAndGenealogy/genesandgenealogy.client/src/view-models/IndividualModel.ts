@@ -6,6 +6,7 @@ export interface IndividualModel {
   birth: EventModel;
   death: EventModel;
   events: EventModel[];
+  fullName: string;
   given: string;
   personalName: string;
   sex: string;

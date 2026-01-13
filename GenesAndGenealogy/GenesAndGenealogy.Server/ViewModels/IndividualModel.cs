@@ -10,7 +10,6 @@ public class IndividualModel
         Birth = new EventModel(individualRecord.Birth);
         Death = new EventModel(individualRecord.Death);
         Events = individualRecord.IndividualEventStructures.Select(ies => new EventModel(ies)).ToList();
-        FullName = $"{Given} {Surname}";
         Given = individualRecord.PersonalNameStructures[0].Given;
         PersonalName = individualRecord.PersonalNameStructures[0].NamePersonal;
         Sex = individualRecord.SexValue;
@@ -32,7 +31,7 @@ public class IndividualModel
     public EventModel Birth { get; set; }
     public EventModel Death { get; set; }
     public List<EventModel> Events { get; set; }
-    public string FullName { get; set; }
+    public string FullName => $"{Given} {Surname}";
     public string Given { get; set; }
     public string PersonalName { get; set; }
     public string Sex { get; set; }
