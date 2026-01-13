@@ -39,6 +39,7 @@ public class IndividualModel
     public string Surname { get; set; }
     private string TreeId { get; set; }
     public string Xref { get; set; }
+    public string XrefNumber => Xref.Replace("@", "").Substring(1);
 
     public override string ToString() => $"{FullName} ({Birth.Date.DayMonthYear})-{Death.Date.DayMonthYear})";
 }

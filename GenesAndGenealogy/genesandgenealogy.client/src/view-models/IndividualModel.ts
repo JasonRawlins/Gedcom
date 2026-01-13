@@ -13,4 +13,5 @@ export interface IndividualModel {
   submitter: string;
   surname: string;
   xref: string;
+  xrefNumber: string;
 }

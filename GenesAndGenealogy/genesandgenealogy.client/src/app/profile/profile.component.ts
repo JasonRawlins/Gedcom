@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { ProfileModel } from '../../view-models/ProfileModel';
+import { ActivatedRoute } from '@angular/router';
+import { GedcomService } from '../gedcom.service';
 
 @Component({
   selector: 'app-profile',
@@ -9,4 +11,22 @@ import { ProfileModel } from '../../view-models/ProfileModel';
 })
 export class ProfileComponent {
   @Input() profile!: ProfileModel;
+  private activatedRoute = inject(ActivatedRoute);
+
+  constructor(private gedcomService: GedcomService) {
+  }
+
+  ngOnInit() {
+    this.activatedRoute.params.subscribe((params) => {
+      const individualXref = params['individualXref'];
+
+      this.gedcomService.getProfile(individualXref).subscribe(
+        (profile) => {
+          this.profile = profile;
+        },
+        (error) => {
+          console.error(error);
+        });
+    });
+  }
 }
