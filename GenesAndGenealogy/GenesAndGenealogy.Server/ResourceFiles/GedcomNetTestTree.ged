@@ -13,8 +13,8 @@
 3 ADDR 1300 West Traverse Parkway
 4 CONT Lehi, UT  84043
 4 CONT USA
-1 DATE 6 Jan 2026
-2 TIME 08:01:29
+1 DATE 17 Jan 2026
+2 TIME 23:29:46
 1 GEDC
 2 VERS 5.5.1
 2 FORM LINEAGE-LINKED
@@ -145,12 +145,26 @@
 2 DATE 7 Jul 1948
 2 PLAC Aberystwyth, Cardiganshire, Wales
 2 SOUR @S977151981@
-3 PAGE Department of History and Welsh History
+3 PAGE Department of Welsh History
+3 DATA
+4 DATE 1 Jan 2026
+4 TEXT Duis laoreet nulla euismod ex feugiat, ac dictum nulla fringilla. Pellentesque molestie tempus tincidunt. In nec risus eget sem fermentum posuere. Suspendisse potenti. Fusce sed tincidunt nibh. Pellentesque facilisis, felis in posuere gravida, ant
+5 CONC e lorem bibendum ipsum, viverra mattis dolor dui ac turpis. Aliquam erat volutpat. In consectetur pulvinar magna ut vulputate. Donec malesuada a purus posuere elementum. Fusce placerat scelerisque lacus, in dapibus leo molestie a. Morbi vitae null
+5 CONC a vel augue laoreet consequat vitae tincidunt tellus.
+4 WWW https://www.aber.ac.uk/en/
+3 NOTE Ut volutpat massa nec purus volutpat, vitae cursus nisi tempor.
 1 GRAD
 2 DATE 7 Jul 1952
 2 PLAC Aberystwyth, Cardiganshire, Wales
 2 SOUR @S977151981@
-3 PAGE Department of History and Welsh History
+3 PAGE Department of Welsh History
+3 DATA
+4 DATE 1 Jan 2026
+4 TEXT Duis laoreet nulla euismod ex feugiat, ac dictum nulla fringilla. Pellentesque molestie tempus tincidunt. In nec risus eget sem fermentum posuere. Suspendisse potenti. Fusce sed tincidunt nibh. Pellentesque facilisis, felis in posuere gravida, ant
+5 CONC e lorem bibendum ipsum, viverra mattis dolor dui ac turpis. Aliquam erat volutpat. In consectetur pulvinar magna ut vulputate. Donec malesuada a purus posuere elementum. Fusce placerat scelerisque lacus, in dapibus leo molestie a. Morbi vitae null
+5 CONC a vel augue laoreet consequat vitae tincidunt tellus.
+4 WWW https://www.aber.ac.uk/en/
+3 NOTE Ut volutpat massa nec purus volutpat, vitae cursus nisi tempor.
 2 NOTE Bachelor's degree with honours in Welsh history.
 1 OCCU Publishing
 2 DATE 7 Jul 1960
@@ -216,7 +230,14 @@
 1 SOUR @S977151969@
 2 PAGE 123 Caroline Street
 1 SOUR @S977151981@
-2 PAGE Department of History and Welsh History
+2 PAGE Department of Welsh History
+2 DATA
+3 DATE 1 Jan 2026
+3 TEXT Duis laoreet nulla euismod ex feugiat, ac dictum nulla fringilla. Pellentesque molestie tempus tincidunt. In nec risus eget sem fermentum posuere. Suspendisse potenti. Fusce sed tincidunt nibh. Pellentesque facilisis, felis in posuere gravida, ant
+4 CONC e lorem bibendum ipsum, viverra mattis dolor dui ac turpis. Aliquam erat volutpat. In consectetur pulvinar magna ut vulputate. Donec malesuada a purus posuere elementum. Fusce placerat scelerisque lacus, in dapibus leo molestie a. Morbi vitae null
+4 CONC a vel augue laoreet consequat vitae tincidunt tellus.
+3 WWW https://www.aber.ac.uk/en/
+2 NOTE Ut volutpat massa nec purus volutpat, vitae cursus nisi tempor.
 1 SOUR @S977151991@
 2 PAGE Death announcements p. 10
 2 DATA
@@ -543,7 +564,17 @@
 1 REPO @R856111490@
 0 @S977151981@ SOUR
 1 TITL Aberystwyth University 
+1 AUTH Undergraduate admissions
+1 PUBL Publishing department
+2 DATE 1 Jan 2026
+2 PLAC Aberystwyth, Wales
+1 CALN CN 123
+1 REFN REFN 123
 1 REPO @R856111492@
+1 NOTE Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nulla neque, elementum id pharetra vel, pretium at lectus. Etiam dictum pellentesque mauris, in suscipit turpis dictum non. Nullam vulputate, mi nec ultrices ultricies, dolor lorem tinc
+2 CONC idunt orci, a tincidunt metus ligula eu purus. Ut erat elit, suscipit quis varius in, laoreet quis risus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec vehicula magna a scelerisque elementum. Etiam si
+2 CONC t amet euismod leo, sit amet posuere dui. Nullam fringilla ex et pellentesque efficitur. Curabitur vestibulum consequat lorem eget auctor. Duis nec nisl et elit lobortis porttitor id et lacus. Sed volutpat lectus vitae felis tincidunt, eget convall
+2 CONC is metus feugiat. Suspendisse cursus lorem porta rutrum hendrerit.
 0 @S977151991@ SOUR
 1 TITL Death announcements
 1 REPO @R856111493@
@@ -567,7 +598,12 @@
 1 ADDR <line />
 0 @R856111492@ REPO
 1 NAME Welsh higher education repository
-1 ADDR <line />
+1 ADDR <line>Penglais, Aberystwyth, Ceredigion, SY23 3FL</line>
+1 PHON (123) 456-7890
+1 EMAIL ug-admissions@@aber.ac.uk
+1 CALN 123 abc
+1 REFN REFN 123
+1 NOTE Undergraduate admissions
 0 @R856111493@ REPO
 1 NAME Welsh newspapers
 1 ADDR <line />

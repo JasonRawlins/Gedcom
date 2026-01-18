@@ -6,7 +6,7 @@
         <div class="icon">
           <img class="rounded" src="images/source-icon.jpg" alt="An image of a source file" />
         </div>
-        {{source.title}}
+        <a [routerLink]="['/source-information', source.xref]">{{source.title}}</a>        
       </div>
     </div>
   </li>

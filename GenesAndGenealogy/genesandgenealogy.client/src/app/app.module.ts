@@ -12,6 +12,8 @@ import { RelationshipsComponent } from './relationships/relationships.component'
 import { RelationshipCardComponent } from './relationship-card/relationship-card.component';
 import { TreeComponent } from './tree/tree.component';
 import { ProfileComponent } from './profile/profile.component';
+import { SourceInformationComponent } from './source-information/source-information.component';
+import { RepositoryInformationComponent } from './repository-information/repository-information.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { ProfileComponent } from './profile/profile.component';
     RelationshipsComponent,
     RelationshipCardComponent,
     TreeComponent,
-    ProfileComponent
+    ProfileComponent,
+    SourceInformationComponent,
+    RepositoryInformationComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

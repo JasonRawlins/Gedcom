@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IndividualModel } from '../../view-models/IndividualModel';
-import { GedcomService } from '../gedcom.service';
+import { GedcomService } from '../services/gedcom.service';
 
 @Component({
   selector: 'app-tree',

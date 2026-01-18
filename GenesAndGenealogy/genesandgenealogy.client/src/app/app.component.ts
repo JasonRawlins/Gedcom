@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GedcomService } from './gedcom.service';
+import { GedcomService } from './services/gedcom.service';
 import { ProfileModel } from '../view-models/ProfileModel';
 
 @Component({

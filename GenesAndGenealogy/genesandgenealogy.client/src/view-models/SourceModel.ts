@@ -11,7 +11,9 @@ export interface SourceModel {
   originator: string;
   publicationFacts: string;
   //recordData: SourceRecordData;
+  repositoryXref: string;
   //sourceRepositoryCitations: SourceRepositoryCitation[];
   textFromSource: string;
   //userReferenceNumbers: UserReferenceNumber[];
+  xref: string;
 }

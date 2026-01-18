@@ -14,6 +14,7 @@ public class SourceRecord : RecordStructureBase
     public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
+    public string RepositoryXref => GetValue(Tag.Repository);
     public NoteStructure SourceDescriptiveTitle => First<NoteStructure>(Tag.Title);
     public NoteStructure SourceFiledByEntry => First<NoteStructure>(Tag.Abbreviation);
     public NoteStructure SourceOriginator => First<NoteStructure>(Tag.Author);
@@ -54,6 +55,7 @@ internal class SourceJson : GedcomJson
         PublicationFacts = JsonRecord(sourceRecord.SourcePublicationFacts);
         RecordData = JsonRecord(sourceRecord.SourceRecordData);
         RepositoryCitations = JsonList(sourceRecord.SourceRepositoryCitations);
+        RepositoryXref = JsonString(sourceRecord.RepositoryXref);
         TextFromSource = JsonRecord(sourceRecord.TextFromSource);
         UserReferenceNumbers = JsonList(sourceRecord.UserReferenceNumbers);
         Xref = sourceRecord.Xref;
@@ -70,6 +72,7 @@ internal class SourceJson : GedcomJson
     public NoteStructure? PublicationFacts { get; set; }
     public SourceRecordData? RecordData { get; set; }
     public List<SourceRepositoryCitation>? RepositoryCitations { get; set; }
+    public string? RepositoryXref { get; set; }
     public NoteStructure? TextFromSource { get; set; }
     public List<UserReferenceNumber>? UserReferenceNumbers { get; set; }
     public string Xref { get; set; }

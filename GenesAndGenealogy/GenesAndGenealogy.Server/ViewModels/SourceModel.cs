@@ -17,9 +17,11 @@ public class SourceModel
         Originator = sourceRecord.SourceOriginator.Text;
         PublicationFacts = sourceRecord.SourcePublicationFacts.Text;
         //RecordData = sourceRecord.SourceRecordData;
+        RepositoryXref = sourceRecord.RepositoryXref;
         //SourceRepositoryCitations = sourceRecord.SourceRepositoryCitations;
         TextFromSource = sourceRecord.TextFromSource.Text;
         //UserReferenceNumbers = sourceRecord.UserReferenceNumbers
+        Xref = sourceRecord.Xref;
     }
 
     public string AutomatedRecordId { get; set; }
@@ -31,10 +33,12 @@ public class SourceModel
     public string FiledByEntry { get; set; }
     public string Originator { get; set; }
     public string PublicationFacts { get; set; }
+    public string RepositoryXref { get; set; }
     //public SourceRecordData RecordData { get; set; }
     //public List<SourceRepositoryCitation> SourceRepositoryCitations { get; set; }
     public string TextFromSource { get; set; }
     //public List<UserReferenceNumber> UserReferenceNumbers { get; set; }
+    public string Xref { get; set; }
 
     public override string ToString() => $"({AutomatedRecordId}) {TextFromSource}";
 }
