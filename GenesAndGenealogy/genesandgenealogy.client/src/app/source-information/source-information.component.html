@@ -1,29 +1,31 @@
-<h2>Source information</h2>
 <div class="repository-source-information">
-  <div class="field">
-    <div><strong>Title</strong></div>
-    <div>{{source.title}}</div>
-  </div>
-  <div class="field">
-    <div><strong>Author</strong></div>
-    <div>{{source.originator}}</div>
-  </div>
-  <div class="field">
-    <div><strong>Call number</strong></div>
-    <div>{{source.callNumber}}</div>
-  </div>
-  <div class="field">
-    <div><strong>Note</strong></div>
-    <div>{{source.notes}}</div>
-  </div>
-  <div class="field">
-    <div><strong>Publisher</strong></div>
-    <div>{{source.publicationFacts}}</div>
-  </div>
-  <div class="field">
-    <div><strong>Repository</strong></div>
-    <div>
-      <a [routerLink]="['/repository-information', source.repositoryXref]">Repository</a>
+  <div class="content">
+    <h2>Source information</h2>
+    <div class="field">
+      <div><strong>Title</strong></div>
+      <div>{{source.title}}</div>
+    </div>
+    <div class="field">
+      <div><strong>Author</strong></div>
+      <div>{{source.originator}}</div>
+    </div>
+    <div class="field">
+      <div><strong>Call number</strong></div>
+      <div>{{source.callNumber}}</div>
+    </div>
+    <div class="field">
+      <div><strong>Note</strong></div>
+      <div>{{source.notes}}</div>
+    </div>
+    <div class="field">
+      <div><strong>Publisher</strong></div>
+      <div>{{source.publicationFacts}}</div>
+    </div>
+    <div class="field">
+      <div><strong>Repository</strong></div>
+      <div>
+        <a [routerLink]="['/repository-information', source.repositoryXref]">Repository</a>
+      </div>
     </div>
   </div>
 </div>

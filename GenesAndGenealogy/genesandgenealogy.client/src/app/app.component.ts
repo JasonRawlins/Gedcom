@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GedcomService } from './services/gedcom.service';
-import { ProfileModel } from '../view-models/ProfileModel';
+import { TreeModel } from '../view-models/TreeModel';
 
 @Component({
   selector: 'app-root',
@@ -10,26 +10,19 @@ import { ProfileModel } from '../view-models/ProfileModel';
   providers: [GedcomService]
 })
 export class AppComponent implements OnInit {
-  public profile?: ProfileModel;
+  public treeModel!: TreeModel;
 
   constructor(private gedcomService: GedcomService) {
   }
 
   ngOnInit() {
-    this.getProfile("@I272718948910@");
-    //this.gedcomService.getIndividuals().subscribe(
-    //  (individuals) => {
-    //    this.individuals = individuals;
-    //  },
-    //  (error) => {
-    //    console.error(error);
-    //  });
+    this.getTree();
   }
 
-  getProfile(individualXref: string) {
-    this.gedcomService.getProfile(individualXref).subscribe(
-      (profileModel) => {
-        this.profile = profileModel;
+  getTree() {
+    this.gedcomService.getTree().subscribe(
+      (treeModel) => {
+        this.treeModel = treeModel;
       },
       (error) => {
         console.error(error);

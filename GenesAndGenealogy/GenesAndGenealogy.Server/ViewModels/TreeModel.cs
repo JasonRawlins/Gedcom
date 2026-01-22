@@ -8,10 +8,12 @@ public class TreeModel
     {
         AutomatedRecordId = headerTree.AutomatedRecordId;
         Name = headerTree.Name;
+        Note = headerTree.Note.Text;
     }
 
     public string AutomatedRecordId { get; set; }
     public string Name { get; set; }
+    public string Note { get; set; }
 
     public override string ToString() => $"{Name} ({AutomatedRecordId})";
 }

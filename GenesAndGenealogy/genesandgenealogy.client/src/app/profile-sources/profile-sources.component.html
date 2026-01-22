@@ -1,12 +1,12 @@
 <h3>Sources</h3>
 <ul>
   <li *ngFor="let source of sources">
-    <div class="card">
+    <div class="card" [routerLink]="['/source-information', source.xref]">
       <div class="icon-details">
         <div class="icon">
           <img class="rounded" src="images/source-icon.jpg" alt="An image of a source file" />
         </div>
-        <a [routerLink]="['/source-information', source.xref]">{{source.title}}</a>        
+        {{source.title}}    
       </div>
     </div>
   </li>

@@ -5,6 +5,7 @@ import { IndividualModel } from "../../view-models/IndividualModel";
 import { ProfileModel } from "../../view-models/ProfileModel";
 import { RepositoryModel } from "../../view-models/RepositoryModel";
 import { SourceModel } from "../../view-models/SourceModel";
+import { TreeModel } from "../../view-models/TreeModel";
 
 @Injectable()
 export class GedcomService {
@@ -33,5 +34,9 @@ export class GedcomService {
 
   getSource(sourceXref: string) {
     return this.http.get<SourceModel>(`/gedcom/source/${sourceXref}`);
+  }
+
+  getTree() {
+    return this.http.get<TreeModel>(`/gedcom/tree`);
   }
 }

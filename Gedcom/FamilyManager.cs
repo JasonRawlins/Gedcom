@@ -52,6 +52,12 @@ public class FamilyManager(Gedcom gedcom)
             return exisitingIndividual;
 
         var newIndividual = new Individual(individualRecord);
+
+        foreach (var multimediaLink in individualRecord.MultimediaLinks)
+        {
+            var objectRecord = Gedcom.GetObjectRecord(multimediaLink.Xref);
+            newIndividual.MultimediaRecords.Add(objectRecord);
+        }
         
         IndividualsCache[individualXref] = newIndividual;
 

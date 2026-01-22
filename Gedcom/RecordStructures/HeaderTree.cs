@@ -11,6 +11,7 @@ public class HeaderTree : RecordStructureBase
 
     public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
     public string Name => Record.Value;
+    public NoteStructure Note => First<NoteStructure>(Tag.Note);
 
     public override string ToString() => $"{Record.Value}, {Name}";
 }

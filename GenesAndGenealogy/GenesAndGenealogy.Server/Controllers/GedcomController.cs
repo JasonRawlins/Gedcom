@@ -12,6 +12,7 @@ namespace GenesAndGenealogy.Server.Controllers
     public class GedcomController : ControllerBase
     {
         private readonly ILogger<GedcomController> _logger;
+        private FamilyManager FamilyManager { get; }
         private Gedcom.Gedcom Gedcom { get; }
         private TreeModel TreeModel => new(Gedcom.Header.Source.Tree);
 
@@ -22,6 +23,7 @@ namespace GenesAndGenealogy.Server.Controllers
             var gedFileLines = Encoding.UTF8.GetString(Properties.Resources.GedcomNetTestTree).Split("\r\n");
             var gedcomLines = gedFileLines.Where(l => !string.IsNullOrEmpty(l)).Select(GedcomLine.Parse).ToList();
             Gedcom = new Gedcom.Gedcom(gedcomLines);
+            FamilyManager = new FamilyManager(Gedcom);
         }
 
         [HttpGet(Name = "GetGedcom")]
@@ -44,6 +46,10 @@ namespace GenesAndGenealogy.Server.Controllers
 
             foreach (var familyRecord in familyRecords)
             {
+                var family = FamilyManager.CreateFamily(familyRecord.Xref, 1, 1);
+
+
+
                 var husband = new IndividualModel(Gedcom.GetIndividualRecord(familyRecord.Husband), TreeModel);
                 var wife = new IndividualModel(Gedcom.GetIndividualRecord(familyRecord.Wife), TreeModel);
                 var children = new List<IndividualModel>();
@@ -116,6 +122,9 @@ namespace GenesAndGenealogy.Server.Controllers
             var parentsFamilyRecord = Gedcom.GetFamilyRecordOfParents(individualRecord.Xref);
             if (!parentsFamilyRecord.IsEmpty)
             {
+                var familyManager = new FamilyManager(Gedcom);
+                var family = familyManager.CreateFamily(parentsFamilyRecord.Xref, 0, 1);
+
                 var fatherIndividualRecord = Gedcom.GetIndividualRecord(parentsFamilyRecord.Husband);
                 IndividualModel? father = null;
                 if (!fatherIndividualRecord.IsEmpty)
@@ -137,10 +146,10 @@ namespace GenesAndGenealogy.Server.Controllers
                 profileModel.Parents = new FamilyModel(null, null);
             }
 
-                return profileModel;
+            return profileModel;
         }
 
-        [HttpGet("repository/{repositoryXref}")] 
+        [HttpGet("repository/{repositoryXref}")]
         public RepositoryModel GetRepository(string repositoryXref)
         {
             return new RepositoryModel(Gedcom.GetRepositoryRecord(repositoryXref));
@@ -150,6 +159,12 @@ namespace GenesAndGenealogy.Server.Controllers
         public SourceModel GetSource(string sourceXref)
         {
             return new SourceModel(Gedcom.GetSourceRecord(sourceXref));
+        }
+
+        [HttpGet("tree")]
+        public TreeModel GetTree()
+        {
+            return TreeModel;
         }
     }
 }

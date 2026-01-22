@@ -52,6 +52,15 @@ img.rounded {
   flex: 1;
 }
 
+.repository-source-information {
+    display: flex;
+    justify-content: center;
+}
+
+  .repository-source-information .content {
+    width: 500px;
+  }
+
 .repository-source-information .field {
   margin-bottom: 10px;
 }

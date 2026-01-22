@@ -8,8 +8,11 @@ public class Individual(IndividualRecord individualRecord)
 
     public List<Individual> Children { get; set; } = [];
     public string Given => IndividualRecord.Given;
+
+    public List<MultimediaRecord> MultimediaRecords { get; set; } = [];
     public Family? Parents { get; set; }
     public List<Individual> Siblings { get; set; } = [];
+    public string Sex => IndividualRecord.SexValue;
     public string Surname => IndividualRecord.Surname;
     public string Xref => IndividualRecord.Xref;
 

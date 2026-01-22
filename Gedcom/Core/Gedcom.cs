@@ -61,8 +61,8 @@ public class Gedcom : RecordStructureBase
     public List<IndividualRecord> GetIndividualRecords(string query = "") => GetRecords<IndividualRecord>(Tag.Individual, query);
 
     // Multimedia (OBJE)
-    public MultimediaRecord GetMultimediaRecord(string xref) => GetRecord<MultimediaRecord>(xref);
-    public List<MultimediaRecord> GetMultimediaRecords() => GetRecords<MultimediaRecord>(Tag.Object);
+    public MultimediaRecord GetObjectRecord(string xref) => GetRecord<MultimediaRecord>(xref);
+    public List<MultimediaRecord> GetObjectRecords() => GetRecords<MultimediaRecord>(Tag.Object);
 
     // Note (NOTE)
     public NoteRecord GetNoteRecord(string xref) => GetRecord<NoteRecord>(xref);
