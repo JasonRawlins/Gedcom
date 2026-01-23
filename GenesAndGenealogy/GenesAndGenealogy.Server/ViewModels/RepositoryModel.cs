@@ -7,7 +7,7 @@ public class RepositoryModel
 {
     public RepositoryModel(RepositoryRecord repositoryRecord)
     {
-        Address = new AddressModel(repositoryRecord.AddressStructure);
+        //Address = new AddressModel(repositoryRecord.AddressStructure);
         AutomatedRecordId = repositoryRecord.AutomatedRecordId;
         //CallNumber = repositoryRecord.CallNumber;
         //ChangeDate = repositoryRecord.ChangeDate;
@@ -21,7 +21,7 @@ public class RepositoryModel
         Xref = repositoryRecord.Xref;
     }
 
-    public AddressModel Address { get; set; }
+    //public AddressModel Address { get; set; }
     public string AutomatedRecordId { get; set; }
     //public CallNumber CallNumber { get; set; }
     //public ChangeDate ChangeDate { get; set; }

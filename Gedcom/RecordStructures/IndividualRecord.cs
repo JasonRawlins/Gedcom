@@ -18,7 +18,7 @@ public class IndividualRecord : RecordStructureBase
     public List<ChildToFamilyLink> ChildToFamilyLinks => List<ChildToFamilyLink>(Tag.FamilyChild);
     public List<string> DescendantInterests => List(r => r.Tag.Equals(Tag.DescendantInterest)).Select(r => r.Value).ToList();
     //public List<IndividualAttributeStructure> IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
-    public List<IndividualEventStructure> IndividualEventStructures => List(IndividualEventStructure.IsIndividualEventStructure).Select(r => new IndividualEventStructure(r)).ToList();
+    public List<IEventDetail> IndividualEventStructures => List(IndividualEventStructure.IsIndividualEventStructure).Select(r => (IEventDetail)(new IndividualEventStructure(r))).ToList();
     public List<LdsIndividualOrdinance> LdsIndividualOrdinances => List<LdsIndividualOrdinance>(Tag.Ordinance);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
@@ -74,7 +74,7 @@ internal class IndividualJsonConverter : JsonConverter<IndividualRecord>
     }
 }
 
-internal class IndividualJson : GedcomJson
+public class IndividualJson : GedcomJson
 {
     public IndividualJson(IndividualRecord individualRecord)
     {
@@ -83,16 +83,17 @@ internal class IndividualJson : GedcomJson
         AncestralFileNumber = JsonString(individualRecord.AncestralFileNumber);
         Associations = JsonList(individualRecord.AssociationStructures);
         AutomatedRecordId = JsonString(individualRecord.AutomatedRecordId);
-        Birth = JsonString($"{individualRecord.Birth.DateValue} at {individualRecord.Birth.PlaceStructure.PlaceName}");
+        Birth = JsonRecord(individualRecord.Birth);
         ChangeDate = JsonRecord(individualRecord.ChangeDate);
         ChildToFamilyLinks = JsonList(individualRecord.ChildToFamilyLinks);
-        Death = JsonString($"{individualRecord.Death.DateValue} at {individualRecord.Death.PlaceStructure.PlaceName}");
+        Death = JsonRecord(individualRecord.Death);
         DescendantInterests = JsonList(individualRecord.DescendantInterests);
         //IndividualAttributes = JsonList(individualRecord.IndividualAttributeStructures);
         Events = JsonList(individualRecord.IndividualEventStructures);
+        IsEmpty = individualRecord.IsEmpty;
         LdsIndividualOrdinances = JsonList(individualRecord.LdsIndividualOrdinances);
         MultimediaLinks = JsonList(individualRecord.MultimediaLinks);
-        Notes = JsonList(individualRecord.NoteStructures);
+        Notes = JsonList(individualRecord.NoteStructures.Select(ns => ns.Text).ToList());
         PermanentRecordFileNumber = JsonString(individualRecord.PermanentRecordFileNumber);
         PersonalNames = JsonList(individualRecord.PersonalNameStructures);
         RestrictionNotice = JsonString(individualRecord.RestrictionNotice);
@@ -100,35 +101,55 @@ internal class IndividualJson : GedcomJson
         SourceCitations = JsonList(individualRecord.SourceCitations);
         SpouseToFamilyLinks = JsonList(individualRecord.SpouseToFamilyLinks);
         Submitter = JsonString(individualRecord.Submitter);
+        TreeId = "";
         UserReferenceNumbers = JsonList(individualRecord.UserReferenceNumbers);
         Xref = individualRecord.Xref;
     }
 
-    public List<string>? Aliases { get; set; }
-    public List<string>? AncestorInterests { get; set; }
+    public IndividualJson(IndividualRecord individualRecord, string treeId) : this(individualRecord)
+    {
+        TreeId = treeId;
+    }
+
+    public List<string>? Aliases { get; set; } = [];
+    public List<string>? AncestorInterests { get; set; } = [];
     public string? AncestralFileNumber { get; set; }
-    public List<AssociationStructure>? Associations { get; set; }
+
+    public string AncestryLink
+    {
+        get
+        {
+            var xrefNumbersOnly = string.IsNullOrEmpty(Xref) ? "" : Xref.Replace("@", "").Replace("I", "");
+            return $"https://www.ancestry.com/family-tree/person/tree/{TreeId}/person/{xrefNumbersOnly}/facts";
+        }
+    }
+
+    public List<AssociationStructure>? Associations { get; set; } = [];
     public string? AutomatedRecordId { get; set; }
-    public string? Birth { get; set; }
+    public IEventDetail? Birth { get; set; }
     public ChangeDate? ChangeDate { get; set; }
-    public List<ChildToFamilyLink>? ChildToFamilyLinks { get; set; }
-    public string? Death { get; set; }
-    public List<string>? DescendantInterests { get; set; }
-    public string Given => PersonalNames == null ? "" : PersonalNames[0].Given;
+    public List<ChildToFamilyLink>? ChildToFamilyLinks { get; set; } = [];
+    public IEventDetail? Death { get; set; }
+    public List<string>? DescendantInterests { get; set; } = [];
     //public List<IndividualAttributeStructure>? IndividualAttributes { get; set; }
-    public List<IndividualEventStructure>? Events { get; set; }
-    public List<LdsIndividualOrdinance>? LdsIndividualOrdinances { get; set; }
-    public List<MultimediaLink>? MultimediaLinks { get; set; }
-    public List<NoteStructure>? Notes { get; set; }
+    public List<IEventDetail>? Events { get; set; } = [];
+    public string FullName => $"{Given} {Surname}";
+    public string Given => PersonalNames?.Count > 0 ? PersonalNames[0].Given : "";
+    public bool IsEmpty { get; set; }
+    public List<LdsIndividualOrdinance>? LdsIndividualOrdinances { get; set; } = [];
+    public List<MultimediaLink>? MultimediaLinks { get; set; } = [];
+    public string NamePersonal => PersonalNames?.Count > 0 ? PersonalNames[0].NamePersonal : "";
+    public List<string>? Notes { get; set; } = [];
     public string? PermanentRecordFileNumber { get; set; }
-    public List<PersonalNameStructure>? PersonalNames { get; set; }
+    public List<PersonalNameStructure>? PersonalNames { get; set; } = [];
     public string? RestrictionNotice { get; set; }
     public string? Sex { get; set; }
-    public List<SourceCitation>? SourceCitations { get; set; }
-    public List<SpouseToFamilyLink>? SpouseToFamilyLinks { get; set; }
+    public List<SourceCitation>? SourceCitations { get; set; } = [];
+    public List<SpouseToFamilyLink>? SpouseToFamilyLinks { get; set; } = [];
     public string? Submitter { get; set; }
-    public string Surname => PersonalNames == null ? "" : PersonalNames[0].Surname;
-    public List<UserReferenceNumber>? UserReferenceNumbers { get; set; }
+    public string Surname => PersonalNames?.Count > 0 ? PersonalNames[0].Surname : "";
+    public string TreeId { get; set; }
+    public List<UserReferenceNumber>? UserReferenceNumbers { get; set; } = [];
     public string? Xref { get; set; }
 }
 

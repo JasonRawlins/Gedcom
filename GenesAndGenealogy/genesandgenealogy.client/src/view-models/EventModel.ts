@@ -1,4 +1,5 @@
 import { DateModel } from '../view-models/DateModel';
+import { NoteModel } from './NoteModel';
 import { PlaceModel } from '../view-models/PlaceModel';
 
 export interface EventModel {
@@ -6,11 +7,11 @@ export interface EventModel {
   ageAtEvent: string;
   causeOfEvent: string;
   eventOrFactClassification: string;
-  date: DateModel;
+  gedcomDate: DateModel;
   name: string;
-  notes: string[];
+  noteStructures: NoteModel[];
   //multimediaLinks: MultimediaLinkModel[];
-  place: PlaceModel;
+  placeStructure: PlaceModel;
   religiousAffiliation: string;
   responsibleAgency: string;
   restrictionNotice: string;

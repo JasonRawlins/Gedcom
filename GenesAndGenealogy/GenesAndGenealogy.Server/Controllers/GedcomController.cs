@@ -2,7 +2,6 @@ using Gedcom;
 using Gedcom.RecordStructures;
 using GenesAndGenealogy.Server.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.FileSystemGlobbing;
 using System.Text;
 
 namespace GenesAndGenealogy.Server.Controllers
@@ -27,9 +26,9 @@ namespace GenesAndGenealogy.Server.Controllers
         }
 
         [HttpGet(Name = "GetGedcom")]
-        public IEnumerable<IndividualModel> Get()
+        public IEnumerable<IndividualJson> Get()
         {
-            return Gedcom.GetIndividualRecords().Select(ir => new IndividualModel(ir, TreeModel));
+            return Gedcom.GetIndividualRecords().Select(ir => new IndividualJson(ir, TreeModel.AutomatedRecordId));
         }
 
         private List<FamilyModel> GetFamilyModels(IndividualRecord individualRecord)
@@ -50,20 +49,20 @@ namespace GenesAndGenealogy.Server.Controllers
 
 
 
-                var husband = new IndividualModel(Gedcom.GetIndividualRecord(familyRecord.Husband), TreeModel);
-                var wife = new IndividualModel(Gedcom.GetIndividualRecord(familyRecord.Wife), TreeModel);
-                var children = new List<IndividualModel>();
+                var husband = new IndividualJson(Gedcom.GetIndividualRecord(familyRecord.Husband), TreeModel.AutomatedRecordId);
+                var wife = new IndividualJson(Gedcom.GetIndividualRecord(familyRecord.Wife), TreeModel.AutomatedRecordId);
+                var children = new List<IndividualJson>();
 
                 foreach (var childXref in familyRecord.Children)
                 {
                     var childIndividualRecord = Gedcom.GetIndividualRecord(childXref);
-                    children.Add(new IndividualModel(childIndividualRecord, TreeModel));
+                    children.Add(new IndividualJson(childIndividualRecord, TreeModel.AutomatedRecordId));
                 }
 
-                var events = new List<EventModel>();
+                var events = new List<IEventDetail>();
                 foreach (var familyEventStructure in familyRecord.FamilyEventStructures)
                 {
-                    events.Add(new EventModel(familyEventStructure));
+                    events.Add(familyEventStructure);
                 }
 
                 var familyModel = new FamilyModel(husband, wife)
@@ -79,10 +78,10 @@ namespace GenesAndGenealogy.Server.Controllers
         }
 
         [HttpGet("individual/{individualXref}")]
-        public IndividualModel GetIndividual(string individualXref)
+        public IndividualJson GetIndividual(string individualXref)
         {
             var individualRecord = Gedcom.GetIndividualRecord(individualXref);
-            return new IndividualModel(individualRecord, TreeModel);
+            return new IndividualJson(individualRecord, TreeModel.AutomatedRecordId);
         }
 
         [HttpGet("individual/{individualXref}/families/")]
@@ -92,22 +91,22 @@ namespace GenesAndGenealogy.Server.Controllers
         }
 
         [HttpGet("individuals")]
-        public List<IndividualModel> GetIndividuals() => Gedcom.GetIndividualRecords().Select(ir => new IndividualModel(ir, TreeModel)).ToList();
+        public List<IndividualJson> GetIndividuals() => Gedcom.GetIndividualRecords().Select(ir => new IndividualJson(ir, TreeModel.AutomatedRecordId)).ToList();
 
         [HttpGet("profile/{individualXref}")]
         public ProfileModel GetProfile(string individualXref)
         {
             var individualRecord = Gedcom.GetIndividualRecord(individualXref);
-            var individualModel = new IndividualModel(individualRecord, TreeModel);
+            var individualJson = new IndividualJson(individualRecord, TreeModel.AutomatedRecordId);
 
             var familyModels = GetFamilyModels(individualRecord);
 
             foreach (var familyModel in familyModels)
             {
-                individualModel.Events.AddRange(familyModel.Events);
+                individualJson.Events!.AddRange(familyModel.Events);
             }
 
-            individualModel.Events.Sort();
+            individualJson.Events!.Sort();
 
             //var groupedEvents = individualModel.Events
             //    .GroupBy(e => e.Date.Year)
@@ -115,16 +114,16 @@ namespace GenesAndGenealogy.Server.Controllers
 
             var repositories = Gedcom.GetRepositoryRecords().Select(r => new RepositoryModel(r)).ToList();
 
-            var sources = new List<SourceModel>();
+            var sources = new List<SourceJson>();
             foreach (var sourceCitation in individualRecord.SourceCitations)
             {
                 var sourceRecord = Gedcom.GetSourceRecord(sourceCitation.Xref);
-                sources.Add(new SourceModel(sourceRecord));
+                sources.Add(new SourceJson(sourceRecord));
             }
 
-            var sortedSources = sources.OrderBy(s => s.Title).ToList();
+            var sortedSources = sources.OrderBy(s => s.DescriptiveTitle).ToList();
 
-            var profileModel = new ProfileModel(TreeModel, individualModel, familyModels, repositories, sortedSources);
+            var profileModel = new ProfileModel(TreeModel, individualJson, familyModels, repositories, sortedSources);
 
             var parentsFamilyRecord = Gedcom.GetFamilyRecordOfParents(individualRecord.Xref);
             if (!parentsFamilyRecord.IsEmpty)
@@ -133,17 +132,17 @@ namespace GenesAndGenealogy.Server.Controllers
                 var family = familyManager.CreateFamily(parentsFamilyRecord.Xref, 0, 1);
 
                 var fatherIndividualRecord = Gedcom.GetIndividualRecord(parentsFamilyRecord.Husband);
-                IndividualModel? father = null;
+                IndividualJson? father = null;
                 if (!fatherIndividualRecord.IsEmpty)
                 {
-                    father = new IndividualModel(fatherIndividualRecord, TreeModel);
+                    father = new IndividualJson(fatherIndividualRecord, TreeModel.AutomatedRecordId);
                 }
 
                 var motherIndividualRecord = Gedcom.GetIndividualRecord(parentsFamilyRecord.Wife);
-                IndividualModel? mother = null;
+                IndividualJson? mother = null;
                 if (!motherIndividualRecord.IsEmpty)
                 {
-                    mother = new IndividualModel(motherIndividualRecord, TreeModel);
+                    mother = new IndividualJson(motherIndividualRecord, TreeModel.AutomatedRecordId);
                 }
 
                 profileModel.Parents = new FamilyModel(father, mother);
@@ -163,9 +162,9 @@ namespace GenesAndGenealogy.Server.Controllers
         }
 
         [HttpGet("source/{sourceXref}")]
-        public SourceModel GetSource(string sourceXref)
+        public SourceJson GetSource(string sourceXref)
         {
-            return new SourceModel(Gedcom.GetSourceRecord(sourceXref));
+            return new SourceJson(Gedcom.GetSourceRecord(sourceXref));
         }
 
         [HttpGet("tree")]

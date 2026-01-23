@@ -3,7 +3,7 @@
     <h2>Repository information</h2>
     <div class="field" *ngIf="!source.isEmpty">
       <div></div>
-      <div>Return to <a [routerLink]="['/source-information', source.xref]" [queryParams]=" { individualXref: individualXref }">{{source.title}}</a></div>
+      <div>Return to <a [routerLink]="['/source-information', source.xref]" [queryParams]=" { individualXref: individualXref }">{{source.descriptiveTitle}}</a></div>
     </div>
     <div class="field">
       <div><strong>Name</strong></div>

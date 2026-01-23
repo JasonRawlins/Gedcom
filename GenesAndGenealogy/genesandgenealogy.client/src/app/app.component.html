@@ -1,6 +1,6 @@
 <div class="family-tree-icon">
   <a routerLink="/tree">
-    <h2>
+    <h2 *ngIf="treeModel">
       <img src="/images/tree-icon.jpg" alt="A picture of a tree" /> {{treeModel.name}} - {{treeModel.note}}
     </h2>
   </a> 

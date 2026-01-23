@@ -12,17 +12,16 @@ public class MultimediaRecord : RecordStructureBase
 
     public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
     public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
+    // The DATE value is not in the specification, but is in the gedcom exported from Ancestry.
+    public string Date => GetValue(Tag.Date);
     public string Description => GetValue(ExtensionTag.Description);
     public string DescriptiveTitle => GetValue(Tag.Title);
+    public FileRecord FileRecord => First<FileRecord>(Tag.File);
     public List<string> MultimediaFileReferenceNumbers => List(r => r.Tag.Equals(Tag.File)).Select(r => r.Value).ToList();
     public MultimediaFormat MultimediaFormat => First<MultimediaFormat>(Tag.Format);
-    // The DATE value is not in the specification, but is in the gedcom exported from Ancestry.
-    public string Date => GetValue(Tag.Date); 
-
-    public FileRecord FileRecord => First<FileRecord>(Tag.File);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
-    // The PLAC line is not in the specification, but is in the gedcom exported from Ancestry.
     public string ObjectId => GetValue(ExtensionTag.ObjectId);
+    // The PLAC line is not in the specification, but is in the gedcom exported from Ancestry.
     public PlaceStructure PlaceStructure => First<PlaceStructure>(Tag.Place);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.Source);
     public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(Tag.Reference);
@@ -48,20 +47,30 @@ internal class MultimediaJson : GedcomJson
     {
         AutomatedRecordId = JsonString(multimediaRecord.AutomatedRecordId);
         ChangeDate = JsonRecord(multimediaRecord.ChangeDate);
+        Date = JsonString(multimediaRecord.Date);
+        Description = JsonString(multimediaRecord.Description);
         DescriptiveTitle = JsonString(multimediaRecord.DescriptiveTitle);
+        FileRecord = JsonRecord(multimediaRecord.FileRecord);
         MultimediaFileReferenceNumbers = JsonList(multimediaRecord.MultimediaFileReferenceNumbers);
         MultimediaFormat = JsonRecord(multimediaRecord.MultimediaFormat);
         Notes = JsonList(multimediaRecord.NoteStructures);
+        ObjectId = JsonString(multimediaRecord.ObjectId);
+        Place = JsonRecord(multimediaRecord.PlaceStructure);
         SourceCitations = JsonList(multimediaRecord.SourceCitations);
         UserReferenceNumber = JsonRecord(multimediaRecord.UserReferenceNumber);
     }
 
     public string? AutomatedRecordId { get; set; }
     public ChangeDate? ChangeDate { get; set; }
+    public string? Date { get; set; }
+    public string? Description { get; set; }
     public string? DescriptiveTitle { get; set; }
+    public FileRecord? FileRecord { get; set; }
     public List<string>? MultimediaFileReferenceNumbers { get; set; }
     public MultimediaFormat? MultimediaFormat { get; set; }
     public List<NoteStructure>? Notes { get; set; }
+    public string? ObjectId { get; set; }
+    public PlaceStructure? Place { get; set; }
     public List<SourceCitation>? SourceCitations { get; set; }
     public UserReferenceNumber? UserReferenceNumber { get; set; }
 }

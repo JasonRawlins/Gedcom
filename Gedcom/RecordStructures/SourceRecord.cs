@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Gedcom.RecordStructures;
 
@@ -40,15 +41,16 @@ internal class SourceJsonConverter : JsonConverter<SourceRecord>
     }
 }
 
-internal class SourceJson : GedcomJson
+public class SourceJson : GedcomJson, IComparable<SourceJson>
 {
     public SourceJson(SourceRecord sourceRecord)
     {
         AutomatedRecordId = JsonString(sourceRecord.AutomatedRecordId);
         CallNumber = JsonString(sourceRecord.CallNumber);
         ChangeDate = JsonRecord(sourceRecord.ChangeDate);
-        DescriptiveTitle = JsonRecord(sourceRecord.SourceDescriptiveTitle);
+        DescriptiveTitle = JsonString(sourceRecord.SourceDescriptiveTitle.Text);
         FiledByEntry = JsonRecord(sourceRecord.SourceFiledByEntry);
+        IsEmpty = sourceRecord.IsEmpty;
         MultimediaLinks = JsonList(sourceRecord.MultimediaLinks);
         Notes = JsonList(sourceRecord.NoteStructures);
         Originator = JsonRecord(sourceRecord.SourceOriginator);
@@ -64,8 +66,9 @@ internal class SourceJson : GedcomJson
     public string? AutomatedRecordId { get; set; }
     public string? CallNumber { get; set; }
     public ChangeDate? ChangeDate { get; set; }
-    public NoteStructure? DescriptiveTitle { get; set; }
+    public string? DescriptiveTitle { get; set; }
     public NoteStructure? FiledByEntry { get; set; }
+    public bool? IsEmpty { get; set; }
     public List<MultimediaLink>? MultimediaLinks { get; set; }
     public List<NoteStructure>? Notes { get; set; }
     public NoteStructure? Originator { get; set; }
@@ -76,6 +79,13 @@ internal class SourceJson : GedcomJson
     public NoteStructure? TextFromSource { get; set; }
     public List<UserReferenceNumber>? UserReferenceNumbers { get; set; }
     public string Xref { get; set; }
+
+    public int CompareTo(SourceJson? other)
+    {
+        if (other == null) return 1;
+
+        return other.DescriptiveTitle!.CompareTo(other.DescriptiveTitle);
+    }
 }
 
 #region SOURCE_RECORD p. 27-28

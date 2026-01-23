@@ -1,8 +1,8 @@
 
 export interface PlaceModel {
-  name: string;
+  placeName: string;
   hierarchy: string;
   //map = new MapModel(placeStructure.Map);
-  //notes = placeStruct
+  notes: string[];
 }
 

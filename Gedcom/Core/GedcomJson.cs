@@ -1,4 +1,6 @@
-﻿namespace Gedcom;
+﻿using Gedcom.RecordStructures;
+
+namespace Gedcom;
 
 /*
  * All RecordStructure classes are serialized as GedcomJson objects. This allows 
@@ -9,7 +11,7 @@
  * any data. And by most, I mean 90%. The front end will have to handle these missing 
  * properties. 
  */
-internal class GedcomJson
+public class GedcomJson
 {
     protected T? JsonRecord<T>(T recordStructureBase) where T : RecordStructureBase
     {
@@ -21,6 +23,7 @@ internal class GedcomJson
 
     protected string? JsonString(string value) => string.IsNullOrEmpty(value) ? null : value;    
     protected List<string>? JsonList(List<string> stringList) => stringList.Count == 0 ? null : stringList;
+    protected List<IEventDetail>? JsonList(List<IEventDetail> eventDetailList) => eventDetailList.Count == 0 ? null : eventDetailList;
     protected List<T>? JsonList<T>(List<T>? recordStructureBaseList) where T : RecordStructureBase => 
         (recordStructureBaseList == null || (recordStructureBaseList != null && recordStructureBaseList.Count == 0)) 
         ? null : recordStructureBaseList;

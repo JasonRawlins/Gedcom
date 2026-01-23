@@ -56,7 +56,7 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
                 Tag.Marriage => "Marriage",
                 Tag.MarriageSettlement => "Marriage Settlement",
                 Tag.Naturalization => "Naturalization",
-                Tag.Occupation => "Occupations",
+                Tag.Occupation => "Occupation",
                 Tag.Ordinance => "Ordinance",
                 Tag.Ordination => "Ordination",
                 Tag.Probate => "Probate",
@@ -124,6 +124,20 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
         return individualEventTags.Contains(record.Tag);
     }
 
+    public int CompareTo(IEventDetail? other)
+    {
+        if (other == null) return 1;
+
+        // Compare by year first, then month, then day
+        int yearComparison = GedcomDate.Year.CompareTo(other.GedcomDate.Year);
+        if (yearComparison != 0) return yearComparison;
+
+        int monthComparison = GedcomDate.Month.CompareTo(other.GedcomDate.Month);
+        if (monthComparison != 0) return monthComparison;
+
+        return GedcomDate.Day.CompareTo(other.GedcomDate.Day);
+    }
+
     public override string ToString() => $"{Record.Value}, {ResponsibleAgency}";
 }
 
@@ -150,14 +164,13 @@ internal class IndividualEventJson : GedcomJson
         EventOrFactClassification = JsonString(individualEventStructure.EventOrFactClassification);
         GedcomDate = individualEventStructure.GedcomDate;
         MultimediaLinks = JsonList(individualEventStructure.MultimediaLinks);
-        Notes = JsonList(individualEventStructure.NoteStructures);
+        Notes = JsonList(individualEventStructure.NoteStructures.Select(ns => ns.Text).ToList());
         Place = JsonRecord(individualEventStructure.PlaceStructure);
         ReligiousAffiliation = JsonString(individualEventStructure.ReligiousAffiliation);
         ResponsibleAgency = JsonString(individualEventStructure.ResponsibleAgency);
         RestrictionNotice = JsonString(individualEventStructure.RestrictionNotice);
         SourceCitations = JsonList(individualEventStructure.SourceCitations);
         Tag = JsonString(individualEventStructure.Record.Tag);
-
     }
 
     public AddressStructure? Address { get; set; }
@@ -167,7 +180,7 @@ internal class IndividualEventJson : GedcomJson
     public string? EventOrFactClassification { get; set; }
     public GedcomDate GedcomDate { get; set; }
     public List<MultimediaLink>? MultimediaLinks { get; set; }
-    public List<NoteStructure>? Notes { get; set; }
+    public List<string>? Notes { get; set; }
     public PlaceStructure? Place { get; set; }
     public string? ReligiousAffiliation { get; set; }
     public string? ResponsibleAgency { get; set; }

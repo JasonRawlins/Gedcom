@@ -1,12 +1,14 @@
+using Gedcom.RecordStructures;
+
 namespace GenesAndGenealogy.Server.ViewModels;
 
-public class FamilyModel(IndividualModel? husband, IndividualModel? wife)
+public class FamilyModel(IndividualJson? husband, IndividualJson? wife)
 {
-    public List<IndividualModel> Children { get; set; } = [];
-    public List<EventModel> Events { get; set; } = [];
-    public IndividualModel? Husband { get; set; } = husband;
+    public List<IndividualJson> Children { get; set; } = [];
+    public List<IEventDetail> Events { get; set; } = [];
+    public IndividualJson? Husband { get; set; } = husband;
     public FamilyModel? Parents { get; set; }
-    public IndividualModel? Wife { get; set; } = wife;
+    public IndividualJson? Wife { get; set; } = wife;
 
     public override string ToString() => $"{Husband?.FullName ?? "Unknown father"}, {Wife?.FullName ?? "Unknown mother"} with {Children.Count} children)";
 }

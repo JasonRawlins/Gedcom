@@ -2,7 +2,7 @@
 
 namespace Gedcom.RecordStructures;
 
-public interface IEventDetail
+public interface IEventDetail: IComparable<IEventDetail>
 {
     AddressStructure AddressStructure { get; }
     // AgeAtEvent is only found in an IndividualEventStructure in the specification

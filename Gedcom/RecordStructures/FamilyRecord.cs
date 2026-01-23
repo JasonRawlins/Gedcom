@@ -15,7 +15,7 @@ public class FamilyRecord : RecordStructureBase
     public List<string> Children => List(r => r.Tag.Equals(Tag.Child)).Select(r => r.Value).ToList();
     public string CountOfChildren => GetValue(Tag.ChildrenCount);
     public FamilyEventStructure Divorce => First<FamilyEventStructure>(Tag.Divorce);
-    public List<FamilyEventStructure> FamilyEventStructures => List(FamilyEventStructure.IsFamilyEventStructure).Select(r => new FamilyEventStructure(r)).ToList();
+    public List<IEventDetail> FamilyEventStructures => List(FamilyEventStructure.IsFamilyEventStructure).Select(r => (IEventDetail)(new FamilyEventStructure(r))).ToList();
     public string Husband => GetValue(Tag.Husband);
     // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
     public FamilyEventStructure Marriage => First<FamilyEventStructure>(Tag.Marriage);
@@ -79,7 +79,7 @@ internal class FamilyJson : GedcomJson
     public List<string>? Children { get; set; }
     public string? CountOfChildren { get; set; }
     public FamilyEventStructure? Divorce { get; set; }
-    public List<FamilyEventStructure>? Events { get; set; }
+    public List<IEventDetail>? Events { get; set; }
     public string? Husband { get; set; }
     // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
     public FamilyEventStructure? Marriage { get; set; }

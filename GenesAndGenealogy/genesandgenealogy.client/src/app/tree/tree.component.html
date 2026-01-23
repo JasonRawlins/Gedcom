@@ -1,4 +1,4 @@
-<ul *ngIf="individuals">
+<ul>
   <li *ngFor="let individual of individuals">
     <a [routerLink]="['/profile', individual.xref]">{{individual.fullName}}</a>
   </li>

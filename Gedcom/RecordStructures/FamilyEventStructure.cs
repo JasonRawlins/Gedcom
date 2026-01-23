@@ -1,5 +1,6 @@
 ﻿using Gedcom.Entities;
 using Newtonsoft.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Gedcom.RecordStructures;
 
@@ -67,6 +68,20 @@ public class FamilyEventStructure : RecordStructureBase, IEventDetail
         return familyEventTags.Contains(record.Tag);
     }
 
+    public int CompareTo(IEventDetail? other)
+    {
+        if (other == null) return 1;
+
+        // Compare by year first, then month, then day
+        int yearComparison = GedcomDate.Year.CompareTo(other.GedcomDate.Year);
+        if (yearComparison != 0) return yearComparison;
+
+        int monthComparison = GedcomDate.Month.CompareTo(other.GedcomDate.Month);
+        if (monthComparison != 0) return monthComparison;
+
+        return GedcomDate.Day.CompareTo(other.GedcomDate.Day);
+    }
+
     public override string ToString() => $"{Record}";
 }
 
@@ -82,40 +97,43 @@ internal class FamilyEventJsonConverter : JsonConverter<FamilyEventStructure>
     }
 }
 
-internal class FamilyEventJson : GedcomJson
+public class FamilyEventJson : GedcomJson
 {
-    public FamilyEventJson(FamilyEventStructure familyEventStructure)
+    public FamilyEventJson(IEventDetail familyEventStructure)
     {
-        Address = JsonRecord(familyEventStructure.AddressStructure);
+        AddressStructure = JsonRecord(familyEventStructure.AddressStructure);
         AgeAtEvent = JsonString(familyEventStructure.AgeAtEvent);
         CauseOfEvent = JsonString(familyEventStructure.CauseOfEvent);
-        Date = JsonString(familyEventStructure.DateValue);
+        Date = JsonRecord(familyEventStructure.GedcomDate);
         EventOrFactClassification = JsonString(familyEventStructure.EventOrFactClassification);
+        EventType = familyEventStructure.EventType;
         GedcomDate = familyEventStructure.GedcomDate;
         MultimediaLinks = JsonList(familyEventStructure.MultimediaLinks);
-        Notes = JsonList(familyEventStructure.NoteStructures);
-        Place = JsonRecord(familyEventStructure.PlaceStructure);
+        Name = JsonString(familyEventStructure.Name);
+        Notes = JsonList(familyEventStructure.NoteStructures.Select(ns => ns.Text).ToList());
+        PlaceStructure = JsonRecord(familyEventStructure.PlaceStructure);
         ReligiousAffiliation = JsonString(familyEventStructure.ReligiousAffiliation);
         ResponsibleAgency = JsonString(familyEventStructure.ResponsibleAgency);
         RestrictionNotice = JsonString(familyEventStructure.RestrictionNotice);
         SourceCitations = JsonList(familyEventStructure.SourceCitations);
-        Tag = JsonString(familyEventStructure.Record.Tag);
     }
 
-    public AddressStructure? Address { get; set; }
+    public AddressStructure? AddressStructure { get; set; }
     public string? AgeAtEvent { get; set; }
     public string? CauseOfEvent { get; set; }
-    public string? Date { get; set; }
+    public GedcomDate? Date { get; set; }
     public string? EventOrFactClassification { get; set; }
+    public EventType EventType { get; set; }
     public GedcomDate GedcomDate { get; set; }
     public List<MultimediaLink>? MultimediaLinks { get; set; }
-    public List<NoteStructure>? Notes { get; set; }
-    public PlaceStructure? Place { get; set; }
+    public string? Name { get; set; }
+    public List<string>? Notes { get; set; }
+    public PlaceStructure? PlaceStructure { get; set; }
     public string? ReligiousAffiliation { get; set; }
     public string? ResponsibleAgency { get; set; }
     public string? RestrictionNotice { get; set; }
     public List<SourceCitation>? SourceCitations { get; set; }
-    public string? Tag { get; set; }
+    //public string? Tag { get; set; }
 
 }
 
