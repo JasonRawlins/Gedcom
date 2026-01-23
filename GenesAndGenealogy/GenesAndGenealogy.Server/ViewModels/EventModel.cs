@@ -1,43 +1,26 @@
+using Gedcom.Entities;
 using Gedcom.RecordStructures;
 
 namespace GenesAndGenealogy.Server.ViewModels;
 
 public class EventModel : IComparable<EventModel>
 {
-    public EventModel(IndividualEventStructure individualEventStructure)
+    public EventModel(IEventDetail eventDetail)
     {
         // AddressStructure
-        AgeAtEvent = individualEventStructure.AgeAtEvent;
-        CauseOfEvent = individualEventStructure.CauseOfEvent;
-        Date = new DateModel(GedcomDate.Parse(individualEventStructure.DateValue));
-        EventOrFactClassification = individualEventStructure.EventOrFactClassification;
+        AgeAtEvent = eventDetail.AgeAtEvent;
+        CauseOfEvent = eventDetail.CauseOfEvent;
+        Date = new DateModel(eventDetail.GedcomDate);
+        EventOrFactClassification = eventDetail.EventOrFactClassification;
         // MultimediaLinks
-        Name = individualEventStructure.Name;
-        Notes = individualEventStructure.NoteStructures.Select(ns => ns.Text).ToList();
-        Place = new PlaceModel(individualEventStructure.PlaceStructure);
-        ReligiousAffiliation = individualEventStructure.ReligiousAffiliation;
-        ResponsibleAgency = individualEventStructure.ResponsibleAgency;
-        RestrictionNotice = individualEventStructure.RestrictionNotice;
-        SourceCitations = individualEventStructure.SourceCitations.Select(sc => new SourceCitationModel(sc)).ToList();
-        Type = EventModelType.Individual;
-    }
-
-    public EventModel(FamilyEventStructure familyEventStructure)
-    {
-        // AddressStructure
-        AgeAtEvent = familyEventStructure.AgeAtEvent;
-        CauseOfEvent = familyEventStructure.CauseOfEvent;
-        Date = new DateModel(GedcomDate.Parse(familyEventStructure.DateValue));
-        EventOrFactClassification = familyEventStructure.EventOrFactClassification;
-        // MultimediaLinks
-        Name = familyEventStructure.Name;
-        Notes = familyEventStructure.NoteStructures.Select(ns => ns.Text).ToList();
-        Place = new PlaceModel(familyEventStructure.PlaceStructure);
-        ReligiousAffiliation = familyEventStructure.ReligiousAffiliation;
-        ResponsibleAgency = familyEventStructure.ResponsibleAgency;
-        RestrictionNotice = familyEventStructure.RestrictionNotice;
-        SourceCitations = familyEventStructure.SourceCitations.Select(sc => new SourceCitationModel(sc)).ToList();
-        Type = EventModelType.Family;
+        Name = eventDetail.Name;
+        Notes = eventDetail.NoteStructures.Select(ns => ns.Text).ToList();
+        Place = new PlaceModel(eventDetail.PlaceStructure);
+        ReligiousAffiliation = eventDetail.ReligiousAffiliation;
+        ResponsibleAgency = eventDetail.ResponsibleAgency;
+        RestrictionNotice = eventDetail.RestrictionNotice;
+        SourceCitations = eventDetail.SourceCitations.Select(sc => new SourceCitationModel(sc)).ToList();
+        Type = eventDetail.EventType;
     }
 
     //public AddressStructure AddressStructure { get; set; }
@@ -53,7 +36,7 @@ public class EventModel : IComparable<EventModel>
     public string ResponsibleAgency { get; set; }
     public string RestrictionNotice { get; set; }
     public List<SourceCitationModel> SourceCitations { get; set; }
-    public EventModelType Type { get; set; }
+    public EventType Type { get; set; }
 
     // Sorts by year, then month, then day.
     public int CompareTo(EventModel? other)
@@ -71,10 +54,4 @@ public class EventModel : IComparable<EventModel>
     }
 
     public override string ToString() => Name;
-}
-
-public enum EventModelType
-{
-    Family,
-    Individual
 }

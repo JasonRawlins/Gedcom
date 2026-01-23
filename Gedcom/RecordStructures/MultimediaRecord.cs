@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -11,6 +12,7 @@ public class MultimediaRecord : RecordStructureBase
 
     public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
     public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
+    public string Description => GetValue(ExtensionTag.Description);
     public string DescriptiveTitle => GetValue(Tag.Title);
     public List<string> MultimediaFileReferenceNumbers => List(r => r.Tag.Equals(Tag.File)).Select(r => r.Value).ToList();
     public MultimediaFormat MultimediaFormat => First<MultimediaFormat>(Tag.Format);
@@ -20,6 +22,7 @@ public class MultimediaRecord : RecordStructureBase
     public FileRecord FileRecord => First<FileRecord>(Tag.File);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
     // The PLAC line is not in the specification, but is in the gedcom exported from Ancestry.
+    public string ObjectId => GetValue(ExtensionTag.ObjectId);
     public PlaceStructure PlaceStructure => First<PlaceStructure>(Tag.Place);
     public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.Source);
     public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(Tag.Reference);

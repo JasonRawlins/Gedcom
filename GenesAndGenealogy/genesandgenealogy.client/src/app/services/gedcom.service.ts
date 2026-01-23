@@ -20,6 +20,10 @@ export class GedcomService {
     return this.http.get<FamilyModel[]>(`/gedcom/individual/${individualXref}/families`);
   }
 
+  getIndividual(individualXref: string) {
+    return this.http.get<IndividualModel>(`/gedcom/individual/${individualXref}`);
+  }
+
   getIndividuals() {
     return this.http.get<IndividualModel[]>("/gedcom/individuals");
   }

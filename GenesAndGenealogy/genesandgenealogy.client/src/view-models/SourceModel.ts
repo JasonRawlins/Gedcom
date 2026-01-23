@@ -4,6 +4,7 @@ export interface SourceModel {
   automatedRecordId: string;
   callNumber: string;
   changeDate: DateModel;
+  isEmpty: boolean;
   //multimediaLinks: MultimediaLink[];
   notes: string[];
   title: string;

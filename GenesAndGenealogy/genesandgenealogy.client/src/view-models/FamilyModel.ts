@@ -5,6 +5,6 @@ export interface FamilyModel {
   children: IndividualModel[];
   events: EventModel[];
   husband: IndividualModel;
-  parents: FamilyModel;
   wife: IndividualModel;
+  xref: string;
 }

@@ -35,8 +35,9 @@ public class IndividualRecord : RecordStructureBase
     #region Convenience properties
 
     public string FullName => $"{Given}, {Surname}";
-    public string Given => $"{PersonalNameStructures[0].Given}";
-    public string Surname => $"{PersonalNameStructures[0].Surname}";
+    public string Given => PersonalNameStructures.Count > 0 ? PersonalNameStructures[0].Given : "";
+    public string PersonalName => PersonalNameStructures.Count > 0 ? PersonalNameStructures[0].NamePersonal : "";
+    public string Surname => PersonalNameStructures.Count > 0 ? PersonalNameStructures[0].Surname : "";
 
     #endregion
 

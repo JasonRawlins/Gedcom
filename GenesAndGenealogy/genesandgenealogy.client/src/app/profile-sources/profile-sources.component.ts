@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
+import { GedcomService } from '../services/gedcom.service';
+import { IndividualModel } from '../../view-models/IndividualModel';
 import { SourceModel } from '../../view-models/SourceModel';
 
 @Component({
@@ -8,5 +10,9 @@ import { SourceModel } from '../../view-models/SourceModel';
   styleUrl: './profile-sources.component.css'
 })
 export class ProfileSourcesComponent {
-  @Input() sources!: SourceModel[]
+  @Input() individual!: IndividualModel;
+  @Input() sources!: SourceModel[];
+
+  constructor(private gedcomService: GedcomService) {
+  }
 }

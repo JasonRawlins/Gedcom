@@ -8,6 +8,7 @@ export interface IndividualModel {
   events: EventModel[];
   fullName: string;
   given: string;
+  isEmpty: boolean;
   personalName: string;
   sex: string;
   submitter: string;

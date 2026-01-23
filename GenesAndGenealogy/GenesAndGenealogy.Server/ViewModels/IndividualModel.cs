@@ -10,11 +10,12 @@ public class IndividualModel
         Birth = new EventModel(individualRecord.Birth);
         Death = new EventModel(individualRecord.Death);
         Events = individualRecord.IndividualEventStructures.Select(ies => new EventModel(ies)).ToList();
-        Given = individualRecord.PersonalNameStructures[0].Given;
-        PersonalName = individualRecord.PersonalNameStructures[0].NamePersonal;
+        Given = individualRecord.Given;
+        IsEmpty = individualRecord.IsEmpty;
+        PersonalName = individualRecord.PersonalName;
         Sex = individualRecord.SexValue;
         Submitter = individualRecord.Submitter;
-        Surname = individualRecord.PersonalNameStructures[0].Surname;
+        Surname = individualRecord.Surname;
         TreeId = treeModel.AutomatedRecordId;
         Xref = individualRecord.Xref;
     }
@@ -33,13 +34,14 @@ public class IndividualModel
     public List<EventModel> Events { get; set; }
     public string FullName => $"{Given} {Surname}";
     public string Given { get; set; }
+    public bool IsEmpty { get; set; }
     public string PersonalName { get; set; }
     public string Sex { get; set; }
     public string Submitter { get; set; }
     public string Surname { get; set; }
     private string TreeId { get; set; }
     public string Xref { get; set; }
-    public string XrefNumber => Xref.Replace("@", "").Substring(1);
+    public string XrefNumber => string.IsNullOrEmpty(Xref) ? "" : Xref.Replace("@", "").Substring(1);
 
     public override string ToString() => $"{FullName} ({Birth.Date.DayMonthYear})-{Death.Date.DayMonthYear})";
 }

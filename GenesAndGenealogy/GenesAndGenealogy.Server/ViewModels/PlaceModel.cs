@@ -3,20 +3,12 @@ using Gedcom.RecordStructures;
 
 namespace GenesAndGenealogy.Server.ViewModels;
 
-public class PlaceModel
+public class PlaceModel(PlaceStructure placeStructure)
 {
-    public PlaceModel(PlaceStructure placeStructure)
-    {
-        Name = placeStructure.PlaceName;
-        Hierarchy = placeStructure.PlaceHierarchy;
-        Map = new MapModel(placeStructure.Map);
-        Notes = placeStructure.NoteStructures.Select(ns => ns.Text).ToList();
-    }
-
-    public string Name { get; set; }
-    public string Hierarchy { get; set; }
-    public MapModel Map { get; set; }
-    public List<string> Notes { get; set; }
+    public string Name { get; set; } = placeStructure.PlaceName;
+    public string Hierarchy { get; set; } = placeStructure.PlaceHierarchy;
+    public MapModel Map { get; set; } = new MapModel(placeStructure.Map);
+    public List<string> Notes { get; set; } = placeStructure.NoteStructures.Select(ns => ns.Text).ToList();
 
     public override string ToString() => Name;
 }

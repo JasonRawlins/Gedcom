@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Gedcom.Entities;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -15,6 +17,7 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
     public ChildToFamilyLink ChildToFamilyLink => First<ChildToFamilyLink>(Tag.FamilyChild);
     public string DateValue => GetValue(Tag.Date);
     public string EventOrFactClassification => GetValue(Tag.Type);
+    public EventType EventType => EventType.Individual;
     public GedcomDate GedcomDate => GedcomDate.Parse(DateValue);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
     public string Name

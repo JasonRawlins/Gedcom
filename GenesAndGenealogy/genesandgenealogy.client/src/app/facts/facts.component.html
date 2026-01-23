@@ -3,7 +3,7 @@
     <app-timeline [events]="profile.individual.events"></app-timeline>
   </div>
   <div class="column sources">
-    <app-profile-sources [sources]="profile.sources"></app-profile-sources>
+    <app-profile-sources [sources]="profile.sources" [individual]="profile.individual"></app-profile-sources>
   </div>
   <div class="column relationships">
     <app-relationships [individualXref]="profile.individual.xref" [families]="profile.families" [parents]="profile.parents"></app-relationships>

@@ -2,6 +2,7 @@ import { Component, inject, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GedcomService } from '../services/gedcom.service';
 import { RepositoryModel } from '../../view-models/RepositoryModel';
+import { SourceModel } from '../../view-models/SourceModel';
 
 @Component({
   selector: 'app-repository-information',
@@ -11,7 +12,9 @@ import { RepositoryModel } from '../../view-models/RepositoryModel';
 })
 export class RepositoryInformationComponent {
   private activatedRoute = inject(ActivatedRoute);
+  @Input() individualXref!: string;
   @Input() repository!: RepositoryModel;
+  @Input() source!: SourceModel;
 
   constructor(private gedcomService: GedcomService) {
   }
@@ -23,6 +26,20 @@ export class RepositoryInformationComponent {
       this.gedcomService.getRepository(repositoryXref).subscribe(
         (repository) => {
           this.repository = repository;
+        },
+        (error) => {
+          console.error(error);
+        }
+      )
+    });
+
+    this.activatedRoute.queryParams.subscribe((params) => {
+      const sourceXref = params['sourceXref'];
+      this.individualXref = params['individualXref'];
+
+      this.gedcomService.getSource(sourceXref).subscribe(
+        (source) => {
+          this.source = source;
         },
         (error) => {
           console.error(error);

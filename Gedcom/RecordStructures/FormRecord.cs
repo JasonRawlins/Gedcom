@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -9,6 +10,8 @@ public class FormRecord : RecordStructureBase
     public FormRecord() : base() { }
     public FormRecord(Record record) : base(record) { }
 
+    public string MediaType => GetValue(ExtensionTag.MediaType);
+    public string SourceType => GetValue(ExtensionTag.SourceType);
     public string Type => GetValue(Tag.Type);
 
     public override string ToString() => $"{Type}";

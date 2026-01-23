@@ -1,7 +1,7 @@
 <h3>Sources</h3>
 <ul>
   <li *ngFor="let source of sources">
-    <div class="card" [routerLink]="['/source-information', source.xref]">
+    <div class="card" [routerLink]="['/source-information', source.xref]" [queryParams]="{ individualXref: individual.xref }">
       <div class="icon-details">
         <div class="icon">
           <img class="rounded" src="images/source-icon.jpg" alt="An image of a source file" />

@@ -78,6 +78,13 @@ namespace GenesAndGenealogy.Server.Controllers
             return familyModels;
         }
 
+        [HttpGet("individual/{individualXref}")]
+        public IndividualModel GetIndividual(string individualXref)
+        {
+            var individualRecord = Gedcom.GetIndividualRecord(individualXref);
+            return new IndividualModel(individualRecord, TreeModel);
+        }
+
         [HttpGet("individual/{individualXref}/families/")]
         public List<FamilyModel> GetIndividualFamilies(string individualXref)
         {

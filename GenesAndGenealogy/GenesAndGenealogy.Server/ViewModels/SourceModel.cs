@@ -10,6 +10,7 @@ public class SourceModel
         AutomatedRecordId = sourceRecord.AutomatedRecordId;
         CallNumber = sourceRecord.CallNumber;
         ChangeDate = sourceRecord.ChangeDate;
+        IsEmpty = sourceRecord.IsEmpty;
         //MultimediaLinks = sourceRecord.MultimediaLinks;
         Notes = sourceRecord.NoteStructures.Select(ns => ns.Text).ToList();
         Title = sourceRecord.SourceDescriptiveTitle.Text;
@@ -27,6 +28,7 @@ public class SourceModel
     public string AutomatedRecordId { get; set; }
     public string CallNumber { get; set; }
     public ChangeDate ChangeDate { get; set; }
+    public bool IsEmpty { get; set; }
     //public List<MultimediaLink> MultimediaLinks { get; set; }
     public List<string> Notes { get; set; }
     public string Title { get; set; }

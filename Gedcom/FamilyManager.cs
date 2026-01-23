@@ -28,20 +28,9 @@ public class FamilyManager(Gedcom gedcom)
         return family;
     }
 
-    public void LoadSiblings(Individual individual)
+    public Family CreateNullFamily()
     {
-        var parentsFamilyRecord = Gedcom.GetFamilyRecordOfParents(individual.Xref);
-
-        if (parentsFamilyRecord.IsEmpty)
-            return;
-
-        var parentsFamily = GetOrCreateFamily(parentsFamilyRecord.Xref);
-        LoadDescendants(parentsFamily, 1);
-
-        foreach (var sibling in parentsFamily.Children.Where(c => c.Xref != individual.Xref))
-        {
-            individual.Siblings.Add(sibling);
-        }
+        return new Family(RecordStructureBase.Empty<FamilyRecord>());
     }
 
     private Individual GetOrCreateIndividual(string individualXref)
@@ -63,7 +52,6 @@ public class FamilyManager(Gedcom gedcom)
 
         return newIndividual;
     }
-
 
     private Family GetOrCreateFamily(string familyXref)
     {
@@ -101,7 +89,6 @@ public class FamilyManager(Gedcom gedcom)
             return;
 
         var parentsFamily = GetOrCreateFamily(parentsFamilyRecord.Xref);
-        individual.Parents = parentsFamily;
 
         if (parentsFamily.Husband != null)
         {
@@ -150,6 +137,22 @@ public class FamilyManager(Gedcom gedcom)
                 var childAsParentFamily = GetOrCreateFamily(childAsParentFamilyRecord.Xref);
                 LoadDescendants(childAsParentFamily, generationsOfDescendants - 1);
             }
+        }
+    }
+
+    public void LoadSiblings(Individual individual)
+    {
+        var parentsFamilyRecord = Gedcom.GetFamilyRecordOfParents(individual.Xref);
+
+        if (parentsFamilyRecord.IsEmpty)
+            return;
+
+        var parentsFamily = GetOrCreateFamily(parentsFamilyRecord.Xref);
+        LoadDescendants(parentsFamily, 1);
+
+        foreach (var sibling in parentsFamily.Children.Where(c => c.Xref != individual.Xref))
+        {
+            individual.Siblings.Add(sibling);
         }
     }
 }
