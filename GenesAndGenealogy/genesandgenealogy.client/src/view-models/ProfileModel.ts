@@ -7,6 +7,7 @@ export interface ProfileModel {
   families: FamilyModel[];
   individual: IndividualModel;
   parents: FamilyModel;
+  portraitUrl: string;
   sources: SourceModel[];
   tree: TreeModel;
 }

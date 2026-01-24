@@ -1,6 +1,9 @@
 <div class="page" *ngIf="profile">
   <div class="row row-2">
-    <app-profile-header [individual]="profile.individual"></app-profile-header>
+    <app-profile-header [individual]="profile.individual" [portraitUrl]="profile.portraitUrl"></app-profile-header>
   </div>
-  <app-facts [profile]="profile"></app-facts>
+  <div>
+    <app-facts [profile]="profile"></app-facts>
+    <!--<router-outlet></router-outlet>-->
+  </div>
 </div>

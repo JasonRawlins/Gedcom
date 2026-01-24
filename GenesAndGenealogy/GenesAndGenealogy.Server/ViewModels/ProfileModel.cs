@@ -1,3 +1,4 @@
+using Gedcom;
 using Gedcom.RecordStructures;
 
 namespace GenesAndGenealogy.Server.ViewModels;
@@ -5,8 +6,26 @@ namespace GenesAndGenealogy.Server.ViewModels;
 public class ProfileModel(HeaderTreeJson treeModel, IndividualJson individualJson, List<FamilyModel> familyModels, List<RepositoryJson> repositories, List<SourceJson> sources)
 {
     public List<FamilyModel> Families { get; set; } = familyModels;
-    public IndividualJson Individual { get; set; } = individualJson;
+    public IndividualJson Individual { get; set; } = individualJson;    
     public FamilyModel? Parents { get; set; }
+    public MultimediaJson? PortraitMultiMedia { get; set; }
+    public string PortraitUrl
+    {
+        get
+        {
+            if (PortraitMultiMedia != null)
+            {
+                return $"{PortraitMultiMedia.ObjectId}.{PortraitMultiMedia!.File!.Form!.SourceType}";
+            }
+
+            return Individual.Sex! switch
+            {
+                "M" => "silhouette-male.jpg",
+                "F" => "silhouette-female.jpg",
+                _ => "silhouette-unknown.jpg"
+            };
+        }
+    }
     public List<RepositoryJson> Repositories { get; set; } = repositories;
     public List<SourceJson> Sources { get; set; } = sources;
     public HeaderTreeJson Tree { get; set; } = treeModel;

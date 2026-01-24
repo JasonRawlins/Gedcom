@@ -128,8 +128,13 @@ namespace GenesAndGenealogy.Server.Controllers
             }
 
 
-
             var profileModel = new ProfileModel(HeaderTree, individualJson, familyModels, repositories, sortedSources);
+            
+            var portraitMultimedia = multimedias.FirstOrDefault(m => m.File?.Form?.MediaType?.Equals("portrait") ?? false);
+            if (portraitMultimedia != null)
+            {
+                profileModel.PortraitMultiMedia = portraitMultimedia;
+            }
 
             var parentsFamilyRecord = Gedcom.GetFamilyRecordOfParents(individualRecord.Xref);
             if (!parentsFamilyRecord.IsEmpty)

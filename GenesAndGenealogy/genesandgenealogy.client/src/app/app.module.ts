@@ -14,6 +14,7 @@ import { TreeComponent } from './tree/tree.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SourceInformationComponent } from './source-information/source-information.component';
 import { RepositoryInformationComponent } from './repository-information/repository-information.component';
+import { GalleryComponent } from './gallery/gallery.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { RepositoryInformationComponent } from './repository-information/reposit
     TreeComponent,
     ProfileComponent,
     SourceInformationComponent,
-    RepositoryInformationComponent
+    RepositoryInformationComponent,
+    GalleryComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

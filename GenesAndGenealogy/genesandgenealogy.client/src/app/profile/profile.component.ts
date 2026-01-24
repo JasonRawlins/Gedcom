@@ -10,8 +10,8 @@ import { ProfileModel } from '../../view-models/ProfileModel';
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
-  @Input() profile!: ProfileModel;
   private activatedRoute = inject(ActivatedRoute);
+  @Input() profile!: ProfileModel;
 
   constructor(private gedcomService: GedcomService) {
   }

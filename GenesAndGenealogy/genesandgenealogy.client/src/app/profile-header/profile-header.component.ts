@@ -9,4 +9,5 @@ import { IndividualModel } from '../../view-models/IndividualModel';
 })
 export class ProfileHeaderComponent {
   @Input() individual!: IndividualModel;
+  @Input() portraitUrl!: string;
 }
