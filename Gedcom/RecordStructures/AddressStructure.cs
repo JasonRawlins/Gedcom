@@ -55,6 +55,8 @@ public class AddressJson : GedcomJson
     public string? Line3 { get; set; }
     public string? PostalCode { get; set; }
     public string? State { get; set; }
+
+    public override string ToString() => $"{Line}, {City}, {State}, {PostalCode}";
 }
 
 #region ADDRESS_STRUCTURE p. 31

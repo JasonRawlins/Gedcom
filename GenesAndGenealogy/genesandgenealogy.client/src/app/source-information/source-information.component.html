@@ -1,34 +1,36 @@
 <div class="repository-source-information">
   <div class="content">
     <h2>Source information</h2>
-    <div class="field" *ngIf="!individual.isEmpty">
-      <div></div>
-      <div>Return to <a [routerLink]="['/profile', individual.xref]">{{individual.fullName}}</a></div>
-    </div>
-    <div class="field">
-      <div><strong>Title</strong></div>
-      <div>{{source.descriptiveTitle}}</div>
-    </div>
-    <div class="field">
-      <div><strong>Author</strong></div>
-      <div>{{source.originator}}</div>
-    </div>
-    <div class="field">
-      <div><strong>Call number</strong></div>
-      <div>{{source.callNumber}}</div>
-    </div>
-    <div class="field">
-      <div><strong>Note</strong></div>
-      <div>{{source.note}}</div>
-    </div>
-    <div class="field">
-      <div><strong>Publisher</strong></div>
-      <div>{{source.publicationFacts}}</div>
-    </div>
-    <div class="field">
-      <div><strong>Repository</strong></div>
-      <div>
-        <a [routerLink]="['/repository-information', source.repositoryXref]" [queryParams]="{ sourceXref: source.xref, individualXref: individual.xref }">{{repository.name}}</a>
+    <div *ngIf="source">
+      <div class="field" *ngIf="!individual.isEmpty">
+        <div></div>
+        <div>Return to <a [routerLink]="['/profile', individual.xref]">{{individual.fullName}}</a></div>
+      </div>
+      <div class="field">
+        <div><strong>Title</strong></div>
+        <div>{{source.descriptiveTitle}}</div>
+      </div>
+      <div class="field">
+        <div><strong>Author</strong></div>
+        <div>{{source.originator}}</div>
+      </div>
+      <div class="field">
+        <div><strong>Call number</strong></div>
+        <div>{{source.callNumber}}</div>
+      </div>
+      <div class="field">
+        <div><strong>Note</strong></div>
+        <div>{{source.note}}</div>
+      </div>
+      <div class="field">
+        <div><strong>Publisher</strong></div>
+        <div>{{source.publicationFacts}}</div>
+      </div>
+      <div class="field">
+        <div><strong>Repository</strong></div>
+        <div>
+          <a [routerLink]="['/repository-information', source.repositoryXref]" [queryParams]="{ sourceXref: source.xref, individualXref: individual.xref }">{{repository.name}}</a>
+        </div>
       </div>
     </div>
   </div>

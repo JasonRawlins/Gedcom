@@ -25,15 +25,6 @@ export class SourceInformationComponent {
     this.activatedRoute.params.subscribe(params => {
       const sourceXref = params['sourceXref'];
 
-      //this.gedcomService.getSource(sourceXref).subscribe(
-      //  (source) => {
-      //    this.source = source;
-      //  },
-      //  (error) => {
-      //    console.error(error);
-      //  }
-      //);
-
       this.gedcomService.getSource(sourceXref).pipe(
         switchMap((source) => {
           this.source = source;

@@ -13,7 +13,7 @@ namespace GenesAndGenealogy.Server.Controllers
         private readonly ILogger<GedcomController> _logger;
         private FamilyManager FamilyManager { get; }
         private Gedcom.Gedcom Gedcom { get; }
-        private TreeModel TreeModel => new(Gedcom.Header.Source.Tree);
+        private HeaderTreeJson HeaderTree => new(Gedcom.Header.Source.Tree);
 
         public GedcomController(ILogger<GedcomController> logger)
         {
@@ -28,7 +28,7 @@ namespace GenesAndGenealogy.Server.Controllers
         [HttpGet(Name = "GetGedcom")]
         public IEnumerable<IndividualJson> Get()
         {
-            return Gedcom.GetIndividualRecords().Select(ir => new IndividualJson(ir, TreeModel.AutomatedRecordId));
+            return Gedcom.GetIndividualRecords().Select(ir => new IndividualJson(ir, HeaderTree.AutomatedRecordId));
         }
 
         private List<FamilyModel> GetFamilyModels(IndividualRecord individualRecord)
@@ -49,14 +49,14 @@ namespace GenesAndGenealogy.Server.Controllers
 
 
 
-                var husband = new IndividualJson(Gedcom.GetIndividualRecord(familyRecord.Husband), TreeModel.AutomatedRecordId);
-                var wife = new IndividualJson(Gedcom.GetIndividualRecord(familyRecord.Wife), TreeModel.AutomatedRecordId);
+                var husband = new IndividualJson(Gedcom.GetIndividualRecord(familyRecord.Husband), HeaderTree.AutomatedRecordId);
+                var wife = new IndividualJson(Gedcom.GetIndividualRecord(familyRecord.Wife), HeaderTree.AutomatedRecordId);
                 var children = new List<IndividualJson>();
 
                 foreach (var childXref in familyRecord.Children)
                 {
                     var childIndividualRecord = Gedcom.GetIndividualRecord(childXref);
-                    children.Add(new IndividualJson(childIndividualRecord, TreeModel.AutomatedRecordId));
+                    children.Add(new IndividualJson(childIndividualRecord, HeaderTree.AutomatedRecordId));
                 }
 
                 var events = new List<EventJson>();
@@ -81,7 +81,7 @@ namespace GenesAndGenealogy.Server.Controllers
         public IndividualJson GetIndividual(string individualXref)
         {
             var individualRecord = Gedcom.GetIndividualRecord(individualXref);
-            return new IndividualJson(individualRecord, TreeModel.AutomatedRecordId);
+            return new IndividualJson(individualRecord, HeaderTree.AutomatedRecordId);
         }
 
         [HttpGet("individual/{individualXref}/families/")]
@@ -91,13 +91,13 @@ namespace GenesAndGenealogy.Server.Controllers
         }
 
         [HttpGet("individuals")]
-        public List<IndividualJson> GetIndividuals() => Gedcom.GetIndividualRecords().Select(ir => new IndividualJson(ir, TreeModel.AutomatedRecordId)).ToList();
+        public List<IndividualJson> GetIndividuals() => Gedcom.GetIndividualRecords().Select(ir => new IndividualJson(ir, HeaderTree.AutomatedRecordId)).ToList();
 
         [HttpGet("profile/{individualXref}")]
         public ProfileModel GetProfile(string individualXref)
         {
             var individualRecord = Gedcom.GetIndividualRecord(individualXref);
-            var individualJson = new IndividualJson(individualRecord, TreeModel.AutomatedRecordId);
+            var individualJson = new IndividualJson(individualRecord, HeaderTree.AutomatedRecordId);
 
             var familyModels = GetFamilyModels(individualRecord);
 
@@ -112,7 +112,7 @@ namespace GenesAndGenealogy.Server.Controllers
             //    .GroupBy(e => e.Date.Year)
             //    .Select(g => new { Year = g.Key, Events = g.ToList() });
 
-            var repositories = Gedcom.GetRepositoryRecords().Select(r => new RepositoryModel(r)).ToList();
+            var repositories = Gedcom.GetRepositoryRecords().Select(r => new RepositoryJson(r)).ToList();
 
             var sources = new List<SourceJson>();
             foreach (var sourceCitation in individualRecord.SourceCitations)
@@ -123,7 +123,7 @@ namespace GenesAndGenealogy.Server.Controllers
 
             var sortedSources = sources.OrderBy(s => s.DescriptiveTitle).ToList();
 
-            var profileModel = new ProfileModel(TreeModel, individualJson, familyModels, repositories, sortedSources);
+            var profileModel = new ProfileModel(HeaderTree, individualJson, familyModels, repositories, sortedSources);
 
             var parentsFamilyRecord = Gedcom.GetFamilyRecordOfParents(individualRecord.Xref);
             if (!parentsFamilyRecord.IsEmpty)
@@ -135,14 +135,14 @@ namespace GenesAndGenealogy.Server.Controllers
                 IndividualJson? father = null;
                 if (!fatherIndividualRecord.IsEmpty)
                 {
-                    father = new IndividualJson(fatherIndividualRecord, TreeModel.AutomatedRecordId);
+                    father = new IndividualJson(fatherIndividualRecord, HeaderTree.AutomatedRecordId);
                 }
 
                 var motherIndividualRecord = Gedcom.GetIndividualRecord(parentsFamilyRecord.Wife);
                 IndividualJson? mother = null;
                 if (!motherIndividualRecord.IsEmpty)
                 {
-                    mother = new IndividualJson(motherIndividualRecord, TreeModel.AutomatedRecordId);
+                    mother = new IndividualJson(motherIndividualRecord, HeaderTree.AutomatedRecordId);
                 }
 
                 profileModel.Parents = new FamilyModel(father, mother);
@@ -156,9 +156,9 @@ namespace GenesAndGenealogy.Server.Controllers
         }
 
         [HttpGet("repository/{repositoryXref}")]
-        public RepositoryModel GetRepository(string repositoryXref)
+        public RepositoryJson GetRepository(string repositoryXref)
         {
-            return new RepositoryModel(Gedcom.GetRepositoryRecord(repositoryXref));
+            return new RepositoryJson(Gedcom.GetRepositoryRecord(repositoryXref));
         }
 
         [HttpGet("source/{sourceXref}")]
@@ -168,9 +168,9 @@ namespace GenesAndGenealogy.Server.Controllers
         }
 
         [HttpGet("tree")]
-        public TreeModel GetTree()
+        public HeaderTreeJson GetTree()
         {
-            return TreeModel;
+            return HeaderTree;
         }
     }
 }

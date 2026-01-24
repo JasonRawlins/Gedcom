@@ -37,7 +37,7 @@ internal class RepositoryJsonConverter : JsonConverter<RepositoryRecord>
     }
 }
 
-internal class RepositoryJson : GedcomJson
+public class RepositoryJson : GedcomJson
 {
     public RepositoryJson(RepositoryRecord repositoryRecord)
     {
@@ -48,7 +48,7 @@ internal class RepositoryJson : GedcomJson
         Emails = JsonList(repositoryRecord.AddressEmails);
         FaxNumbers = JsonList(repositoryRecord.AddressFaxNumbers);       
         Name = JsonString(repositoryRecord.Name);
-        Notes = JsonList(repositoryRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+        Note = JsonString(repositoryRecord.NoteStructures.FirstOrDefault()?.Text ?? "");
         PhoneNumbers = JsonList(repositoryRecord.PhoneNumbers);
         UserReferenceNumber = JsonRecord(new UserReferenceNumberJson(repositoryRecord.UserReferenceNumber));
         WebPages = JsonList(repositoryRecord.AddressWebPages);
@@ -62,7 +62,7 @@ internal class RepositoryJson : GedcomJson
     public List<string>? Emails { get; set; }
     public List<string>? FaxNumbers { get; set; }
     public string? Name { get; set; }
-    public List<NoteJson>? Notes { get; set; }
+    public string? Note { get; set; }
     public List<string>? PhoneNumbers { get; set; }
     public UserReferenceNumberJson? UserReferenceNumber { get; set; }
     public List<string>? WebPages { get; set; }

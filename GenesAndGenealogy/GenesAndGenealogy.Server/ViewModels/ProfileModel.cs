@@ -2,23 +2,14 @@ using Gedcom.RecordStructures;
 
 namespace GenesAndGenealogy.Server.ViewModels;
 
-public class ProfileModel
+public class ProfileModel(HeaderTreeJson treeModel, IndividualJson individualJson, List<FamilyModel> familyModels, List<RepositoryJson> repositories, List<SourceJson> sources)
 {
-    public ProfileModel(TreeModel treeModel, IndividualJson individualJson, List<FamilyModel> familyModels, List<RepositoryModel> repositories, List<SourceJson> sources)
-    {
-        Families = familyModels;
-        Individual = individualJson;
-        Repositories = repositories;
-        Tree = treeModel;
-        Sources = sources;
-    }
-
-    public List<FamilyModel> Families { get; set; }
-    public IndividualJson Individual { get; set; }
+    public List<FamilyModel> Families { get; set; } = familyModels;
+    public IndividualJson Individual { get; set; } = individualJson;
     public FamilyModel? Parents { get; set; }
-    public List<RepositoryModel> Repositories { get; set; }
-    public List<SourceJson> Sources { get; set; }
-    public TreeModel Tree { get; set; }
+    public List<RepositoryJson> Repositories { get; set; } = repositories;
+    public List<SourceJson> Sources { get; set; } = sources;
+    public HeaderTreeJson Tree { get; set; } = treeModel;
 
     public override string ToString() => $"{Individual.Given} {Individual.Surname}";
 }
