@@ -29,7 +29,7 @@ internal class FormJsonConverter : JsonConverter<FormRecord>
     }
 }
 
-internal class FormJson : GedcomJson
+public class FormJson : GedcomJson
 {
     public FormJson(FormRecord formRecord)
     {

@@ -26,7 +26,7 @@ internal class MapJsonConverter : JsonConverter<Map>
     }
 }
 
-internal class MapJson : GedcomJson
+public class MapJson : GedcomJson
 {
     public MapJson(Map map)
     {

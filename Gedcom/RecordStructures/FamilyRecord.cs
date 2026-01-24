@@ -15,7 +15,7 @@ public class FamilyRecord : RecordStructureBase
     public List<string> Children => List(r => r.Tag.Equals(Tag.Child)).Select(r => r.Value).ToList();
     public string CountOfChildren => GetValue(Tag.ChildrenCount);
     public FamilyEventStructure Divorce => First<FamilyEventStructure>(Tag.Divorce);
-    public List<IEventDetail> FamilyEventStructures => List(FamilyEventStructure.IsFamilyEventStructure).Select(r => (IEventDetail)(new FamilyEventStructure(r))).ToList();
+    public List<EventStructure> FamilyEventStructures => List(FamilyEventStructure.IsFamilyEventStructure).Select(r => new EventStructure(r)).ToList();
     public string Husband => GetValue(Tag.Husband);
     // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
     public FamilyEventStructure Marriage => First<FamilyEventStructure>(Tag.Marriage);
@@ -48,49 +48,26 @@ internal class FamilyJsonConverter : JsonConverter<FamilyRecord>
     }
 }
 
-internal class FamilyJson : GedcomJson
+public class FamilyJson(FamilyRecord familyRecord) : GedcomJson
 {
-    public FamilyJson(FamilyRecord familyRecord)
-    {
-        AdoptedByWhichParent = JsonString(familyRecord.AdoptedByWhichParent);
-        AutomatedRecordNumber = JsonString(familyRecord.AutomatedRecordNumber);
-        ChangeDate = JsonRecord(familyRecord.ChangeDate);
-        Children = JsonList(familyRecord.Children);
-        CountOfChildren = JsonString(familyRecord.CountOfChildren);
-        Divorce = JsonRecord(familyRecord.Divorce);
-        Events = JsonList(familyRecord.FamilyEventStructures);
-        Husband = JsonString(familyRecord.Husband);
-        // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
-        Marriage = JsonRecord(familyRecord.Marriage);
-        MultimediaLinks = JsonList(familyRecord.MultimediaLinks);
-        Notes = JsonList(familyRecord.NoteStructures);
-        RestrictionNotice = JsonString(familyRecord.RestrictionNotice);
-        SourceCitations = JsonList(familyRecord.SourceCitations);
-        Submitter = JsonString(familyRecord.Submitter);
-        UserReferenceNumbers = JsonList(familyRecord.UserReferenceNumbers);
-        Wife = JsonString(familyRecord.Wife);
-        Xref = familyRecord.Xref;
-
-    }
-
-    public string? AdoptedByWhichParent { get; set; }
-    public string? AutomatedRecordNumber { get; set; }
-    public ChangeDate? ChangeDate { get; set; }
-    public List<string>? Children { get; set; }
-    public string? CountOfChildren { get; set; }
-    public FamilyEventStructure? Divorce { get; set; }
-    public List<IEventDetail>? Events { get; set; }
-    public string? Husband { get; set; }
+    public string? AdoptedByWhichParent { get; set; } = JsonString(familyRecord.AdoptedByWhichParent);
+    public string? AutomatedRecordNumber { get; set; } = JsonString(familyRecord.AutomatedRecordNumber);
+    public ChangeDateJson? ChangeDate { get; set; } = JsonRecord(new ChangeDateJson(familyRecord.ChangeDate));
+    public List<string>? Children { get; set; } = JsonList(familyRecord.Children);
+    public string? CountOfChildren { get; set; } = JsonString(familyRecord.CountOfChildren);
+    public EventJson? Divorce { get; set; } = JsonRecord(new EventJson(familyRecord.Divorce));
+    public List<EventJson>? Events { get; set; } = JsonList(familyRecord.FamilyEventStructures.Select(fes => new EventJson(fes)).ToList());
+    public string? Husband { get; set; } = JsonString(familyRecord.Husband);
     // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
-    public FamilyEventStructure? Marriage { get; set; }
-    public List<MultimediaLink>? MultimediaLinks { get; set; }
-    public List<NoteStructure>? Notes { get; set; }
-    public string? RestrictionNotice { get; set; }
-    public List<SourceCitation>? SourceCitations { get; set; }
-    public string? Submitter { get; set; }
-    public List<UserReferenceNumber>? UserReferenceNumbers { get; set; }
-    public string? Wife { get; set; }
-    public string Xref { get; set; }
+    public EventJson? Marriage { get; set; } = JsonRecord(new EventJson(familyRecord.Marriage));
+    public List<MultimediaLinkJson>? MultimediaLinks { get; set; } = JsonList(familyRecord.MultimediaLinks.Select(ml => new MultimediaLinkJson(ml)).ToList());
+    public List<NoteJson>? Notes { get; set; } = JsonList(familyRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public string? RestrictionNotice { get; set; } = JsonString(familyRecord.RestrictionNotice);
+    public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(familyRecord.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
+    public string? Submitter { get; set; } = JsonString(familyRecord.Submitter);
+    public List<UserReferenceNumberJson>? UserReferenceNumbers { get; set; } = JsonList(familyRecord.UserReferenceNumbers.Select(urn => new UserReferenceNumberJson(urn)).ToList());
+    public string? Wife { get; set; } = JsonString(familyRecord.Wife);
+    public string Xref { get; set; } = familyRecord.Xref;
 }
 
 #region FAM_RECORD (FAM) p. 24

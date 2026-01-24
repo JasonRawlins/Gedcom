@@ -27,7 +27,7 @@ internal class FamilyPartnerJsonConverter : JsonConverter<FamilyPartner>
     }
 }
 
-internal class FamilyPartnerJson : GedcomJson
+public class FamilyPartnerJson : GedcomJson
 {
     public FamilyPartnerJson(FamilyPartner familyPartner)
     {

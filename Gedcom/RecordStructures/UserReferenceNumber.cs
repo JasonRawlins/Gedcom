@@ -30,7 +30,7 @@ internal class UserReferenceNumberJsonConverter : JsonConverter<UserReferenceNum
     }
 }
 
-internal class UserReferenceNumberJson : GedcomJson
+public class UserReferenceNumberJson : GedcomJson
 {
     public UserReferenceNumberJson(UserReferenceNumber userReferenceNumber)
     {

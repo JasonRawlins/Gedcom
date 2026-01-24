@@ -197,13 +197,13 @@ internal class GedcomDateJsonConverter : JsonConverter<GedcomDate>
     }
 }
 
-internal class GedcomDateJson : GedcomJson
+public class GedcomDateJson : GedcomJson, IComparable<GedcomDateJson>
 {
     public GedcomDateJson(GedcomDate gedcomDate)
     {
         DateValue = gedcomDate.DateValue;
         Day = gedcomDate.Day;
-        Dmy = gedcomDate.DayMonthYear;
+        DayMonthYear = gedcomDate.DayMonthYear;
         Month = gedcomDate.Month;
         MonthName = gedcomDate.MonthName;
         Time = gedcomDate.TimeValue;
@@ -212,11 +212,24 @@ internal class GedcomDateJson : GedcomJson
 
     public string DateValue { get; set; } // The raw, un-parsed data value.
     public int? Day { get; set; }
-    public string? Dmy { get; set; }
+    public string? DayMonthYear { get; set; }
     public int? Month { get; set; }
     public string? MonthName { get; set; } = "";
     public string? Time { get; set; }
     public int? Year { get; set; }
+
+    public int CompareTo(GedcomDateJson? other)
+    {
+        if (other == null) return 1;
+
+        int yearComparison = Nullable.Compare(Year, other.Year);
+        if (yearComparison != 0) return yearComparison;
+
+        int monthComparison = Nullable.Compare(Month, other.Month);
+        if (monthComparison != 0) return monthComparison;
+
+        return Nullable.Compare(Day, other.Day);
+    }
 }
 
 #region DATE p. 45

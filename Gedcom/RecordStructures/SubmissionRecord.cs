@@ -35,16 +35,16 @@ internal class SubmissionJsonConverter : JsonConverter<SubmissionRecord>
     }
 }
 
-internal class SubmissionJson : GedcomJson
+public class SubmissionJson : GedcomJson
 {
     public SubmissionJson(SubmissionRecord submissionRecord)
     {
         AutomatedRecordId = JsonString(submissionRecord.AutomatedRecordId);
-        ChangeDate = JsonRecord(submissionRecord.ChangeDate);
+        ChangeDate = JsonRecord(new ChangeDateJson(submissionRecord.ChangeDate));
         GenerationsOfAncestors = JsonString(submissionRecord.GenerationsOfAncestors);
         GenerationsOfDescendants = JsonString(submissionRecord.GenerationsOfDescendants);
         NameOfFamilyFile = JsonString(submissionRecord.NameOfFamilyFile);
-        Notes = JsonList(submissionRecord.NoteStructures);
+        Notes = JsonList(submissionRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
         OrdinanceProcessFlag = JsonString(submissionRecord.OrdinanceProcessFlag);
         Submitter = JsonString(submissionRecord.Submitter);
         TempleCode = JsonString(submissionRecord.TempleCode);
@@ -52,11 +52,11 @@ internal class SubmissionJson : GedcomJson
     }
 
     public string? AutomatedRecordId { get; set; }
-    public ChangeDate? ChangeDate { get; set; }
+    public ChangeDateJson? ChangeDate { get; set; }
     public string? GenerationsOfAncestors { get; set; }
     public string? GenerationsOfDescendants { get; set; }
     public string? NameOfFamilyFile { get; set; }
-    public List<NoteStructure>? Notes { get; set; }
+    public List<NoteJson>? Notes { get; set; }
     public string? OrdinanceProcessFlag { get; set; }
     public string? Submitter { get; set; }
     public string? TempleCode { get; set; }

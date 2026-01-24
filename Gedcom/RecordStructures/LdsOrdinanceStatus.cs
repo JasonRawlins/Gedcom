@@ -24,7 +24,7 @@ internal class LdsOrdinanceStatusJsonConverter : JsonConverter<LdsOrdinanceStatu
     }
 }
 
-internal class LdsOrdinanceStatusJson : GedcomJson
+public class LdsOrdinanceStatusJson : GedcomJson
 {
     public LdsOrdinanceStatusJson(LdsOrdinanceStatus ldsOrdinanceStatus)
     {

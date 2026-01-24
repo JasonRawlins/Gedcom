@@ -33,7 +33,7 @@ internal class AddressJsonConverter : JsonConverter<AddressStructure>
     }
 }
 
-internal class AddressJson : GedcomJson
+public class AddressJson : GedcomJson
 {
     public AddressJson(AddressStructure addressStructure)
     {

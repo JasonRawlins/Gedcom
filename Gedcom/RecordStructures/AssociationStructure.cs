@@ -28,18 +28,18 @@ internal class AssociationJsonConverter : JsonConverter<AssociationStructure>
     }
 }
 
-internal class AssociationJson : GedcomJson
+public class AssociationJson : GedcomJson
 {
     public AssociationJson(AssociationStructure associationStructure)
     {
-        Notes = JsonList(associationStructure.NoteStructures);
+        Notes = JsonList(associationStructure.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
         RelationIsDescriptor = JsonString(associationStructure.RelationIsDescriptor);
-        SourceCitations = JsonList(associationStructure.SourceCitations);
+        SourceCitations = JsonList(associationStructure.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
     }
 
-    public List<NoteStructure>? Notes { get; set; }
+    public List<NoteJson>? Notes { get; set; }
     public string? RelationIsDescriptor { get; set; }
-    public List<SourceCitation>? SourceCitations { get; set; }
+    public List<SourceCitationJson>? SourceCitations { get; set; }
 }
 
 #region ASSOCIATION_STRUCTURE p. 31 

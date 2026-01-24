@@ -7,7 +7,7 @@ public class Family(FamilyRecord familyRecord)
     private FamilyRecord FamilyRecord { get; } = familyRecord;
 
     public List<Individual> Children { get; set; } = [];
-    public List<IEventDetail> Events { get; set; } = [];
+    public List<Event> Events { get; set; } = [];
     public Individual? Husband { get; set; }
     public Individual? Wife { get; set; }
     public string Xref => FamilyRecord.Xref;
@@ -20,11 +20,11 @@ public class Family(FamilyRecord familyRecord)
         }
     }
 
-    public void AddEvent(IEventDetail eventDetail)
+    public void AddEvent(Event @event)
     {
-        if (Events.Contains(eventDetail))
+        if (Events.Contains(@event))
         {
-            Events.Add(eventDetail);
+            Events.Add(@event);
         }
     }
 

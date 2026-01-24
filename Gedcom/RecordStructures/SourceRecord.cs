@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Gedcom.RecordStructures;
 
@@ -47,37 +46,36 @@ public class SourceJson : GedcomJson, IComparable<SourceJson>
     {
         AutomatedRecordId = JsonString(sourceRecord.AutomatedRecordId);
         CallNumber = JsonString(sourceRecord.CallNumber);
-        ChangeDate = JsonRecord(sourceRecord.ChangeDate);
+        ChangeDate = JsonRecord(new ChangeDateJson(sourceRecord.ChangeDate));
         DescriptiveTitle = JsonString(sourceRecord.SourceDescriptiveTitle.Text);
-        FiledByEntry = JsonRecord(sourceRecord.SourceFiledByEntry);
+        FiledByEntry = JsonRecord(new NoteJson(sourceRecord.SourceFiledByEntry));
         IsEmpty = sourceRecord.IsEmpty;
-        MultimediaLinks = JsonList(sourceRecord.MultimediaLinks);
-        Notes = JsonList(sourceRecord.NoteStructures);
-        Originator = JsonRecord(sourceRecord.SourceOriginator);
-        PublicationFacts = JsonRecord(sourceRecord.SourcePublicationFacts);
-        RecordData = JsonRecord(sourceRecord.SourceRecordData);
-        RepositoryCitations = JsonList(sourceRecord.SourceRepositoryCitations);
+        MultimediaLinks = JsonList(sourceRecord.MultimediaLinks.Select(ml => new MultimediaLinkJson(ml)).ToList());
+        Note = JsonString(sourceRecord.NoteStructures.FirstOrDefault()?.Text ?? "");
+        Originator = JsonString(sourceRecord.SourceOriginator.Text);
+        PublicationFacts = JsonString(sourceRecord.SourcePublicationFacts.Text);
+        RecordData = JsonRecord(new SourceDataJson(sourceRecord.SourceRecordData));
+        RepositoryCitations = JsonList(sourceRecord.SourceRepositoryCitations.Select(src => new SourceRepositoryCitationJson(src)).ToList());
         RepositoryXref = JsonString(sourceRecord.RepositoryXref);
-        TextFromSource = JsonRecord(sourceRecord.TextFromSource);
-        UserReferenceNumbers = JsonList(sourceRecord.UserReferenceNumbers);
+        TextFromSource = JsonRecord(new NoteJson(sourceRecord.TextFromSource));
+        UserReferenceNumbers = JsonList(sourceRecord.UserReferenceNumbers.Select(urn => new UserReferenceNumberJson(urn)).ToList());
         Xref = sourceRecord.Xref;
     }
 
     public string? AutomatedRecordId { get; set; }
     public string? CallNumber { get; set; }
-    public ChangeDate? ChangeDate { get; set; }
+    public ChangeDateJson? ChangeDate { get; set; }
     public string? DescriptiveTitle { get; set; }
-    public NoteStructure? FiledByEntry { get; set; }
-    public bool? IsEmpty { get; set; }
-    public List<MultimediaLink>? MultimediaLinks { get; set; }
-    public List<NoteStructure>? Notes { get; set; }
-    public NoteStructure? Originator { get; set; }
-    public NoteStructure? PublicationFacts { get; set; }
-    public SourceRecordData? RecordData { get; set; }
-    public List<SourceRepositoryCitation>? RepositoryCitations { get; set; }
+    public NoteJson? FiledByEntry { get; set; }
+    public List<MultimediaLinkJson>? MultimediaLinks { get; set; }
+    public string? Note { get; set; }
+    public string? Originator { get; set; }
+    public string? PublicationFacts { get; set; }
+    public SourceDataJson? RecordData { get; set; }
+    public List<SourceRepositoryCitationJson>? RepositoryCitations { get; set; }
     public string? RepositoryXref { get; set; }
-    public NoteStructure? TextFromSource { get; set; }
-    public List<UserReferenceNumber>? UserReferenceNumbers { get; set; }
+    public NoteJson? TextFromSource { get; set; }
+    public List<UserReferenceNumberJson>? UserReferenceNumbers { get; set; }
     public string Xref { get; set; }
 
     public int CompareTo(SourceJson? other)

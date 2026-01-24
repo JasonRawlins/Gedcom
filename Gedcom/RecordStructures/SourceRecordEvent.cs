@@ -27,7 +27,7 @@ internal class SourceRecordEventJsonConverter : JsonConverter<SourceRecordEvent>
     }
 }
 
-internal class SourceRecordEventJson : GedcomJson
+public class SourceRecordEventJson : GedcomJson
 {
     public SourceRecordEventJson(SourceRecordEvent sourceRecordEvent)
     {

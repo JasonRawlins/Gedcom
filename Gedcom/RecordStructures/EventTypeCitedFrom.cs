@@ -26,7 +26,7 @@ internal class EventTypeCitedFromJsonConverter : JsonConverter<EventTypeCitedFro
     }
 }
 
-internal class EventTypeCitedFromJson : GedcomJson
+public class EventTypeCitedFromJson : GedcomJson
 {
     public EventTypeCitedFromJson(EventTypeCitedFrom eventTypeCitedFrom)
     {

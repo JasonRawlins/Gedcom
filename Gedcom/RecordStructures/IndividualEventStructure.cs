@@ -5,76 +5,13 @@ using Newtonsoft.Json;
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(IndividualEventJsonConverter))]
-public class IndividualEventStructure : RecordStructureBase, IEventDetail
+//[JsonConverter(typeof(IndividualEventJsonConverter))]
+public class IndividualEventStructure : EventStructure
 {
     public IndividualEventStructure() { }
     public IndividualEventStructure(Record record) : base(record) { }
 
-    public AddressStructure AddressStructure => First<AddressStructure>(Tag.Address);
-    public string AgeAtEvent => GetValue(Tag.Age);
-    public string CauseOfEvent => GetValue(Tag.Cause);
-    public ChildToFamilyLink ChildToFamilyLink => First<ChildToFamilyLink>(Tag.FamilyChild);
-    public string DateValue => GetValue(Tag.Date);
-    public string EventOrFactClassification => GetValue(Tag.Type);
-    public EventType EventType => EventType.Individual;
-    public GedcomDate GedcomDate => GedcomDate.Parse(DateValue);
-    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
-    public string Name
-    {
-        get
-        {
-            return Record.Tag switch
-            {
-                Tag.Adoption => "Adoption",
-                Tag.BaptismLds => "Baptism (LDS)",
-                Tag.Baptism => "Baptism",
-                Tag.BarMitzvah => "Bar Mitzvah",
-                Tag.BasMitzvah => "Bas Mitzvah",
-                Tag.Birth => "Birth",
-                Tag.Blessing => "Blessing",
-                Tag.Burial => "Burial",
-                Tag.Census => "Census",
-                Tag.Christening => "Christening",
-                Tag.AdultChristening => "Christening (Adult)",
-                Tag.Confirmation => "Confirmation (LDS)",
-                Tag.Cremation => "Cremation",
-                Tag.Death => "Death",
-                Tag.Divorce => "Divorce",
-                Tag.DivorceFiled => "Divorce Filed",
-                ExtensionTag.Election => "Election",
-                Tag.Emigration => "Emigration",
-                Tag.Endowment => "Endowment",
-                Tag.Engagement => "Engagement",
-                Tag.Event => "Event",
-                Tag.FirstCommunion => "First Communion",
-                Tag.Graduation => "Graduation",
-                Tag.Immigration => "Immigration",
-                Tag.MarriageBann => "Marriage Bann",
-                Tag.MarriageContract => "Marriage Contract",
-                Tag.MarriageLicense => "Marriage License",
-                Tag.Marriage => "Marriage",
-                Tag.MarriageSettlement => "Marriage Settlement",
-                Tag.Naturalization => "Naturalization",
-                Tag.Occupation => "Occupation",
-                Tag.Ordinance => "Ordinance",
-                Tag.Ordination => "Ordination",
-                Tag.Probate => "Probate",
-                Tag.Residence => "Residence",
-                Tag.Retirement => "Retirement",
-                Tag.SealingChild => "Sealing (Child)",
-                Tag.SealingSpouse => "Sealing (Spouse)",
-                Tag.Will => "Will",
-                _ => Record.Tag,
-            };
-        }
-    }
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
-    public PlaceStructure PlaceStructure => First<PlaceStructure>(Tag.Place);
-    public string ReligiousAffiliation => GetValue(Tag.Religion);
-    public string ResponsibleAgency => GetValue(Tag.Agency);
-    public string RestrictionNotice => GetValue(Tag.Restriction);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.Source);
+    public override EventType EventType => EventType.Individual;
 
     public static bool IsIndividualEventStructure(Record record)
     {
@@ -123,71 +60,38 @@ public class IndividualEventStructure : RecordStructureBase, IEventDetail
 
         return individualEventTags.Contains(record.Tag);
     }
-
-    public int CompareTo(IEventDetail? other)
-    {
-        if (other == null) return 1;
-
-        // Compare by year first, then month, then day
-        int yearComparison = GedcomDate.Year.CompareTo(other.GedcomDate.Year);
-        if (yearComparison != 0) return yearComparison;
-
-        int monthComparison = GedcomDate.Month.CompareTo(other.GedcomDate.Month);
-        if (monthComparison != 0) return monthComparison;
-
-        return GedcomDate.Day.CompareTo(other.GedcomDate.Day);
-    }
-
-    public override string ToString() => $"{Record.Value}, {ResponsibleAgency}";
 }
 
-internal class IndividualEventJsonConverter : JsonConverter<IndividualEventStructure>
-{
-    public override IndividualEventStructure? ReadJson(JsonReader reader, Type objectType, IndividualEventStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+//internal class IndividualEventJsonConverter : JsonConverter<IndividualEventStructure>
+//{
+//    public override IndividualEventStructure? ReadJson(JsonReader reader, Type objectType, IndividualEventStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, IndividualEventStructure? individualEventStructure, JsonSerializer serializer)
-    {
-        if (individualEventStructure == null) throw new ArgumentNullException(nameof(individualEventStructure));
+//    public override void WriteJson(JsonWriter writer, IndividualEventStructure? individualEventStructure, JsonSerializer serializer)
+//    {
+//        if (individualEventStructure == null) throw new ArgumentNullException(nameof(individualEventStructure));
 
-        serializer.Serialize(writer, new IndividualEventJson(individualEventStructure));
-    }
-}
+//        serializer.Serialize(writer, new IndividualEventJson(individualEventStructure));
+//    }
+//}
 
-internal class IndividualEventJson : GedcomJson
-{
-    public IndividualEventJson(IndividualEventStructure individualEventStructure)
-    {
-        Address = JsonRecord(individualEventStructure.AddressStructure);
-        AgeAtEvent = JsonString(individualEventStructure.AgeAtEvent);
-        CauseOfEvent = JsonString(individualEventStructure.CauseOfEvent);
-        Date = JsonString(individualEventStructure.DateValue);
-        EventOrFactClassification = JsonString(individualEventStructure.EventOrFactClassification);
-        GedcomDate = individualEventStructure.GedcomDate;
-        MultimediaLinks = JsonList(individualEventStructure.MultimediaLinks);
-        Notes = JsonList(individualEventStructure.NoteStructures.Select(ns => ns.Text).ToList());
-        Place = JsonRecord(individualEventStructure.PlaceStructure);
-        ReligiousAffiliation = JsonString(individualEventStructure.ReligiousAffiliation);
-        ResponsibleAgency = JsonString(individualEventStructure.ResponsibleAgency);
-        RestrictionNotice = JsonString(individualEventStructure.RestrictionNotice);
-        SourceCitations = JsonList(individualEventStructure.SourceCitations);
-        Tag = JsonString(individualEventStructure.Record.Tag);
-    }
-
-    public AddressStructure? Address { get; set; }
-    public string? AgeAtEvent { get; set; }
-    public string? CauseOfEvent { get; set; }
-    public string? Date { get; set; }
-    public string? EventOrFactClassification { get; set; }
-    public GedcomDate GedcomDate { get; set; }
-    public List<MultimediaLink>? MultimediaLinks { get; set; }
-    public List<string>? Notes { get; set; }
-    public PlaceStructure? Place { get; set; }
-    public string? ReligiousAffiliation { get; set; }
-    public string? ResponsibleAgency { get; set; }
-    public string? RestrictionNotice { get; set; }
-    public List<SourceCitation>? SourceCitations { get; set; }
-    public string? Tag { get; set; }
-}
+//public class IndividualEventJson(IndividualEventStructure individualEventStructure) : GedcomJson
+//{
+//    public AddressJson? Address { get; set; } = JsonRecord(new AddressJson(individualEventStructure.AddressStructure));
+//    public string? AgeAtEvent { get; set; } = JsonString(individualEventStructure.AgeAtEvent);
+//    public string? CauseOfEvent { get; set; } = JsonString(individualEventStructure.CauseOfEvent);
+//    public GedcomDateJson? Date { get; set; } = JsonRecord(new GedcomDateJson(familyEventStructure.GedcomDate));
+//    public string? EventOrFactClassification { get; set; } = JsonString(individualEventStructure.EventOrFactClassification);
+//    public EventType EventType { get; set; } = familyEventStructure.EventType;
+//    public List<MultimediaLinkJson>? MultimediaLinks { get; set; } = JsonList(individualEventStructure.MultimediaLinks.Select(ml => new MultimediaLinkJson(ml)).ToList());
+//    public string? Name { get; set; } = JsonString(familyEventStructure.Name);
+//    public List<string>? Notes { get; set; } = JsonList(individualEventStructure.NoteStructures.Select(ns => ns.Text).ToList());
+//    public PlaceJson? Place { get; set; } = JsonRecord(new PlaceJson(individualEventStructure.PlaceStructure));
+//    public string? ReligiousAffiliation { get; set; } = JsonString(individualEventStructure.ReligiousAffiliation);
+//    public string? ResponsibleAgency { get; set; } = JsonString(individualEventStructure.ResponsibleAgency);
+//    public string? RestrictionNotice { get; set; } = JsonString(individualEventStructure.RestrictionNotice);
+//    public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(individualEventStructure.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
+//    public string? Tag { get; set; }
+//}
 
 #region INDIVIDUAL_EVENT_STRUCTURE p. 34
 /* 

@@ -37,36 +37,36 @@ internal class HeaderJsonConverter : JsonConverter<Header>
     }
 }
 
-internal class HeaderJson : GedcomJson
+public class HeaderJson : GedcomJson
 {
     public HeaderJson(Header header)
     {
-        CharacterSet = JsonRecord(header.CharacterSet);
+        CharacterSet = JsonRecord(new CharacterSetJson(header.CharacterSet));
         CopyrightGedcomFile = JsonString(header.CopyrightGedcomFile);
         FileName = JsonString(header.FileName);
-        Gedcom = JsonRecord(header.Gedcom);
-        GedcomContentDescription = JsonRecord(header.GedcomContentDescription);
+        Gedcom = JsonRecord(new HeaderGedcomJson(header.Gedcom));
+        GedcomContentDescription = JsonRecord(new NoteJson(header.GedcomContentDescription));
         LanguageOfText = JsonString(header.LanguageOfText);
         PlaceHierarchy = JsonString(header.PlaceHierarchy);
         ReceivingSystemName = JsonString(header.ReceivingSystemName);
-        Source = JsonRecord(header.Source);
-        SubmissionRecord = JsonRecord(header.SubmissionRecord);
+        Source = JsonRecord(new HeaderSourceJson(header.Source));
+        SubmissionRecord = JsonRecord(new SubmissionJson(header.SubmissionRecord));
         Submitter = JsonString(header.Submitter);
-        TransmissionDate = JsonRecord(header.TransmissionDate);
+        TransmissionDate = JsonRecord(new GedcomDateJson(header.TransmissionDate));
     }
 
-    public CharacterSet? CharacterSet { get; set; }
+    public CharacterSetJson? CharacterSet { get; set; }
     public string? CopyrightGedcomFile { get; set; }
     public string? FileName { get; set; }
-    public HeaderGedcom? Gedcom { get; set; }
-    public NoteStructure? GedcomContentDescription { get; set; }
+    public HeaderGedcomJson? Gedcom { get; set; }
+    public NoteJson? GedcomContentDescription { get; set; }
     public string? LanguageOfText { get; set; }
     public string? PlaceHierarchy { get; set; }
     public string? ReceivingSystemName { get; set; }
-    public HeaderSource? Source { get; set; }
-    public SubmissionRecord? SubmissionRecord { get; set; }
+    public HeaderSourceJson? Source { get; set; }
+    public SubmissionJson? SubmissionRecord { get; set; }
     public string? Submitter { get; set; }
-    public GedcomDate? TransmissionDate { get; set; }
+    public GedcomDateJson? TransmissionDate { get; set; }
 }
 
 #region HEADER p. 23

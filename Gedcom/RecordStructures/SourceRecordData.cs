@@ -9,7 +9,7 @@ public class SourceRecordData : RecordStructureBase
     public SourceRecordData() : base() { }
     public SourceRecordData(Record record) : base(record) { }
 
-    public List<SourceRecordEvent> EventsRecorded => List<SourceRecordEvent>(Tag.Event);
+    public List<SourceRecordEvent> RecordEvents => List<SourceRecordEvent>(Tag.Event);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
     public string ResponsibleAgency => GetValue(Tag.Agency);
 
@@ -28,17 +28,17 @@ internal class SourceDataJsonConverter : JsonConverter<SourceRecordData>
     }
 }
 
-internal class SourceDataJson : GedcomJson
+public class SourceDataJson : GedcomJson
 {
     public SourceDataJson(SourceRecordData sourceRecordData)
     {
-        EventsRecorded = JsonList(sourceRecordData.EventsRecorded);
-        Notes = JsonList(sourceRecordData.NoteStructures);
+        EventsRecorded = JsonList(sourceRecordData.RecordEvents.Select(re => new SourceRecordEventJson(re)).ToList());
+        Notes = JsonList(sourceRecordData.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
         ResponsibleAgency = JsonString(sourceRecordData.ResponsibleAgency);
     }
 
-    public List<SourceRecordEvent>? EventsRecorded { get; set; }
-    public List<NoteStructure>? Notes { get; set; }
+    public List<SourceRecordEventJson>? EventsRecorded { get; set; }
+    public List<NoteJson>? Notes { get; set; }
     public string? ResponsibleAgency { get; set; }
 }
 

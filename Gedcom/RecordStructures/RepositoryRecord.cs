@@ -41,30 +41,30 @@ internal class RepositoryJson : GedcomJson
 {
     public RepositoryJson(RepositoryRecord repositoryRecord)
     {
-        Address = JsonRecord(repositoryRecord.AddressStructure);
+        Address = JsonRecord(new AddressJson(repositoryRecord.AddressStructure));
         AutomatedRecordId = JsonString(repositoryRecord.AutomatedRecordId);
-        CallNumber = JsonRecord(repositoryRecord.CallNumber);
-        ChangeDate = JsonRecord(repositoryRecord.ChangeDate);
+        CallNumber = JsonRecord(new CallNumberJson(repositoryRecord.CallNumber));
+        ChangeDate = JsonRecord(new ChangeDateJson(repositoryRecord.ChangeDate));
         Emails = JsonList(repositoryRecord.AddressEmails);
         FaxNumbers = JsonList(repositoryRecord.AddressFaxNumbers);       
         Name = JsonString(repositoryRecord.Name);
-        Notes = JsonList(repositoryRecord.NoteStructures);
+        Notes = JsonList(repositoryRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
         PhoneNumbers = JsonList(repositoryRecord.PhoneNumbers);
-        UserReferenceNumber = JsonRecord(repositoryRecord.UserReferenceNumber);
+        UserReferenceNumber = JsonRecord(new UserReferenceNumberJson(repositoryRecord.UserReferenceNumber));
         WebPages = JsonList(repositoryRecord.AddressWebPages);
         Xref = repositoryRecord.Xref;
     }
 
-    public AddressStructure? Address { get; set; }
+    public AddressJson? Address { get; set; }
     public string? AutomatedRecordId { get; set; }
-    public CallNumber? CallNumber { get; set; }
-    public ChangeDate? ChangeDate { get; set; }
+    public CallNumberJson? CallNumber { get; set; }
+    public ChangeDateJson? ChangeDate { get; set; }
     public List<string>? Emails { get; set; }
     public List<string>? FaxNumbers { get; set; }
     public string? Name { get; set; }
-    public List<NoteStructure>? Notes { get; set; }
+    public List<NoteJson>? Notes { get; set; }
     public List<string>? PhoneNumbers { get; set; }
-    public UserReferenceNumber? UserReferenceNumber { get; set; }
+    public UserReferenceNumberJson? UserReferenceNumber { get; set; }
     public List<string>? WebPages { get; set; }
     public string? Xref { get; set; }
 }

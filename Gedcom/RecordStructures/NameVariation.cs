@@ -33,7 +33,7 @@ internal class NameVariationJsonConverter : JsonConverter<NameVariation>
     }
 }
 
-internal class NameVariationJson : GedcomJson
+public class NameVariationJson : GedcomJson
 {
     public NameVariationJson(NameVariation nameVariation)
     {

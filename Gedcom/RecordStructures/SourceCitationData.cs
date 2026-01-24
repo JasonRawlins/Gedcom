@@ -27,7 +27,7 @@ internal class SourceCitationDataJsonConverter : JsonConverter<SourceCitationDat
     }
 }
 
-internal class SourceCitationDataJson : GedcomJson
+public class SourceCitationDataJson : GedcomJson
 {
     public SourceCitationDataJson(SourceCitationData sourceCitationData)
     {

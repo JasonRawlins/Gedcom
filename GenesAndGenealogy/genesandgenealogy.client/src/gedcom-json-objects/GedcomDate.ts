@@ -1,7 +1,7 @@
 export interface GedcomDate {
   dateValue: string;
   day: number;
-  dmy: string;
+  dayMonthYear: string;
   month: number;
   monthName: string;
   time: string;

@@ -27,15 +27,15 @@ internal class SpouseToFamilyLinkJsonConverter : JsonConverter<SpouseToFamilyLin
     }
 }
 
-internal class SpouseToFamilyLinkJson : GedcomJson
+public class SpouseToFamilyLinkJson : GedcomJson
 {
     public SpouseToFamilyLinkJson(SpouseToFamilyLink spouseToFamilyLink)
     {
-        Notes = JsonList(spouseToFamilyLink.NoteStructures);
+        Notes = JsonList(spouseToFamilyLink.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
         Xref = spouseToFamilyLink.Xref;
     }
 
-    public List<NoteStructure>? Notes { get; set; }
+    public List<NoteJson>? Notes { get; set; }
     public string Xref { get; set; }
 }
 

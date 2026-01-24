@@ -27,15 +27,15 @@ internal class HeaderDataJsonConverter : JsonConverter<HeaderData>
     }
 }
 
-internal class HeaderDataJson : GedcomJson
+public class HeaderDataJson : GedcomJson
 {
     public HeaderDataJson(HeaderData headerData)
     {
-        CopyrightSourceData = JsonRecord(headerData.CopyrightSourceData);
+        CopyrightSourceData = JsonRecord(new NoteJson(headerData.CopyrightSourceData));
         PublicationDate = JsonString(headerData.PublicationDate);
     }
 
-    public NoteStructure? CopyrightSourceData { get; set; }
+    public NoteJson? CopyrightSourceData { get; set; }
     public string? PublicationDate { get; set; }
 }
 

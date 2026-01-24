@@ -59,8 +59,8 @@ namespace GenesAndGenealogy.Server.Controllers
                     children.Add(new IndividualJson(childIndividualRecord, TreeModel.AutomatedRecordId));
                 }
 
-                var events = new List<IEventDetail>();
-                foreach (var familyEventStructure in familyRecord.FamilyEventStructures)
+                var events = new List<EventJson>();
+                foreach (var familyEventStructure in familyRecord.FamilyEventStructures.Select(fes => new EventJson(fes)).ToList())
                 {
                     events.Add(familyEventStructure);
                 }

@@ -41,38 +41,38 @@ internal class MultimediaJsonConverter : JsonConverter<MultimediaRecord>
     }
 }
 
-internal class MultimediaJson : GedcomJson
+public class MultimediaJson : GedcomJson
 {
     public MultimediaJson(MultimediaRecord multimediaRecord)
     {
         AutomatedRecordId = JsonString(multimediaRecord.AutomatedRecordId);
-        ChangeDate = JsonRecord(multimediaRecord.ChangeDate);
+        ChangeDate = JsonRecord(new ChangeDateJson(multimediaRecord.ChangeDate));
         Date = JsonString(multimediaRecord.Date);
         Description = JsonString(multimediaRecord.Description);
         DescriptiveTitle = JsonString(multimediaRecord.DescriptiveTitle);
-        FileRecord = JsonRecord(multimediaRecord.FileRecord);
+        File = JsonRecord(new FileJson(multimediaRecord.FileRecord));
         MultimediaFileReferenceNumbers = JsonList(multimediaRecord.MultimediaFileReferenceNumbers);
-        MultimediaFormat = JsonRecord(multimediaRecord.MultimediaFormat);
-        Notes = JsonList(multimediaRecord.NoteStructures);
+        MultimediaFormat = JsonRecord(new MultimediaFormatJson(multimediaRecord.MultimediaFormat));
+        Notes = JsonList(multimediaRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
         ObjectId = JsonString(multimediaRecord.ObjectId);
-        Place = JsonRecord(multimediaRecord.PlaceStructure);
-        SourceCitations = JsonList(multimediaRecord.SourceCitations);
-        UserReferenceNumber = JsonRecord(multimediaRecord.UserReferenceNumber);
+        Place = JsonRecord(new PlaceJson(multimediaRecord.PlaceStructure));
+        SourceCitations = JsonList(multimediaRecord.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
+        UserReferenceNumber = JsonRecord(new UserReferenceNumberJson(multimediaRecord.UserReferenceNumber));
     }
 
     public string? AutomatedRecordId { get; set; }
-    public ChangeDate? ChangeDate { get; set; }
+    public ChangeDateJson? ChangeDate { get; set; }
     public string? Date { get; set; }
     public string? Description { get; set; }
     public string? DescriptiveTitle { get; set; }
-    public FileRecord? FileRecord { get; set; }
+    public FileJson? File { get; set; }
     public List<string>? MultimediaFileReferenceNumbers { get; set; }
-    public MultimediaFormat? MultimediaFormat { get; set; }
-    public List<NoteStructure>? Notes { get; set; }
+    public MultimediaFormatJson? MultimediaFormat { get; set; }
+    public List<NoteJson>? Notes { get; set; }
     public string? ObjectId { get; set; }
-    public PlaceStructure? Place { get; set; }
-    public List<SourceCitation>? SourceCitations { get; set; }
-    public UserReferenceNumber? UserReferenceNumber { get; set; }
+    public PlaceJson? Place { get; set; }
+    public List<SourceCitationJson>? SourceCitations { get; set; }
+    public UserReferenceNumberJson? UserReferenceNumber { get; set; }
 }
 
 #region MULTIMEDIA_RECORD p. 26

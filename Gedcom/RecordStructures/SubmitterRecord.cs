@@ -33,26 +33,26 @@ internal class SubmitterJsonConverter : JsonConverter<SubmitterRecord>
     }
 }
 
-internal class SubmitterJson : GedcomJson
+public class SubmitterJson : GedcomJson
 {
     public SubmitterJson(SubmitterRecord submitterRecord)
     {
-        Address = JsonRecord(submitterRecord.AddressStructure);
+        Address = JsonRecord(new AddressJson(submitterRecord.AddressStructure));
         AutomatedRecordId = JsonString(submitterRecord.AutomatedRecordId);
-        ChangeDate = JsonRecord(submitterRecord.ChangeDate);
+        ChangeDate = JsonRecord(new GedcomDateJson(submitterRecord.ChangeDate));
         LanguagePreferences = JsonList(submitterRecord.LanguagePreferences);
-        MultimediaLinks = JsonList(submitterRecord.MultimediaLinks);
-        Notes = JsonList(submitterRecord.NoteStructures);
+        MultimediaLinks = JsonList(submitterRecord.MultimediaLinks.Select(ml => new MultimediaLinkJson(ml)).ToList());
+        Notes = JsonList(submitterRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
         SubmitterName = JsonString(submitterRecord.SubmitterName);
         SubmitterRegisteredReferenceNumber = JsonString(submitterRecord.SubmitterRegisteredRfn);
     }
 
-    public AddressStructure? Address { get; set; }
+    public AddressJson? Address { get; set; }
     public string? AutomatedRecordId { get; set; }
-    public GedcomDate? ChangeDate { get; set; }
+    public GedcomDateJson? ChangeDate { get; set; }
     public List<string>? LanguagePreferences { get; set; }
-    public List<MultimediaLink>? MultimediaLinks { get; set; }
-    public List<NoteStructure>? Notes { get; set; }
+    public List<MultimediaLinkJson>? MultimediaLinks { get; set; }
+    public List<NoteJson>? Notes { get; set; }
     public string? SubmitterName { get; set; }
     public string? SubmitterRegisteredReferenceNumber { get; set; }
 }

@@ -5,7 +5,7 @@ namespace GenesAndGenealogy.Server.ViewModels;
 public class FamilyModel(IndividualJson? husband, IndividualJson? wife)
 {
     public List<IndividualJson> Children { get; set; } = [];
-    public List<IEventDetail> Events { get; set; } = [];
+    public List<EventJson> Events { get; set; } = [];
     public IndividualJson? Husband { get; set; } = husband;
     public FamilyModel? Parents { get; set; }
     public IndividualJson? Wife { get; set; } = wife;

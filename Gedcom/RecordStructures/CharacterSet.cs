@@ -26,7 +26,7 @@ internal class CharacterSetJsonConverter : JsonConverter<CharacterSet>
     }
 }
 
-internal class CharacterSetJson : GedcomJson
+public class CharacterSetJson : GedcomJson
 {
     public CharacterSetJson(CharacterSet characterSet)
     {

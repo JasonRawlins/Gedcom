@@ -30,20 +30,20 @@ internal class ChildToFamilyLinkJsonConverter : JsonConverter<ChildToFamilyLink>
     }
 }
 
-internal class ChildToFamilyLinkJson : GedcomJson
+public class ChildToFamilyLinkJson : GedcomJson
 {
     public ChildToFamilyLinkJson(ChildToFamilyLink childToFamilyLink)
     {
         AdoptedByWhichParent = JsonString(childToFamilyLink.AdoptedByWhichParent);
         ChildLinkageStatus = JsonString(childToFamilyLink.ChildLinkageStatus);
-        Notes = JsonList(childToFamilyLink.NoteStructures);
+        Notes = JsonList(childToFamilyLink.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
         PedigreeLinkageType = JsonString(childToFamilyLink.PedigreeLinkageType);
         Xref = JsonString(childToFamilyLink.Xref);
     }
 
     public string? AdoptedByWhichParent { get; set; }
     public string? ChildLinkageStatus { get; set; }
-    public List<NoteStructure>? Notes { get; set; }
+    public List<NoteJson>? Notes { get; set; }
     public string? PedigreeLinkageType { get; set; }
     public string? Xref { get; set; }
 }

@@ -13,18 +13,19 @@ namespace Gedcom;
  */
 public class GedcomJson
 {
-    protected T? JsonRecord<T>(T recordStructureBase) where T : RecordStructureBase
+    public bool IsEmpty { get; set; }
+    protected static T? JsonRecord<T>(T gedcomJson) where T : GedcomJson
     {
-        if (recordStructureBase.IsEmpty) 
+        if (gedcomJson.IsEmpty) 
             return null;
 
-        return recordStructureBase;
+        return gedcomJson;
     }
 
-    protected string? JsonString(string value) => string.IsNullOrEmpty(value) ? null : value;    
-    protected List<string>? JsonList(List<string> stringList) => stringList.Count == 0 ? null : stringList;
-    protected List<IEventDetail>? JsonList(List<IEventDetail> eventDetailList) => eventDetailList.Count == 0 ? null : eventDetailList;
-    protected List<T>? JsonList<T>(List<T>? recordStructureBaseList) where T : RecordStructureBase => 
-        (recordStructureBaseList == null || (recordStructureBaseList != null && recordStructureBaseList.Count == 0)) 
-        ? null : recordStructureBaseList;
+    protected static string? JsonString(string value) => string.IsNullOrEmpty(value) ? null : value;    
+    protected static List<string>? JsonList(List<string> stringList) => stringList.Count == 0 ? null : stringList;
+    protected static List<GedcomJson>? JsonList(List<GedcomJson> gedcomJson) => gedcomJson.Count == 0 ? null : gedcomJson;
+    protected static List<T>? JsonList<T>(List<T>? gedcomBaseList) where T : GedcomJson => 
+        (gedcomBaseList == null || (gedcomBaseList != null && gedcomBaseList.Count == 0)) 
+        ? null : gedcomBaseList;
 }

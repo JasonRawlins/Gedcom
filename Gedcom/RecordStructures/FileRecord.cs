@@ -27,7 +27,7 @@ internal class FileJsonConverter : JsonConverter<FileRecord>
     }
 }
 
-internal class FileJson : GedcomJson
+public class FileJson : GedcomJson
 {
     public FileJson(FileRecord fileRecord)
     {

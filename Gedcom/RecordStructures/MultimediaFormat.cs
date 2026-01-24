@@ -26,7 +26,7 @@ internal class MultimediaFormatJsonConverter : JsonConverter<MultimediaFormat>
     }
 }
 
-internal class MultimediaFormatJson : GedcomJson
+public class MultimediaFormatJson : GedcomJson
 {
     public MultimediaFormatJson(MultimediaFormat multimediaFormat)
     {

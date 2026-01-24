@@ -31,24 +31,24 @@ internal class PlaceJsonConverter : JsonConverter<PlaceStructure>
     }
 }
 
-internal class PlaceJson : GedcomJson
+public class PlaceJson : GedcomJson
 {
     public PlaceJson(PlaceStructure placeStructure)
     {
         Hierarchy = JsonString(placeStructure.PlaceHierarchy);
-        Map = JsonRecord(placeStructure.Map);
+        Map = JsonRecord(new MapJson(placeStructure.Map));
         Name = JsonString(placeStructure.PlaceName);
-        Notes = JsonList(placeStructure.NoteStructures);
-        PhoneticVariations = JsonList(placeStructure.PlacePhoneticVariations);
-        RomanizedVariations = JsonList(placeStructure.PlaceRomanizedVariations);
+        Notes = JsonList(placeStructure.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+        PhoneticVariations = JsonList(placeStructure.PlacePhoneticVariations.Select(ppv => new NameVariationJson(ppv)).ToList());
+        RomanizedVariations = JsonList(placeStructure.PlaceRomanizedVariations.Select(prv => new NameVariationJson(prv)).ToList());
     }
 
     public string? Hierarchy { get; set; }
-    public Map? Map { get; set; }
+    public MapJson? Map { get; set; }
     public string? Name { get; set; }
-    public List<NoteStructure>? Notes { get; set; }
-    public List<NameVariation>? PhoneticVariations { get; set; }
-    public List<NameVariation>? RomanizedVariations { get; set; }
+    public List<NoteJson>? Notes { get; set; }
+    public List<NameVariationJson>? PhoneticVariations { get; set; }
+    public List<NameVariationJson>? RomanizedVariations { get; set; }
 }
 
 #region PLACE_STRUCTURE p. 38-39

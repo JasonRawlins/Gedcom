@@ -27,7 +27,7 @@ internal class HeaderGedcomJsonConverter : JsonConverter<HeaderGedcom>
     }
 }
 
-internal class HeaderGedcomJson : GedcomJson
+public class HeaderGedcomJson : GedcomJson
 {
     public HeaderGedcomJson(HeaderGedcom gedc)
     {

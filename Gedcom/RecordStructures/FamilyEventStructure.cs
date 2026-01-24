@@ -1,52 +1,15 @@
 ﻿using Gedcom.Entities;
-using Newtonsoft.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(FamilyEventJsonConverter))]
-public class FamilyEventStructure : RecordStructureBase, IEventDetail
+//[JsonConverter(typeof(FamilyEventJsonConverter))]
+public class FamilyEventStructure : EventStructure
 {
     public FamilyEventStructure() { }
     public FamilyEventStructure(Record record) : base(record) { }
 
-    public AddressStructure AddressStructure => First<AddressStructure>(Tag.Address);
-    public string AgeAtEvent => GetValue(Tag.Age);
-    public string CauseOfEvent => GetValue(Tag.Cause);
-    public string DateValue => GetValue(Tag.Date);
-    public string EventOrFactClassification => GetValue(Tag.Type);
-    public EventType EventType => EventType.Family;
-    public GedcomDate GedcomDate => GedcomDate.Parse(DateValue);
-    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
-    public string Name
-    {
-        get
-        {
-            return Record.Tag switch
-            {
-                Tag.Annulment => "Annulment",
-                Tag.Census => "Census",
-                Tag.Divorce => "Divorce",
-                Tag.DivorceFiled => "Divorce Filed",
-                Tag.Engagement => "Engagement",
-                Tag.MarriageBann => "Marriage Bann",
-                Tag.MarriageContract => "Marriage Contract",
-                Tag.Marriage => "Marriage",
-                Tag.MarriageLicense => "Marriage License",
-                Tag.MarriageSettlement => "Marriage Settlement",
-                Tag.Residence => "Residence",
-                _ => Record.Tag,
-            };
-        }
-    }
-
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
-    public PlaceStructure PlaceStructure => First<PlaceStructure>(Tag.Place);
-    public string ReligiousAffiliation => GetValue(Tag.Religion);
-    public string ResponsibleAgency => GetValue(Tag.Agency);
-    public string RestrictionNotice => GetValue(Tag.Restriction);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.Source);
+    public override EventType EventType => EventType.Family;
 
     public static bool IsFamilyEventStructure(Record record)
     {
@@ -67,75 +30,37 @@ public class FamilyEventStructure : RecordStructureBase, IEventDetail
 
         return familyEventTags.Contains(record.Tag);
     }
-
-    public int CompareTo(IEventDetail? other)
-    {
-        if (other == null) return 1;
-
-        // Compare by year first, then month, then day
-        int yearComparison = GedcomDate.Year.CompareTo(other.GedcomDate.Year);
-        if (yearComparison != 0) return yearComparison;
-
-        int monthComparison = GedcomDate.Month.CompareTo(other.GedcomDate.Month);
-        if (monthComparison != 0) return monthComparison;
-
-        return GedcomDate.Day.CompareTo(other.GedcomDate.Day);
-    }
-
-    public override string ToString() => $"{Record}";
 }
 
-internal class FamilyEventJsonConverter : JsonConverter<FamilyEventStructure>
-{
-    public override FamilyEventStructure? ReadJson(JsonReader reader, Type objectType, FamilyEventStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+//internal class FamilyEventJsonConverter : JsonConverter<FamilyEventStructure>
+//{
+//    public override FamilyEventStructure? ReadJson(JsonReader reader, Type objectType, FamilyEventStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, FamilyEventStructure? familyEventStructure, JsonSerializer serializer)
-    {
-        if (familyEventStructure == null) throw new ArgumentNullException(nameof(familyEventStructure));
+//    public override void WriteJson(JsonWriter writer, FamilyEventStructure? familyEventStructure, JsonSerializer serializer)
+//    {
+//        if (familyEventStructure == null) throw new ArgumentNullException(nameof(familyEventStructure));
 
-        serializer.Serialize(writer, new FamilyEventJson(familyEventStructure));
-    }
-}
+//        serializer.Serialize(writer, new FamilyEventJson(familyEventStructure));
+//    }
+//}
 
-public class FamilyEventJson : GedcomJson
-{
-    public FamilyEventJson(IEventDetail familyEventStructure)
-    {
-        AddressStructure = JsonRecord(familyEventStructure.AddressStructure);
-        AgeAtEvent = JsonString(familyEventStructure.AgeAtEvent);
-        CauseOfEvent = JsonString(familyEventStructure.CauseOfEvent);
-        Date = JsonRecord(familyEventStructure.GedcomDate);
-        EventOrFactClassification = JsonString(familyEventStructure.EventOrFactClassification);
-        EventType = familyEventStructure.EventType;
-        GedcomDate = familyEventStructure.GedcomDate;
-        MultimediaLinks = JsonList(familyEventStructure.MultimediaLinks);
-        Name = JsonString(familyEventStructure.Name);
-        Notes = JsonList(familyEventStructure.NoteStructures.Select(ns => ns.Text).ToList());
-        PlaceStructure = JsonRecord(familyEventStructure.PlaceStructure);
-        ReligiousAffiliation = JsonString(familyEventStructure.ReligiousAffiliation);
-        ResponsibleAgency = JsonString(familyEventStructure.ResponsibleAgency);
-        RestrictionNotice = JsonString(familyEventStructure.RestrictionNotice);
-        SourceCitations = JsonList(familyEventStructure.SourceCitations);
-    }
-
-    public AddressStructure? AddressStructure { get; set; }
-    public string? AgeAtEvent { get; set; }
-    public string? CauseOfEvent { get; set; }
-    public GedcomDate? Date { get; set; }
-    public string? EventOrFactClassification { get; set; }
-    public EventType EventType { get; set; }
-    public GedcomDate GedcomDate { get; set; }
-    public List<MultimediaLink>? MultimediaLinks { get; set; }
-    public string? Name { get; set; }
-    public List<string>? Notes { get; set; }
-    public PlaceStructure? PlaceStructure { get; set; }
-    public string? ReligiousAffiliation { get; set; }
-    public string? ResponsibleAgency { get; set; }
-    public string? RestrictionNotice { get; set; }
-    public List<SourceCitation>? SourceCitations { get; set; }
-    //public string? Tag { get; set; }
-
-}
+//public class FamilyEventJson(FamilyEventStructure familyEventStructure) : GedcomJson
+//{
+//    public AddressJson? AddressStructure { get; set; } = JsonRecord(new AddressJson(familyEventStructure.AddressStructure));
+//    public string? AgeAtEvent { get; set; } = JsonString(familyEventStructure.AgeAtEvent);
+//    public string? CauseOfEvent { get; set; } = JsonString(familyEventStructure.CauseOfEvent);
+//    public GedcomDateJson? Date { get; set; } = JsonRecord(new GedcomDateJson(familyEventStructure.GedcomDate));
+//    public string? EventOrFactClassification { get; set; } = JsonString(familyEventStructure.EventOrFactClassification);
+//    public EventType EventType { get; set; } = familyEventStructure.EventType;
+//    public List<MultimediaLinkJson>? MultimediaLinks { get; set; } = JsonList(familyEventStructure.MultimediaLinks.Select(ml => new MultimediaLinkJson(ml)).ToList());
+//    public string? Name { get; set; } = JsonString(familyEventStructure.Name);
+//    public List<string>? Notes { get; set; } = JsonList(familyEventStructure.NoteStructures.Select(ns => ns.Text).ToList());
+//    public PlaceJson? Place { get; set; } = JsonRecord(new PlaceJson(familyEventStructure.PlaceStructure));
+//    public string? ReligiousAffiliation { get; set; } = JsonString(familyEventStructure.ReligiousAffiliation);
+//    public string? ResponsibleAgency { get; set; } = JsonString(familyEventStructure.ResponsibleAgency);
+//    public string? RestrictionNotice { get; set; } = JsonString(familyEventStructure.RestrictionNotice);
+//    public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(familyEventStructure.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
+//}
 
 #region FAMILY_EVENT_STRUCTURE p. 32
 /* 

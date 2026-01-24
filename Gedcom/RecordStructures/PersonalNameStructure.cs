@@ -35,16 +35,16 @@ internal class PersonalNameJsonConverter : JsonConverter<PersonalNameStructure>
     }
 }
 
-internal class PersonalNameJson : GedcomJson
+public class PersonalNameJson : GedcomJson
 {
     public PersonalNameJson(PersonalNameStructure personalNameStructure)
     {
         Given = JsonString(personalNameStructure.Given);
         Name = JsonString(personalNameStructure.NamePersonal);
         Nickname = JsonString(personalNameStructure.Nickname);
-        PhoneticVariation = JsonRecord(personalNameStructure.NamePhoneticVariation);
+        PhoneticVariation = JsonRecord(new NameVariationJson(personalNameStructure.NamePhoneticVariation));
         Prefix = JsonString(personalNameStructure.NamePrefix);
-        RomanizedVariation = JsonRecord(personalNameStructure.NameRomanizedVariation);
+        RomanizedVariation = JsonRecord(new NameVariationJson(personalNameStructure.NameRomanizedVariation));
         Suffix = JsonString(personalNameStructure.NameSuffix);
         Surname = JsonString(personalNameStructure.Surname);
         SurnamePrefix = JsonString(personalNameStructure.SurnamePrefix);
@@ -52,12 +52,11 @@ internal class PersonalNameJson : GedcomJson
     }
 
     public string? Given { get; set; }
-   
     public string? Name { get; set; }
     public string? Nickname { get; set; }
-    public NameVariation? PhoneticVariation { get; set; }
+    public NameVariationJson? PhoneticVariation { get; set; }
     public string? Prefix { get; set; }
-    public NameVariation? RomanizedVariation { get; set; }
+    public NameVariationJson? RomanizedVariation { get; set; }
     public string? Suffix { get; set; }
     public string? Surname { get; set; }
     public string? SurnamePrefix { get; set; }

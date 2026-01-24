@@ -56,14 +56,9 @@ internal class NoteJsonConverter : JsonConverter<NoteStructure>
     }
 }
 
-internal class NoteJson : GedcomJson
+public class NoteJson(NoteStructure noteStructure) : GedcomJson
 {
-    public NoteJson(NoteStructure noteStructure)
-    {
-        Text = noteStructure.Text;
-    }
-
-    public string Text { get; set; }
+    public string Text { get; set; } = noteStructure.Text;
 }
 
 #region NOTE_STRUCTURE p. 37

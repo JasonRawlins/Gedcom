@@ -26,7 +26,7 @@ internal class CallNumberJsonConverter : JsonConverter<CallNumber>
     }
 }
 
-internal class CallNumberJson : GedcomJson
+public class CallNumberJson : GedcomJson
 {
     public CallNumberJson(CallNumber callNumber)
     {

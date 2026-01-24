@@ -7,11 +7,11 @@ export interface EventModel {
   ageAtEvent: string;
   causeOfEvent: string;
   eventOrFactClassification: string;
-  gedcomDate: DateModel;
+  date: DateModel;
   name: string;
-  noteStructures: NoteModel[];
+  notes: string[];
   //multimediaLinks: MultimediaLinkModel[];
-  placeStructure: PlaceModel;
+  place: PlaceModel;
   religiousAffiliation: string;
   responsibleAgency: string;
   restrictionNotice: string;

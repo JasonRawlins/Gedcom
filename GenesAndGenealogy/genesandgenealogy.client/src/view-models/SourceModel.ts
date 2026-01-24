@@ -8,7 +8,7 @@ export interface SourceModel {
   filedByEntry: string;
   isEmpty: boolean;
   //multimediaLinks: MultimediaLink[];
-  notes: string[];
+  note: string;
   originator: string;
   publicationFacts: string;
   //recordData: SourceRecordData;

@@ -5,7 +5,7 @@
       <img *ngIf="sex === 'F'" class="rounded" src="images/silhouette-female.jpg" alt="A silhouette of a woman's portrait'" />
     </div>
     <div><strong>{{individual.fullName}}</strong></div>
-    <div>{{individual.birth.gedcomDate.year}}-{{individual.death.gedcomDate.year}}</div>
+    <div>{{individual.birth.date.year}}-{{individual.death.date.year}}</div>
   </div>
 </div>
 <div class="card" *ngIf="!individual" [ngClass]="{ 'child': isChild }">

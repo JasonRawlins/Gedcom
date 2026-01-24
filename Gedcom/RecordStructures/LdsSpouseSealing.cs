@@ -31,23 +31,23 @@ internal class LdsSpouseSealingJsonConverter : JsonConverter<LdsSpouseSealing>
     }
 }
 
-internal class LdsSpouseSealingJson : GedcomJson
+public class LdsSpouseSealingJson : GedcomJson
 {
     public LdsSpouseSealingJson(LdsSpouseSealing ldsSpouseSealing)
     {
         DateLdsOrdinance = JsonString(ldsSpouseSealing.DateLdsOrdinance);
-        LdsSpouseSealingDateStatus = JsonRecord(ldsSpouseSealing.LdsSpouseSealingDateStatus);
-        Notes = JsonList(ldsSpouseSealing.NoteStructures);
+        LdsSpouseSealingDateStatus = JsonRecord(new LdsOrdinanceStatusJson(ldsSpouseSealing.LdsSpouseSealingDateStatus));
+        Notes = JsonList(ldsSpouseSealing.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
         PlaceLivingOrdinance = JsonString(ldsSpouseSealing.PlaceLivingOrdinance);
-        SourceCitations = JsonList(ldsSpouseSealing.SourceCitations);
+        SourceCitations = JsonList(ldsSpouseSealing.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
         TempleCode = JsonString(ldsSpouseSealing.TempleCode);
     }
 
     public string? DateLdsOrdinance { get; set; }
-    public LdsOrdinanceStatus? LdsSpouseSealingDateStatus { get; set; }
-    public List<NoteStructure>? Notes { get; set; }
+    public LdsOrdinanceStatusJson? LdsSpouseSealingDateStatus { get; set; }
+    public List<NoteJson>? Notes { get; set; }
     public string? PlaceLivingOrdinance { get; set; }
-    public List<SourceCitation>? SourceCitations { get; set; }
+    public List<SourceCitationJson>? SourceCitations { get; set; }
     public string? TempleCode { get; set; }
 }
 
