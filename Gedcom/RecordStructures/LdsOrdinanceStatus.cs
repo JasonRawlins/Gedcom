@@ -24,16 +24,10 @@ internal class LdsOrdinanceStatusJsonConverter : JsonConverter<LdsOrdinanceStatu
     }
 }
 
-public class LdsOrdinanceStatusJson : GedcomJson
+public class LdsOrdinanceStatusJson(LdsOrdinanceStatus ldsOrdinanceStatus) : GedcomJson
 {
-    public LdsOrdinanceStatusJson(LdsOrdinanceStatus ldsOrdinanceStatus)
-    {
-        ChangeDate = JsonString(ldsOrdinanceStatus.ChangeDate);
-        Status = JsonString(ldsOrdinanceStatus.Status);
-    }
-
-    public string? ChangeDate { get; set; }
-    public string? Status { get; set; }
+    public string? ChangeDate { get; set; } = JsonString(ldsOrdinanceStatus.ChangeDate);
+    public string? Status { get; set; } = JsonString(ldsOrdinanceStatus.Status);
 }
 
 #region STRUCTURE_NAME p. 

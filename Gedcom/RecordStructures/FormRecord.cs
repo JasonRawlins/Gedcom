@@ -29,14 +29,11 @@ internal class FormJsonConverter : JsonConverter<FormRecord>
     }
 }
 
-public class FormJson : GedcomJson
+public class FormJson(FormRecord formRecord) : GedcomJson
 {
-    public FormJson(FormRecord formRecord)
-    {
-        Type = JsonString(formRecord.Type);
-    }
-
-    public string? Type { get; set; }
+    public string? MediaType { get; set; } = JsonString(formRecord.MediaType);
+    public string? SourceType { get; set; } = JsonString(formRecord.SourceType);
+    public string? Type { get; set; } = JsonString(formRecord.Type);
 }
 
 #region MULTIMEDIA_FORMAT p. 26

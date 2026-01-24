@@ -30,14 +30,9 @@ internal class UserReferenceNumberJsonConverter : JsonConverter<UserReferenceNum
     }
 }
 
-public class UserReferenceNumberJson : GedcomJson
+public class UserReferenceNumberJson(UserReferenceNumber userReferenceNumber) : GedcomJson
 {
-    public UserReferenceNumberJson(UserReferenceNumber userReferenceNumber)
-    {
-        UserReferenceType = JsonString(userReferenceNumber.UserReferenceType);
-    }
-
-    public string? UserReferenceType { get; set; }
+    public string? UserReferenceType { get; set; } = JsonString(userReferenceNumber.UserReferenceType);
 }
 
 #region USER_REFERENCE_TYPE (REFN) p. 27

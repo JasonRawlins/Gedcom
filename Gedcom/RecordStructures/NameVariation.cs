@@ -33,27 +33,15 @@ internal class NameVariationJsonConverter : JsonConverter<NameVariation>
     }
 }
 
-public class NameVariationJson : GedcomJson
+public class NameVariationJson(NameVariation nameVariation) : GedcomJson
 {
-    public NameVariationJson(NameVariation nameVariation)
-    {
-        Given = JsonString(nameVariation.Type);
-        Nickname = JsonString(nameVariation.Type);
-        Prefix = JsonString(nameVariation.Type);
-        Suffix = JsonString(nameVariation.Type);
-        Surname = JsonString(nameVariation.Type);
-        SurnamePrefix = JsonString(nameVariation.Type);
-        Type = JsonString(nameVariation.Type);
-    }
-
-
-    public string? Given { get; set; }
-    public string? Nickname { get; set; }
-    public string? Prefix { get; set; }
-    public string? Suffix { get; set; }
-    public string? Surname { get; set; }
-    public string? SurnamePrefix { get; set; }
-    public string? Type { get; set; }
+    public string? Given { get; set; } = JsonString(nameVariation.Type);
+    public string? Nickname { get; set; } = JsonString(nameVariation.Type);
+    public string? Prefix { get; set; } = JsonString(nameVariation.Type);
+    public string? Suffix { get; set; } = JsonString(nameVariation.Type);
+    public string? Surname { get; set; } = JsonString(nameVariation.Type);
+    public string? SurnamePrefix { get; set; } = JsonString(nameVariation.Type);
+    public string? Type { get; set; } = JsonString(nameVariation.Type);
 }
 
 #region NAME_PHONETIC_VARIATION (FONE) and NAME_ROMANIZED_VARIATION (ROMN) p. 38

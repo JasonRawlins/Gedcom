@@ -47,8 +47,6 @@ namespace GenesAndGenealogy.Server.Controllers
             {
                 var family = FamilyManager.CreateFamily(familyRecord.Xref, 1, 1);
 
-
-
                 var husband = new IndividualJson(Gedcom.GetIndividualRecord(familyRecord.Husband), HeaderTree.AutomatedRecordId);
                 var wife = new IndividualJson(Gedcom.GetIndividualRecord(familyRecord.Wife), HeaderTree.AutomatedRecordId);
                 var children = new List<IndividualJson>();
@@ -120,8 +118,16 @@ namespace GenesAndGenealogy.Server.Controllers
                 var sourceRecord = Gedcom.GetSourceRecord(sourceCitation.Xref);
                 sources.Add(new SourceJson(sourceRecord));
             }
-
             var sortedSources = sources.OrderBy(s => s.DescriptiveTitle).ToList();
+
+            var multimedias = new List<MultimediaJson>();
+            foreach (var multimediaLink in individualRecord.MultimediaLinks)
+            {
+                var multimediaRecord = Gedcom.GetObjectRecord(multimediaLink.Xref);
+                multimedias.Add(new MultimediaJson(multimediaRecord));
+            }
+
+
 
             var profileModel = new ProfileModel(HeaderTree, individualJson, familyModels, repositories, sortedSources);
 

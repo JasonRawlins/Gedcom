@@ -27,16 +27,10 @@ internal class SourceCitationDataJsonConverter : JsonConverter<SourceCitationDat
     }
 }
 
-public class SourceCitationDataJson : GedcomJson
+public class SourceCitationDataJson(SourceCitationData sourceCitationData) : GedcomJson
 {
-    public SourceCitationDataJson(SourceCitationData sourceCitationData)
-    {
-        EntryRecordingDate = JsonString(sourceCitationData.EntryRecordingDate);        
-        TextFromSources = sourceCitationData.TextFromSources.Select(t => t.Text).ToList();
-    }
-
-    public string? EntryRecordingDate { get; set; }
-    public List<string> TextFromSources { get; set; }
+    public string? EntryRecordingDate { get; set; } = JsonString(sourceCitationData.EntryRecordingDate);
+    public List<string> TextFromSources { get; set; } = sourceCitationData.TextFromSources.Select(t => t.Text).ToList();
 }
 
 #region SOUR.DATA p. 39

@@ -27,14 +27,8 @@ internal class FamilyPartnerJsonConverter : JsonConverter<FamilyPartner>
     }
 }
 
-public class FamilyPartnerJson : GedcomJson
+public class FamilyPartnerJson(FamilyPartner familyPartner) : GedcomJson
 {
-    public FamilyPartnerJson(FamilyPartner familyPartner)
-    {
-        AgeAtEvent = JsonString(familyPartner.AgeAtEvent);
-        Name = JsonString(familyPartner.Name);
-    }
-
-    public string? AgeAtEvent { get; set; }
-    public string? Name { get; set; }
+    public string? AgeAtEvent { get; set; } = JsonString(familyPartner.AgeAtEvent);
+    public string? Name { get; set; } = JsonString(familyPartner.Name);
 }

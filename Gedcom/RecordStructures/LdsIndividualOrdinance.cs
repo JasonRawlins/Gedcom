@@ -31,24 +31,14 @@ internal class LdsIndividualOrdinanceJsonConverter : JsonConverter<LdsIndividual
     }
 }
 
-public class LdsIndividualOrdinanceJson : GedcomJson
+public class LdsIndividualOrdinanceJson(LdsIndividualOrdinance ldsIndividualOrdinance) : GedcomJson
 {
-    public LdsIndividualOrdinanceJson(LdsIndividualOrdinance ldsIndividualOrdinance)
-    {
-        DateLdsOrdinance = JsonString(ldsIndividualOrdinance.DateLdsOrdinance);
-        LdsBaptismDateStatus = JsonRecord(new LdsOrdinanceStatusJson(ldsIndividualOrdinance.LdsBaptismDateStatus));
-        Notes = JsonList(ldsIndividualOrdinance.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
-        PlaceLivingOrdinance = JsonString(ldsIndividualOrdinance.PlaceLivingOrdinance);
-        SourceCitations = JsonList(ldsIndividualOrdinance.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
-        TempleCode = JsonString(ldsIndividualOrdinance.TempleCode);
-    }
-
-    public string? DateLdsOrdinance { get; set; }
-    public LdsOrdinanceStatusJson? LdsBaptismDateStatus { get; set; }
-    public List<NoteJson>? Notes { get; set; }
-    public string? PlaceLivingOrdinance { get; set; }
-    public List<SourceCitationJson>? SourceCitations { get; set; }
-    public string? TempleCode { get; set; }
+    public string? DateLdsOrdinance { get; set; } = JsonString(ldsIndividualOrdinance.DateLdsOrdinance);
+    public LdsOrdinanceStatusJson? LdsBaptismDateStatus { get; set; } = JsonRecord(new LdsOrdinanceStatusJson(ldsIndividualOrdinance.LdsBaptismDateStatus));
+    public List<NoteJson>? Notes { get; set; } = JsonList(ldsIndividualOrdinance.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public string? PlaceLivingOrdinance { get; set; } = JsonString(ldsIndividualOrdinance.PlaceLivingOrdinance);
+    public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(ldsIndividualOrdinance.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
+    public string? TempleCode { get; set; } = JsonString(ldsIndividualOrdinance.TempleCode);
 }
 
 #region LDS_INDIVIDUAL_ORDINANCE p. 

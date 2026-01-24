@@ -26,14 +26,9 @@ internal class CharacterSetJsonConverter : JsonConverter<CharacterSet>
     }
 }
 
-public class CharacterSetJson : GedcomJson
+public class CharacterSetJson(CharacterSet characterSet) : GedcomJson
 {
-    public CharacterSetJson(CharacterSet characterSet)
-    {
-        VersionNumber = JsonString(characterSet.VersionNumber);
-    }
-
-    public string? VersionNumber { get; set; }
+    public string? VersionNumber { get; set; } = JsonString(characterSet.VersionNumber);
 }
 
 #region CHARACTER_SET p. 23

@@ -32,26 +32,15 @@ internal class SourceCitationJsonConverter : JsonConverter<SourceCitation>
     }
 }
 
-public class SourceCitationJson : GedcomJson
+public class SourceCitationJson(SourceCitation sourceCitation) : GedcomJson
 {
-    public SourceCitationJson(SourceCitation sourceCitation)
-    {
-        CertaintyAssessment = JsonString(sourceCitation.CertaintyAssessment);
-        Data = JsonRecord(new SourceCitationDataJson(sourceCitation.SourceCitationData));
-        EventTypeCitedFrom = JsonRecord(new EventTypeCitedFromJson(sourceCitation.EventTypeCitedFrom));
-        MultimediaLinks = JsonList(sourceCitation.MultimediaLinks.Select(ml => new MultimediaLinkJson(ml)).ToList());
-        Notes = JsonList(sourceCitation.NoteStructures.Select(ns => ns.Text).ToList());
-        WhereWithinSource = JsonString(sourceCitation.WhereWithinSource);
-        Xref = sourceCitation.Xref;
-    }
-
-    public string? CertaintyAssessment { get; set; }
-    public SourceCitationDataJson? Data { get; set; }
-    public EventTypeCitedFromJson? EventTypeCitedFrom { get; set; }
-    public List<MultimediaLinkJson>? MultimediaLinks { get; set; }
-    public List<string>? Notes { get; set; }
-    public string? WhereWithinSource { get; set; }
-    public string? Xref { get; set; }
+    public string? CertaintyAssessment { get; set; } = JsonString(sourceCitation.CertaintyAssessment);
+    public SourceCitationDataJson? Data { get; set; } = JsonRecord(new SourceCitationDataJson(sourceCitation.SourceCitationData));
+    public EventTypeCitedFromJson? EventTypeCitedFrom { get; set; } = JsonRecord(new EventTypeCitedFromJson(sourceCitation.EventTypeCitedFrom));
+    public List<MultimediaLinkJson>? MultimediaLinks { get; set; } = JsonList(sourceCitation.MultimediaLinks.Select(ml => new MultimediaLinkJson(ml)).ToList());
+    public List<string>? Notes { get; set; } = JsonList(sourceCitation.NoteStructures.Select(ns => ns.Text).ToList());
+    public string? WhereWithinSource { get; set; } = JsonString(sourceCitation.WhereWithinSource);
+    public string? Xref { get; set; } = sourceCitation.Xref;
 }
 
 #region SOURCE_CITATION p. 39

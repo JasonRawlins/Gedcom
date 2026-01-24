@@ -1,11 +1,9 @@
 ﻿using Gedcom.Core;
 using Gedcom.Entities;
-using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-//[JsonConverter(typeof(IndividualEventJsonConverter))]
 public class IndividualEventStructure : EventStructure
 {
     public IndividualEventStructure() { }
@@ -61,37 +59,6 @@ public class IndividualEventStructure : EventStructure
         return individualEventTags.Contains(record.Tag);
     }
 }
-
-//internal class IndividualEventJsonConverter : JsonConverter<IndividualEventStructure>
-//{
-//    public override IndividualEventStructure? ReadJson(JsonReader reader, Type objectType, IndividualEventStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
-
-//    public override void WriteJson(JsonWriter writer, IndividualEventStructure? individualEventStructure, JsonSerializer serializer)
-//    {
-//        if (individualEventStructure == null) throw new ArgumentNullException(nameof(individualEventStructure));
-
-//        serializer.Serialize(writer, new IndividualEventJson(individualEventStructure));
-//    }
-//}
-
-//public class IndividualEventJson(IndividualEventStructure individualEventStructure) : GedcomJson
-//{
-//    public AddressJson? Address { get; set; } = JsonRecord(new AddressJson(individualEventStructure.AddressStructure));
-//    public string? AgeAtEvent { get; set; } = JsonString(individualEventStructure.AgeAtEvent);
-//    public string? CauseOfEvent { get; set; } = JsonString(individualEventStructure.CauseOfEvent);
-//    public GedcomDateJson? Date { get; set; } = JsonRecord(new GedcomDateJson(familyEventStructure.GedcomDate));
-//    public string? EventOrFactClassification { get; set; } = JsonString(individualEventStructure.EventOrFactClassification);
-//    public EventType EventType { get; set; } = familyEventStructure.EventType;
-//    public List<MultimediaLinkJson>? MultimediaLinks { get; set; } = JsonList(individualEventStructure.MultimediaLinks.Select(ml => new MultimediaLinkJson(ml)).ToList());
-//    public string? Name { get; set; } = JsonString(familyEventStructure.Name);
-//    public List<string>? Notes { get; set; } = JsonList(individualEventStructure.NoteStructures.Select(ns => ns.Text).ToList());
-//    public PlaceJson? Place { get; set; } = JsonRecord(new PlaceJson(individualEventStructure.PlaceStructure));
-//    public string? ReligiousAffiliation { get; set; } = JsonString(individualEventStructure.ReligiousAffiliation);
-//    public string? ResponsibleAgency { get; set; } = JsonString(individualEventStructure.ResponsibleAgency);
-//    public string? RestrictionNotice { get; set; } = JsonString(individualEventStructure.RestrictionNotice);
-//    public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(individualEventStructure.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
-//    public string? Tag { get; set; }
-//}
 
 #region INDIVIDUAL_EVENT_STRUCTURE p. 34
 /* 

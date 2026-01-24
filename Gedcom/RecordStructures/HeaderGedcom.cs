@@ -27,16 +27,10 @@ internal class HeaderGedcomJsonConverter : JsonConverter<HeaderGedcom>
     }
 }
 
-public class HeaderGedcomJson : GedcomJson
+public class HeaderGedcomJson(HeaderGedcom gedc) : GedcomJson
 {
-    public HeaderGedcomJson(HeaderGedcom gedc)
-    {
-        GedcomForm = JsonString(gedc.GedcomForm);
-        VersionNumber = JsonString(gedc.VersionNumber);
-    }
-
-    public string? GedcomForm { get; set; }
-    public string? VersionNumber { get; set; }
+    public string? GedcomForm { get; set; } = JsonString(gedc.GedcomForm);
+    public string? VersionNumber { get; set; } = JsonString(gedc.VersionNumber);
 }
 
 #region STRUCTURE_NAME p. 23

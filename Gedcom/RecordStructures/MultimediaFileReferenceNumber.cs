@@ -26,14 +26,9 @@ internal class MultimediaFileReferenceNumberJsonConverter : JsonConverter<Multim
     }
 }
 
-public class MultimediaFileReferenceNumberJson : GedcomJson
+public class MultimediaFileReferenceNumberJson(MultimediaFileReferenceNumber multimediaFileReferenceNumber) : GedcomJson
 {
-    public MultimediaFileReferenceNumberJson(MultimediaFileReferenceNumber multimediaFileReferenceNumber)
-    {
-        MultiMediaFormat = JsonRecord(new MultimediaFormatJson(multimediaFileReferenceNumber.MultimediaFormat));
-    }
-
-    public MultimediaFormatJson? MultiMediaFormat { get; set; }
+    public MultimediaFormatJson? MultiMediaFormat { get; set; } = JsonRecord(new MultimediaFormatJson(multimediaFileReferenceNumber.MultimediaFormat));
 }
 
 #region STRUCTURE_NAME p. 37

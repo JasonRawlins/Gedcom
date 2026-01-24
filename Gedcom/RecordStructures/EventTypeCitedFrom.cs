@@ -26,14 +26,9 @@ internal class EventTypeCitedFromJsonConverter : JsonConverter<EventTypeCitedFro
     }
 }
 
-public class EventTypeCitedFromJson : GedcomJson
+public class EventTypeCitedFromJson(EventTypeCitedFrom eventTypeCitedFrom) : GedcomJson
 {
-    public EventTypeCitedFromJson(EventTypeCitedFrom eventTypeCitedFrom)
-    {
-        RoleInEvent = JsonString(eventTypeCitedFrom.RoleInEvent);
-    }
-
-    public string? RoleInEvent { get; set; }
+    public string? RoleInEvent { get; set; } = JsonString(eventTypeCitedFrom.RoleInEvent);
 }
 
 #region EVENT_TYPE_CITED_FROM p. 49

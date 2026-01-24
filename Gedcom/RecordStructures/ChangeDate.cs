@@ -27,16 +27,10 @@ internal class ChangeDateJsonConverter : JsonConverter<ChangeDate>
     }
 }
 
-public class ChangeDateJson : GedcomJson
+public class ChangeDateJson(ChangeDate changeDate) : GedcomJson
 {
-    public ChangeDateJson(ChangeDate changeDate)
-    {
-        ChangeDate = JsonRecord(new GedcomDateJson(changeDate.GedcomDate));
-        Notes = JsonList(changeDate.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
-    }
-
-    public GedcomDateJson? ChangeDate { get; set; }
-    public List<NoteJson>? Notes { get; set; }
+    public GedcomDateJson? ChangeDate { get; set; } = JsonRecord(new GedcomDateJson(changeDate.GedcomDate));
+    public List<NoteJson>? Notes { get; set; } = JsonList(changeDate.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
 }
 
 #region CHANGE_DATE (CHAN) p. 31

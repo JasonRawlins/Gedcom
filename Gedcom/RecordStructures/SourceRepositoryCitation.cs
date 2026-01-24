@@ -27,16 +27,10 @@ internal class SourceRepositoryCitationJsonConverter : JsonConverter<SourceRepos
     }
 }
 
-public class SourceRepositoryCitationJson : GedcomJson
+public class SourceRepositoryCitationJson(SourceRepositoryCitation sourceRepositoryCitation) : GedcomJson
 {
-    public SourceRepositoryCitationJson(SourceRepositoryCitation sourceRepositoryCitation)
-    {
-        CallNumbers = JsonList(sourceRepositoryCitation.CallNumbers.Select(cn => new CallNumberJson(cn)).ToList());
-        Notes = JsonList(sourceRepositoryCitation.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
-    }
-
-    public List<CallNumberJson>? CallNumbers { get; set; }
-    public List<NoteJson>? Notes { get; set; }
+    public List<CallNumberJson>? CallNumbers { get; set; } = JsonList(sourceRepositoryCitation.CallNumbers.Select(cn => new CallNumberJson(cn)).ToList());
+    public List<NoteJson>? Notes { get; set; } = JsonList(sourceRepositoryCitation.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
 }
 
 #region SOURCE_REPOSITORY_CITATION p. 40

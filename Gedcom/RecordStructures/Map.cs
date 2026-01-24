@@ -26,16 +26,10 @@ internal class MapJsonConverter : JsonConverter<Map>
     }
 }
 
-public class MapJson : GedcomJson
+public class MapJson(Map map) : GedcomJson
 {
-    public MapJson(Map map)
-    {
-        Latitude = JsonString(map.PlaceLatitude);
-        Longitude = JsonString(map.PlaceLongitude);
-    }
-
-    public string? Latitude { get; set; }
-    public string? Longitude { get; set; }
+    public string? Latitude { get; set; } = JsonString(map.PlaceLatitude);
+    public string? Longitude { get; set; } = JsonString(map.PlaceLongitude);
 }
 
 #region MAP p. 39

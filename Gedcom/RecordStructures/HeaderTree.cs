@@ -28,18 +28,11 @@ internal class HeaderTreeJsonConverter : JsonConverter<HeaderTree>
     }
 }
 
-public class HeaderTreeJson : GedcomJson
+public class HeaderTreeJson(HeaderTree headerTree) : GedcomJson
 {
-    public HeaderTreeJson(HeaderTree headerTree)
-    {
-        AutomatedRecordId = headerTree.AutomatedRecordId;
-        Name = headerTree.Name;
-        Note = headerTree.Note.Text;
-    }
-
-    public string AutomatedRecordId { get; set; }
-    public string Name { get; set; }
-    public string Note { get; set; }
+    public string AutomatedRecordId { get; set; } = headerTree.AutomatedRecordId;
+    public string Name { get; set; } = headerTree.Name;
+    public string Note { get; set; } = headerTree.Note.Text;
 }
 
 

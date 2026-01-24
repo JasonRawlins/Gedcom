@@ -32,24 +32,14 @@ internal class HeaderSourceJsonConverter : JsonConverter<HeaderSource>
     }
 }
 
-public class HeaderSourceJson : GedcomJson
+public class HeaderSourceJson(HeaderSource headerSource) : GedcomJson
 {
-    public HeaderSourceJson(HeaderSource headerSource)
-    {
-        Corporation = JsonRecord(new HeaderCorporationJson(headerSource.Corporation));
-        Data = JsonRecord(new HeaderDataJson(headerSource.Data));
-        NameOfProduct = JsonString(headerSource.NameOfProduct);
-        Tree = JsonRecord(new HeaderTreeJson(headerSource.Tree));
-        Version = JsonString(headerSource.Version);
-        Xref = JsonString(headerSource.Xref);
-    }
-
-    public HeaderCorporationJson? Corporation { get; set; }
-    public HeaderDataJson? Data { get; set; }
-    public string? NameOfProduct { get; set; }
-    public HeaderTreeJson? Tree { get; set; }
-    public string? Version { get; set; }
-    public string? Xref { get; set; }
+    public HeaderCorporationJson? Corporation { get; set; } = JsonRecord(new HeaderCorporationJson(headerSource.Corporation));
+    public HeaderDataJson? Data { get; set; } = JsonRecord(new HeaderDataJson(headerSource.Data));
+    public string? NameOfProduct { get; set; } = JsonString(headerSource.NameOfProduct);
+    public HeaderTreeJson? Tree { get; set; } = JsonRecord(new HeaderTreeJson(headerSource.Tree));
+    public string? Version { get; set; } = JsonString(headerSource.Version);
+    public string? Xref { get; set; } = JsonString(headerSource.Xref);
 }
 
 

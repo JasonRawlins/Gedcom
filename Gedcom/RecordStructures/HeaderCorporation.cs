@@ -30,22 +30,13 @@ internal class HeaderCorporationJsonConverter : JsonConverter<HeaderCorporation>
     }
 }
 
-public class HeaderCorporationJson : GedcomJson
+public class HeaderCorporationJson(HeaderCorporation headerCorporation) : GedcomJson
 {
-    public HeaderCorporationJson(HeaderCorporation headerCorporation)
-    {
-        Address = JsonRecord(new AddressJson(headerCorporation.AddressStructure));
-        Emails = JsonList(headerCorporation.AddressEmails);
-        FaxNumbers = JsonList(headerCorporation.AddressFaxNumbers);
-        PhoneNumbers = JsonList(headerCorporation.PhoneNumbers);
-        WebPages = JsonList(headerCorporation.AddressWebPages);
-    }
-
-    public AddressJson? Address { get; set; }
-    public List<string>? Emails { get; set; }
-    public List<string>? FaxNumbers { get; set; }
-    public List<string>? PhoneNumbers { get; set; }
-    public List<string>? WebPages { get; set; }
+    public AddressJson? Address { get; set; } = JsonRecord(new AddressJson(headerCorporation.AddressStructure));
+    public List<string>? Emails { get; set; } = JsonList(headerCorporation.AddressEmails);
+    public List<string>? FaxNumbers { get; set; } = JsonList(headerCorporation.AddressFaxNumbers);
+    public List<string>? PhoneNumbers { get; set; } = JsonList(headerCorporation.PhoneNumbers);
+    public List<string>? WebPages { get; set; } = JsonList(headerCorporation.AddressWebPages);
 }
 
 #region HeaderCorporation p. 23

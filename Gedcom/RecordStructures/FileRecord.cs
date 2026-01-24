@@ -27,14 +27,10 @@ internal class FileJsonConverter : JsonConverter<FileRecord>
     }
 }
 
-public class FileJson : GedcomJson
+public class FileJson(FileRecord fileRecord) : GedcomJson
 {
-    public FileJson(FileRecord fileRecord)
-    {
-        Title = JsonString(fileRecord.Title);
-    }
-
-    public string? Title { get; set; }
+    public FormJson? Form { get; set; } = JsonRecord(new FormJson(fileRecord.FormRecord));
+    public string? Title { get; set; } = JsonString(fileRecord.Title);
 }
 
 #region MULTIMEDIA_FILE_REFN p. 26

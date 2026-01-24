@@ -35,32 +35,18 @@ internal class SubmissionJsonConverter : JsonConverter<SubmissionRecord>
     }
 }
 
-public class SubmissionJson : GedcomJson
+public class SubmissionJson(SubmissionRecord submissionRecord) : GedcomJson
 {
-    public SubmissionJson(SubmissionRecord submissionRecord)
-    {
-        AutomatedRecordId = JsonString(submissionRecord.AutomatedRecordId);
-        ChangeDate = JsonRecord(new ChangeDateJson(submissionRecord.ChangeDate));
-        GenerationsOfAncestors = JsonString(submissionRecord.GenerationsOfAncestors);
-        GenerationsOfDescendants = JsonString(submissionRecord.GenerationsOfDescendants);
-        NameOfFamilyFile = JsonString(submissionRecord.NameOfFamilyFile);
-        Notes = JsonList(submissionRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
-        OrdinanceProcessFlag = JsonString(submissionRecord.OrdinanceProcessFlag);
-        Submitter = JsonString(submissionRecord.Submitter);
-        TempleCode = JsonString(submissionRecord.TempleCode);
-        Xref = submissionRecord.Xref;
-    }
-
-    public string? AutomatedRecordId { get; set; }
-    public ChangeDateJson? ChangeDate { get; set; }
-    public string? GenerationsOfAncestors { get; set; }
-    public string? GenerationsOfDescendants { get; set; }
-    public string? NameOfFamilyFile { get; set; }
-    public List<NoteJson>? Notes { get; set; }
-    public string? OrdinanceProcessFlag { get; set; }
-    public string? Submitter { get; set; }
-    public string? TempleCode { get; set; }
-    public string? Xref { get; set; }
+    public string? AutomatedRecordId { get; set; } = JsonString(submissionRecord.AutomatedRecordId);
+    public ChangeDateJson? ChangeDate { get; set; } = JsonRecord(new ChangeDateJson(submissionRecord.ChangeDate));
+    public string? GenerationsOfAncestors { get; set; } = JsonString(submissionRecord.GenerationsOfAncestors);
+    public string? GenerationsOfDescendants { get; set; } = JsonString(submissionRecord.GenerationsOfDescendants);
+    public string? NameOfFamilyFile { get; set; } = JsonString(submissionRecord.NameOfFamilyFile);
+    public List<NoteJson>? Notes { get; set; } = JsonList(submissionRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public string? OrdinanceProcessFlag { get; set; } = JsonString(submissionRecord.OrdinanceProcessFlag);
+    public string? Submitter { get; set; } = JsonString(submissionRecord.Submitter);
+    public string? TempleCode { get; set; } = JsonString(submissionRecord.TempleCode);
+    public string? Xref { get; set; } = submissionRecord.Xref;
 }
 
 #region SUBMISSION_RECORD p. 28

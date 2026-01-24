@@ -33,28 +33,16 @@ internal class AddressJsonConverter : JsonConverter<AddressStructure>
     }
 }
 
-public class AddressJson : GedcomJson
+public class AddressJson(AddressStructure addressStructure) : GedcomJson
 {
-    public AddressJson(AddressStructure addressStructure)
-    {
-        City = JsonString(addressStructure.AddressCity);
-        Country = JsonString(addressStructure.AddressCountry);
-        Line = JsonString(addressStructure.AddressLine);
-        Line1 = JsonString(addressStructure.AddressLine1);
-        Line2 = JsonString(addressStructure.AddressLine2);
-        Line3 = JsonString(addressStructure.AddressLine3);
-        PostalCode = JsonString(addressStructure.AddressPostCode);
-        State = JsonString(addressStructure.AddressState);
-    }
-
-    public string? City { get; set; }
-    public string? Country { get; set; }
-    public string? Line { get; set; }
-    public string? Line1 { get; set; }
-    public string? Line2 { get; set; }
-    public string? Line3 { get; set; }
-    public string? PostalCode { get; set; }
-    public string? State { get; set; }
+    public string? City { get; set; } = JsonString(addressStructure.AddressCity);
+    public string? Country { get; set; } = JsonString(addressStructure.AddressCountry);
+    public string? Line { get; set; } = JsonString(addressStructure.AddressLine);
+    public string? Line1 { get; set; } = JsonString(addressStructure.AddressLine1);
+    public string? Line2 { get; set; } = JsonString(addressStructure.AddressLine2);
+    public string? Line3 { get; set; } = JsonString(addressStructure.AddressLine3);
+    public string? PostalCode { get; set; } = JsonString(addressStructure.AddressPostCode);
+    public string? State { get; set; } = JsonString(addressStructure.AddressState);
 
     public override string ToString() => $"{Line}, {City}, {State}, {PostalCode}";
 }

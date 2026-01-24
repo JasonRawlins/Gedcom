@@ -27,16 +27,10 @@ internal class SourceRecordEventJsonConverter : JsonConverter<SourceRecordEvent>
     }
 }
 
-public class SourceRecordEventJson : GedcomJson
+public class SourceRecordEventJson(SourceRecordEvent sourceRecordEvent) : GedcomJson
 {
-    public SourceRecordEventJson(SourceRecordEvent sourceRecordEvent)
-    {
-        DatePeriod = JsonString(sourceRecordEvent.DatePeriod);
-        SourceJurisdictionPlace = JsonString(sourceRecordEvent.SourceJurisdictionPlace);
-    }
-
-    public string? DatePeriod { get; set; }
-    public string? SourceJurisdictionPlace { get; set; }
+    public string? DatePeriod { get; set; } = JsonString(sourceRecordEvent.DatePeriod);
+    public string? SourceJurisdictionPlace { get; set; } = JsonString(sourceRecordEvent.SourceJurisdictionPlace);
 }
 
 #region SOURCE_RECORD (DATA) p. 27

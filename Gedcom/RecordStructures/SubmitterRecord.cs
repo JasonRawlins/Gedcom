@@ -33,28 +33,16 @@ internal class SubmitterJsonConverter : JsonConverter<SubmitterRecord>
     }
 }
 
-public class SubmitterJson : GedcomJson
+public class SubmitterJson(SubmitterRecord submitterRecord) : GedcomJson
 {
-    public SubmitterJson(SubmitterRecord submitterRecord)
-    {
-        Address = JsonRecord(new AddressJson(submitterRecord.AddressStructure));
-        AutomatedRecordId = JsonString(submitterRecord.AutomatedRecordId);
-        ChangeDate = JsonRecord(new GedcomDateJson(submitterRecord.ChangeDate));
-        LanguagePreferences = JsonList(submitterRecord.LanguagePreferences);
-        MultimediaLinks = JsonList(submitterRecord.MultimediaLinks.Select(ml => new MultimediaLinkJson(ml)).ToList());
-        Notes = JsonList(submitterRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
-        SubmitterName = JsonString(submitterRecord.SubmitterName);
-        SubmitterRegisteredReferenceNumber = JsonString(submitterRecord.SubmitterRegisteredRfn);
-    }
-
-    public AddressJson? Address { get; set; }
-    public string? AutomatedRecordId { get; set; }
-    public GedcomDateJson? ChangeDate { get; set; }
-    public List<string>? LanguagePreferences { get; set; }
-    public List<MultimediaLinkJson>? MultimediaLinks { get; set; }
-    public List<NoteJson>? Notes { get; set; }
-    public string? SubmitterName { get; set; }
-    public string? SubmitterRegisteredReferenceNumber { get; set; }
+    public AddressJson? Address { get; set; } = JsonRecord(new AddressJson(submitterRecord.AddressStructure));
+    public string? AutomatedRecordId { get; set; } = JsonString(submitterRecord.AutomatedRecordId);
+    public GedcomDateJson? ChangeDate { get; set; } = JsonRecord(new GedcomDateJson(submitterRecord.ChangeDate));
+    public List<string>? LanguagePreferences { get; set; } = JsonList(submitterRecord.LanguagePreferences);
+    public List<MultimediaLinkJson>? MultimediaLinks { get; set; } = JsonList(submitterRecord.MultimediaLinks.Select(ml => new MultimediaLinkJson(ml)).ToList());
+    public List<NoteJson>? Notes { get; set; } = JsonList(submitterRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public string? SubmitterName { get; set; } = JsonString(submitterRecord.SubmitterName);
+    public string? SubmitterRegisteredReferenceNumber { get; set; } = JsonString(submitterRecord.SubmitterRegisteredRfn);
 }
 
 #region SUBMITTER_RECORD p. 28-29

@@ -31,24 +31,14 @@ internal class LdsSpouseSealingJsonConverter : JsonConverter<LdsSpouseSealing>
     }
 }
 
-public class LdsSpouseSealingJson : GedcomJson
+public class LdsSpouseSealingJson(LdsSpouseSealing ldsSpouseSealing) : GedcomJson
 {
-    public LdsSpouseSealingJson(LdsSpouseSealing ldsSpouseSealing)
-    {
-        DateLdsOrdinance = JsonString(ldsSpouseSealing.DateLdsOrdinance);
-        LdsSpouseSealingDateStatus = JsonRecord(new LdsOrdinanceStatusJson(ldsSpouseSealing.LdsSpouseSealingDateStatus));
-        Notes = JsonList(ldsSpouseSealing.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
-        PlaceLivingOrdinance = JsonString(ldsSpouseSealing.PlaceLivingOrdinance);
-        SourceCitations = JsonList(ldsSpouseSealing.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
-        TempleCode = JsonString(ldsSpouseSealing.TempleCode);
-    }
-
-    public string? DateLdsOrdinance { get; set; }
-    public LdsOrdinanceStatusJson? LdsSpouseSealingDateStatus { get; set; }
-    public List<NoteJson>? Notes { get; set; }
-    public string? PlaceLivingOrdinance { get; set; }
-    public List<SourceCitationJson>? SourceCitations { get; set; }
-    public string? TempleCode { get; set; }
+    public string? DateLdsOrdinance { get; set; } = JsonString(ldsSpouseSealing.DateLdsOrdinance);
+    public LdsOrdinanceStatusJson? LdsSpouseSealingDateStatus { get; set; } = JsonRecord(new LdsOrdinanceStatusJson(ldsSpouseSealing.LdsSpouseSealingDateStatus));
+    public List<NoteJson>? Notes { get; set; } = JsonList(ldsSpouseSealing.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public string? PlaceLivingOrdinance { get; set; } = JsonString(ldsSpouseSealing.PlaceLivingOrdinance);
+    public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(ldsSpouseSealing.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
+    public string? TempleCode { get; set; } = JsonString(ldsSpouseSealing.TempleCode);
 }
 
 #region LDS_SPOUSE_SEALING p. 36

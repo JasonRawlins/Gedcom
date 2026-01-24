@@ -197,26 +197,15 @@ internal class GedcomDateJsonConverter : JsonConverter<GedcomDate>
     }
 }
 
-public class GedcomDateJson : GedcomJson, IComparable<GedcomDateJson>
+public class GedcomDateJson(GedcomDate gedcomDate) : GedcomJson, IComparable<GedcomDateJson>
 {
-    public GedcomDateJson(GedcomDate gedcomDate)
-    {
-        DateValue = gedcomDate.DateValue;
-        Day = gedcomDate.Day;
-        DayMonthYear = gedcomDate.DayMonthYear;
-        Month = gedcomDate.Month;
-        MonthName = gedcomDate.MonthName;
-        Time = gedcomDate.TimeValue;
-        Year = gedcomDate.Year;
-    }
-
-    public string DateValue { get; set; } // The raw, un-parsed data value.
-    public int? Day { get; set; }
-    public string? DayMonthYear { get; set; }
-    public int? Month { get; set; }
-    public string? MonthName { get; set; } = "";
-    public string? Time { get; set; }
-    public int? Year { get; set; }
+    public string DateValue { get; set; } = gedcomDate.DateValue;
+    public int? Day { get; set; } = gedcomDate.Day;
+    public string? DayMonthYear { get; set; } = gedcomDate.DayMonthYear;
+    public int? Month { get; set; } = gedcomDate.Month;
+    public string? MonthName { get; set; } = gedcomDate.MonthName;
+    public string? Time { get; set; } = gedcomDate.TimeValue;
+    public int? Year { get; set; } = gedcomDate.Year;
 
     public int CompareTo(GedcomDateJson? other)
     {

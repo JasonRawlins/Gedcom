@@ -30,22 +30,13 @@ internal class ChildToFamilyLinkJsonConverter : JsonConverter<ChildToFamilyLink>
     }
 }
 
-public class ChildToFamilyLinkJson : GedcomJson
+public class ChildToFamilyLinkJson(ChildToFamilyLink childToFamilyLink) : GedcomJson
 {
-    public ChildToFamilyLinkJson(ChildToFamilyLink childToFamilyLink)
-    {
-        AdoptedByWhichParent = JsonString(childToFamilyLink.AdoptedByWhichParent);
-        ChildLinkageStatus = JsonString(childToFamilyLink.ChildLinkageStatus);
-        Notes = JsonList(childToFamilyLink.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
-        PedigreeLinkageType = JsonString(childToFamilyLink.PedigreeLinkageType);
-        Xref = JsonString(childToFamilyLink.Xref);
-    }
-
-    public string? AdoptedByWhichParent { get; set; }
-    public string? ChildLinkageStatus { get; set; }
-    public List<NoteJson>? Notes { get; set; }
-    public string? PedigreeLinkageType { get; set; }
-    public string? Xref { get; set; }
+    public string? AdoptedByWhichParent { get; set; } = JsonString(childToFamilyLink.AdoptedByWhichParent);
+    public string? ChildLinkageStatus { get; set; } = JsonString(childToFamilyLink.ChildLinkageStatus);
+    public List<NoteJson>? Notes { get; set; } = JsonList(childToFamilyLink.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public string? PedigreeLinkageType { get; set; } = JsonString(childToFamilyLink.PedigreeLinkageType);
+    public string? Xref { get; set; } = JsonString(childToFamilyLink.Xref);
 }
 
 #region CHILD_TO_FAMILY_LINK p. 31-32

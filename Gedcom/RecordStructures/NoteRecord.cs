@@ -28,18 +28,11 @@ internal class NoteRecordJsonConverter : JsonConverter<NoteRecord>
     }
 }
 
-public class NoteRecordJson : GedcomJson
+public class NoteRecordJson(NoteRecord noteRecord) : GedcomJson
 {
-    public NoteRecordJson(NoteRecord noteRecord)
-    {
-        AutomatedRecordId = JsonString(noteRecord.AutomatedRecordId);
-        ChangeDate = JsonRecord(new ChangeDateJson(noteRecord.ChangeDate));
-        UserReferenceNumber = JsonRecord(new UserReferenceNumberJson(noteRecord.UserReferenceNumber));
-    }
-
-    public string? AutomatedRecordId { get; set; }
-    public ChangeDateJson? ChangeDate { get; set; }
-    public UserReferenceNumberJson? UserReferenceNumber { get; set; }
+    public string? AutomatedRecordId { get; set; } = JsonString(noteRecord.AutomatedRecordId);
+    public ChangeDateJson? ChangeDate { get; set; } = JsonRecord(new ChangeDateJson(noteRecord.ChangeDate));
+    public UserReferenceNumberJson? UserReferenceNumber { get; set; } = JsonRecord(new UserReferenceNumberJson(noteRecord.UserReferenceNumber));
 }
 
 #region NOTE_RECORD (NOTE) p. 27
