@@ -46,7 +46,8 @@ public class RepositoryJson : GedcomJson
         CallNumber = JsonRecord(new CallNumberJson(repositoryRecord.CallNumber));
         ChangeDate = JsonRecord(new ChangeDateJson(repositoryRecord.ChangeDate));
         Emails = JsonList(repositoryRecord.AddressEmails);
-        FaxNumbers = JsonList(repositoryRecord.AddressFaxNumbers);       
+        FaxNumbers = JsonList(repositoryRecord.AddressFaxNumbers);
+        IsEmpty = repositoryRecord.IsEmpty;
         Name = JsonString(repositoryRecord.Name);
         Note = JsonString(repositoryRecord.NoteStructures.FirstOrDefault()?.Text ?? "");
         PhoneNumbers = JsonList(repositoryRecord.PhoneNumbers);
