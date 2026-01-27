@@ -1,17 +1,25 @@
 Current
 -------
-Write GedcomDate tests.
+Ensure CLI still works
+	Excel
+	Text
+	Html
+	Json
+Ensure tests still work
+	GedcomDate tests.
+Define minimum tests
+Documentation
+	CLI
+	Gedcom.NET
 
 
 
 Backlog
 -------
-Fix the Gedcom.Gedcom namespace issue.
+
+Fix the Core.Gedcom Gedcom namespace issue.
 Make a Visual Studio addon that formats .ged files. There might already be one.
 Configure GitHub CI, test runner, and GitHub releases. 
-README
-	CLI
-	Export formats
 Testing
 	Research most common mistakes in trees and create test cases for it. (e.g. duplicate children, impossible dates)
 
