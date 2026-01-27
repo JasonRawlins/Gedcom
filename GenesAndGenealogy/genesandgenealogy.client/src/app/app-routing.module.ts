@@ -2,12 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, RouterOutlet, Routes } from '@angular/router';
 import { FactsComponent } from './facts/facts.component';
 import { GalleryComponent } from './gallery/gallery.component';
+import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RepositoryInformationComponent } from './repository-information/repository-information.component';
 import { SourceInformationComponent } from './source-information/source-information.component';
 import { TreeComponent } from './tree/tree.component';
 
 const routes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'tree', component: TreeComponent },
   {
     path: 'profile/:individualXref',

@@ -1,9 +1,15 @@
-<div class="family-tree-icon">
-  <a routerLink="/tree">
-    <h2 *ngIf="treeModel">
-      <img src="/images/tree-icon.jpg" alt="A picture of a tree" /> {{treeModel.name}} - {{treeModel.note}}
-    </h2>
-  </a> 
+<div class="page">
+  <div class="content">
+    <div class="family-tree-icon">
+      <a routerLink="/">
+        <h2 *ngIf="treeModel">
+          <img src="/images/tree-icon.jpg" alt="A picture of a tree" /> {{treeModel.name}} - {{treeModel.note}}
+        </h2>
+      </a>
+    </div>
+
+    <router-outlet></router-outlet>
+  </div>
 </div>
 
-<router-outlet></router-outlet>
+

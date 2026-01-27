@@ -15,6 +15,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { SourceInformationComponent } from './source-information/source-information.component';
 import { RepositoryInformationComponent } from './repository-information/repository-information.component';
 import { GalleryComponent } from './gallery/gallery.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { GalleryComponent } from './gallery/gallery.component';
     ProfileComponent,
     SourceInformationComponent,
     RepositoryInformationComponent,
-    GalleryComponent
+    GalleryComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

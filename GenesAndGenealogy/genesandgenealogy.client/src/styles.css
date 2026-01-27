@@ -52,15 +52,34 @@ img.rounded {
   flex: 1;
 }
 
-.repository-source-information {
-    display: flex;
-    justify-content: center;
+.centered-content {
+  display: flex;
+  justify-content: center;
 }
 
-  .repository-source-information .content {
+  .centered-content .repository-and-source-information {
     width: 500px;
   }
 
-.repository-source-information .field {
+.home {
+  margin: 0 auto;
+  width: 800px;
+}
+
+.page {
+  margin: 0 auto;
+  width: 1000px;
+}
+
+.content {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.demo-person-link:visited {
+  color: inherit;
+}
+
+.repository-and-source-information .field {
   margin-bottom: 10px;
 }
