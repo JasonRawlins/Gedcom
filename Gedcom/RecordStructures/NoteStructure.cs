@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Gedcom.Core;
 using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
@@ -50,8 +51,7 @@ internal class NoteJsonConverter : JsonConverter<NoteStructure>
 
     public override void WriteJson(JsonWriter writer, NoteStructure? noteStructure, JsonSerializer serializer)
     {
-        if (noteStructure == null) throw new ArgumentNullException(nameof(noteStructure));
-
+        ArgumentNullException.ThrowIfNull(noteStructure);
         serializer.Serialize(writer, new NoteJson(noteStructure));
     }
 }
@@ -59,8 +59,8 @@ internal class NoteJsonConverter : JsonConverter<NoteStructure>
 public class NoteJson(NoteStructure noteStructure) : GedcomJson
 {
     public string Text { get; set; } = noteStructure.Text;
-    private const int TextLenthLimit = 32;
-    public override string ToString() => Text.Length <= TextLenthLimit ? Text : Text.Substring(TextLenthLimit); 
+    private const int TextLengthLimit = 32;
+    public override string ToString() => Text.Length <= TextLengthLimit ? Text : Text.Substring(TextLengthLimit); 
 }
 
 #region NOTE_STRUCTURE p. 37

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -21,8 +22,7 @@ internal class HeaderDataJsonConverter : JsonConverter<HeaderData>
 
     public override void WriteJson(JsonWriter writer, HeaderData? headerData, JsonSerializer serializer)
     {
-        if (headerData == null) throw new ArgumentNullException(nameof(headerData));
-
+        ArgumentNullException.ThrowIfNull(headerData);
         serializer.Serialize(writer, new HeaderDataJson(headerData));
     }
 }

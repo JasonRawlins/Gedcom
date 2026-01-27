@@ -1,12 +1,10 @@
-﻿using Gedcom.CLI;
-using Gedcom.Core;
-using Gedcom.RecordStructures;
+﻿using Gedcom.Core;
 
 namespace Gedcom.GedcomWriters;
 
 public class GedcomWriter
 {
-    public static IGedcomWriter Create(Gedcom gedcom, string format)
+    public static IGedcomWriter Create(Core.Gedcom gedcom, string format)
     {
         return format switch
         {

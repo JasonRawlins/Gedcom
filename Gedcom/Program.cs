@@ -1,6 +1,7 @@
 ﻿using CommandLine;
 using Gedcom;
 using Gedcom.CLI;
+using Gedcom.Core;
 using Gedcom.GedcomWriters;
 
 public class Program
@@ -12,11 +13,11 @@ public class Program
             .WithNotParsed(HandleParseError);
     }
 
-    private static Gedcom.Gedcom CreateGedcom(string gedFullName)
+    private static Gedcom.Core.Gedcom CreateGedcom(string gedFullName)
     {
         var gedFileLines = File.ReadAllLines(gedFullName);
         var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
-        return new Gedcom.Gedcom(gedcomLines);
+        return new Gedcom.Core.Gedcom(gedcomLines);
     }
 
     private static void HandleParseError(IEnumerable<Error> errors)

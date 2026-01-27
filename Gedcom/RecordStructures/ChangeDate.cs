@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -21,8 +22,7 @@ internal class ChangeDateJsonConverter : JsonConverter<ChangeDate>
 
     public override void WriteJson(JsonWriter writer, ChangeDate? changeDate, JsonSerializer serializer)
     {
-        if (changeDate == null) throw new ArgumentNullException(nameof(changeDate));
-
+        ArgumentNullException.ThrowIfNull(changeDate);
         serializer.Serialize(writer, new ChangeDateJson(changeDate));
     }
 }

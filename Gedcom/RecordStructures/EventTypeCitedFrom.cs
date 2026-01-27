@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -20,8 +21,7 @@ internal class EventTypeCitedFromJsonConverter : JsonConverter<EventTypeCitedFro
 
     public override void WriteJson(JsonWriter writer, EventTypeCitedFrom? eventTypeCitedFrom, JsonSerializer serializer)
     {
-        if (eventTypeCitedFrom == null) throw new ArgumentNullException(nameof(eventTypeCitedFrom));
-
+        ArgumentNullException.ThrowIfNull(eventTypeCitedFrom);
         serializer.Serialize(writer, new EventTypeCitedFromJson(eventTypeCitedFrom));
     }
 }

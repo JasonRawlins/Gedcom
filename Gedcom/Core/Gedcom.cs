@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Gedcom.RecordStructures;
 
-namespace Gedcom;
+namespace Gedcom.Core;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(GedcomJsonConverter))]
@@ -79,7 +79,7 @@ public class Gedcom : RecordStructureBase
     // Submitter (SUBM) TODO:
     public SubmitterRecord GetSubmitterRecord(string xref) => GetRecord<SubmitterRecord>(xref);
 
-    private T GetRecord<T>(string xref) where T : RecordStructureBase, new() => 
+    private T GetRecord<T>(string xref) where T : RecordStructureBase, new() =>
         CreateRecord<T>(Single(r => r.Value.Equals(xref) && r.Level == 0 && r.Tag != Tag.Header && r.Tag != Tag.Trailer));
 
     private List<T> GetRecords<T>(string tag, string query = "") where T : RecordStructureBase, new()
@@ -88,10 +88,10 @@ public class Gedcom : RecordStructureBase
             r.Tag.Equals(tag)
             && r.IsQueryMatch(query));
 
-        return records.Select(CreateRecord<T>).ToList();
+        return [.. records.Select(CreateRecord<T>)];
     }
 
-    private T CreateRecord<T>(Record record) where T : RecordStructureBase, new()
+    private static T CreateRecord<T>(Record record) where T : RecordStructureBase, new()
     {
         var dynamic = new T();
         dynamic.SetRecord(record);
@@ -120,7 +120,7 @@ public class Gedcom : RecordStructureBase
 
         gedcomLinesAtThisLevel.Add(currentGedcomLines);
 
-        return gedcomLinesAtThisLevel.Skip(1).ToList();
+        return [.. gedcomLinesAtThisLevel.Skip(1)];
     }
 
     public override string ToString() => $"{Header.Source.Tree.Name} ({Header.Source.Tree.AutomatedRecordId})";
@@ -176,7 +176,7 @@ Explanation of List<List<GedcomLine>> GetGedcomLinesForLevel(int level, List<Ged
 Note: I will be indenting the lines by level in this example for readability, but no leading whitespace 
 is allowed in a valid ged file.
 
-A Gedcom file is made up of a series of lines that each have a level. Here is a small ged file
+A Gedcom file is made up of a series of lines that each have a level. Here is a small gedcom file
 representing two individuals (INDI):
 
 // gedcom lines

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -25,8 +26,7 @@ internal class LdsIndividualOrdinanceJsonConverter : JsonConverter<LdsIndividual
 
     public override void WriteJson(JsonWriter writer, LdsIndividualOrdinance? ldsIndividualOrdinance, JsonSerializer serializer)
     {
-        if (ldsIndividualOrdinance  == null) throw new ArgumentNullException(nameof(ldsIndividualOrdinance));
-
+        ArgumentNullException.ThrowIfNull(ldsIndividualOrdinance);
         serializer.Serialize(writer, new LdsIndividualOrdinanceJson(ldsIndividualOrdinance));
     }
 }

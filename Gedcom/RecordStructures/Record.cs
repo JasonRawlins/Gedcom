@@ -22,7 +22,7 @@ public class Record
 
         if (gedcomLines.Count > 1)
         {
-            var nextLevelGedcomLines = Gedcom.GetGedcomLinesForLevel(Level + 1, gedcomLines.Skip(1).ToList());
+            var nextLevelGedcomLines = Core.Gedcom.GetGedcomLinesForLevel(Level + 1, [.. gedcomLines.Skip(1)]);
             foreach (var nextLevelGedcomLine in nextLevelGedcomLines)
             {
                 Records.Add(new Record(nextLevelGedcomLine));
@@ -37,7 +37,7 @@ public class Record
             return true;
         }
 
-        if (Value.ToUpper().Contains(query.ToUpper()))
+        if (Value.Contains(query, StringComparison.CurrentCultureIgnoreCase))
         {
             return true;
         }
@@ -60,8 +60,7 @@ public class Record
         {
             var gedcomLines = new List<GedcomLine>
             {
-                new GedcomLine
-                {
+                new() {
                     Level = -1,
                     Tag = C.Empty,
                     Value = ""

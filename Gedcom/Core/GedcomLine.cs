@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Gedcom;
+namespace Gedcom.Core;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
 public class GedcomLine

@@ -4,9 +4,9 @@ namespace Gedcom.GedcomWriters;
 
 public class ExcelGedcomWriter : IGedcomWriter
 {
-    private Gedcom Gedcom { get; set; }
+    private Core.Gedcom Gedcom { get; set; }
 
-    public ExcelGedcomWriter(Gedcom gedcom)
+    public ExcelGedcomWriter(Core.Gedcom gedcom)
     {
         Gedcom = gedcom;
         ExcelPackage.License.SetNonCommercialOrganization("Gedcom.NET");
@@ -57,8 +57,6 @@ public class ExcelGedcomWriter : IGedcomWriter
         var individualRecords = Gedcom.GetIndividualRecords(query);
         var individualListItems = individualRecords.Select(ir => new IndividualListItem(ir)).ToList();
 
-        // Hard-coding the path to the template file for development.
-        // Once the template.xlsx is complete, this will come from project resources.
         using var userTemplatePackage = new ExcelPackage(new MemoryStream(Properties.Resources.GedcomXlsxTemplate));
         var templateSheet = userTemplatePackage.Workbook.Worksheets["Template"];
         using var excelPackage = new ExcelPackage();

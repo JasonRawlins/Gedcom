@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -26,8 +27,7 @@ internal class SourceCitationJsonConverter : JsonConverter<SourceCitation>
 
     public override void WriteJson(JsonWriter writer, SourceCitation? sourceCitation, JsonSerializer serializer)
     {
-        if (sourceCitation == null) throw new ArgumentNullException(nameof(sourceCitation));
-
+        ArgumentNullException.ThrowIfNull(sourceCitation);
         serializer.Serialize(writer, new SourceCitationJson(sourceCitation));
     }
 }

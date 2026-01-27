@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -25,8 +26,7 @@ internal class LdsSpouseSealingJsonConverter : JsonConverter<LdsSpouseSealing>
 
     public override void WriteJson(JsonWriter writer, LdsSpouseSealing? ldsSpouseSealing, JsonSerializer serializer)
     {
-        if (ldsSpouseSealing  == null) throw new ArgumentNullException(nameof(ldsSpouseSealing));
-
+        ArgumentNullException.ThrowIfNull(ldsSpouseSealing);
         serializer.Serialize(writer, new LdsSpouseSealingJson(ldsSpouseSealing));
     }
 }

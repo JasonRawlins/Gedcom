@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -20,8 +21,7 @@ internal class CallNumberJsonConverter : JsonConverter<CallNumber>
 
     public override void WriteJson(JsonWriter writer, CallNumber? callNumber, JsonSerializer serializer)
     {
-        if (callNumber == null) throw new ArgumentNullException(nameof(callNumber));
-
+        ArgumentNullException.ThrowIfNull(callNumber);
         serializer.Serialize(writer, new CallNumberJson(callNumber));
     }
 }

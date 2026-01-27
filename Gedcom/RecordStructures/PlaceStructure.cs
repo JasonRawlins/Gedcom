@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -25,8 +26,7 @@ internal class PlaceJsonConverter : JsonConverter<PlaceStructure>
 
     public override void WriteJson(JsonWriter writer, PlaceStructure? placeStructure, JsonSerializer serializer)
     {
-        if (placeStructure == null) throw new ArgumentNullException(nameof(placeStructure));
-
+        ArgumentNullException.ThrowIfNull(placeStructure);
         serializer.Serialize(writer, new PlaceJson(placeStructure));
     }
 }

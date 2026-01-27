@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -23,8 +24,7 @@ internal class MultimediaLinkJsonConverter : JsonConverter<MultimediaLink>
 
     public override void WriteJson(JsonWriter writer, MultimediaLink? multimediaLink, JsonSerializer serializer)
     {
-        if (multimediaLink == null) throw new ArgumentNullException(nameof(multimediaLink));
-
+        ArgumentNullException.ThrowIfNull(multimediaLink);
         serializer.Serialize(writer, new MultimediaLinkJson(multimediaLink));
     }
 }

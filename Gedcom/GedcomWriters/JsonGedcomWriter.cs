@@ -1,11 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 using System.Text;
 
 namespace Gedcom.GedcomWriters;
 
-public class JsonGedcomWriter(Gedcom gedcom) : IGedcomWriter
+public class JsonGedcomWriter(Core.Gedcom gedcom) : IGedcomWriter
 {
-    private Gedcom Gedcom { get; set; } = gedcom;
+    private Core.Gedcom Gedcom { get; set; } = gedcom;
 
     public string GetIndividual(string xref)
     {

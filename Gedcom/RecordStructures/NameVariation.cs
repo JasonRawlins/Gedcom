@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -27,8 +28,7 @@ internal class NameVariationJsonConverter : JsonConverter<NameVariation>
 
     public override void WriteJson(JsonWriter writer, NameVariation? nameVariation, JsonSerializer serializer)
     {
-        if (nameVariation == null) throw new ArgumentNullException(nameof(nameVariation));
-
+        ArgumentNullException.ThrowIfNull(nameVariation);
         serializer.Serialize(writer, new NameVariationJson(nameVariation));
     }
 }

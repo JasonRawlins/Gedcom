@@ -13,7 +13,7 @@ namespace GenesAndGenealogy.Server.Controllers
     {
         private readonly ILogger<GedcomController> _logger;
         private FamilyManager FamilyManager { get; }
-        private Gedcom.Gedcom Gedcom { get; }
+        private Gedcom.Core.Gedcom Gedcom { get; }
         private HeaderTreeJson HeaderTree => new(Gedcom.Header.Source.Tree);
 
         public GedcomController(ILogger<GedcomController> logger)
@@ -22,7 +22,7 @@ namespace GenesAndGenealogy.Server.Controllers
 
             var gedFileLines = Encoding.UTF8.GetString(Properties.Resources.GedcomNetTestTree).Split("\r\n");
             var gedcomLines = gedFileLines.Where(l => !string.IsNullOrEmpty(l)).Select(GedcomLine.Parse).ToList();
-            Gedcom = new Gedcom.Gedcom(gedcomLines);
+            Gedcom = new Gedcom.Core.Gedcom(gedcomLines);
             FamilyManager = new FamilyManager(Gedcom);
         }
 

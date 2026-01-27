@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -22,8 +23,7 @@ internal class AssociationJsonConverter : JsonConverter<AssociationStructure>
 
     public override void WriteJson(JsonWriter writer, AssociationStructure? associationStructure, JsonSerializer serializer)
     {
-        if (associationStructure == null) throw new ArgumentNullException(nameof(associationStructure));
-
+        ArgumentNullException.ThrowIfNull(associationStructure);
         serializer.Serialize(writer, new AssociationJson(associationStructure));
     }
 }

@@ -23,8 +23,7 @@ internal class FormJsonConverter : JsonConverter<FormRecord>
 
     public override void WriteJson(JsonWriter writer, FormRecord? formRecord, JsonSerializer serializer)
     {
-        if (formRecord == null) throw new ArgumentNullException(nameof(formRecord));
-
+        ArgumentNullException.ThrowIfNull(formRecord);
         serializer.Serialize(writer, new FormJson(formRecord));
     }
 }

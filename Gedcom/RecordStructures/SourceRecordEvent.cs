@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -21,8 +22,7 @@ internal class SourceRecordEventJsonConverter : JsonConverter<SourceRecordEvent>
 
     public override void WriteJson(JsonWriter writer, SourceRecordEvent? sourceRecordEvent, JsonSerializer serializer)
     {
-        if (sourceRecordEvent == null) throw new ArgumentNullException(nameof(sourceRecordEvent));
-
+        ArgumentNullException.ThrowIfNull(sourceRecordEvent);
         serializer.Serialize(writer, new SourceRecordEventJson(sourceRecordEvent));
     }
 }

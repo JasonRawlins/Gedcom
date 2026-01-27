@@ -17,7 +17,7 @@ public class MultimediaRecord : RecordStructureBase
     public string Description => GetValue(ExtensionTag.Description);
     public string DescriptiveTitle => GetValue(Tag.Title);
     public FileRecord FileRecord => First<FileRecord>(Tag.File);
-    public List<string> MultimediaFileReferenceNumbers => List(r => r.Tag.Equals(Tag.File)).Select(r => r.Value).ToList();
+    public List<string> MultimediaFileReferenceNumbers => [.. List(r => r.Tag.Equals(Tag.File)).Select(r => r.Value)];
     public MultimediaFormat MultimediaFormat => First<MultimediaFormat>(Tag.Format);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
     public string ObjectId => GetValue(ExtensionTag.ObjectId);
@@ -35,8 +35,7 @@ internal class MultimediaJsonConverter : JsonConverter<MultimediaRecord>
 
     public override void WriteJson(JsonWriter writer, MultimediaRecord? multimediaRecord, JsonSerializer serializer)
     {
-        if (multimediaRecord == null) throw new ArgumentNullException(nameof(multimediaRecord));
-
+        ArgumentNullException.ThrowIfNull(multimediaRecord);
         serializer.Serialize(writer, new MultimediaJson(multimediaRecord));
     }
 }

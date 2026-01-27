@@ -1,12 +1,11 @@
-﻿using Gedcom.CLI;
-using Gedcom.RecordStructures;
+﻿using Gedcom.RecordStructures;
 using System.Text;
 
 namespace Gedcom.GedcomWriters;
 
-public class HtmlGedcomWriter(Gedcom gedcom) : IGedcomWriter
+public class HtmlGedcomWriter(Core.Gedcom gedcom) : IGedcomWriter
 {
-    private Gedcom Gedcom { get; set; } = gedcom;
+    private Core.Gedcom Gedcom { get; set; } = gedcom;
 
     public string GetIndividual(string xref)
     {

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -29,8 +30,7 @@ internal class PersonalNameJsonConverter : JsonConverter<PersonalNameStructure>
 
     public override void WriteJson(JsonWriter writer, PersonalNameStructure? personalNameStructure, JsonSerializer serializer)
     {
-        if (personalNameStructure == null) throw new ArgumentNullException(nameof(personalNameStructure));
-
+        ArgumentNullException.ThrowIfNull(personalNameStructure);
         serializer.Serialize(writer, new PersonalNameJson(personalNameStructure));
     }
 }

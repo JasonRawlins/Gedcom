@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -24,8 +25,7 @@ internal class ChildToFamilyLinkJsonConverter : JsonConverter<ChildToFamilyLink>
 
     public override void WriteJson(JsonWriter writer, ChildToFamilyLink? childToFamilyLink, JsonSerializer serializer)
     {
-        if (childToFamilyLink == null) throw new ArgumentNullException(nameof(childToFamilyLink));
-
+        ArgumentNullException.ThrowIfNull(childToFamilyLink);
         serializer.Serialize(writer, new ChildToFamilyLinkJson(childToFamilyLink));
     }
 }

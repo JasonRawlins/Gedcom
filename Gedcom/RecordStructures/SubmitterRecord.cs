@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -12,7 +13,7 @@ public class SubmitterRecord : RecordStructureBase
     public AddressStructure AddressStructure => First<AddressStructure>(Tag.Address);
     public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
     public GedcomDate ChangeDate => First<GedcomDate>(Tag.Change);
-    public List<string> LanguagePreferences => List(r => r.Tag.Equals(Tag.Language)).Select(r => r.Value).ToList();
+    public List<string> LanguagePreferences => [.. List(r => r.Tag.Equals(Tag.Language)).Select(r => r.Value)];
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Media);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
     public string SubmitterName => GetValue(Tag.Name);
@@ -27,8 +28,7 @@ internal class SubmitterJsonConverter : JsonConverter<SubmitterRecord>
 
     public override void WriteJson(JsonWriter writer, SubmitterRecord? submitterRecord, JsonSerializer serializer)
     {
-        if (submitterRecord == null) throw new ArgumentNullException(nameof(submitterRecord));
-
+        ArgumentNullException.ThrowIfNull(submitterRecord);
         serializer.Serialize(writer, new SubmitterJson(submitterRecord));
     }
 }

@@ -7,7 +7,7 @@ namespace GedcomTests;
 [TestClass]
 public sealed class OptionsTests
 {
-    private static Gedcom.Gedcom Gedcom { get; set; }
+    private static Gedcom.Core.Gedcom Gedcom { get; set; }
 
     static OptionsTests()
     {

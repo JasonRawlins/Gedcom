@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -20,8 +21,7 @@ internal class CharacterSetJsonConverter : JsonConverter<CharacterSet>
 
     public override void WriteJson(JsonWriter writer, CharacterSet? characterSet, JsonSerializer serializer)
     {
-        if (characterSet == null) throw new ArgumentNullException(nameof(characterSet));
-
+        ArgumentNullException.ThrowIfNull(characterSet);
         serializer.Serialize(writer, new CharacterSetJson(characterSet));
     }
 }

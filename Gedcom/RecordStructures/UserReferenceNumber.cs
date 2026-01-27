@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -23,8 +24,7 @@ internal class UserReferenceNumberJsonConverter : JsonConverter<UserReferenceNum
 
     public override void WriteJson(JsonWriter writer, UserReferenceNumber? userReferenceNumber, JsonSerializer serializer)
     {
-        if (userReferenceNumber == null) throw new ArgumentNullException(nameof(userReferenceNumber));
-
+        ArgumentNullException.ThrowIfNull(userReferenceNumber);
         serializer.Serialize(writer, new UserReferenceNumberJson(userReferenceNumber));
     }
 }

@@ -1,4 +1,4 @@
-﻿using Gedcom;
+﻿using Gedcom.Core;
 using System.Text;
 
 namespace GedcomTests;
@@ -11,11 +11,11 @@ public class TestUtilities
     public static readonly string JsonFullName = Path.Combine(BaseDirectory, "TestOutput", "GedcomNET.json");
     public static readonly string TextFullName = Path.Combine(BaseDirectory, "TestOutput", "GedcomNET.txt");
 
-    public static Gedcom.Gedcom CreateGedcom()
+    public static Gedcom.Core.Gedcom CreateGedcom()
     {
         var gedFileLines = Encoding.UTF8.GetString(Properties.Resources.GedcomNetTestTree).Split('\n');
         var gedcomLines = gedFileLines.Where(l => !string.IsNullOrEmpty(l)).Select(GedcomLine.Parse).ToList();
-        return new Gedcom.Gedcom(gedcomLines);
+        return new Gedcom.Core.Gedcom(gedcomLines);
     }
 
     public static string GetImageBase64String()

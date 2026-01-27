@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -12,10 +13,10 @@ public class FamilyRecord : RecordStructureBase
     public string AdoptedByWhichParent => GetValue(Tag.Adoption);
     public string AutomatedRecordNumber => GetValue(Tag.RecordIdNumber);
     public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
-    public List<string> Children => List(r => r.Tag.Equals(Tag.Child)).Select(r => r.Value).ToList();
+    public List<string> Children => [.. List(r => r.Tag.Equals(Tag.Child)).Select(r => r.Value)];
     public string CountOfChildren => GetValue(Tag.ChildrenCount);
     public FamilyEventStructure Divorce => First<FamilyEventStructure>(Tag.Divorce);
-    public List<EventStructure> FamilyEventStructures => List(FamilyEventStructure.IsFamilyEventStructure).Select(r => new EventStructure(r)).ToList();
+    public List<EventStructure> FamilyEventStructures => [.. List(FamilyEventStructure.IsFamilyEventStructure).Select(r => new EventStructure(r))];
     public string Husband => GetValue(Tag.Husband);
     // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
     public FamilyEventStructure Marriage => First<FamilyEventStructure>(Tag.Marriage);
@@ -42,8 +43,7 @@ internal class FamilyJsonConverter : JsonConverter<FamilyRecord>
 
     public override void WriteJson(JsonWriter writer, FamilyRecord? familyRecord, JsonSerializer serializer)
     {
-        if (familyRecord == null) throw new ArgumentNullException(nameof(familyRecord));
-
+        ArgumentNullException.ThrowIfNull(familyRecord);
         serializer.Serialize(writer, new FamilyJson(familyRecord));
     }
 }

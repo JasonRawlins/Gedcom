@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -9,16 +10,16 @@ public class IndividualRecord : RecordStructureBase
     public IndividualRecord() { }
     public IndividualRecord(Record record) : base(record) { }
 
-    public List<string> Aliases => List(r => r.Tag.Equals(Tag.Alias)).Select(r => r.Value).ToList();
-    public List<string> AncestorInterests => List(r => r.Tag.Equals(Tag.AncesInterest)).Select(r => r.Value).ToList();
+    public List<string> Aliases => [.. List(r => r.Tag.Equals(Tag.Alias)).Select(r => r.Value)];
+    public List<string> AncestorInterests => [.. List(r => r.Tag.Equals(Tag.AncesInterest)).Select(r => r.Value)];
     public string AncestralFileNumber => GetValue(Tag.AncestralFileNumber);
     public List<AssociationStructure> AssociationStructures => List<AssociationStructure>(Tag.Associates);
     public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
     public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
     public List<ChildToFamilyLink> ChildToFamilyLinks => List<ChildToFamilyLink>(Tag.FamilyChild);
-    public List<string> DescendantInterests => List(r => r.Tag.Equals(Tag.DescendantInterest)).Select(r => r.Value).ToList();
+    public List<string> DescendantInterests => [.. List(r => r.Tag.Equals(Tag.DescendantInterest)).Select(r => r.Value)];
     //public List<IndividualAttributeStructure> IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
-    public List<EventStructure> IndividualEventStructures => List(IndividualEventStructure.IsIndividualEventStructure).Select(r => new EventStructure(r)).ToList();
+    public List<EventStructure> IndividualEventStructures => [.. List(IndividualEventStructure.IsIndividualEventStructure).Select(r => new EventStructure(r))];
     public List<LdsIndividualOrdinance> LdsIndividualOrdinances => List<LdsIndividualOrdinance>(Tag.Ordinance);
     public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
     public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
@@ -68,8 +69,7 @@ internal class IndividualJsonConverter : JsonConverter<IndividualRecord>
 
     public override void WriteJson(JsonWriter writer, IndividualRecord? individualRecord, JsonSerializer serializer)
     {
-        if (individualRecord == null) throw new ArgumentNullException(nameof(individualRecord));
-
+        ArgumentNullException.ThrowIfNull(individualRecord);
         serializer.Serialize(writer, new IndividualJson(individualRecord));
     }
 }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -20,8 +21,7 @@ internal class MapJsonConverter : JsonConverter<Map>
 
     public override void WriteJson(JsonWriter writer, Map? map, JsonSerializer serializer)
     {
-        if (map == null) throw new ArgumentNullException(nameof(map));
-
+        ArgumentNullException.ThrowIfNull(map);
         serializer.Serialize(writer, new MapJson(map));
     }
 }

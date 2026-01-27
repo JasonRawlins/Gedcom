@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -20,8 +21,7 @@ internal class MultimediaFileReferenceNumberJsonConverter : JsonConverter<Multim
 
     public override void WriteJson(JsonWriter writer, MultimediaFileReferenceNumber? multimediaFileReferenceNumber, JsonSerializer serializer)
     {
-        if (multimediaFileReferenceNumber == null) throw new ArgumentNullException(nameof(multimediaFileReferenceNumber));
-
+        ArgumentNullException.ThrowIfNull(multimediaFileReferenceNumber);
         serializer.Serialize(writer, new MultimediaFileReferenceNumberJson(multimediaFileReferenceNumber));
     }
 }

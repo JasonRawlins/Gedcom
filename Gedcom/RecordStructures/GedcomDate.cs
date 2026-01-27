@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Gedcom.Core;
 using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
@@ -7,7 +8,8 @@ namespace Gedcom.RecordStructures;
 
 // Many dates in a ged file are missing or oddly formatted, or you may only have
 // part of the date e.g. "Mar 1889" (only month and year), "1943" (only year)
-// It may also have arbitrary text in it such as "Spring 1980".
+// It may also have arbitrary text in it such as "Spring 1980". The problem of
+// parsing dates isn't simple so this is a naive implementation so far.
 [JsonConverter(typeof(GedcomDateJsonConverter))]
 public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
 {
@@ -156,7 +158,6 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
         }
 
         // The date cannot be parsed by DateTime.Parse() at this point and needs custom parsing.
-
         foreach (var datePart in dateParts)
         {
             if (IsMonth(datePart))
@@ -191,8 +192,7 @@ internal class GedcomDateJsonConverter : JsonConverter<GedcomDate>
 
     public override void WriteJson(JsonWriter writer, GedcomDate? gedcomDate, JsonSerializer serializer)
     {
-        if (gedcomDate == null) throw new ArgumentNullException(nameof(gedcomDate));
-
+        ArgumentNullException.ThrowIfNull(gedcomDate);
         serializer.Serialize(writer, new GedcomDateJson(gedcomDate));
     }
 }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Gedcom.Core;
+using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -27,8 +28,7 @@ internal class AddressJsonConverter : JsonConverter<AddressStructure>
 
     public override void WriteJson(JsonWriter writer, AddressStructure? addressStructure, JsonSerializer serializer)
     {
-        if (addressStructure == null) throw new ArgumentNullException(nameof(addressStructure));
-
+        ArgumentNullException.ThrowIfNull(addressStructure);
         serializer.Serialize(writer, new AddressJson(addressStructure));
     }
 }
