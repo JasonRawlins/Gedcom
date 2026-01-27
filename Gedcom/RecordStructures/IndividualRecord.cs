@@ -88,7 +88,7 @@ public class IndividualJson : GedcomJson
         ChildToFamilyLinks = JsonList(individualRecord.ChildToFamilyLinks.Select(ctfl => new ChildToFamilyLinkJson(ctfl)).ToList());
         Death = JsonRecord(new EventJson(individualRecord.Death));
         DescendantInterests = JsonList(individualRecord.DescendantInterests);
-        Events = JsonList(individualRecord.IndividualEventStructures.Select(ies => new EventJson(ies)).ToList());
+        Events = individualRecord.IndividualEventStructures.Select(ies => new EventJson(ies)).ToList();
         IsEmpty = individualRecord.IsEmpty;
         LdsIndividualOrdinances = JsonList(individualRecord.LdsIndividualOrdinances.Select(lio => new LdsIndividualOrdinanceJson(lio)).ToList());
         MultimediaLinks = JsonList(individualRecord.MultimediaLinks.Select(ml => new MultimediaLinkJson(ml)).ToList());

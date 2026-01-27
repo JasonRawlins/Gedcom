@@ -35,6 +35,10 @@ img.rounded {
     cursor: pointer;
   }
 
+  .card.short{
+      width: 400px;
+  }
+
 .icon-details {
   display: flex;
   align-items: center;

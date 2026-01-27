@@ -90,7 +90,11 @@ namespace GenesAndGenealogy.Server.Controllers
         }
 
         [HttpGet("individuals")]
-        public List<IndividualJson> GetIndividuals() => Gedcom.GetIndividualRecords().Select(ir => new IndividualJson(ir, HeaderTree.AutomatedRecordId)).ToList();
+        public List<IndividualJson> GetIndividuals()
+        {
+            var individuals = Gedcom.GetIndividualRecords().Select(ir => new IndividualJson(ir, HeaderTree.AutomatedRecordId)).ToList();
+            return [.. individuals.OrderBy(i => i.Birth).ThenBy(i => i.Surname)];
+        }
 
         [HttpGet("profile/{individualXref}")]
         public ProfileModel GetProfile(string individualXref)

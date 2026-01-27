@@ -1,5 +1,16 @@
 <ul>
   <li *ngFor="let individual of individuals">
-    <a [routerLink]="['/profile', individual.xref]">{{individual.fullName}}</a>
+    <div class="card short" [routerLink]="['/profile', individual.xref]">
+      <div class="icon-details">
+        <div class="icon">
+          <img *ngIf="individual.sex === 'M'" class="rounded" src="images/silhouette-male.jpg" alt="A silhouette of a man's portrait'" />
+          <img *ngIf="individual.sex === 'F'" class="rounded" src="images/silhouette-female.jpg" alt="A silhouette of a woman's portrait'" />
+        </div>
+        <div><strong>{{individual.fullName}}</strong></div>
+        <div>{{individual.birth.date.year}}-{{individual.death.date.year}}</div>
+      </div>
+    </div>
   </li>
 </ul>
+
+
