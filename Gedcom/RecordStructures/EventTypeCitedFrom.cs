@@ -29,6 +29,7 @@ internal class EventTypeCitedFromJsonConverter : JsonConverter<EventTypeCitedFro
 public class EventTypeCitedFromJson(EventTypeCitedFrom eventTypeCitedFrom) : GedcomJson
 {
     public string? RoleInEvent { get; set; } = JsonString(eventTypeCitedFrom.RoleInEvent);
+    public override string ToString() => $"{RoleInEvent}";
 }
 
 #region EVENT_TYPE_CITED_FROM p. 49

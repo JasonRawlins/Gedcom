@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
-using Gedcom.RecordStructures;
 
-namespace Gedcom;
+namespace Gedcom.RecordStructures;
 
 public class RecordStructureBase
 {

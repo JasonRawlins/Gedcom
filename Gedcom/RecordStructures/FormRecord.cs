@@ -34,6 +34,7 @@ public class FormJson(FormRecord formRecord) : GedcomJson
     public string? MediaType { get; set; } = JsonString(formRecord.MediaType);
     public string? SourceType { get; set; } = JsonString(formRecord.SourceType);
     public string? Type { get; set; } = JsonString(formRecord.Type);
+    public override string ToString() => $"{Type}";
 }
 
 #region MULTIMEDIA_FORMAT p. 26

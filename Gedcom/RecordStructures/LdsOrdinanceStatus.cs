@@ -28,6 +28,7 @@ public class LdsOrdinanceStatusJson(LdsOrdinanceStatus ldsOrdinanceStatus) : Ged
 {
     public string? ChangeDate { get; set; } = JsonString(ldsOrdinanceStatus.ChangeDate);
     public string? Status { get; set; } = JsonString(ldsOrdinanceStatus.Status);
+    public override string ToString() => $"{Status}";
 }
 
 #region STRUCTURE_NAME p. 

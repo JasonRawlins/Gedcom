@@ -33,6 +33,8 @@ public class NoteRecordJson(NoteRecord noteRecord) : GedcomJson
     public string? AutomatedRecordId { get; set; } = JsonString(noteRecord.AutomatedRecordId);
     public ChangeDateJson? ChangeDate { get; set; } = JsonRecord(new ChangeDateJson(noteRecord.ChangeDate));
     public UserReferenceNumberJson? UserReferenceNumber { get; set; } = JsonRecord(new UserReferenceNumberJson(noteRecord.UserReferenceNumber));
+
+    public override string ToString() => $"{AutomatedRecordId}";
 }
 
 #region NOTE_RECORD (NOTE) p. 27

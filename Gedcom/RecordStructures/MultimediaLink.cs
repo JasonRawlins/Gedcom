@@ -35,6 +35,7 @@ public class MultimediaLinkJson(MultimediaLink multimediaLink) : GedcomJson
     public List<MultimediaFileReferenceNumberJson>? MultimediaFileReferenceNumbers { get; set; } = JsonList(multimediaLink.MultimediaFileReferenceNumbers.Select(mfrn => new MultimediaFileReferenceNumberJson(mfrn)).ToList());
     public string? SourceMediaType { get; set; } = JsonString(multimediaLink.SourceMediaType);
     public string? Xref { get; set; } = multimediaLink.Xref;
+    public override string ToString() => $"{DescriptiveTitle}";
 }
 
 #region MULTIMEDIA_LINK p. 37

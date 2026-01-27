@@ -33,6 +33,8 @@ public class SourceDataJson(SourceRecordData sourceRecordData) : GedcomJson
     public List<SourceRecordEventJson>? EventsRecorded { get; set; } = JsonList(sourceRecordData.RecordEvents.Select(re => new SourceRecordEventJson(re)).ToList());
     public List<NoteJson>? Notes { get; set; } = JsonList(sourceRecordData.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
     public string? ResponsibleAgency { get; set; } = JsonString(sourceRecordData.ResponsibleAgency);
+
+    public override string ToString() => $"{ResponsibleAgency}";
 }
 
 #region SOURCE_RECORD (DATA) p. 27

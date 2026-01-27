@@ -31,6 +31,7 @@ public class HeaderGedcomJson(HeaderGedcom gedc) : GedcomJson
 {
     public string? GedcomForm { get; set; } = JsonString(gedc.GedcomForm);
     public string? VersionNumber { get; set; } = JsonString(gedc.VersionNumber);
+    public override string ToString() => $"{VersionNumber}";
 }
 
 #region STRUCTURE_NAME p. 23

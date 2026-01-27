@@ -29,6 +29,7 @@ internal class CallNumberJsonConverter : JsonConverter<CallNumber>
 public class CallNumberJson(CallNumber callNumber) : GedcomJson
 {
     public string? SourceMediaType { get; set; } = JsonString(callNumber.SourceMediaType);
+    public override string ToString() => $"{SourceMediaType}";
 }
 
 #region CALL_NUMBER p. 40

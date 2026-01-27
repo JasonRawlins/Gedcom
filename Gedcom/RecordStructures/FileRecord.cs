@@ -31,6 +31,7 @@ public class FileJson(FileRecord fileRecord) : GedcomJson
 {
     public FormJson? Form { get; set; } = JsonRecord(new FormJson(fileRecord.FormRecord));
     public string? Title { get; set; } = JsonString(fileRecord.Title);
+    public override string ToString() => $"{Title}";
 }
 
 #region MULTIMEDIA_FILE_REFN p. 26

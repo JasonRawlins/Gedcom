@@ -42,6 +42,8 @@ public class NameVariationJson(NameVariation nameVariation) : GedcomJson
     public string? Surname { get; set; } = JsonString(nameVariation.Type);
     public string? SurnamePrefix { get; set; } = JsonString(nameVariation.Type);
     public string? Type { get; set; } = JsonString(nameVariation.Type);
+
+    public override string ToString() => $"{Given} {Surname}";
 }
 
 #region NAME_PHONETIC_VARIATION (FONE) and NAME_ROMANIZED_VARIATION (ROMN) p. 38

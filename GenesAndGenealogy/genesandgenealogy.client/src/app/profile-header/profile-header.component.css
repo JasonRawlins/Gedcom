@@ -25,3 +25,14 @@
     margin: 0;
     padding: 0;
   }
+
+.ancestry-logo {
+    height: 20px;
+}
+
+.ancestry-link {
+  padding-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* space between image and link */
+}

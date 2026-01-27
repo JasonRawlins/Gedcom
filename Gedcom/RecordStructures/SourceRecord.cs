@@ -84,6 +84,8 @@ public class SourceJson : GedcomJson, IComparable<SourceJson>
 
         return other.DescriptiveTitle!.CompareTo(other.DescriptiveTitle);
     }
+
+    public override string ToString() => $"{DescriptiveTitle}";
 }
 
 #region SOURCE_RECORD p. 27-28

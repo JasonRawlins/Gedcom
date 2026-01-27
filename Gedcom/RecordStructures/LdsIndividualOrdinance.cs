@@ -39,6 +39,7 @@ public class LdsIndividualOrdinanceJson(LdsIndividualOrdinance ldsIndividualOrdi
     public string? PlaceLivingOrdinance { get; set; } = JsonString(ldsIndividualOrdinance.PlaceLivingOrdinance);
     public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(ldsIndividualOrdinance.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
     public string? TempleCode { get; set; } = JsonString(ldsIndividualOrdinance.TempleCode);
+    public override string ToString() => $"{TempleCode} {DateLdsOrdinance}";
 }
 
 #region LDS_INDIVIDUAL_ORDINANCE p. 

@@ -31,6 +31,7 @@ public class ChangeDateJson(ChangeDate changeDate) : GedcomJson
 {
     public GedcomDateJson? ChangeDate { get; set; } = JsonRecord(new GedcomDateJson(changeDate.GedcomDate));
     public List<NoteJson>? Notes { get; set; } = JsonList(changeDate.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public override string ToString() => $"{ChangeDate}";
 }
 
 #region CHANGE_DATE (CHAN) p. 31

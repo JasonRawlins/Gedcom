@@ -31,6 +31,8 @@ public class SpouseToFamilyLinkJson(SpouseToFamilyLink spouseToFamilyLink) : Ged
 {
     public List<NoteJson>? Notes { get; set; } = JsonList(spouseToFamilyLink.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
     public string Xref { get; set; } = spouseToFamilyLink.Xref;
+
+    public override string ToString() => Xref;
 }
 
 #region SPOUSE_TO_FAMILY_LINK p. 40

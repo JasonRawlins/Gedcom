@@ -90,7 +90,7 @@ public class EventStructure : RecordStructureBase, IComparable<EventStructure>
         return GedcomDate.Day.CompareTo(other.GedcomDate.Day);
     }
 
-    public override string ToString() => $"{Record.Value}, {ResponsibleAgency}";
+    public override string ToString() => $"{Name}, {DateValue}";
 }
 
 internal class EventJsonConverter : JsonConverter<EventStructure>
@@ -125,8 +125,17 @@ public class EventJson(EventStructure eventStructure) : GedcomJson, IComparable<
     {
         if (other == null) return 1;
 
-        return other.Date.CompareTo(Date);
+        // Compare by year first, then month, then day
+        int yearComparison = Nullable.Compare(Date.Year, other.Date.Year);
+        if (yearComparison != 0) return yearComparison;
+
+        int monthComparison = Nullable.Compare(Date.Month, other.Date.Month);
+        if (monthComparison != 0) return monthComparison;
+
+        return Nullable.Compare(Date.Day, other.Date.Day);
     }
+
+    public override string ToString() => $"{Name} {Date}";
 }
 
 #region Event structure

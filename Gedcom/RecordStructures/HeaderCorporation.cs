@@ -37,6 +37,7 @@ public class HeaderCorporationJson(HeaderCorporation headerCorporation) : Gedcom
     public List<string>? FaxNumbers { get; set; } = JsonList(headerCorporation.AddressFaxNumbers);
     public List<string>? PhoneNumbers { get; set; } = JsonList(headerCorporation.PhoneNumbers);
     public List<string>? WebPages { get; set; } = JsonList(headerCorporation.AddressWebPages);
+    public override string ToString() => $"{Emails?.FirstOrDefault()}";
 }
 
 #region HeaderCorporation p. 23

@@ -68,6 +68,12 @@ public class FamilyJson(FamilyRecord familyRecord) : GedcomJson
     public List<UserReferenceNumberJson>? UserReferenceNumbers { get; set; } = JsonList(familyRecord.UserReferenceNumbers.Select(urn => new UserReferenceNumberJson(urn)).ToList());
     public string? Wife { get; set; } = JsonString(familyRecord.Wife);
     public string Xref { get; set; } = familyRecord.Xref;
+    public override string ToString()
+    {
+        var childrenCountText = Children?.Count == 1 ? "child" : "children";
+
+        return $"({Xref}) {Husband} and {Wife} with {Children?.Count} {childrenCountText}";
+    }
 }
 
 #region FAM_RECORD (FAM) p. 24

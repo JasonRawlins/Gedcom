@@ -1,5 +1,4 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -33,6 +32,8 @@ internal class UserReferenceNumberJsonConverter : JsonConverter<UserReferenceNum
 public class UserReferenceNumberJson(UserReferenceNumber userReferenceNumber) : GedcomJson
 {
     public string? UserReferenceType { get; set; } = JsonString(userReferenceNumber.UserReferenceType);
+
+    public override string ToString() => $"{UserReferenceType}";
 }
 
 #region USER_REFERENCE_TYPE (REFN) p. 27

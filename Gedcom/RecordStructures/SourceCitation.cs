@@ -41,6 +41,7 @@ public class SourceCitationJson(SourceCitation sourceCitation) : GedcomJson
     public List<string>? Notes { get; set; } = JsonList(sourceCitation.NoteStructures.Select(ns => ns.Text).ToList());
     public string? WhereWithinSource { get; set; } = JsonString(sourceCitation.WhereWithinSource);
     public string? Xref { get; set; } = sourceCitation.Xref;
+    public override string ToString() => $"{WhereWithinSource}";
 }
 
 #region SOURCE_CITATION p. 39

@@ -56,6 +56,7 @@ public class MultimediaJson(MultimediaRecord multimediaRecord) : GedcomJson
     public PlaceJson? Place { get; set; } = JsonRecord(new PlaceJson(multimediaRecord.PlaceStructure));
     public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(multimediaRecord.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
     public UserReferenceNumberJson? UserReferenceNumber { get; set; } = JsonRecord(new UserReferenceNumberJson(multimediaRecord.UserReferenceNumber));
+    public override string ToString() => $"{Description}";
 }
 
 #region MULTIMEDIA_RECORD p. 26

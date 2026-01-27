@@ -29,6 +29,7 @@ internal class CharacterSetJsonConverter : JsonConverter<CharacterSet>
 public class CharacterSetJson(CharacterSet characterSet) : GedcomJson
 {
     public string? VersionNumber { get; set; } = JsonString(characterSet.VersionNumber);
+    public override string ToString() => $"{VersionNumber}";
 }
 
 #region CHARACTER_SET p. 23

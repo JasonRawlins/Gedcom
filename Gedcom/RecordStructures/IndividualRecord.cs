@@ -88,7 +88,6 @@ public class IndividualJson : GedcomJson
         ChildToFamilyLinks = JsonList(individualRecord.ChildToFamilyLinks.Select(ctfl => new ChildToFamilyLinkJson(ctfl)).ToList());
         Death = JsonRecord(new EventJson(individualRecord.Death));
         DescendantInterests = JsonList(individualRecord.DescendantInterests);
-        //IndividualAttributes = JsonList(individualRecord.IndividualAttributeStructures);
         Events = JsonList(individualRecord.IndividualEventStructures.Select(ies => new EventJson(ies)).ToList());
         IsEmpty = individualRecord.IsEmpty;
         LdsIndividualOrdinances = JsonList(individualRecord.LdsIndividualOrdinances.Select(lio => new LdsIndividualOrdinanceJson(lio)).ToList());
@@ -149,6 +148,8 @@ public class IndividualJson : GedcomJson
     public string? TreeId { get; set; }
     public List<UserReferenceNumberJson>? UserReferenceNumbers { get; set; } = [];
     public string? Xref { get; set; }
+
+    public override string ToString() => $"{Given} {Surname}";
 }
 
 #region INDIVIDUAL_RECORD (INDI) p. 25

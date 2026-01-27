@@ -40,6 +40,7 @@ public class HeaderSourceJson(HeaderSource headerSource) : GedcomJson
     public HeaderTreeJson? Tree { get; set; } = JsonRecord(new HeaderTreeJson(headerSource.Tree));
     public string? Version { get; set; } = JsonString(headerSource.Version);
     public string? Xref { get; set; } = JsonString(headerSource.Xref);
+    public override string ToString() => $"{Tree?.Name}";
 }
 
 

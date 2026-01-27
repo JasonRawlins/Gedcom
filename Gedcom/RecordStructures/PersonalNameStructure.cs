@@ -47,6 +47,7 @@ public class PersonalNameJson(PersonalNameStructure personalNameStructure) : Ged
     public string? Surname { get; set; } = JsonString(personalNameStructure.Surname);
     public string? SurnamePrefix { get; set; } = JsonString(personalNameStructure.SurnamePrefix);
     public string? Type { get; set; } = JsonString(personalNameStructure.NameType);
+    public override string ToString() => $"{Given} {Surname}";
 }
 
 #region PERSONAL_NAME_STRUCTURE p. 38

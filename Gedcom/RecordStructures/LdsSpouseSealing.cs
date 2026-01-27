@@ -39,6 +39,7 @@ public class LdsSpouseSealingJson(LdsSpouseSealing ldsSpouseSealing) : GedcomJso
     public string? PlaceLivingOrdinance { get; set; } = JsonString(ldsSpouseSealing.PlaceLivingOrdinance);
     public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(ldsSpouseSealing.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
     public string? TempleCode { get; set; } = JsonString(ldsSpouseSealing.TempleCode);
+    public override string ToString() => $"{TempleCode}";
 }
 
 #region LDS_SPOUSE_SEALING p. 36

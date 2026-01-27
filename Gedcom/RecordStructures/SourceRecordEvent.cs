@@ -31,6 +31,8 @@ public class SourceRecordEventJson(SourceRecordEvent sourceRecordEvent) : Gedcom
 {
     public string? DatePeriod { get; set; } = JsonString(sourceRecordEvent.DatePeriod);
     public string? SourceJurisdictionPlace { get; set; } = JsonString(sourceRecordEvent.SourceJurisdictionPlace);
+
+    public override string ToString() => $"{SourceJurisdictionPlace} {DatePeriod}";
 }
 
 #region SOURCE_RECORD (DATA) p. 27

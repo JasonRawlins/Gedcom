@@ -33,6 +33,7 @@ public class AssociationJson(AssociationStructure associationStructure) : Gedcom
     public List<NoteJson>? Notes { get; set; } = JsonList(associationStructure.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
     public string? RelationIsDescriptor { get; set; } = JsonString(associationStructure.RelationIsDescriptor);
     public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(associationStructure.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
+    public override string ToString() => $"{RelationIsDescriptor}";
 }
 
 #region ASSOCIATION_STRUCTURE p. 31 

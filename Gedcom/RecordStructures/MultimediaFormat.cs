@@ -29,6 +29,7 @@ internal class MultimediaFormatJsonConverter : JsonConverter<MultimediaFormat>
 public class MultimediaFormatJson(MultimediaFormat multimediaFormat) : GedcomJson
 {
     public string? SourceMediaType { get; set; } = JsonString(multimediaFormat.SourceMediaType);
+    public override string ToString() => $"{SourceMediaType}";
 }
 
 #region MULTIMEDIA_FORMAT p. 54

@@ -47,6 +47,8 @@ public class SubmissionJson(SubmissionRecord submissionRecord) : GedcomJson
     public string? Submitter { get; set; } = JsonString(submissionRecord.Submitter);
     public string? TempleCode { get; set; } = JsonString(submissionRecord.TempleCode);
     public string? Xref { get; set; } = submissionRecord.Xref;
+
+    public override string ToString() => $"{Submitter}";
 }
 
 #region SUBMISSION_RECORD p. 28

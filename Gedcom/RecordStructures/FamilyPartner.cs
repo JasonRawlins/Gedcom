@@ -31,4 +31,5 @@ public class FamilyPartnerJson(FamilyPartner familyPartner) : GedcomJson
 {
     public string? AgeAtEvent { get; set; } = JsonString(familyPartner.AgeAtEvent);
     public string? Name { get; set; } = JsonString(familyPartner.Name);
+    public override string ToString() => $"{Name}";
 }

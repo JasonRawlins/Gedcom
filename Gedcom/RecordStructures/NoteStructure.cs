@@ -59,6 +59,8 @@ internal class NoteJsonConverter : JsonConverter<NoteStructure>
 public class NoteJson(NoteStructure noteStructure) : GedcomJson
 {
     public string Text { get; set; } = noteStructure.Text;
+    private const int TextLenthLimit = 32;
+    public override string ToString() => Text.Length <= TextLenthLimit ? Text : Text.Substring(TextLenthLimit); 
 }
 
 #region NOTE_STRUCTURE p. 37

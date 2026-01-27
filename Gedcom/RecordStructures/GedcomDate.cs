@@ -219,6 +219,8 @@ public class GedcomDateJson(GedcomDate gedcomDate) : GedcomJson, IComparable<Ged
 
         return Nullable.Compare(Day, other.Day);
     }
+
+    public override string ToString() => $"{DayMonthYear ?? DateValue}";
 }
 
 #region DATE p. 45

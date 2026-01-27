@@ -33,6 +33,8 @@ public class HeaderTreeJson(HeaderTree headerTree) : GedcomJson
     public string AutomatedRecordId { get; set; } = headerTree.AutomatedRecordId;
     public string Name { get; set; } = headerTree.Name;
     public string Note { get; set; } = headerTree.Note.Text;
+
+    public override string ToString() => $"{Name}";
 }
 
 

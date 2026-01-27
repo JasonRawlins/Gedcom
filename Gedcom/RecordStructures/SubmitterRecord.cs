@@ -43,6 +43,8 @@ public class SubmitterJson(SubmitterRecord submitterRecord) : GedcomJson
     public List<NoteJson>? Notes { get; set; } = JsonList(submitterRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
     public string? SubmitterName { get; set; } = JsonString(submitterRecord.SubmitterName);
     public string? SubmitterRegisteredReferenceNumber { get; set; } = JsonString(submitterRecord.SubmitterRegisteredRfn);
+
+    public override string ToString() => $"{SubmitterName}";
 }
 
 #region SUBMITTER_RECORD p. 28-29

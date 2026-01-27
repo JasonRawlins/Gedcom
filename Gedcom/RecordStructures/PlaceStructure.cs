@@ -39,6 +39,8 @@ public class PlaceJson(PlaceStructure placeStructure) : GedcomJson
     public List<NoteJson>? Notes { get; set; } = JsonList(placeStructure.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
     public List<NameVariationJson>? PhoneticVariations { get; set; } = JsonList(placeStructure.PlacePhoneticVariations.Select(ppv => new NameVariationJson(ppv)).ToList());
     public List<NameVariationJson>? RomanizedVariations { get; set; } = JsonList(placeStructure.PlaceRomanizedVariations.Select(prv => new NameVariationJson(prv)).ToList());
+
+    public override string ToString() => $"{Name}";
 }
 
 #region PLACE_STRUCTURE p. 38-39

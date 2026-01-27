@@ -1,4 +1,5 @@
 using Gedcom;
+using Gedcom.Core;
 using Gedcom.RecordStructures;
 using GenesAndGenealogy.Server.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -127,7 +128,6 @@ namespace GenesAndGenealogy.Server.Controllers
                 multimedias.Add(new MultimediaJson(multimediaRecord));
             }
 
-
             var profileModel = new ProfileModel(HeaderTree, individualJson, familyModels, repositories, sortedSources);
             
             var portraitMultimedia = multimedias.FirstOrDefault(m => m.File?.Form?.MediaType?.Equals("portrait") ?? false);
@@ -140,7 +140,7 @@ namespace GenesAndGenealogy.Server.Controllers
             if (!parentsFamilyRecord.IsEmpty)
             {
                 var familyManager = new FamilyManager(Gedcom);
-                var family = familyManager.CreateFamily(parentsFamilyRecord.Xref, 0, 1);
+                var family = familyManager.CreateFamily(parentsFamilyRecord.Xref, Generation.Current, Generation.Child);
 
                 var fatherIndividualRecord = Gedcom.GetIndividualRecord(parentsFamilyRecord.Husband);
                 IndividualJson? father = null;

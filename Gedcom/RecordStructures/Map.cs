@@ -30,6 +30,7 @@ public class MapJson(Map map) : GedcomJson
 {
     public string? Latitude { get; set; } = JsonString(map.PlaceLatitude);
     public string? Longitude { get; set; } = JsonString(map.PlaceLongitude);
+    public override string ToString() => $"({Latitude}, {Longitude})";
 }
 
 #region MAP p. 39

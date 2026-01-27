@@ -31,6 +31,7 @@ public class HeaderDataJson(HeaderData headerData) : GedcomJson
 {
     public NoteJson? CopyrightSourceData { get; set; } = JsonRecord(new NoteJson(headerData.CopyrightSourceData));
     public string? PublicationDate { get; set; } = JsonString(headerData.PublicationDate);
+    public override string ToString() => $"{PublicationDate}";
 }
 
 #region HeaderSOUR p. 23

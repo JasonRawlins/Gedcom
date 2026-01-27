@@ -37,6 +37,7 @@ public class ChildToFamilyLinkJson(ChildToFamilyLink childToFamilyLink) : Gedcom
     public List<NoteJson>? Notes { get; set; } = JsonList(childToFamilyLink.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
     public string? PedigreeLinkageType { get; set; } = JsonString(childToFamilyLink.PedigreeLinkageType);
     public string? Xref { get; set; } = JsonString(childToFamilyLink.Xref);
+    public override string ToString() => $"{Xref}";
 }
 
 #region CHILD_TO_FAMILY_LINK p. 31-32

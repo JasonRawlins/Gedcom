@@ -51,6 +51,7 @@ public class HeaderJson(Header header) : GedcomJson
     public SubmissionJson? SubmissionRecord { get; set; } = JsonRecord(new SubmissionJson(header.SubmissionRecord));
     public string? Submitter { get; set; } = JsonString(header.Submitter);
     public GedcomDateJson? TransmissionDate { get; set; } = JsonRecord(new GedcomDateJson(header.TransmissionDate));
+    public override string ToString() => $"{Submitter}";
 }
 
 #region HEADER p. 23

@@ -31,6 +31,8 @@ public class SourceCitationDataJson(SourceCitationData sourceCitationData) : Ged
 {
     public string? EntryRecordingDate { get; set; } = JsonString(sourceCitationData.EntryRecordingDate);
     public List<string> TextFromSources { get; set; } = sourceCitationData.TextFromSources.Select(t => t.Text).ToList();
+
+    public override string ToString() => $"Count: {TextFromSources.Count}";
 }
 
 #region SOUR.DATA p. 39

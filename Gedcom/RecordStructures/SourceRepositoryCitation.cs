@@ -31,6 +31,8 @@ public class SourceRepositoryCitationJson(SourceRepositoryCitation sourceReposit
 {
     public List<CallNumberJson>? CallNumbers { get; set; } = JsonList(sourceRepositoryCitation.CallNumbers.Select(cn => new CallNumberJson(cn)).ToList());
     public List<NoteJson>? Notes { get; set; } = JsonList(sourceRepositoryCitation.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+
+    public override string ToString() => string.Join(", ", CallNumbers ?? []);
 }
 
 #region SOURCE_REPOSITORY_CITATION p. 40

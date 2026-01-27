@@ -68,6 +68,7 @@ public class RepositoryJson : GedcomJson
     public UserReferenceNumberJson? UserReferenceNumber { get; set; }
     public List<string>? WebPages { get; set; }
     public string? Xref { get; set; }
+    public override string ToString() => $"{Name}";
 }
 
 #region REPOSITORY_RECORD p. 27
