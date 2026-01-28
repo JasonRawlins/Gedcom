@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ProfileModel } from '../../view-models/ProfileModel';
+import { ProfileService } from '../services/profile.service';
 
 @Component({
   selector: 'app-facts',
@@ -8,5 +10,9 @@ import { ProfileModel } from '../../view-models/ProfileModel';
   styleUrl: './facts.component.css'
 })
 export class FactsComponent {
-  @Input() profile!: ProfileModel;
+  profile$: Observable<ProfileModel | null>;
+
+  constructor(private profileService: ProfileService) {
+    this.profile$ = this.profileService.profile$;
+  }
 }

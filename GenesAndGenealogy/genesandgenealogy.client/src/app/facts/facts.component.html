@@ -1,11 +1,13 @@
-<main class="columns">
-  <div class="column timeline">
-    <app-timeline [events]="profile.individual.events"></app-timeline>
-  </div>
-  <div class="column sources">
-    <app-profile-sources [sources]="profile.sources" [individual]="profile.individual"></app-profile-sources>
-  </div>
-  <div class="column relationships">
-    <app-relationships [individualXref]="profile.individual.xref" [families]="profile.families" [parents]="profile.parents"></app-relationships>
+<main>
+  <div *ngIf="profile$ | async as profile"  class="columns">
+    <div class="column timeline">
+      <app-timeline [events]="profile.individual.events"></app-timeline>
+    </div>
+    <div class="column sources">
+      <app-profile-sources [sources]="profile.sources" [individual]="profile.individual"></app-profile-sources>
+    </div>
+    <div class="column relationships">
+      <app-relationships [individualXref]="profile.individual.xref" [families]="profile.families" [parents]="profile.parents"></app-relationships>
+    </div>
   </div>
 </main>

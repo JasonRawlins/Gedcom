@@ -2,7 +2,7 @@
   <div class="repository-and-source-information">
     <h2>Source information</h2>
     <div *ngIf="source">
-      <div class="field" *ngIf="!individual.isEmpty">
+      <div class="field" *ngIf="individual && !individual.isEmpty">
         <div></div>
         <div>Return to <a [routerLink]="['/profile', individual.xref]">{{individual.fullName}}</a></div>
       </div>
@@ -28,8 +28,13 @@
       </div>
       <div class="field">
         <div><strong>Repository</strong></div>
-        <div>
-          <a [routerLink]="['/repository-information', source.repositoryXref]" [queryParams]="{ sourceXref: source.xref, individualXref: individual.xref }">{{repository.name}}</a>
+        <div *ngIf="repository">
+          <div *ngIf="individual && !individual.isEmpty">
+            <a [routerLink]="['/repository-information', source.repositoryXref]" [queryParams]="{ sourceXref: source.xref, individualXref: individual.xref }">{{repository.name}}</a>
+          </div>
+          <div *ngIf="!individual">
+            <a [routerLink]="['/repository-information', source.repositoryXref]" [queryParams]="{ sourceXref: source.xref }">{{repository.name}}</a>
+          </div>
         </div>
       </div>
     </div>

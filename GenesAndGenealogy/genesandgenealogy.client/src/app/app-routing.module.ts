@@ -16,6 +16,7 @@ const routes: Routes = [
     component: ProfileComponent,
     title: 'Profile',
     children: [
+      { path: '', redirectTo: 'facts', pathMatch: 'full' },
       { path: 'facts', component: FactsComponent, title: 'Facts' },
       { path: 'gallery', component: GalleryComponent, title: 'Gallery' }
     ]

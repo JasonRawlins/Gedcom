@@ -1,9 +1,22 @@
-<div class="page" *ngIf="profile">
+<div class="page" *ngIf="profile$ | async as profile">
   <div class="row row-2">
     <app-profile-header [individual]="profile.individual" [portraitUrl]="profile.portraitUrl"></app-profile-header>
   </div>
-  <div>
-    <app-facts [profile]="profile"></app-facts>
-    <!--<router-outlet></router-outlet>-->
+  <nav class="tabs">
+    <ul>
+      <li>
+        <a [routerLink]="['/profile/', profile.individual.xref, 'facts']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          Facts
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="['/profile/', profile.individual.xref, 'gallery']" routerLinkActive="active">
+          Gallery
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div class="tab-content">
+    <router-outlet></router-outlet>
   </div>
 </div>

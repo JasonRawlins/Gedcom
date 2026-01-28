@@ -2,7 +2,7 @@
   <div class="repository-and-source-information">
     <h2>Repository information</h2>
     <div *ngIf="repository">
-      <div class="field" *ngIf="!source.isEmpty">
+      <div class="field" *ngIf="source && !source.isEmpty">
         <div></div>
         <div>Return to <a [routerLink]="['/source-information', source.xref]" [queryParams]=" { individualXref: individualXref }">{{source.descriptiveTitle}}</a></div>
       </div>

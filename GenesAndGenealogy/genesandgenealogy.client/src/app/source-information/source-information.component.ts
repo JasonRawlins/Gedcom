@@ -1,10 +1,11 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { combineLatest, forkJoin, of } from 'rxjs';
+import { catchError, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { GedcomService } from '../services/gedcom.service';
 import { IndividualModel } from '../../view-models/IndividualModel';
 import { RepositoryModel } from '../../view-models/RepositoryModel';
 import { SourceModel } from '../../view-models/SourceModel';
-import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-source-information',
@@ -14,39 +15,51 @@ import { switchMap } from 'rxjs';
 })
 export class SourceInformationComponent {
   private activatedRoute = inject(ActivatedRoute);
-  @Input() individual!: IndividualModel;
-  @Input() repository!: RepositoryModel;
-  @Input() source!: SourceModel;
+  individual: IndividualModel | null = null;
+  repository: RepositoryModel | null = null;
+  source: SourceModel | null = null;
 
   constructor(private gedcomService: GedcomService) {
   }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => {
-      const sourceXref = params['sourceXref'];
+    const sourceXref$ = this.activatedRoute.paramMap.pipe(
+      map(paramMap => paramMap.get('sourceXref')),
+      distinctUntilChanged()
+    );
 
-      this.gedcomService.getSource(sourceXref).pipe(
-        switchMap((source) => {
-          this.source = source;
-          return this.gedcomService.getRepository(source.repositoryXref);
-        })
-      ).subscribe(repository => {
-          this.repository = repository;
-        }
-      );
-    });
+    const individualXref$ = this.activatedRoute.queryParamMap.pipe(
+      map(queryParamMap => queryParamMap.get('individualXref')),
+      distinctUntilChanged()
+    );
 
-    this.activatedRoute.queryParams.subscribe((params) => {
-      const individualXref = params['individualXref'];
+    combineLatest([sourceXref$, individualXref$]).pipe(
+      switchMap(([sourceXref, individualXref]) => {
+        if (!sourceXref) return of(null);
 
-      this.gedcomService.getIndividual(individualXref).subscribe(
-        (individual) => {
-          this.individual = individual;
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
+        // Get source
+        return this.gedcomService.getSource(sourceXref).pipe(
+          // Get repository and individual
+          switchMap(source => {
+            this.source = source;
+
+            return forkJoin({
+              repository: this.gedcomService.getRepository(source.repositoryXref),
+              individual: individualXref 
+                ? this.gedcomService.getIndividual(individualXref)
+                : of(null)
+            });
+          })
+        );
+      }),
+      catchError(error => {
+        console.error(error);
+        return of({ repository: null, individual: null });
+      })
+    ).subscribe(repositoryAndIndividualResult => {
+      if (!repositoryAndIndividualResult) return;
+      this.repository = repositoryAndIndividualResult.repository;
+      this.individual = repositoryAndIndividualResult.individual;
     });
   }
 }
