@@ -21,7 +21,10 @@ public class ProfileModel(
         {
             if (PortraitMultiMedia != null)
             {
-                return $"{PortraitMultiMedia.ObjectId}.{PortraitMultiMedia!.File!.Form!.SourceType}";
+                var sourceType = PortraitMultiMedia!.File!.Form!.SourceType ?? "";
+                if (sourceType.Equals("jpeg"))
+                    sourceType = "jpg";
+                return $"{PortraitMultiMedia.ObjectId}.{sourceType}";
             }
 
             return Individual.Sex! switch
