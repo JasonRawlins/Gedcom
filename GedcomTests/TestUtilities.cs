@@ -1,4 +1,4 @@
-﻿using Gedcom.Core;
+﻿using Gedcom;
 using System.Text;
 
 namespace GedcomTests;

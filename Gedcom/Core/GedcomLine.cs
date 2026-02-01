@@ -1,8 +1,6 @@
-﻿using OfficeOpenXml.Drawing.Theme;
 ﻿using System.Text;
-using System.Text.RegularExpressions;
 
-namespace Gedcom.Core;
+namespace Gedcom;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
 public class GedcomLine
@@ -22,39 +20,83 @@ public class GedcomLine
     // For all other lines, the order is Level, Tag, Value (optional): (e.g. "1 NAME John /Doe/", "1 BIRT").
     public static GedcomLine Parse(string line)
     {
-        var level = int.Parse(line.Substring(0, line.IndexOf(" ")));
-        var lineWithoutLevel = line.Substring(line.IndexOf(" ") + 1);
-        // Some lines do not have a value, such as events like a birth: "1 BIRT".
-        // In this case, there will not be a second space index.
-        var secondSpaceIndex = lineWithoutLevel.IndexOf(" ");
-        var secondSegment = "";
-        var thirdSegment = "";
+        ArgumentNullException.ThrowIfNull(line);
 
-        if (secondSpaceIndex != -1) // The line has no value, and hence no second space index.
+        if (line.Length > 256)
         {
-            secondSegment = lineWithoutLevel.Substring(0, lineWithoutLevel.IndexOf(" "));
-            thirdSegment = lineWithoutLevel.Substring(lineWithoutLevel.IndexOf(' ') + 1);
+            throw new GedcomLineParseException(line, $"The Gedcom line is longer than 256 characters. Actual length was {line.Length}.");
         }
-        else
+
+        if (line.Length > 0 && Char.IsWhiteSpace(line[0]))
         {
+            throw new GedcomLineParseException(line, "The Gedcom line has leading whitespace.");
+        }
+
+        // Get level
+        var firstSpaceIndex = line.IndexOf(' ');
+        var levelText = line.Substring(0, firstSpaceIndex);
+
+        if (!int.TryParse(levelText, out var level))
+        {
+            throw new GedcomLineParseException(line, $"Level must be an integer. Actual value was {levelText}.");
+        }
+
+        if (level < 0 || level > 99)
+        {
+            throw new GedcomLineParseException(line, $"Level must be between 0 and 99. Actual value was {level}.");
+        }
+
+        var lineWithoutLevel = line.Substring(firstSpaceIndex + 1);
+        var secondSpaceIndex = lineWithoutLevel.IndexOf(' ');
+
+        string secondSegment = "";
+        string thirdSegment = "";
+
+        if (secondSpaceIndex == -1)
+        {
+            // If there is no second space index, it is probably a line with only a tag and value (e.g. 1 BIRT, 0 HEAD).
             secondSegment = lineWithoutLevel;
         }
-
-        var value = "";
-        var tag = "";
-
-        if (level == 0 && Regex.IsMatch(secondSegment, @"@.*@"))
+        else
         {
-            // If level == 0, it is a top-level record in the form of (Level, Xref (Value), Tag).
-            // Example: "0 @I1234567890@ INDI".
-            tag = thirdSegment;
-            var xref = Regex.Match(secondSegment, @"@.*@").Value;
-            value = xref;
+            // If there is a second space index, it is probably a line with a level, tag, and value/xref (e.g. 0 @I1@ INDI, 1 GIVN Jane).
+            secondSegment = lineWithoutLevel.Substring(0, secondSpaceIndex);
+            thirdSegment = lineWithoutLevel.Substring(secondSpaceIndex + 1);
+        }
+
+        // secondSegment and thirdSegment will be the remaing parts of the line. At this point
+        // we don't know which segment is the tag or which one is the value/xref (if any).
+
+        if (string.IsNullOrEmpty(secondSegment))
+        {
+            throw new GedcomLineParseException(line, "The Gedcom line is missing information after the level.");
+        }
+
+        string value = "";
+        string tag;
+
+        if (level == 0)
+        {
+            if (secondSegment.Equals(Gedcom.Tag.Header) || secondSegment.Equals(Gedcom.Tag.Trailer))
+            {
+                // The HEAD and TRLR tags do not have a value.
+                tag = secondSegment;
+            }
+            else
+            {
+                // The reamining level 0 tags should have a level, xref, and tag).
+                // Example: "0 @I1234567890@ INDI".
+                if (string.IsNullOrEmpty(thirdSegment))
+                {
+                    throw new GedcomLineParseException(line, "The level 0 record is missing a tag or xref.");
+                }
+
+                tag = thirdSegment;
+                value = secondSegment;
+            }
         }
         else
         {
-            // If level != 0, it is a substructure in the form of (Level, Tag, and Value).
-            // Example: "1 NAME John /Doe/".
             tag = secondSegment;
             value = thirdSegment;
         }
