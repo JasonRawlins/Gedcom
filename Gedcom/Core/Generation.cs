@@ -1,4 +1,4 @@
-﻿namespace Gedcom.Core;
+﻿namespace Gedcom;
 
 public static class Generation
 {

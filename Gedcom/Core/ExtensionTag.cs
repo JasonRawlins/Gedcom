@@ -1,4 +1,4 @@
-﻿namespace Gedcom.Core;
+﻿namespace Gedcom;
 
 // Well-known extension tags (e.g. Ancestry tags)
 public static class ExtensionTag 

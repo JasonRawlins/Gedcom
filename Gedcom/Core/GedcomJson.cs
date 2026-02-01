@@ -1,6 +1,6 @@
 ﻿using Gedcom.RecordStructures;
 
-namespace Gedcom.Core;
+namespace Gedcom;
 
 /*
  * All RecordStructure classes are serialized as GedcomJson objects. This allows 

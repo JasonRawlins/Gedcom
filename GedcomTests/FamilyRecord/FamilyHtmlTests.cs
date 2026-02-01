@@ -1,4 +1,4 @@
-﻿using Gedcom.Core;
+﻿using Gedcom;
 using Gedcom.GedcomWriters;
 using GedcomTests.TestEntities;
 
