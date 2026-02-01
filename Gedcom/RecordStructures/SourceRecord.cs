@@ -1,10 +1,11 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(SourceJsonConverter))]
+[JsonConverter(typeof(SourceRecordJsonConverter))]
 public class SourceRecord : RecordStructureBase
 {
     public SourceRecord() : base() { }
@@ -29,14 +30,14 @@ public class SourceRecord : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {AutomatedRecordId}";
 }
 
-internal class SourceJsonConverter : JsonConverter<SourceRecord>
+internal sealed class SourceRecordJsonConverter : JsonConverter<SourceRecord>
 {
-    public override SourceRecord? ReadJson(JsonReader reader, Type objectType, SourceRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override SourceRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, SourceRecord? sourceRecord, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, SourceRecord value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(sourceRecord);
-        serializer.Serialize(writer, new SourceJson(sourceRecord));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new SourceJson(value), options);
     }
 }
 

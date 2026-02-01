@@ -1,10 +1,11 @@
-﻿using Gedcom.Core;
-using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using Gedcom.Core;
 
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(AddressJsonConverter))]
+[JsonConverter(typeof(AddressStructureJsonConverter))]
 public class AddressStructure : RecordStructureBase
 {
     public AddressStructure() { }
@@ -22,14 +23,14 @@ public class AddressStructure : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {AddressLine}";
 }
 
-internal class AddressJsonConverter : JsonConverter<AddressStructure>
+internal sealed class AddressStructureJsonConverter : JsonConverter<AddressStructure>
 {
-    public override AddressStructure? ReadJson(JsonReader reader, Type objectType, AddressStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override AddressStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, AddressStructure? addressStructure, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, AddressStructure value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(addressStructure);
-        serializer.Serialize(writer, new AddressJson(addressStructure));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new AddressJson(value), options);
     }
 }
 

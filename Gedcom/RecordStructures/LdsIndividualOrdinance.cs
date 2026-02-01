@@ -1,5 +1,6 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
@@ -20,14 +21,14 @@ public class LdsIndividualOrdinance : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {TempleCode}, {PlaceLivingOrdinance}";
 }
 
-internal class LdsIndividualOrdinanceJsonConverter : JsonConverter<LdsIndividualOrdinance>
+internal sealed class LdsIndividualOrdinanceJsonConverter : JsonConverter<LdsIndividualOrdinance>
 {
-    public override LdsIndividualOrdinance? ReadJson(JsonReader reader, Type objectType, LdsIndividualOrdinance? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override LdsIndividualOrdinance? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, LdsIndividualOrdinance? ldsIndividualOrdinance, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, LdsIndividualOrdinance value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(ldsIndividualOrdinance);
-        serializer.Serialize(writer, new LdsIndividualOrdinanceJson(ldsIndividualOrdinance));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new LdsIndividualOrdinanceJson(value), options);
     }
 }
 
@@ -35,7 +36,7 @@ public class LdsIndividualOrdinanceJson(LdsIndividualOrdinance ldsIndividualOrdi
 {
     public string? DateLdsOrdinance { get; set; } = JsonString(ldsIndividualOrdinance.DateLdsOrdinance);
     public LdsOrdinanceStatusJson? LdsBaptismDateStatus { get; set; } = JsonRecord(new LdsOrdinanceStatusJson(ldsIndividualOrdinance.LdsBaptismDateStatus));
-    public List<NoteJson>? Notes { get; set; } = JsonList(ldsIndividualOrdinance.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(ldsIndividualOrdinance.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
     public string? PlaceLivingOrdinance { get; set; } = JsonString(ldsIndividualOrdinance.PlaceLivingOrdinance);
     public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(ldsIndividualOrdinance.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
     public string? TempleCode { get; set; } = JsonString(ldsIndividualOrdinance.TempleCode);

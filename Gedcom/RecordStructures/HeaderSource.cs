@@ -1,5 +1,6 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
@@ -20,15 +21,14 @@ public class HeaderSource : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {NameOfProduct}, {Version}";
 }
 
-internal class HeaderSourceJsonConverter : JsonConverter<HeaderSource>
+internal sealed class HeaderSourceJsonConverter : JsonConverter<HeaderSource>
 {
-    public override HeaderSource? ReadJson(JsonReader reader, Type objectType, HeaderSource? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override HeaderSource? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, HeaderSource? headerSource, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, HeaderSource value, JsonSerializerOptions options)
     {
-        if (headerSource == null) throw new ArgumentNullException(nameof(headerSource));
-
-        serializer.Serialize(writer, new HeaderSourceJson(headerSource));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new HeaderSourceJson(value), options);
     }
 }
 

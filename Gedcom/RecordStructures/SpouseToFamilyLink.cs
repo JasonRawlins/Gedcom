@@ -1,5 +1,6 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
@@ -16,20 +17,20 @@ public class SpouseToFamilyLink : RecordStructureBase
     public override string ToString() => $"{Record.Value}";
 }
 
-internal class SpouseToFamilyLinkJsonConverter : JsonConverter<SpouseToFamilyLink>
+internal sealed class SpouseToFamilyLinkJsonConverter : JsonConverter<SpouseToFamilyLink>
 {
-    public override SpouseToFamilyLink? ReadJson(JsonReader reader, Type objectType, SpouseToFamilyLink? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override SpouseToFamilyLink? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, SpouseToFamilyLink? spouseToFamilyLink, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, SpouseToFamilyLink value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(spouseToFamilyLink);
-        serializer.Serialize(writer, new SpouseToFamilyLinkJson(spouseToFamilyLink));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new SpouseToFamilyLinkJson(value), options);
     }
 }
 
 public class SpouseToFamilyLinkJson(SpouseToFamilyLink spouseToFamilyLink) : GedcomJson
 {
-    public List<NoteJson>? Notes { get; set; } = JsonList(spouseToFamilyLink.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(spouseToFamilyLink.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
     public string Xref { get; set; } = spouseToFamilyLink.Xref;
 
     public override string ToString() => Xref;

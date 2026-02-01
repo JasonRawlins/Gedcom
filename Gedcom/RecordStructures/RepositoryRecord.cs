@@ -1,10 +1,11 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(RepositoryJsonConverter))]
+[JsonConverter(typeof(RepositoryRecordJsonConverter))]
 public class RepositoryRecord : RecordStructureBase, IAddressStructure
 {
     public RepositoryRecord() : base() { }
@@ -26,14 +27,14 @@ public class RepositoryRecord : RecordStructureBase, IAddressStructure
     public override string ToString() => $"{Record.Value}, {Name}";
 }
 
-internal class RepositoryJsonConverter : JsonConverter<RepositoryRecord>
+internal sealed class RepositoryRecordJsonConverter : JsonConverter<RepositoryRecord>
 {
-    public override RepositoryRecord? ReadJson(JsonReader reader, Type objectType, RepositoryRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override RepositoryRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, RepositoryRecord? repositoryRecord, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, RepositoryRecord value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(repositoryRecord);
-        serializer.Serialize(writer, new RepositoryJson(repositoryRecord));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new RepositoryJson(value), options);
     }
 }
 

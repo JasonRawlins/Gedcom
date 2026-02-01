@@ -1,5 +1,6 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
@@ -24,14 +25,14 @@ public class SubmissionRecord : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {Submitter}";
 }
 
-internal class SubmissionJsonConverter : JsonConverter<SubmissionRecord>
+internal sealed class SubmissionJsonConverter : JsonConverter<SubmissionRecord>
 {
-    public override SubmissionRecord? ReadJson(JsonReader reader, Type objectType, SubmissionRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override SubmissionRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, SubmissionRecord? submissionRecord, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, SubmissionRecord value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(submissionRecord);
-        serializer.Serialize(writer, new SubmissionJson(submissionRecord));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new SubmissionJson(value), options);
     }
 }
 
@@ -42,7 +43,7 @@ public class SubmissionJson(SubmissionRecord submissionRecord) : GedcomJson
     public string? GenerationsOfAncestors { get; set; } = JsonString(submissionRecord.GenerationsOfAncestors);
     public string? GenerationsOfDescendants { get; set; } = JsonString(submissionRecord.GenerationsOfDescendants);
     public string? NameOfFamilyFile { get; set; } = JsonString(submissionRecord.NameOfFamilyFile);
-    public List<NoteJson>? Notes { get; set; } = JsonList(submissionRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(submissionRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
     public string? OrdinanceProcessFlag { get; set; } = JsonString(submissionRecord.OrdinanceProcessFlag);
     public string? Submitter { get; set; } = JsonString(submissionRecord.Submitter);
     public string? TempleCode { get; set; } = JsonString(submissionRecord.TempleCode);

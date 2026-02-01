@@ -1,4 +1,6 @@
-﻿public interface IPersonalNamePieces
+﻿namespace Gedcom.RecordStructures;
+
+public interface IPersonalNamePieces
 {
     string Given { get; } // GIVN
     string NamePrefix { get; } // NPFX

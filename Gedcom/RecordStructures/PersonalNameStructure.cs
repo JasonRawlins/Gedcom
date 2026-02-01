@@ -1,10 +1,11 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(PersonalNameJsonConverter))]
+[JsonConverter(typeof(PersonalNameStructureJsonConverter))]
 public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
 {
     public PersonalNameStructure() : base() { }
@@ -24,14 +25,14 @@ public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
     public override string ToString() => $"{Record.Value}, {NamePersonal}";
 }
 
-internal class PersonalNameJsonConverter : JsonConverter<PersonalNameStructure>
+internal sealed class PersonalNameStructureJsonConverter : JsonConverter<PersonalNameStructure>
 {
-    public override PersonalNameStructure? ReadJson(JsonReader reader, Type objectType, PersonalNameStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override PersonalNameStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, PersonalNameStructure? personalNameStructure, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, PersonalNameStructure value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(personalNameStructure);
-        serializer.Serialize(writer, new PersonalNameJson(personalNameStructure));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new PersonalNameJson(value), options);
     }
 }
 

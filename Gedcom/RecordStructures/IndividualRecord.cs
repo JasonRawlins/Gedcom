@@ -1,5 +1,6 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
@@ -63,14 +64,14 @@ public class IndividualRecord : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {PersonalNameStructures.First().NamePersonal}, {SexValue}";
 }
 
-internal class IndividualJsonConverter : JsonConverter<IndividualRecord>
+internal sealed class IndividualJsonConverter : JsonConverter<IndividualRecord>
 {
-    public override IndividualRecord? ReadJson(JsonReader reader, Type objectType, IndividualRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override IndividualRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, IndividualRecord? individualRecord, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, IndividualRecord value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(individualRecord);
-        serializer.Serialize(writer, new IndividualJson(individualRecord));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new IndividualJson(value), options);
     }
 }
 
@@ -130,7 +131,6 @@ public class IndividualJson : GedcomJson
     public List<ChildToFamilyLinkJson>? ChildToFamilyLinks { get; set; } = [];
     public EventJson? Death { get; set; }
     public List<string>? DescendantInterests { get; set; } = [];
-    //public List<IndividualAttributeStructure>? IndividualAttributes { get; set; }
     public List<EventJson>? Events { get; set; } = [];
     public string FullName => $"{Given} {Surname}";
     public string? Given => PersonalNames?.Count > 0 ? PersonalNames[0].Given : "";

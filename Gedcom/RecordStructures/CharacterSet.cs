@@ -1,5 +1,6 @@
-﻿using Gedcom.Core;
-using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using Gedcom.Core;
 
 namespace Gedcom.RecordStructures;
 
@@ -15,14 +16,14 @@ public class CharacterSet : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {VersionNumber}";
 }
 
-internal class CharacterSetJsonConverter : JsonConverter<CharacterSet>
+internal sealed class CharacterSetJsonConverter : JsonConverter<CharacterSet>
 {
-    public override CharacterSet? ReadJson(JsonReader reader, Type objectType, CharacterSet? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override CharacterSet? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, CharacterSet? characterSet, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, CharacterSet value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(characterSet);
-        serializer.Serialize(writer, new CharacterSetJson(characterSet));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new CharacterSetJson(value), options);
     }
 }
 

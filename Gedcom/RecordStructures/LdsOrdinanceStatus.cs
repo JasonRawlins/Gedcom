@@ -1,5 +1,6 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
@@ -13,14 +14,14 @@ public class LdsOrdinanceStatus : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {Status}, {ChangeDate}";
 }
 
-internal class LdsOrdinanceStatusJsonConverter : JsonConverter<LdsOrdinanceStatus>
+internal sealed class LdsOrdinanceStatusJsonConverter : JsonConverter<LdsOrdinanceStatus>
 {
-    public override LdsOrdinanceStatus? ReadJson(JsonReader reader, Type objectType, LdsOrdinanceStatus? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override LdsOrdinanceStatus? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, LdsOrdinanceStatus? ldsOrdinanceStatus, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, LdsOrdinanceStatus value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(ldsOrdinanceStatus);
-        serializer.Serialize(writer, new LdsOrdinanceStatusJson(ldsOrdinanceStatus));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new LdsOrdinanceStatusJson(value), options);
     }
 }
 

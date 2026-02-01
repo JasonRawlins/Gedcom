@@ -1,6 +1,7 @@
 ﻿using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Gedcom.Core;
-using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
@@ -186,14 +187,14 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
     public override string ToString() => $"{Record.Value}, {DayMonthYear}, (Raw: {DateValue})";
 }
 
-internal class GedcomDateJsonConverter : JsonConverter<GedcomDate>
+internal sealed class GedcomDateJsonConverter : JsonConverter<GedcomDate>
 {
-    public override GedcomDate? ReadJson(JsonReader reader, Type objectType, GedcomDate? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override GedcomDate? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, GedcomDate? gedcomDate, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, GedcomDate value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(gedcomDate);
-        serializer.Serialize(writer, new GedcomDateJson(gedcomDate));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new GedcomDateJson(value), options);
     }
 }
 

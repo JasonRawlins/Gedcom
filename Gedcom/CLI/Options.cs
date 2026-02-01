@@ -1,6 +1,7 @@
 ﻿using CommandLine;
 using Gedcom.Core;
-using Newtonsoft.Json;
+using System;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace Gedcom.CLI;
@@ -60,7 +61,7 @@ public class Options
                     return argumentErrors;
                 }
 
-                var gedcomNetParams = JsonConvert.DeserializeObject<GedcomNetParams>(File.ReadAllText(ParamsFilePath));
+                var gedcomNetParams = JsonSerializer.Deserialize<GedcomNetParams>(File.ReadAllText(ParamsFilePath))!;
 
                 if (gedcomNetParams == null)
                 {

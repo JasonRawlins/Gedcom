@@ -1,5 +1,6 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
@@ -16,14 +17,14 @@ public class SourceRecordEvent : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {DatePeriod}";
 }
 
-internal class SourceRecordEventJsonConverter : JsonConverter<SourceRecordEvent>
+internal sealed class SourceRecordEventJsonConverter : JsonConverter<SourceRecordEvent>
 {
-    public override SourceRecordEvent? ReadJson(JsonReader reader, Type objectType, SourceRecordEvent? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override SourceRecordEvent? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, SourceRecordEvent? sourceRecordEvent, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, SourceRecordEvent value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(sourceRecordEvent);
-        serializer.Serialize(writer, new SourceRecordEventJson(sourceRecordEvent));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new SourceRecordEventJson(value), options);
     }
 }
 

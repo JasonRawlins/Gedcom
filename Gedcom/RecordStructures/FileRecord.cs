@@ -1,10 +1,11 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(FileJsonConverter))]
+[JsonConverter(typeof(FileRecordJsonConverter))]
 public class FileRecord : RecordStructureBase
 {
     public FileRecord() : base() { }
@@ -16,14 +17,14 @@ public class FileRecord : RecordStructureBase
     public override string ToString() => $"{Title}";
 }
 
-internal class FileJsonConverter : JsonConverter<FileRecord>
+internal sealed class FileRecordJsonConverter : JsonConverter<FileRecord>
 {
-    public override FileRecord? ReadJson(JsonReader reader, Type objectType, FileRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override FileRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, FileRecord? fileRecord, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, FileRecord value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(fileRecord);
-        serializer.Serialize(writer, new FileJson(fileRecord));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new FileJson(value), options);
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.GedcomWriters;
 
@@ -77,9 +78,9 @@ public class JsonGedcomWriter(Core.Gedcom gedcom) : IGedcomWriter
         return Encoding.UTF8.GetBytes(GetFamilies());
     }
 
-    private string SerializeObject(object obj)
+    private static string SerializeObject(object obj)
     {
-        return JsonConvert.SerializeObject(obj, JsonSettings.DefaultOptions);
+        return JsonSerializer.Serialize(obj);
     }
 }
 

@@ -1,10 +1,11 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(FamilyJsonConverter))]
+[JsonConverter(typeof(FamilyRecordJsonConverter))]
 public class FamilyRecord : RecordStructureBase
 {
     public FamilyRecord() : base() { }
@@ -37,14 +38,14 @@ public class FamilyRecord : RecordStructureBase
     }
 }
 
-internal class FamilyJsonConverter : JsonConverter<FamilyRecord>
+internal sealed class FamilyRecordJsonConverter : JsonConverter<FamilyRecord>
 {
-    public override FamilyRecord? ReadJson(JsonReader reader, Type objectType, FamilyRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override FamilyRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, FamilyRecord? familyRecord, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, FamilyRecord value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(familyRecord);
-        serializer.Serialize(writer, new FamilyJson(familyRecord));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new FamilyJson(value), options);
     }
 }
 
@@ -61,7 +62,7 @@ public class FamilyJson(FamilyRecord familyRecord) : GedcomJson
     // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
     public EventJson? Marriage { get; set; } = JsonRecord(new EventJson(familyRecord.Marriage));
     public List<MultimediaLinkJson>? MultimediaLinks { get; set; } = JsonList(familyRecord.MultimediaLinks.Select(ml => new MultimediaLinkJson(ml)).ToList());
-    public List<NoteJson>? Notes { get; set; } = JsonList(familyRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(familyRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
     public string? RestrictionNotice { get; set; } = JsonString(familyRecord.RestrictionNotice);
     public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(familyRecord.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
     public string? Submitter { get; set; } = JsonString(familyRecord.Submitter);

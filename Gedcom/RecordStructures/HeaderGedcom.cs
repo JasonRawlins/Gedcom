@@ -1,5 +1,6 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
@@ -16,14 +17,14 @@ public class HeaderGedcom : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {VersionNumber}";
 }
 
-internal class HeaderGedcomJsonConverter : JsonConverter<HeaderGedcom>
+internal sealed class HeaderGedcomJsonConverter : JsonConverter<HeaderGedcom>
 {
-    public override HeaderGedcom? ReadJson(JsonReader reader, Type objectType, HeaderGedcom? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override HeaderGedcom? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, HeaderGedcom? headerGedcom, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, HeaderGedcom value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(headerGedcom);
-        serializer.Serialize(writer, new HeaderGedcomJson(headerGedcom));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new HeaderGedcomJson(value), options);
     }
 }
 

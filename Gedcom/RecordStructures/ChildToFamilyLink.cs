@@ -1,5 +1,6 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
@@ -19,14 +20,14 @@ public class ChildToFamilyLink : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {PedigreeLinkageType}";
 }
 
-internal class ChildToFamilyLinkJsonConverter : JsonConverter<ChildToFamilyLink>
+internal sealed class ChildToFamilyLinkJsonConverter : JsonConverter<ChildToFamilyLink>
 {
-    public override ChildToFamilyLink? ReadJson(JsonReader reader, Type objectType, ChildToFamilyLink? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override ChildToFamilyLink? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, ChildToFamilyLink? childToFamilyLink, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, ChildToFamilyLink value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(childToFamilyLink);
-        serializer.Serialize(writer, new ChildToFamilyLinkJson(childToFamilyLink));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new ChildToFamilyLinkJson(value), options);
     }
 }
 
@@ -34,7 +35,7 @@ public class ChildToFamilyLinkJson(ChildToFamilyLink childToFamilyLink) : Gedcom
 {
     public string? AdoptedByWhichParent { get; set; } = JsonString(childToFamilyLink.AdoptedByWhichParent);
     public string? ChildLinkageStatus { get; set; } = JsonString(childToFamilyLink.ChildLinkageStatus);
-    public List<NoteJson>? Notes { get; set; } = JsonList(childToFamilyLink.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(childToFamilyLink.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
     public string? PedigreeLinkageType { get; set; } = JsonString(childToFamilyLink.PedigreeLinkageType);
     public string? Xref { get; set; } = JsonString(childToFamilyLink.Xref);
     public override string ToString() => $"{Xref}";

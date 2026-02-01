@@ -1,5 +1,6 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
@@ -15,14 +16,14 @@ public class Map : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {PlaceLatitude}, {PlaceLongitude}";
 }
 
-internal class MapJsonConverter : JsonConverter<Map>
+internal sealed class MapJsonConverter : JsonConverter<Map>
 {
-    public override Map? ReadJson(JsonReader reader, Type objectType, Map? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override Map? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, Map? map, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, Map value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(map);
-        serializer.Serialize(writer, new MapJson(map));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new MapJson(value), options);
     }
 }
 

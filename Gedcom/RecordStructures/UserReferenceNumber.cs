@@ -1,5 +1,6 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
@@ -15,17 +16,14 @@ public class UserReferenceNumber : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {UserReferenceType}";
 }
 
-internal class UserReferenceNumberJsonConverter : JsonConverter<UserReferenceNumber>
+internal sealed class UserReferenceNumberJsonConverter : JsonConverter<UserReferenceNumber>
 {
-    public override UserReferenceNumber? ReadJson(JsonReader reader, Type objectType, UserReferenceNumber? existingValue, bool hasExistingValue, JsonSerializer serializer)
-    {
-        throw new NotImplementedException();
-    }
+    public override UserReferenceNumber? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, UserReferenceNumber? userReferenceNumber, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, UserReferenceNumber value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(userReferenceNumber);
-        serializer.Serialize(writer, new UserReferenceNumberJson(userReferenceNumber));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new UserReferenceNumberJson(value), options);
     }
 }
 

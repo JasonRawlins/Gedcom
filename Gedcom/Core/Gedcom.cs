@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using Gedcom.RecordStructures;
 
 namespace Gedcom.Core;
@@ -65,8 +66,8 @@ public class Gedcom : RecordStructureBase
     public List<MultimediaRecord> GetObjectRecords() => GetRecords<MultimediaRecord>(Tag.Object);
 
     // Note (NOTE)
-    public NoteRecord GetNoteRecord(string xref) => GetRecord<NoteRecord>(xref);
-    public List<NoteRecord> GetNoteRecords() => GetRecords<NoteRecord>(Tag.Note);
+    //public NoteRecord GetNoteRecord(string xref) => GetRecord<NoteRecord>(xref);
+    //public List<NoteRecord> GetNoteRecords() => GetRecords<NoteRecord>(Tag.Note);
 
     // Repository (REPO)
     public RepositoryRecord GetRepositoryRecord(string xref) => GetRecord<RepositoryRecord>(xref);
@@ -128,11 +129,11 @@ public class Gedcom : RecordStructureBase
 
 internal class GedcomJsonConverter : JsonConverter<Gedcom>
 {
-    public override Gedcom? ReadJson(JsonReader reader, Type objectType, Gedcom? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override Gedcom? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, Gedcom? gedcom, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, Gedcom gedcom, JsonSerializerOptions options)
     {
-        if (gedcom == null) throw new ArgumentNullException(nameof(gedcom));
+        ArgumentNullException.ThrowIfNull(gedcom);
 
         var gedcomObject = new
         {
@@ -142,7 +143,7 @@ internal class GedcomJsonConverter : JsonConverter<Gedcom>
             Sources = gedcom.GetSourceRecords()
         };
 
-        serializer.Serialize(writer, gedcomObject);
+        JsonSerializer.Serialize(writer, gedcomObject);
     }
 }
 

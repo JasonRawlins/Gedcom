@@ -1,10 +1,11 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(SourceDataJsonConverter))]
+[JsonConverter(typeof(SourceRecordDataJsonConverter))]
 public class SourceRecordData : RecordStructureBase
 {
     public SourceRecordData() : base() { }
@@ -17,21 +18,21 @@ public class SourceRecordData : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {ResponsibleAgency}";
 }
 
-internal class SourceDataJsonConverter : JsonConverter<SourceRecordData>
+internal sealed class SourceRecordDataJsonConverter : JsonConverter<SourceRecordData>
 {
-    public override SourceRecordData? ReadJson(JsonReader reader, Type objectType, SourceRecordData? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override SourceRecordData? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, SourceRecordData? sourceRecordData, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, SourceRecordData value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(sourceRecordData);
-        serializer.Serialize(writer, new SourceDataJson(sourceRecordData));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new SourceDataJson(value), options);
     }
 }
 
 public class SourceDataJson(SourceRecordData sourceRecordData) : GedcomJson
 {
     public List<SourceRecordEventJson>? EventsRecorded { get; set; } = JsonList(sourceRecordData.RecordEvents.Select(re => new SourceRecordEventJson(re)).ToList());
-    public List<NoteJson>? Notes { get; set; } = JsonList(sourceRecordData.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(sourceRecordData.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
     public string? ResponsibleAgency { get; set; } = JsonString(sourceRecordData.ResponsibleAgency);
 
     public override string ToString() => $"{ResponsibleAgency}";

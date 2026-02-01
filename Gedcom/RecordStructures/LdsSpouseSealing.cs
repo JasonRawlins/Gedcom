@@ -1,5 +1,6 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
@@ -20,14 +21,14 @@ public class LdsSpouseSealing : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {TempleCode}, {DateLdsOrdinance}";
 }
 
-internal class LdsSpouseSealingJsonConverter : JsonConverter<LdsSpouseSealing>
+internal sealed class LdsSpouseSealingJsonConverter : JsonConverter<LdsSpouseSealing>
 {
-    public override LdsSpouseSealing? ReadJson(JsonReader reader, Type objectType, LdsSpouseSealing? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override LdsSpouseSealing? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, LdsSpouseSealing? ldsSpouseSealing, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, LdsSpouseSealing value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(ldsSpouseSealing);
-        serializer.Serialize(writer, new LdsSpouseSealingJson(ldsSpouseSealing));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new LdsSpouseSealingJson(value), options);
     }
 }
 
@@ -35,7 +36,7 @@ public class LdsSpouseSealingJson(LdsSpouseSealing ldsSpouseSealing) : GedcomJso
 {
     public string? DateLdsOrdinance { get; set; } = JsonString(ldsSpouseSealing.DateLdsOrdinance);
     public LdsOrdinanceStatusJson? LdsSpouseSealingDateStatus { get; set; } = JsonRecord(new LdsOrdinanceStatusJson(ldsSpouseSealing.LdsSpouseSealingDateStatus));
-    public List<NoteJson>? Notes { get; set; } = JsonList(ldsSpouseSealing.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(ldsSpouseSealing.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
     public string? PlaceLivingOrdinance { get; set; } = JsonString(ldsSpouseSealing.PlaceLivingOrdinance);
     public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(ldsSpouseSealing.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
     public string? TempleCode { get; set; } = JsonString(ldsSpouseSealing.TempleCode);

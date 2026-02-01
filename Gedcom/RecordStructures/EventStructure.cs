@@ -1,10 +1,11 @@
-﻿using Gedcom.Core;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using Gedcom.Core;
 using Gedcom.Entities;
-using Newtonsoft.Json;
 
 namespace Gedcom.RecordStructures;
 
-[JsonConverter(typeof(EventJsonConverter))]
+[JsonConverter(typeof(EventStructureJsonConverter))]
 public class EventStructure : RecordStructureBase, IComparable<EventStructure>
 {
     public EventStructure() { }
@@ -93,15 +94,14 @@ public class EventStructure : RecordStructureBase, IComparable<EventStructure>
     public override string ToString() => $"{Name}, {DateValue}";
 }
 
-internal class EventJsonConverter : JsonConverter<EventStructure>
+internal sealed class EventStructureJsonConverter : JsonConverter<EventStructure>
 {
-    public override EventStructure? ReadJson(JsonReader reader, Type objectType, EventStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override EventStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, EventStructure? eventStructure, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, EventStructure value, JsonSerializerOptions options)
     {
-        if (eventStructure == null) throw new ArgumentNullException(nameof(eventStructure));
-
-        serializer.Serialize(writer, new EventJson(eventStructure));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new EventJson(value), options);
     }
 }
 

@@ -1,5 +1,6 @@
-﻿using Gedcom.Core;
-using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using Gedcom.Core;
 
 namespace Gedcom.RecordStructures;
 
@@ -16,21 +17,21 @@ public class ChangeDate : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {GedcomDate.DayMonthYear}";
 }
 
-internal class ChangeDateJsonConverter : JsonConverter<ChangeDate>
+internal sealed class ChangeDateJsonConverter : JsonConverter<ChangeDate>
 {
-    public override ChangeDate? ReadJson(JsonReader reader, Type objectType, ChangeDate? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override ChangeDate? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, ChangeDate? changeDate, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, ChangeDate value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(changeDate);
-        serializer.Serialize(writer, new ChangeDateJson(changeDate));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new ChangeDateJson(value), options);
     }
 }
 
 public class ChangeDateJson(ChangeDate changeDate) : GedcomJson
 {
     public GedcomDateJson? ChangeDate { get; set; } = JsonRecord(new GedcomDateJson(changeDate.GedcomDate));
-    public List<NoteJson>? Notes { get; set; } = JsonList(changeDate.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(changeDate.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
     public override string ToString() => $"{ChangeDate}";
 }
 

@@ -1,5 +1,6 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
@@ -21,14 +22,14 @@ public class SourceCitation : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {WhereWithinSource}";
 }
 
-internal class SourceCitationJsonConverter : JsonConverter<SourceCitation>
+internal sealed class SourceCitationJsonConverter : JsonConverter<SourceCitation>
 {
-    public override SourceCitation? ReadJson(JsonReader reader, Type objectType, SourceCitation? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override SourceCitation? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, SourceCitation? sourceCitation, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, SourceCitation value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(sourceCitation);
-        serializer.Serialize(writer, new SourceCitationJson(sourceCitation));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new SourceCitationJson(value), options);
     }
 }
 

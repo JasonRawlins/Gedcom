@@ -1,5 +1,5 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 

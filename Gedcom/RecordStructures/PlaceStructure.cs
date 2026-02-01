@@ -1,10 +1,11 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(PlaceJsonConverter))]
+[JsonConverter(typeof(PlaceStructureJsonConverter))]
 public class PlaceStructure : RecordStructureBase
 {
     public PlaceStructure() : base() { }
@@ -20,14 +21,14 @@ public class PlaceStructure : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {PlaceName}";
 }
 
-internal class PlaceJsonConverter : JsonConverter<PlaceStructure>
+internal sealed class PlaceStructureJsonConverter : JsonConverter<PlaceStructure>
 {
-    public override PlaceStructure? ReadJson(JsonReader reader, Type objectType, PlaceStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override PlaceStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, PlaceStructure? placeStructure, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, PlaceStructure value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(placeStructure);
-        serializer.Serialize(writer, new PlaceJson(placeStructure));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new PlaceJson(value), options);
     }
 }
 
@@ -36,7 +37,7 @@ public class PlaceJson(PlaceStructure placeStructure) : GedcomJson
     public string? Hierarchy { get; set; } = JsonString(placeStructure.PlaceHierarchy);
     public MapJson? Map { get; set; } = JsonRecord(new MapJson(placeStructure.Map));
     public string? Name { get; set; } = JsonString(placeStructure.PlaceName);
-    public List<NoteJson>? Notes { get; set; } = JsonList(placeStructure.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(placeStructure.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
     public List<NameVariationJson>? PhoneticVariations { get; set; } = JsonList(placeStructure.PlacePhoneticVariations.Select(ppv => new NameVariationJson(ppv)).ToList());
     public List<NameVariationJson>? RomanizedVariations { get; set; } = JsonList(placeStructure.PlaceRomanizedVariations.Select(prv => new NameVariationJson(prv)).ToList());
 

@@ -1,5 +1,6 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
@@ -15,14 +16,14 @@ public class MultimediaFileReferenceNumber : RecordStructureBase
     public override string ToString() => $"{Record.Value}";
 }
 
-internal class MultimediaFileReferenceNumberJsonConverter : JsonConverter<MultimediaFileReferenceNumber>
+internal sealed class MultimediaFileReferenceNumberJsonConverter : JsonConverter<MultimediaFileReferenceNumber>
 {
-    public override MultimediaFileReferenceNumber? ReadJson(JsonReader reader, Type objectType, MultimediaFileReferenceNumber? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override MultimediaFileReferenceNumber? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, MultimediaFileReferenceNumber? multimediaFileReferenceNumber, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, MultimediaFileReferenceNumber value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(multimediaFileReferenceNumber);
-        serializer.Serialize(writer, new MultimediaFileReferenceNumberJson(multimediaFileReferenceNumber));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new MultimediaFileReferenceNumberJson(value), options);
     }
 }
 

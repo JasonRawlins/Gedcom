@@ -1,10 +1,11 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(SubmitterJsonConverter))]
+[JsonConverter(typeof(SubmitterRecordJsonConverter))]
 public class SubmitterRecord : RecordStructureBase
 {
     public SubmitterRecord() : base() { }
@@ -22,14 +23,14 @@ public class SubmitterRecord : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {SubmitterName}";
 }
 
-internal class SubmitterJsonConverter : JsonConverter<SubmitterRecord>
+internal sealed class SubmitterRecordJsonConverter : JsonConverter<SubmitterRecord>
 {
-    public override SubmitterRecord? ReadJson(JsonReader reader, Type objectType, SubmitterRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override SubmitterRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, SubmitterRecord? submitterRecord, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, SubmitterRecord value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(submitterRecord);
-        serializer.Serialize(writer, new SubmitterJson(submitterRecord));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new SubmitterJson(value), options);
     }
 }
 
@@ -40,7 +41,7 @@ public class SubmitterJson(SubmitterRecord submitterRecord) : GedcomJson
     public GedcomDateJson? ChangeDate { get; set; } = JsonRecord(new GedcomDateJson(submitterRecord.ChangeDate));
     public List<string>? LanguagePreferences { get; set; } = JsonList(submitterRecord.LanguagePreferences);
     public List<MultimediaLinkJson>? MultimediaLinks { get; set; } = JsonList(submitterRecord.MultimediaLinks.Select(ml => new MultimediaLinkJson(ml)).ToList());
-    public List<NoteJson>? Notes { get; set; } = JsonList(submitterRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(submitterRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
     public string? SubmitterName { get; set; } = JsonString(submitterRecord.SubmitterName);
     public string? SubmitterRegisteredReferenceNumber { get; set; } = JsonString(submitterRecord.SubmitterRegisteredRfn);
 

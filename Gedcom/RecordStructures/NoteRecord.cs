@@ -1,52 +1,53 @@
-﻿using Gedcom.Core;
-using Newtonsoft.Json;
+﻿//using Gedcom.Core;
+//using System.Text.Json;
+//using System.Text.Json.Serialization;
 
-namespace Gedcom.RecordStructures;
+//namespace Gedcom.RecordStructures;
 
-// The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(NoteRecordJsonConverter))]
-public class NoteRecord : RecordStructureBase
-{
-    public NoteRecord() : base() { }
-    public NoteRecord(Record record) : base(record) { }
+//// The Gedcom Standard 5.5.1 documentation is at the end of this file.
+//[JsonConverter(typeof(NoteRecordJsonConverter))]
+//public class NoteRecord : RecordStructureBase
+//{
+//    public NoteRecord() : base() { }
+//    public NoteRecord(Record record) : base(record) { }
 
-    public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
-    public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
-    public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(Tag.Reference);
+//    public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
+//    public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
+//    public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(Tag.Reference);
 
-    public override string ToString() => $"{Record.Value}, {AutomatedRecordId}";
-}
+//    public override string ToString() => $"{Record.Value}, {AutomatedRecordId}";
+//}
 
-internal class NoteRecordJsonConverter : JsonConverter<NoteRecord>
-{
-    public override NoteRecord? ReadJson(JsonReader reader, Type objectType, NoteRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+//internal sealed class NoteRecordJsonConverter : JsonConverter<NoteRecord>
+//{
+//    public override NoteRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, NoteRecord? noteRecord, JsonSerializer serializer)
-    {
-        ArgumentNullException.ThrowIfNull(noteRecord);
-        serializer.Serialize(writer, new NoteRecordJson(noteRecord));
-    }
-}
+//    public override void Write(Utf8JsonWriter writer, NoteRecord value, JsonSerializerOptions options)
+//    {
+//        ArgumentNullException.ThrowIfNull(value);
+//        JsonSerializer.Serialize(writer, new NoteJson(value), options);
+//    }
+//}
 
-public class NoteRecordJson(NoteRecord noteRecord) : GedcomJson
-{
-    public string? AutomatedRecordId { get; set; } = JsonString(noteRecord.AutomatedRecordId);
-    public ChangeDateJson? ChangeDate { get; set; } = JsonRecord(new ChangeDateJson(noteRecord.ChangeDate));
-    public UserReferenceNumberJson? UserReferenceNumber { get; set; } = JsonRecord(new UserReferenceNumberJson(noteRecord.UserReferenceNumber));
+//public class NoteJson(NoteRecord noteRecord) : GedcomJson
+//{
+//    public string? AutomatedRecordId { get; set; } = JsonString(noteRecord.AutomatedRecordId);
+//    public ChangeDateJson? ChangeDate { get; set; } = JsonRecord(new ChangeDateJson(noteRecord.ChangeDate));
+//    public UserReferenceNumberJson? UserReferenceNumber { get; set; } = JsonRecord(new UserReferenceNumberJson(noteRecord.UserReferenceNumber));
 
-    public override string ToString() => $"{AutomatedRecordId}";
-}
+//    public override string ToString() => $"{AutomatedRecordId}";
+//}
 
-#region NOTE_RECORD (NOTE) p. 27
-/* 
+//#region NOTE_RECORD (NOTE) p. 27
+///* 
 
-NOTE_RECORD:=
+//NOTE_RECORD:=
 
-n @<XREF:NOTE>@ NOTE <SUBMITTER_TEXT> {1:1} p.63
-    +1 REFN <USER_REFERENCE_NUMBER> {0:M} p.63, 64
-        +2 TYPE <USER_REFERENCE_TYPE> {0:1} p.64
-    +1 RIN <AUTOMATED_RECORD_ID> {0:1} p.43
-    +1 <<CHANGE_DATE>> {0:1} p.31
+//n @<XREF:NOTE>@ NOTE <SUBMITTER_TEXT> {1:1} p.63
+//    +1 REFN <USER_REFERENCE_NUMBER> {0:M} p.63, 64
+//        +2 TYPE <USER_REFERENCE_TYPE> {0:1} p.64
+//    +1 RIN <AUTOMATED_RECORD_ID> {0:1} p.43
+//    +1 <<CHANGE_DATE>> {0:1} p.31
 
-*/
-#endregion
+//*/
+//#endregion

@@ -1,10 +1,11 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(FormJsonConverter))]
+[JsonConverter(typeof(FormRecordJsonConverter))]
 public class FormRecord : RecordStructureBase
 {
     public FormRecord() : base() { }
@@ -17,14 +18,14 @@ public class FormRecord : RecordStructureBase
     public override string ToString() => $"{Type}";
 }
 
-internal class FormJsonConverter : JsonConverter<FormRecord>
+internal sealed class FormRecordJsonConverter : JsonConverter<FormRecord>
 {
-    public override FormRecord? ReadJson(JsonReader reader, Type objectType, FormRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override FormRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, FormRecord? formRecord, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, FormRecord value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(formRecord);
-        serializer.Serialize(writer, new FormJson(formRecord));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new FormJson(value), options);
     }
 }
 

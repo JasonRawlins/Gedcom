@@ -1,5 +1,6 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
@@ -16,21 +17,21 @@ public class SourceRepositoryCitation : RecordStructureBase
     public override string ToString() => $"{Record.Value}";
 }
 
-internal class SourceRepositoryCitationJsonConverter : JsonConverter<SourceRepositoryCitation>
+internal sealed class SourceRepositoryCitationJsonConverter : JsonConverter<SourceRepositoryCitation>
 {
-    public override SourceRepositoryCitation? ReadJson(JsonReader reader, Type objectType, SourceRepositoryCitation? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override SourceRepositoryCitation? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, SourceRepositoryCitation? sourceRepositoryCitation, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, SourceRepositoryCitation value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(sourceRepositoryCitation);
-        serializer.Serialize(writer, new SourceRepositoryCitationJson(sourceRepositoryCitation));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new SourceRepositoryCitationJson(value), options);
     }
 }
 
 public class SourceRepositoryCitationJson(SourceRepositoryCitation sourceRepositoryCitation) : GedcomJson
 {
     public List<CallNumberJson>? CallNumbers { get; set; } = JsonList(sourceRepositoryCitation.CallNumbers.Select(cn => new CallNumberJson(cn)).ToList());
-    public List<NoteJson>? Notes { get; set; } = JsonList(sourceRepositoryCitation.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(sourceRepositoryCitation.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
 
     public override string ToString() => string.Join(", ", CallNumbers ?? []);
 }

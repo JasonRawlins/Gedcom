@@ -1,10 +1,11 @@
-﻿using Gedcom.Core;
-using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using Gedcom.Core;
 
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(AssociationJsonConverter))]
+[JsonConverter(typeof(AssociationStructureJsonConverter))]
 public class AssociationStructure : RecordStructureBase
 {
     public AssociationStructure() : base() { }
@@ -17,20 +18,20 @@ public class AssociationStructure : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {RelationIsDescriptor}";
 }
 
-internal class AssociationJsonConverter : JsonConverter<AssociationStructure>
+internal sealed class AssociationStructureJsonConverter : JsonConverter<AssociationStructure>
 {
-    public override AssociationStructure? ReadJson(JsonReader reader, Type objectType, AssociationStructure? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override AssociationStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, AssociationStructure? associationStructure, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, AssociationStructure value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(associationStructure);
-        serializer.Serialize(writer, new AssociationJson(associationStructure));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new AssociationJson(value), options);
     }
 }
 
 public class AssociationJson(AssociationStructure associationStructure) : GedcomJson
 {
-    public List<NoteJson>? Notes { get; set; } = JsonList(associationStructure.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(associationStructure.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
     public string? RelationIsDescriptor { get; set; } = JsonString(associationStructure.RelationIsDescriptor);
     public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(associationStructure.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
     public override string ToString() => $"{RelationIsDescriptor}";

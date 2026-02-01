@@ -1,10 +1,11 @@
 ﻿using Gedcom.Core;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(MultimediaJsonConverter))]
+[JsonConverter(typeof(MultimediaRecordJsonConverter))]
 public class MultimediaRecord : RecordStructureBase
 {
     public MultimediaRecord() : base() { }
@@ -29,14 +30,14 @@ public class MultimediaRecord : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {AutomatedRecordId}, {DescriptiveTitle}";
 }
 
-internal class MultimediaJsonConverter : JsonConverter<MultimediaRecord>
+internal sealed class MultimediaRecordJsonConverter : JsonConverter<MultimediaRecord>
 {
-    public override MultimediaRecord? ReadJson(JsonReader reader, Type objectType, MultimediaRecord? existingValue, bool hasExistingValue, JsonSerializer serializer) => throw new NotImplementedException();
+    public override MultimediaRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void WriteJson(JsonWriter writer, MultimediaRecord? multimediaRecord, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, MultimediaRecord value, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(multimediaRecord);
-        serializer.Serialize(writer, new MultimediaJson(multimediaRecord));
+        ArgumentNullException.ThrowIfNull(value);
+        JsonSerializer.Serialize(writer, new MultimediaJson(value), options);
     }
 }
 
@@ -50,7 +51,7 @@ public class MultimediaJson(MultimediaRecord multimediaRecord) : GedcomJson
     public FileJson? File { get; set; } = JsonRecord(new FileJson(multimediaRecord.FileRecord));
     public List<string>? MultimediaFileReferenceNumbers { get; set; } = JsonList(multimediaRecord.MultimediaFileReferenceNumbers);
     public MultimediaFormatJson? MultimediaFormat { get; set; } = JsonRecord(new MultimediaFormatJson(multimediaRecord.MultimediaFormat));
-    public List<NoteJson>? Notes { get; set; } = JsonList(multimediaRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(multimediaRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
     public string? ObjectId { get; set; } = JsonString(multimediaRecord.ObjectId);
     public PlaceJson? Place { get; set; } = JsonRecord(new PlaceJson(multimediaRecord.PlaceStructure));
     public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(multimediaRecord.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
