@@ -11,42 +11,87 @@ public class IndividualRecord : RecordStructureBase
     public IndividualRecord() { }
     public IndividualRecord(Record record) : base(record) { }
 
-    public List<string> Aliases => [.. List(r => r.Tag.Equals(Tag.Alias)).Select(r => r.Value)];
-    public List<string> AncestorInterests => [.. List(r => r.Tag.Equals(Tag.AncesInterest)).Select(r => r.Value)];
-    public string AncestralFileNumber => GetValue(Tag.AncestralFileNumber);
-    public List<AssociationStructure> AssociationStructures => List<AssociationStructure>(Tag.Associates);
-    public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
-    public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
-    public List<ChildToFamilyLink> ChildToFamilyLinks => List<ChildToFamilyLink>(Tag.FamilyChild);
-    public List<string> DescendantInterests => [.. List(r => r.Tag.Equals(Tag.DescendantInterest)).Select(r => r.Value)];
-    //public List<IndividualAttributeStructure> IndividualAttributeStructures => List<IndividualAttributeStructure>(Record.Tag);
-    public List<EventStructure> IndividualEventStructures => [.. List(IndividualEventStructure.IsIndividualEventStructure).Select(r => new EventStructure(r))];
-    public List<LdsIndividualOrdinance> LdsIndividualOrdinances => List<LdsIndividualOrdinance>(Tag.Ordinance);
-    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
-    public string PermanentRecordFileNumber => GetValue(Tag.RecordFileNumber);
-    public List<PersonalNameStructure> PersonalNameStructures => List<PersonalNameStructure>(Tag.Name);
-    public string RestrictionNotice => GetValue(Tag.Restriction);
-    public string SexValue => GetValue(Tag.Sex);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.Source);
-    public List<SpouseToFamilyLink> SpouseToFamilyLinks => List<SpouseToFamilyLink>(Tag.FamilySpouse);
-    public string Submitter => GetValue(Tag.Submission);
-    public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(Tag.Reference);
+    private List<string>? aliases = null;
+    public List<string> Aliases => aliases ??= [.. List(r => r.Tag.Equals(Tag.Alias)).Select(r => r.Value)];
+
+    private List<string>? ancestorInterests = null;
+    public List<string> AncestorInterests => ancestorInterests ??= [.. List(r => r.Tag.Equals(Tag.AncesInterest)).Select(r => r.Value)];
+
+    private string? ancestralFileNumber = null;
+    public string AncestralFileNumber => ancestralFileNumber ??= GetValue(Tag.AncestralFileNumber);
+
+    private List<AssociationStructure>? associationStructures = null;
+    public List<AssociationStructure> AssociationStructures => associationStructures ??= List<AssociationStructure>(Tag.Associates);
+
+    private string? automatedRecordId = null;
+    public string AutomatedRecordId => automatedRecordId ??= GetValue(Tag.RecordIdNumber);
+
+    private ChangeDate? changeDate = null;
+    public ChangeDate ChangeDate => changeDate ??= First<ChangeDate>(Tag.Change);
+
+    private List<ChildToFamilyLink>? childToFamilyLinks = null;
+    public List<ChildToFamilyLink> ChildToFamilyLinks => childToFamilyLinks ??= List<ChildToFamilyLink>(Tag.FamilyChild);
+
+    private List<string>? descendantInterests = null;
+    public List<string> DescendantInterests => descendantInterests ??= [.. List(r => r.Tag.Equals(Tag.DescendantInterest)).Select(r => r.Value)];
+
+    private List<EventStructure>? individualEventStructures = null;
+    public List<EventStructure> IndividualEventStructures => individualEventStructures ??= [.. List(IndividualEventStructure.IsIndividualEventStructure).Select(r => new EventStructure(r))];
+
+    private List<LdsIndividualOrdinance>? ldsIndividualOrdinances = null;
+    public List<LdsIndividualOrdinance> LdsIndividualOrdinances => ldsIndividualOrdinances ??= List<LdsIndividualOrdinance>(Tag.Ordinance);
+
+    private List<MultimediaLink>? multimediaLinks = null;
+    public List<MultimediaLink> MultimediaLinks => multimediaLinks ??= List<MultimediaLink>(Tag.Object);
+
+    private List<NoteStructure>? noteStructures = null;
+    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+
+    private string? permanentRecordFileNumber = null;
+    public string PermanentRecordFileNumber => permanentRecordFileNumber ??= GetValue(Tag.RecordFileNumber);
+
+    private List<PersonalNameStructure>? personalNameStructures = null;
+    public List<PersonalNameStructure> PersonalNameStructures => personalNameStructures ??= List<PersonalNameStructure>(Tag.Name);
+
+    private string? restrictionNotice = null;
+    public string RestrictionNotice => restrictionNotice ??= GetValue(Tag.Restriction);
+
+    private string? sexValue = null;
+    public string SexValue => sexValue ??= GetValue(Tag.Sex);
+
+    private List<SourceCitation>? sourceCitations = null;
+    public List<SourceCitation> SourceCitations => sourceCitations ??= List<SourceCitation>(Tag.Source);
+
+    private List<SpouseToFamilyLink>? spouseToFamilyLinks = null;
+    public List<SpouseToFamilyLink> SpouseToFamilyLinks => spouseToFamilyLinks ??= List<SpouseToFamilyLink>(Tag.FamilySpouse);
+
+    private string? submitter = null;
+    public string Submitter => submitter ??= GetValue(Tag.Submission);
+
+    private List<UserReferenceNumber>? userReferenceNumbers = null;
+    public List<UserReferenceNumber> UserReferenceNumbers => userReferenceNumbers ??= List<UserReferenceNumber>(Tag.Reference);
+   
     public string Xref => Record.Value;
 
     #region Convenience properties
 
     public string FullName => $"{Given}, {Surname}";
+    
     public string Given => PersonalNameStructures.Count > 0 ? PersonalNameStructures[0].Given : "";
-    public string PersonalName => PersonalNameStructures.Count > 0 ? PersonalNameStructures[0].NamePersonal : "";
+   
+    public string NamePersonal => PersonalNameStructures.Count > 0 ? PersonalNameStructures[0].NamePersonal : "";
+   
     public string Surname => PersonalNameStructures.Count > 0 ? PersonalNameStructures[0].Surname : "";
 
     #endregion
 
     #region Strongly-typed IndividualEventStructures
 
-    public EventStructure Birth => First<EventStructure>(Tag.Birth);
-    public EventStructure Death => First<EventStructure>(Tag.Death);
+    private EventStructure? birth = null;
+    public EventStructure Birth => birth ??= First<EventStructure>(Tag.Birth);
+
+    private EventStructure? death = null;
+    public EventStructure Death => death ??= First<EventStructure>(Tag.Death);
 
     #endregion
 

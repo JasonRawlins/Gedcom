@@ -11,8 +11,11 @@ public class FileRecord : RecordStructureBase
     public FileRecord() : base() { }
     public FileRecord(Record record) : base(record) { }
 
-    public FormRecord FormRecord => First<FormRecord>(Tag.Format);
-    public string Title => GetValue(Tag.Title);
+    private FormRecord? formRecord = null;
+    public FormRecord FormRecord => formRecord ??= First<FormRecord>(Tag.Format);
+
+    private string? title = null;
+    public string Title => title ??= GetValue(Tag.Title);
 
     public override string ToString() => $"{Title}";
 }

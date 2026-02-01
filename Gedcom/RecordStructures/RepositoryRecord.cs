@@ -11,17 +11,39 @@ public class RepositoryRecord : RecordStructureBase, IAddressStructure
     public RepositoryRecord() : base() { }
     public RepositoryRecord(Record record) : base(record) { }
 
-    public List<string> AddressEmails => ListValues(Tag.Email);
-    public List<string> AddressFaxNumbers => ListValues(Tag.Facimilie);
-    public AddressStructure AddressStructure => First<AddressStructure>(Tag.Address);
-    public List<string> AddressWebPages => ListValues(Tag.Web);
-    public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
-    public CallNumber CallNumber => First<CallNumber>(Tag.CallNumber);
-    public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
-    public string Name => GetValue(Tag.Name);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
-    public List<string> PhoneNumbers => ListValues(Tag.Phone);
-    public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(Tag.Reference);
+    private List<string>? addressEmails = null;
+    public List<string> AddressEmails => addressEmails ??= ListValues(Tag.Email);
+
+    private List<string>? addressFaxNumbers = null;
+    public List<string> AddressFaxNumbers => addressFaxNumbers ??= ListValues(Tag.Facimilie);
+
+    private AddressStructure? addressStructure = null;
+    public AddressStructure AddressStructure => addressStructure ??= First<AddressStructure>(Tag.Address);
+
+    private List<string>? addressWebPages = null;
+    public List<string> AddressWebPages => addressWebPages ??= ListValues(Tag.Web);
+
+    private string? automatedRecordId = null;
+    public string AutomatedRecordId => automatedRecordId ??= GetValue(Tag.RecordIdNumber);
+
+    private CallNumber? callNumber = null;
+    public CallNumber CallNumber => callNumber ??= First<CallNumber>(Tag.CallNumber);
+
+    private ChangeDate? changeDate = null;
+    public ChangeDate ChangeDate => changeDate ??= First<ChangeDate>(Tag.Change);
+
+    private string? name = null;
+    public string Name => name ??= GetValue(Tag.Name);
+
+    private List<NoteStructure>? noteStructures = null;
+    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+
+    private List<string>? phoneNumbers = null;
+    public List<string> PhoneNumbers => phoneNumbers ??= ListValues(Tag.Phone);
+
+    private UserReferenceNumber? userReferenceNumber = null;
+    public UserReferenceNumber UserReferenceNumber => userReferenceNumber ?? First<UserReferenceNumber>(Tag.Reference);
+    
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {Name}";

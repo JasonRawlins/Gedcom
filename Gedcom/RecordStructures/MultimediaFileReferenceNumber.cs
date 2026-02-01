@@ -11,7 +11,8 @@ public class MultimediaFileReferenceNumber : RecordStructureBase
     public MultimediaFileReferenceNumber() { }
     public MultimediaFileReferenceNumber(Record record) : base(record) { }
 
-    public MultimediaFormat MultimediaFormat => First<MultimediaFormat>(Tag.Format);
+    private MultimediaFormat? multimediaFormat = null;
+    public MultimediaFormat MultimediaFormat => multimediaFormat ??= First<MultimediaFormat>(Tag.Format);
 
     public override string ToString() => $"{Record.Value}";
 }

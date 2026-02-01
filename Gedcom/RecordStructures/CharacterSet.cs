@@ -11,7 +11,8 @@ public class CharacterSet : RecordStructureBase
     public CharacterSet() : base() { }
     public CharacterSet(Record record) : base(record) { }
 
-    public string VersionNumber => GetValue(Tag.Version);
+    private string? versionNumber = null;
+    public string VersionNumber => versionNumber ??= GetValue(Tag.Version);
 
     public override string ToString() => $"{Record.Value}, {VersionNumber}";
 }

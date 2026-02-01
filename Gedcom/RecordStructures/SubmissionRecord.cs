@@ -11,15 +11,33 @@ public class SubmissionRecord : RecordStructureBase
     public SubmissionRecord() : base() { }
     public SubmissionRecord(Record record) : base(record) { }
 
-    public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
-    public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
-    public string GenerationsOfAncestors => GetValue(Tag.Ancestors);
-    public string GenerationsOfDescendants => GetValue(Tag.Descendants);
-    public string NameOfFamilyFile => GetValue(Tag.FamilyFile);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
-    public string OrdinanceProcessFlag => GetValue(Tag.Ordinance);
-    public string Submitter => GetValue(Tag.Submitter);
-    public string TempleCode => GetValue(Tag.Temple);
+    private string? automatedRecordId = null;
+    public string AutomatedRecordId => automatedRecordId ??= GetValue(Tag.RecordIdNumber);
+
+    private ChangeDate? changeDate = null;
+    public ChangeDate ChangeDate => changeDate ??= First<ChangeDate>(Tag.Change);
+
+    private string? generationsOfAncestors = null;
+    public string GenerationsOfAncestors => generationsOfAncestors ??= GetValue(Tag.Ancestors);
+
+    private string? generationsOfDescendants = null;
+    public string GenerationsOfDescendants => generationsOfDescendants ??= GetValue(Tag.Descendants);
+
+    private string? nameOfFamilyFile = null;
+    public string NameOfFamilyFile => nameOfFamilyFile ??= GetValue(Tag.FamilyFile);
+
+    private List<NoteStructure>? noteStructures = null;
+    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+
+    private string? ordinanceProcessFlag = null;
+    public string OrdinanceProcessFlag => ordinanceProcessFlag ??= GetValue(Tag.Ordinance);
+
+    private string? submitter = null;
+    public string Submitter => submitter ??= GetValue(Tag.Submitter);
+
+    private string? templeCode = null;
+    public string TempleCode => templeCode ??= GetValue(Tag.Temple);
+
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {Submitter}";

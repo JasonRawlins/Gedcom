@@ -11,15 +11,32 @@ public class EventStructure : RecordStructureBase, IComparable<EventStructure>
     public EventStructure() { }
     public EventStructure(Record record) : base(record) { }
 
-    public AddressStructure AddressStructure => First<AddressStructure>(Tag.Address);
-    public string AgeAtEvent => GetValue(Tag.Age);
-    public string CauseOfEvent => GetValue(Tag.Cause);
-    public ChildToFamilyLink ChildToFamilyLink => First<ChildToFamilyLink>(Tag.FamilyChild);
-    public string DateValue => GetValue(Tag.Date);
-    public string EventOrFactClassification => GetValue(Tag.Type);
+    private AddressStructure? addressStructure = null;
+    public AddressStructure AddressStructure => addressStructure ??= First<AddressStructure>(Tag.Address);
+
+    private string? ageAtEvent = null;
+    public string AgeAtEvent => ageAtEvent ??= GetValue(Tag.Age);
+
+    private string? causeOfEvent = null;
+    public string CauseOfEvent => causeOfEvent ??= GetValue(Tag.Cause);
+
+    private ChildToFamilyLink? childToFamilyLink = null;
+    public ChildToFamilyLink ChildToFamilyLink => childToFamilyLink ??= First<ChildToFamilyLink>(Tag.FamilyChild);
+
+    private string? dateValue = null;
+    public string DateValue => dateValue ??= GetValue(Tag.Date);
+
+    private string? eventOrFactClassification = null;
+    public string EventOrFactClassification => eventOrFactClassification ??= GetValue(Tag.Type);
+   
     public virtual EventType EventType { get; set; }
-    public GedcomDate GedcomDate => GedcomDate.Parse(DateValue);
-    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
+
+    private GedcomDate? gedcomDate = null;
+    public GedcomDate GedcomDate => gedcomDate ??= GedcomDate.Parse(DateValue);
+
+    private List<MultimediaLink>? multimediaLinks = null;
+    public List<MultimediaLink> MultimediaLinks => multimediaLinks ??= List<MultimediaLink>(Tag.Object);
+    
     public string Name
     {
         get
@@ -70,12 +87,24 @@ public class EventStructure : RecordStructureBase, IComparable<EventStructure>
             };
         }
     }
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
-    public PlaceStructure PlaceStructure => First<PlaceStructure>(Tag.Place);
-    public string ReligiousAffiliation => GetValue(Tag.Religion);
-    public string ResponsibleAgency => GetValue(Tag.Agency);
-    public string RestrictionNotice => GetValue(Tag.Restriction);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.Source);
+
+    private List<NoteStructure>? noteStructures = null;
+    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+
+    private PlaceStructure? placeStructure = null;
+    public PlaceStructure PlaceStructure => placeStructure ??= First<PlaceStructure>(Tag.Place);
+
+    private string? religiousAffiliation = null;
+    public string ReligiousAffiliation => religiousAffiliation ??= GetValue(Tag.Religion);
+
+    private string? responsibleAgency = null;
+    public string ResponsibleAgency => responsibleAgency ??= GetValue(Tag.Agency);
+
+    private string? restrictionNotice = null;
+    public string RestrictionNotice => restrictionNotice ??= GetValue(Tag.Restriction);
+
+    private List<SourceCitation>? sourceCitations = null;
+    public List<SourceCitation> SourceCitations => sourceCitations ??= List<SourceCitation>(Tag.Source);
 
     public int CompareTo(EventStructure? other)
     {

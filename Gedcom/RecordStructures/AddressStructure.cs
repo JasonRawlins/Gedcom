@@ -11,14 +11,28 @@ public class AddressStructure : RecordStructureBase
     public AddressStructure() { }
     public AddressStructure(Record record) : base(record) { }
 
-    public string AddressCity => GetValue(Tag.City);
-    public string AddressCountry => GetValue(Tag.Country);
+    private string? addressCity = null;
+    public string AddressCity => addressCity ??= GetValue(Tag.City);
+
+    private string? addressCountry = null;
+    public string AddressCountry => addressCountry ??= GetValue(Tag.Country);
+
     public string AddressLine => Record.Value;
-    public string AddressLine1 => GetValue(Tag.Address1);
-    public string AddressLine2 => GetValue(Tag.Address2);
-    public string AddressLine3 => GetValue(Tag.Address3);
-    public string AddressPostCode => GetValue(Tag.PostalCode);
-    public string AddressState => GetValue(Tag.State);
+
+    private string? addressLine1 = null;
+    public string AddressLine1 => addressLine1 ??= GetValue(Tag.Address1);
+
+    private string? addressLine2 = null;
+    public string AddressLine2 => addressLine2 ??= GetValue(Tag.Address2);
+
+    private string? addressLine3 = null;
+    public string AddressLine3 => addressLine3 ??= GetValue(Tag.Address3);
+
+    private string? addressPostCode = null;
+    public string AddressPostCode => addressPostCode ??= GetValue(Tag.PostalCode);
+
+    private string? addressState = null;
+    public string AddressState => addressState ??= GetValue(Tag.State);
 
     public override string ToString() => $"{Record.Value}, {AddressLine}";
 }

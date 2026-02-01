@@ -11,8 +11,12 @@ public class ChangeDate : RecordStructureBase
     public ChangeDate() { }
     public ChangeDate(Record record) : base(record) { }
 
-    public GedcomDate GedcomDate => First<GedcomDate>(Tag.Date);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
+
+    private GedcomDate? gedcomDate = null;
+    public GedcomDate GedcomDate => gedcomDate ??= First<GedcomDate>(Tag.Date);
+
+    private List<NoteStructure>? noteStructures = null;
+    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
 
     public override string ToString() => $"{Record.Value}, {GedcomDate.DayMonthYear}";
 }

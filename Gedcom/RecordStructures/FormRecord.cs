@@ -11,9 +11,14 @@ public class FormRecord : RecordStructureBase
     public FormRecord() : base() { }
     public FormRecord(Record record) : base(record) { }
 
-    public string MediaType => GetValue(ExtensionTag.MediaType);
-    public string SourceType => GetValue(ExtensionTag.SourceType);
-    public string Type => GetValue(Tag.Type);
+    private string? mediaType = null;
+    public string MediaType => mediaType ??= GetValue(ExtensionTag.MediaType);
+
+    private string? sourceType = null;
+    public string SourceType => sourceType ??= GetValue(ExtensionTag.SourceType);
+
+    private string? type = null;
+    public string Type => type ??= GetValue(Tag.Type);
 
     public override string ToString() => $"{Type}";
 }

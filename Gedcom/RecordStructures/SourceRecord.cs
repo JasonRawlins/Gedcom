@@ -11,20 +11,48 @@ public class SourceRecord : RecordStructureBase
     public SourceRecord() : base() { }
     public SourceRecord(Record record) : base(record) { }
 
-    public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
-    public string CallNumber => GetValue(Tag.CallNumber);
-    public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
-    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
-    public string RepositoryXref => GetValue(Tag.Repository);
-    public NoteStructure SourceDescriptiveTitle => First<NoteStructure>(Tag.Title);
-    public NoteStructure SourceFiledByEntry => First<NoteStructure>(Tag.Abbreviation);
-    public NoteStructure SourceOriginator => First<NoteStructure>(Tag.Author);
-    public NoteStructure SourcePublicationFacts => First<NoteStructure>(Tag.Publication);
-    public SourceRecordData SourceRecordData => First<SourceRecordData>(Tag.Data);
-    public List<SourceRepositoryCitation> SourceRepositoryCitations => List<SourceRepositoryCitation>(Tag.Repository);
-    public NoteStructure TextFromSource => First<NoteStructure>(Tag.Text);
-    public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(Tag.Reference);
+    private string? automatedRecordId = null;
+    public string AutomatedRecordId => automatedRecordId ??= GetValue(Tag.RecordIdNumber);
+
+    private string? callNumber = null;
+    public string CallNumber => callNumber ??= GetValue(Tag.CallNumber);
+
+    private ChangeDate? changeDate = null;
+    public ChangeDate ChangeDate => changeDate ??= First<ChangeDate>(Tag.Change);
+
+    private List<MultimediaLink>? multimediaLinks = null;
+    public List<MultimediaLink> MultimediaLinks => multimediaLinks ??= List<MultimediaLink>(Tag.Object);
+
+    private List<NoteStructure>? noteStructures = null;
+    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+
+    private string? repositoryXref = null;
+    public string RepositoryXref => repositoryXref ??= GetValue(Tag.Repository);
+
+    private NoteStructure? sourceDescriptiveTitle = null;
+    public NoteStructure SourceDescriptiveTitle => sourceDescriptiveTitle ??= First<NoteStructure>(Tag.Title);
+
+    private NoteStructure? sourceFiledByEntry = null;
+    public NoteStructure SourceFiledByEntry => sourceFiledByEntry ??= First<NoteStructure>(Tag.Abbreviation);
+
+    private NoteStructure? sourceOriginator = null;
+    public NoteStructure SourceOriginator => sourceOriginator ??= First<NoteStructure>(Tag.Author);
+
+    private NoteStructure? sourcePublicationFacts = null;
+    public NoteStructure SourcePublicationFacts => sourcePublicationFacts ??= First<NoteStructure>(Tag.Publication);
+
+    private SourceRecordData? sourceRecordData = null;
+    public SourceRecordData SourceRecordData => sourceRecordData ??= First<SourceRecordData>(Tag.Data);
+
+    private List<SourceRepositoryCitation>? sourceRepositoryCitations = null;
+    public List<SourceRepositoryCitation> SourceRepositoryCitations => sourceRepositoryCitations ??= List<SourceRepositoryCitation>(Tag.Repository);
+
+    private NoteStructure? textFromSource = null;
+    public NoteStructure TextFromSource => textFromSource ??= First<NoteStructure>(Tag.Text);
+
+    private List<UserReferenceNumber>? userReferenceNumbers = null;
+    public List<UserReferenceNumber> UserReferenceNumbers => userReferenceNumbers ??= List<UserReferenceNumber>(Tag.Reference);
+    
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {AutomatedRecordId}";

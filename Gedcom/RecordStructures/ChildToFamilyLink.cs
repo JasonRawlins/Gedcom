@@ -11,10 +11,18 @@ public class ChildToFamilyLink : RecordStructureBase
     public ChildToFamilyLink() : base() { }
     public ChildToFamilyLink(Record record) : base(record) { }
 
-    public string AdoptedByWhichParent => GetValue(Tag.Adoption);
-    public string ChildLinkageStatus => GetValue(Tag.Status);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
-    public string PedigreeLinkageType => GetValue(Tag.Pedigree);
+    private string? adoptedByWhichParent = null;
+    public string AdoptedByWhichParent => adoptedByWhichParent ??= GetValue(Tag.Adoption);
+
+    private string? childLinkageStatus = null;
+    public string ChildLinkageStatus => childLinkageStatus ?? GetValue(Tag.Status);
+
+    private List<NoteStructure>? noteStructures = null;
+    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+
+    private string? pedigreeLinkageType = null;
+    public string PedigreeLinkageType => pedigreeLinkageType ??= GetValue(Tag.Pedigree);
+   
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {PedigreeLinkageType}";

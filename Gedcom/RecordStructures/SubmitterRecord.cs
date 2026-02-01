@@ -11,14 +11,29 @@ public class SubmitterRecord : RecordStructureBase
     public SubmitterRecord() : base() { }
     public SubmitterRecord(Record record) : base(record) { }
 
-    public AddressStructure AddressStructure => First<AddressStructure>(Tag.Address);
-    public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
-    public GedcomDate ChangeDate => First<GedcomDate>(Tag.Change);
-    public List<string> LanguagePreferences => [.. List(r => r.Tag.Equals(Tag.Language)).Select(r => r.Value)];
-    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Media);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
-    public string SubmitterName => GetValue(Tag.Name);
-    public string SubmitterRegisteredRfn => GetValue(Tag.RecordFileNumber);
+    private AddressStructure? addressStructure = null;
+    public AddressStructure AddressStructure => addressStructure ??= First<AddressStructure>(Tag.Address);
+   
+    private string? automatedRecordId = null;
+    public string AutomatedRecordId => automatedRecordId ??= GetValue(Tag.RecordIdNumber);
+
+    private GedcomDate? changeDate = null;
+    public GedcomDate ChangeDate => changeDate ??= First<GedcomDate>(Tag.Change);
+
+    private List<string>? languagePreferences = null;
+    public List<string> LanguagePreferences => languagePreferences ??= [.. List(r => r.Tag.Equals(Tag.Language)).Select(r => r.Value)];
+
+    private List<MultimediaLink>? multimediaLinks = null;
+    public List<MultimediaLink> MultimediaLinks => multimediaLinks ??= List<MultimediaLink>(Tag.Media);
+
+    private List<NoteStructure>? noteStructures = null;
+    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+
+    private string? submitterName = null;
+    public string SubmitterName => submitterName ??= GetValue(Tag.Name);
+
+    private string? submitterRegisteredRfn = null;
+    public string SubmitterRegisteredRfn => submitterRegisteredRfn ??= GetValue(Tag.RecordFileNumber);
 
     public override string ToString() => $"{Record.Value}, {SubmitterName}";
 }

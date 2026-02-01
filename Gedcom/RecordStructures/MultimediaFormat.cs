@@ -11,7 +11,8 @@ public class MultimediaFormat : RecordStructureBase
     public MultimediaFormat() : base() { }
     public MultimediaFormat(Record record) : base(record) { }
 
-    public string SourceMediaType => GetValue(Tag.Media);
+    private string? sourceMediaType = null;
+    public string SourceMediaType => sourceMediaType ??= GetValue(Tag.Media);
 
     public override string ToString() => $"{Record.Value}, {SourceMediaType}";
 }

@@ -11,11 +11,21 @@ public class HeaderSource : RecordStructureBase
     public HeaderSource() : base() { }
     public HeaderSource(Record record) : base(record) { }
 
-    public HeaderCorporation Corporation => First<HeaderCorporation>(Tag.Corporate);
-    public HeaderData Data => First<HeaderData>(Tag.Data);
-    public string NameOfProduct => GetValue(Tag.Name);
-    public HeaderTree Tree => First<HeaderTree>(ExtensionTag.Tree);
-    public string Version => GetValue(Tag.Version);
+    private HeaderCorporation? corporation = null;
+    public HeaderCorporation Corporation => corporation ??= First<HeaderCorporation>(Tag.Corporate);
+
+    private HeaderData? data = null;
+    public HeaderData Data => data ??= First<HeaderData>(Tag.Data);
+
+    private string? nameOfProduct = null;
+    public string NameOfProduct => nameOfProduct ??= GetValue(Tag.Name);
+
+    private HeaderTree? tree = null;
+    public HeaderTree Tree => tree ??= First<HeaderTree>(ExtensionTag.Tree);
+
+    private string? version = null;
+    public string Version => version ??= GetValue(Tag.Version);
+    
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {NameOfProduct}, {Version}";

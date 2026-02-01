@@ -11,23 +11,55 @@ public class FamilyRecord : RecordStructureBase
     public FamilyRecord() : base() { }
     public FamilyRecord(Record record) : base(record) { }
 
-    public string AdoptedByWhichParent => GetValue(Tag.Adoption);
-    public string AutomatedRecordNumber => GetValue(Tag.RecordIdNumber);
-    public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
-    public List<string> Children => [.. List(r => r.Tag.Equals(Tag.Child)).Select(r => r.Value)];
-    public string CountOfChildren => GetValue(Tag.ChildrenCount);
-    public FamilyEventStructure Divorce => First<FamilyEventStructure>(Tag.Divorce);
-    public List<EventStructure> FamilyEventStructures => [.. List(FamilyEventStructure.IsFamilyEventStructure).Select(r => new EventStructure(r))];
-    public string Husband => GetValue(Tag.Husband);
+    private string? adoptedByWhichParent = null;
+    public string AdoptedByWhichParent => adoptedByWhichParent ??= GetValue(Tag.Adoption);
+
+    private string? automatedRecordNumber = null;
+    public string AutomatedRecordNumber => automatedRecordNumber ??= GetValue(Tag.RecordIdNumber);
+
+    private ChangeDate? changeDate = null;
+    public ChangeDate ChangeDate => changeDate ??= First<ChangeDate>(Tag.Change);
+
+    private List<string>? children = null;
+    public List<string> Children => children ??= [.. List(r => r.Tag.Equals(Tag.Child)).Select(r => r.Value)];
+
+    private string? countOfChildren = null;
+    public string CountOfChildren => countOfChildren ??= GetValue(Tag.ChildrenCount);
+
+    private FamilyEventStructure? divorce = null;
+    public FamilyEventStructure Divorce => divorce ??= First<FamilyEventStructure>(Tag.Divorce);
+
+    private List<EventStructure>? familyEventStructures = null;
+    public List<EventStructure> FamilyEventStructures => familyEventStructures ??= [.. List(FamilyEventStructure.IsFamilyEventStructure).Select(r => new EventStructure(r))];
+
+    private string? husband = null;
+    public string Husband => husband ??= GetValue(Tag.Husband);
     // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
-    public FamilyEventStructure Marriage => First<FamilyEventStructure>(Tag.Marriage);
-    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
-    public string RestrictionNotice => GetValue(Tag.Restriction);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.Source);
-    public string Submitter => GetValue(Tag.Submitter);
-    public List<UserReferenceNumber> UserReferenceNumbers => List<UserReferenceNumber>(Tag.Reference);
-    public string Wife => GetValue(Tag.Wife);
+
+    private FamilyEventStructure? marriage = null;
+    public FamilyEventStructure Marriage => marriage ??= First<FamilyEventStructure>(Tag.Marriage);
+
+    private List<MultimediaLink>? multimediaLinks = null;
+    public List<MultimediaLink> MultimediaLinks => multimediaLinks ??= List<MultimediaLink>(Tag.Object);
+
+    private List<NoteStructure>? noteStructures = null;
+    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+
+    private string? restrictionNotice = null;
+    public string RestrictionNotice => restrictionNotice ??= GetValue(Tag.Restriction);
+
+    private List<SourceCitation>? sourceCitations = null;
+    public List<SourceCitation> SourceCitations => sourceCitations ??= List<SourceCitation>(Tag.Source);
+
+    private string? submitter = null;
+    public string Submitter => submitter ??= GetValue(Tag.Submitter);
+
+    private List<UserReferenceNumber>? userReferenceNumbers = null;
+    public List<UserReferenceNumber> UserReferenceNumbers => userReferenceNumbers ??= List<UserReferenceNumber>(Tag.Reference);
+
+    private string? wife = null;
+    public string Wife => wife ??= GetValue(Tag.Wife);
+   
     public string Xref => Record.Value;
 
     public override string ToString()

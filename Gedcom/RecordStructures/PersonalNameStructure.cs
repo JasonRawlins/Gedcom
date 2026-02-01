@@ -11,16 +11,34 @@ public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
     public PersonalNameStructure() : base() { }
     public PersonalNameStructure(Record record) : base(record) { }
 
-    public string Given => GetValue(Tag.GivenName);
+    private string? given = null;
+    public string Given => given ??= GetValue(Tag.GivenName);
+    
     public string NamePersonal => Record.Value; // The complete name, (e.g. John /Doe/)
-    public NameVariation NamePhoneticVariation => First<NameVariation>(Tag.Phonetic);
-    public string NamePrefix => GetValue(Tag.NamePrefix);
-    public string NameSuffix => GetValue(Tag.NameSuffix);
-    public NameVariation NameRomanizedVariation => First<NameVariation>(Tag.Romanized);
-    public string NameType => GetValue(Tag.Type);
-    public string Nickname => GetValue(Tag.Nickname);
-    public string Surname => GetValue(Tag.Surname);
-    public string SurnamePrefix => GetValue(Tag.SurnamePrefix);
+
+    private NameVariation? namePhoneticVariation = null;
+    public NameVariation NamePhoneticVariation => namePhoneticVariation ??= First<NameVariation>(Tag.Phonetic);
+
+    private string? namePrefix = null;
+    public string NamePrefix => namePrefix ??= GetValue(Tag.NamePrefix);
+
+    private string? nameSuffix = null;
+    public string NameSuffix => nameSuffix ??= GetValue(Tag.NameSuffix);
+
+    private NameVariation? nameRomanizedVariation = null;
+    public NameVariation NameRomanizedVariation => nameRomanizedVariation ??= First<NameVariation>(Tag.Romanized);
+
+    private string? nameType = null;
+    public string NameType => nameType ??= GetValue(Tag.Type);
+
+    private string? nickname = null;
+    public string Nickname => nickname ??= GetValue(Tag.Nickname);
+
+    private string? surname = null;
+    public string Surname => surname ??= GetValue(Tag.Surname);
+
+    private string? surnamePrefix = null;
+    public string SurnamePrefix => surnamePrefix ??= GetValue(Tag.SurnamePrefix);
 
     public override string ToString() => $"{Record.Value}, {NamePersonal}";
 }

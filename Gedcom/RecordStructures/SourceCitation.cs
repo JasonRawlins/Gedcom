@@ -11,12 +11,24 @@ public class SourceCitation : RecordStructureBase
     public SourceCitation() : base() { }
     public SourceCitation(Record record) : base(record) { }
 
-    public string CertaintyAssessment => GetValue(Tag.QualityOfData);
-    public EventTypeCitedFrom EventTypeCitedFrom => First<EventTypeCitedFrom>(Tag.Event);
-    public List<MultimediaLink> MultimediaLinks => List<MultimediaLink>(Tag.Object);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
-    public SourceCitationData SourceCitationData => First<SourceCitationData>(Tag.Data);
-    public string WhereWithinSource => GetValue(Tag.Page);
+    private string? certaintyAssessment = null;
+    public string CertaintyAssessment => certaintyAssessment ??= GetValue(Tag.QualityOfData);
+
+    private EventTypeCitedFrom? eventTypeCitedFrom = null;
+    public EventTypeCitedFrom EventTypeCitedFrom => eventTypeCitedFrom ??= First<EventTypeCitedFrom>(Tag.Event);
+
+    private List<MultimediaLink>? multimediaLinks = null;
+    public List<MultimediaLink> MultimediaLinks => multimediaLinks ??= List<MultimediaLink>(Tag.Object);
+
+    private List<NoteStructure>? noteStructures = null;
+    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+
+    private SourceCitationData? sourceCitationData = null;
+    public SourceCitationData SourceCitationData => sourceCitationData ??= First<SourceCitationData>(Tag.Data);
+
+    private string? whereWithinSource = null;
+    public string WhereWithinSource => whereWithinSource ??= GetValue(Tag.Page);
+    
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {WhereWithinSource}";

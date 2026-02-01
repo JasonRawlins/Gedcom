@@ -11,21 +11,46 @@ public class MultimediaRecord : RecordStructureBase
     public MultimediaRecord() : base() { }
     public MultimediaRecord(Record record) : base(record) { }
 
-    public string AutomatedRecordId => GetValue(Tag.RecordIdNumber);
-    public ChangeDate ChangeDate => First<ChangeDate>(Tag.Change);
+    private string? automatedRecordId = null;
+    public string AutomatedRecordId => automatedRecordId ??= GetValue(Tag.RecordIdNumber);
+
+    private ChangeDate? changeDate = null;
+    public ChangeDate ChangeDate => changeDate ??= First<ChangeDate>(Tag.Change);
+
     // The DATE value is not in the specification, but is in the gedcom exported from Ancestry.
-    public string Date => GetValue(Tag.Date);
-    public string Description => GetValue(ExtensionTag.Description);
-    public string DescriptiveTitle => GetValue(Tag.Title);
-    public FileRecord FileRecord => First<FileRecord>(Tag.File);
-    public List<string> MultimediaFileReferenceNumbers => [.. List(r => r.Tag.Equals(Tag.File)).Select(r => r.Value)];
-    public MultimediaFormat MultimediaFormat => First<MultimediaFormat>(Tag.Format);
-    public List<NoteStructure> NoteStructures => List<NoteStructure>(Tag.Note);
-    public string ObjectId => GetValue(ExtensionTag.ObjectId);
+    private string? date = null;
+    public string Date => date ??= GetValue(Tag.Date);
+
+    private string? description = null;
+    public string Description => description ??= GetValue(ExtensionTag.Description);
+
+    private string? descriptiveTitle = null;
+    public string DescriptiveTitle => descriptiveTitle ??= GetValue(Tag.Title);
+
+    private FileRecord? fileRecord = null;
+    public FileRecord FileRecord => fileRecord ??= First<FileRecord>(Tag.File);
+
+    private List<string>? multimediaFileReferenceNumbers = null;
+    public List<string> MultimediaFileReferenceNumbers => multimediaFileReferenceNumbers ??= [.. List(r => r.Tag.Equals(Tag.File)).Select(r => r.Value)];
+
+    private MultimediaFormat? multimediaFormat = null;
+    public MultimediaFormat MultimediaFormat => multimediaFormat ??= First<MultimediaFormat>(Tag.Format);
+
+    private List<NoteStructure>? noteStructures = null;
+    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+
+    private string? objectId = null;
+    public string ObjectId => objectId ??= GetValue(ExtensionTag.ObjectId);
+
     // The PLAC line is not in the specification, but is in the gedcom exported from Ancestry.
-    public PlaceStructure PlaceStructure => First<PlaceStructure>(Tag.Place);
-    public List<SourceCitation> SourceCitations => List<SourceCitation>(Tag.Source);
-    public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(Tag.Reference);
+    private PlaceStructure? placeStructure = null;
+    public PlaceStructure PlaceStructure => placeStructure ??= First<PlaceStructure>(Tag.Place);
+
+    private List<SourceCitation>? sourceCitations = null;
+    public List<SourceCitation> SourceCitations => sourceCitations ??= List<SourceCitation>(Tag.Source);
+
+    private UserReferenceNumber? userReferenceNumber = null;
+    public UserReferenceNumber UserReferenceNumber => userReferenceNumber ??= First<UserReferenceNumber>(Tag.Reference);
 
     public override string ToString() => $"{Record.Value}, {AutomatedRecordId}, {DescriptiveTitle}";
 }
