@@ -10,7 +10,7 @@ public class FamilyJsonTests
     [TestMethod]
     public void ExportFamilyJsonTest()
     {
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.JSON);
+        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
         var familyJson = jsonGedcomWriter.GetFamily(TestFamilies.DylanDavisAndFionaDouglas.Xref);
 
         Assert.IsTrue(familyJson.Contains(TestFamilies.DylanDavisAndFionaDouglas.Xref)
@@ -21,7 +21,7 @@ public class FamilyJsonTests
     [TestMethod]
     public void ExportFamiliesJsonTest()
     {
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.JSON);
+        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
         var familiesJson = jsonGedcomWriter.GetFamilies();
 
         Assert.IsTrue(familiesJson.Contains(TestFamilies.DylanDavisAndFionaDouglas.Xref)
@@ -32,7 +32,7 @@ public class FamilyJsonTests
     [TestMethod]
     public void ExportNonExistingFamilyJsonTest()
     {
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.JSON);
+        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
         var familiesJson = jsonGedcomWriter.GetFamily(TestConstants.InvalidXref);
 
         Assert.IsTrue(familiesJson.Equals("{}"));
@@ -42,7 +42,7 @@ public class FamilyJsonTests
     public void WriteFamiliesJsonTest()
     {
         // This is an integration test. Figure that out later
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.JSON);
+        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
 
         File.WriteAllText(TestUtilities.JsonFullName, jsonGedcomWriter.GetFamilies());
     }

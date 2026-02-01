@@ -173,7 +173,7 @@ class Record {
 Actually, that's pretty much it. Everything else is tree manipulation, almost all of which is done 
 in the RecordBaseStructure base class. It's pretty simple and every other record inherits from it. 
 The primary way of querying child records is by searching records based on their tag. The complete 
-list of tags are in the C.cs class. Notice I've added a comment after each tag listing the records 
+list of tags are in the Constant.cs class. Notice I've added a comment after each tag listing the records 
 that use it. 
 
 Here are the query functions in the RecordStructureBase class.
@@ -181,7 +181,7 @@ Here are the query functions in the RecordStructureBase class.
 ```
 class RecordStructureBase
 {    
-    string _(string tag); // The "_" method finds the value of a child record by tag name. 
+    string GetValue(string tag); // The "_" method finds the value of a child record by tag name. 
     Record First(string tag);
     List<Record> List(Func<Record, bool> predicate);
     T First<T>(string tag);
@@ -194,8 +194,8 @@ Here is an example of how these functions are used in the PersonalNameStructure 
 ```
 class PersonalNameStructure : RecordStructureBase
 {
-    string Given => _(C.GIVN);
-    string Surname => _(C.SURN);
+    string Given => GetValue(C.GIVN);
+    string Surname => GetValue(C.SURN);
     string NamePersonal => Record.Value;
     NameVariation NamePhoneticVariation => First<NameVariation>(C.FONE);
 }

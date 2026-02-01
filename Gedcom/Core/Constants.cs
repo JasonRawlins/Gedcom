@@ -1,6 +1,6 @@
 ﻿namespace Gedcom.Core;
 
-public static class C // Constants
+public static class Constants // Constants
 {
     public const string Empty = "EMPTY"; // For the empty Record
     public const string Excel = "Excel";

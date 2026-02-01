@@ -13,7 +13,7 @@ public class IndividualHtmlTests
     [TestMethod]
     public void ExportIndividualJsonTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
         var individualHtml = htmlGedcomWriter.GetIndividual(TestIndividuals.SaraDavis.Xref);
 
         Assert.IsTrue(individualHtml.Contains(TestIndividuals.SaraDavis.XrefId) &&
@@ -28,7 +28,7 @@ public class IndividualHtmlTests
     [TestMethod]
     public void ExportIndividualsJsonTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
         var individualsHtml = htmlGedcomWriter.GetIndividuals();
 
         Assert.IsTrue(individualsHtml.Contains(TestIndividuals.SaraDavis.XrefId) &&
@@ -43,7 +43,7 @@ public class IndividualHtmlTests
     [TestMethod]
     public void NonExistingIndividualJsonTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
         var individualJson = htmlGedcomWriter.GetIndividual(TestConstants.InvalidXref);
 
         Assert.IsTrue(individualJson.Equals(""));
@@ -52,7 +52,7 @@ public class IndividualHtmlTests
     [TestMethod]
     public void QueryIndividualsJsonTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
         var individualsHtml = htmlGedcomWriter.GetIndividuals("Davis");
 
         Assert.IsTrue(individualsHtml.Contains(TestIndividuals.DylanDavis.XrefId)
@@ -64,7 +64,7 @@ public class IndividualHtmlTests
     public void WriteIndividualsHtmlTest()
     {
         // This is an integration test. Figure that out later
-        var gedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.HTML);
+        var gedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
         var htmlBytes = gedcomWriter.GetAsByteArray();
 
         File.WriteAllText(TestUtilities.HtmlFullName, Encoding.UTF8.GetString(htmlBytes));

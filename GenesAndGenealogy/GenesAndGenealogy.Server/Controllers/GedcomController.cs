@@ -96,6 +96,13 @@ namespace GenesAndGenealogy.Server.Controllers
             return [.. individuals.OrderBy(i => i.Birth).ThenBy(i => i.Surname)];
         }
 
+        [HttpGet("multimedia-items")]
+        public List<MultimediaJson> GetMultimediaItems()
+        {
+            var multimediaItems = Gedcom.GetObjectRecords().Select(or => new MultimediaJson(or)).ToList();
+            return multimediaItems;
+        }
+
         [HttpGet("profile/{individualXref}")]
         public ProfileModel GetProfile(string individualXref)
         {
@@ -125,16 +132,16 @@ namespace GenesAndGenealogy.Server.Controllers
             }
             var sortedSources = sources.OrderBy(s => s.DescriptiveTitle).ToList();
 
-            var multimedias = new List<MultimediaJson>();
+            var multimediaItems = new List<MultimediaJson>();
             foreach (var multimediaLink in individualRecord.MultimediaLinks)
             {
                 var multimediaRecord = Gedcom.GetObjectRecord(multimediaLink.Xref);
-                multimedias.Add(new MultimediaJson(multimediaRecord));
+                multimediaItems.Add(new MultimediaJson(multimediaRecord));
             }
 
-            var profileModel = new ProfileModel(HeaderTree, individualJson, familyModels, repositories, sortedSources);
+            var profileModel = new ProfileModel(HeaderTree, individualJson, familyModels, repositories, sortedSources, multimediaItems);
             
-            var portraitMultimedia = multimedias.FirstOrDefault(m => m.File?.Form?.MediaType?.Equals("portrait") ?? false);
+            var portraitMultimedia = multimediaItems.FirstOrDefault(m => m.File?.Form?.MediaType?.Equals("portrait") ?? false);
             if (portraitMultimedia != null)
             {
                 profileModel.PortraitMultiMedia = portraitMultimedia;

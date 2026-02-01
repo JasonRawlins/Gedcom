@@ -1,12 +1,18 @@
-using Gedcom;
 using Gedcom.RecordStructures;
 
 namespace GenesAndGenealogy.Server.ViewModels;
 
-public class ProfileModel(HeaderTreeJson treeModel, IndividualJson individualJson, List<FamilyModel> familyModels, List<RepositoryJson> repositories, List<SourceJson> sources)
+public class ProfileModel(
+    HeaderTreeJson treeModel, 
+    IndividualJson individualJson, 
+    List<FamilyModel> familyModels, 
+    List<RepositoryJson> repositories, 
+    List<SourceJson> sources, 
+    List<MultimediaJson> multimediaItems)
 {
     public List<FamilyModel> Families { get; set; } = familyModels;
-    public IndividualJson Individual { get; set; } = individualJson;    
+    public IndividualJson Individual { get; set; } = individualJson;
+    public List<MultimediaJson> MultimediaItems { get; set; } = multimediaItems;
     public FamilyModel? Parents { get; set; }
     public MultimediaJson? PortraitMultiMedia { get; set; }
     public string PortraitUrl

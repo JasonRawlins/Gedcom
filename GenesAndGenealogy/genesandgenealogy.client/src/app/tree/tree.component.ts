@@ -10,7 +10,7 @@ import { GedcomService } from '../services/gedcom.service';
   providers: [GedcomService]
 })
 export class TreeComponent {
-  @Input() individuals!: IndividualModel[];
+  @Input() individuals: IndividualModel[] | null = null;
 
   constructor(private gedcomService: GedcomService) {
   }

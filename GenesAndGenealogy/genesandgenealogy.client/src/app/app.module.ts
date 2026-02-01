@@ -16,6 +16,7 @@ import { SourceInformationComponent } from './source-information/source-informat
 import { RepositoryInformationComponent } from './repository-information/repository-information.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { HomeComponent } from './home/home.component';
+import { MultimediaItemComponent } from './multimedia-item/multimedia-item.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { HomeComponent } from './home/home.component';
     SourceInformationComponent,
     RepositoryInformationComponent,
     GalleryComponent,
-    HomeComponent
+    HomeComponent,
+    MultimediaItemComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

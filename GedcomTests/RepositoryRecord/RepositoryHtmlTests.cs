@@ -12,7 +12,7 @@ public class RepositoryHtmlTests
     [TestMethod]
     public void ExportRepositoryHtmlTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
         var repositoryHtml = htmlGedcomWriter.GetRepository(TestRepositories.VitalRecordsRepository.Xref);
 
         Assert.IsTrue(repositoryHtml.Contains(TestRepositories.VitalRecordsRepository.Xref));
@@ -21,7 +21,7 @@ public class RepositoryHtmlTests
     [TestMethod]
     public void ExportRepositoriesHtmlTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
         var repositoriesHtml = htmlGedcomWriter.GetRepositories();
 
         Assert.IsTrue(repositoriesHtml.Contains(TestRepositories.VitalRecordsRepository.Xref));
@@ -30,7 +30,7 @@ public class RepositoryHtmlTests
     [TestMethod]
     public void NonExistingRepositoryHtmlTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
         var repositoryHtml = htmlGedcomWriter.GetRepository(TestConstants.InvalidXref);
 
         Assert.IsTrue(repositoryHtml.Equals(""));
@@ -39,7 +39,7 @@ public class RepositoryHtmlTests
     [TestMethod]
     public void QueryRepositoriesHtmlTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
         var repositoriesHtml = htmlGedcomWriter.GetRepositories(TestRepositories.VitalRecordsRepository.Xref);
 
         Assert.IsTrue(repositoriesHtml.Contains(TestRepositories.VitalRecordsRepository.Xref));
@@ -49,7 +49,7 @@ public class RepositoryHtmlTests
     public void WriteRepositoriesHtmlTest()
     {
         // This is an integration test. Figure that out later
-        var gedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), C.HTML);
+        var gedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
 
         File.WriteAllText(TestUtilities.HtmlFullName, gedcomWriter.GetRepositories());
     }

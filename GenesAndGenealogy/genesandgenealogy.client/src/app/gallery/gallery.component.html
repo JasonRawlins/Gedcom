@@ -1,1 +1,9 @@
-<p>gallery works!</p>
+<main>
+  <div *ngIf="profile$ | async as profile">
+    <ul>
+      <li *ngFor="let multimediaItem of profile.multimediaItems">
+        <app-multimedia-item [multimediaItem]="multimediaItem"></app-multimedia-item>
+      </li>
+    </ul>
+  </div>
+</main>
