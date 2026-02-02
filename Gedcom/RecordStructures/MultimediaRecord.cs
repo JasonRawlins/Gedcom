@@ -35,7 +35,7 @@ public class MultimediaRecord : RecordStructureBase
     private MultimediaFormat? multimediaFormat = null;
     public MultimediaFormat MultimediaFormat => multimediaFormat ??= First<MultimediaFormat>(Tag.Format);
 
-    private List<NoteStructure>? noteStructures = null;
+    private List<NoteStructure>? _ = null;
     public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
 
     private string? objectId = null;
