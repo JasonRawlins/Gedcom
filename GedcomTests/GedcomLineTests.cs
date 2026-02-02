@@ -107,7 +107,7 @@ public class GedcomLineTests
             GedcomLine.Parse("FAIL GIVN Jane");
         });
 
-        Assert.AreEqual("Level must be an integer. Actual value was FAIL.", exception.Message);
+        Assert.AreEqual("Level must be an integer. Actual value was 'FAIL'.", exception.Message);
     }
 
     [TestMethod]
@@ -141,6 +141,39 @@ public class GedcomLineTests
         });
 
         Assert.AreEqual("A level 0 record with only two parts must be the HEAD or TRLR tag.", exception.Message);
+    }
+
+    [TestMethod]
+    public void ParseLineLevel0RecordWithInvalidXref()
+    {
+        var exception = Assert.ThrowsExactly<GedcomLineParseException>(() =>
+        {
+            GedcomLine.Parse("0 FAIL INDI");
+        });
+
+        Assert.AreEqual("The xref format was invalid. Actual value was 'FAIL'.", exception.Message);
+    }
+
+    [TestMethod]
+    public void ParseLineWithTagThatIsNotUppercase()
+    {
+        var exception = Assert.ThrowsExactly<GedcomLineParseException>(() =>
+        {
+            GedcomLine.Parse("1 GiVn Jane");
+        });
+
+        Assert.AreEqual("The tag must be uppercase. Actual value 'GiVn'", exception.Message);
+    }
+
+    [TestMethod]
+    public void ParseLineWithTagThatIsTooLong()
+    {
+        var exception = Assert.ThrowsExactly<GedcomLineParseException>(() =>
+        {
+            GedcomLine.Parse("1 THIS_TAG_IS_LONGER_THAN_31_CHARACTERS Jane");
+        });
+
+        Assert.AreEqual("The max length of a tag is 31 characters. Actual length was 37.", exception.Message);
     }
 }
 

@@ -1,9 +1,10 @@
 ﻿using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Gedcom;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-public class GedcomLine
+public partial class GedcomLine
 {
     public int Level { get; set; } = -1;
     public string Tag { get; set; } = Constants.Empty;
@@ -14,6 +15,9 @@ public class GedcomLine
     // GedcomLine.Xref will simply return GedcomLine.Value
     public string Value { get; set; } = "";
     public string Xref => Value;
+
+    [GeneratedRegex("^@[0-9a-zA-Z_]{1,22}@$")]
+    private static partial Regex XrefRegex();
 
     public GedcomLine()
     {
@@ -63,7 +67,7 @@ public class GedcomLine
 
         if (!int.TryParse(levelText, out var level))
         {
-            throw new GedcomLineParseException(line, $"Level must be an integer. Actual value was {levelText}.");
+            throw new GedcomLineParseException(line, $"Level must be an integer. Actual value was '{levelText}'.");
         }
 
         if (level < 0 || level > 99)
@@ -94,6 +98,11 @@ public class GedcomLine
                 // The reamining level 0 tags should have a level, xref, and tag).
                 // Example: "0 @I1234567890@ INDI".
 
+                if (!XrefRegex().IsMatch(lineParts[1]))
+                {
+                    throw new GedcomLineParseException(line, $"The xref format was invalid. Actual value was '{lineParts[1]}'.");
+                }
+
                 value = lineParts[1];
                 tag = lineParts[2];
             }
@@ -106,6 +115,16 @@ public class GedcomLine
             {
                 value = lineParts[2];
             }
+        }
+
+        if (!tag.Where(char.IsLetter).All(char.IsUpper))
+        {
+            throw new GedcomLineParseException(line, $"The tag must be uppercase. Actual value '{tag}'");
+        }
+
+        if (tag.Length > 31)
+        {
+            throw new GedcomLineParseException(line, $"The max length of a tag is 31 characters. Actual length was {tag.Length}.");
         }
 
         return new GedcomLine
