@@ -1,5 +1,4 @@
-﻿using Gedcom.Core;
-using Gedcom.Entities;
+﻿using Gedcom.Entities;
 
 namespace Gedcom.RecordStructures;
 

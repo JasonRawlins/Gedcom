@@ -1,8 +1,6 @@
-﻿using CommandLine;
-using Gedcom.Core;
-using System;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.RegularExpressions;
+using CommandLine;
 
 namespace Gedcom.CLI;
 

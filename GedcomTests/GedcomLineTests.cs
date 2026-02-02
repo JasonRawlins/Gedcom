@@ -1,5 +1,4 @@
 ﻿using Gedcom;
-using System.IO;
 
 namespace GedcomTests;
 

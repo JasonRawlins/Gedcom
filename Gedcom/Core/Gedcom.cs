@@ -10,6 +10,25 @@ public class Gedcom : RecordStructureBase
 {
     public Gedcom(List<GedcomLine> gedcomLines)
     {
+        ArgumentNullException.ThrowIfNull(gedcomLines);
+
+        if (gedcomLines.Count < 3)
+        {
+            throw new GedcomFormatException("A valid GEDCOM file must have at least three tags: HEAD, any other tags, and a TRLR.");
+        }
+
+        var firstGedcomLine = gedcomLines.First();
+        if (firstGedcomLine.Tag != Tag.Header)
+        {
+            throw new GedcomFormatException(firstGedcomLine, $"The first tag in a GEDCOM file must be HEAD. The actual tag was {firstGedcomLine.Tag}.");
+        }
+
+        var lastGedcomLine = gedcomLines.Last();
+        if (lastGedcomLine.Tag != Tag.Trailer)
+        {
+            throw new GedcomFormatException(lastGedcomLine, $"The last tag in a GEDCOM file must be TRLR. The actual tag was {lastGedcomLine.Tag}.");
+        }
+
         // Level 0 records are the top-level records:
         // FAM (Family)
         // HEAD (Head)

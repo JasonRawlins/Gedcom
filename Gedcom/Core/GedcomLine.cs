@@ -6,7 +6,7 @@ namespace Gedcom;
 public class GedcomLine
 {
     public int Level { get; set; } = -1;
-    public string Tag { get; set; } = "";
+    public string Tag { get; set; } = Constants.Empty;
 
     // See note 2 below about GedcomLine.Value relationship to an GedcomLine.Xref
     // pointer. Specifically, it emphasizes that a GedcomLine can only have a value or
@@ -14,6 +14,21 @@ public class GedcomLine
     // GedcomLine.Xref will simply return GedcomLine.Value
     public string Value { get; set; } = "";
     public string Xref => Value;
+
+    public GedcomLine()
+    {
+    }
+
+    public GedcomLine(int level, string tag)
+    {
+        Level = level;
+        Tag = tag;
+    }
+
+    public GedcomLine(int level, string tag, string value) : this(level, tag)
+    {
+        Value = value;
+    }
 
     // This takes the text of a single line and parses it into a GedcomLine.
     // The format of a top-level record (level 0 record) is Level, Xref, and TAG: "0 @I1234567890@ INDI".
@@ -66,7 +81,7 @@ public class GedcomLine
             if (lineParts.Length == 2)
             {
                 // This will be either HEAD or TRLR
-                if (lineParts[1] != Gedcom.Tag.Header || lineParts[1] != Gedcom.Tag.Trailer)
+                if (lineParts[1] != Gedcom.Tag.Header && lineParts[1] != Gedcom.Tag.Trailer)
                 {
                     throw new GedcomLineParseException(line, "A level 0 record with only two parts must be the HEAD or TRLR tag.");
                 }

@@ -1,5 +1,4 @@
-﻿using Gedcom.Core;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
