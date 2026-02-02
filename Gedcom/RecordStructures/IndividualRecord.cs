@@ -12,10 +12,10 @@ public class IndividualRecord : RecordStructureBase
     public IndividualRecord(Record record) : base(record) { }
 
     private List<string>? aliases = null;
-    public List<string> Aliases => aliases ??= [.. List(r => r.Tag.Equals(Tag.Alias)).Select(r => r.Value)];
+    public List<string> Aliases => aliases ??= GetStringList(Tag.Alias);
 
     private List<string>? ancestorInterests = null;
-    public List<string> AncestorInterests => ancestorInterests ??= [.. List(r => r.Tag.Equals(Tag.AncesInterest)).Select(r => r.Value)];
+    public List<string> AncestorInterests => ancestorInterests ??= GetStringList(Tag.AncesInterest);
 
     private string? ancestralFileNumber = null;
     public string AncestralFileNumber => ancestralFileNumber ??= GetValue(Tag.AncestralFileNumber);
@@ -33,7 +33,7 @@ public class IndividualRecord : RecordStructureBase
     public List<ChildToFamilyLink> ChildToFamilyLinks => childToFamilyLinks ??= List<ChildToFamilyLink>(Tag.FamilyChild);
 
     private List<string>? descendantInterests = null;
-    public List<string> DescendantInterests => descendantInterests ??= [.. List(r => r.Tag.Equals(Tag.DescendantInterest)).Select(r => r.Value)];
+    public List<string> DescendantInterests => descendantInterests ??= GetStringList(Tag.DescendantInterest);
 
     private List<EventStructure>? individualEventStructures = null;
     public List<EventStructure> IndividualEventStructures => individualEventStructures ??= [.. List(IndividualEventStructure.IsIndividualEventStructure).Select(r => new EventStructure(r))];

@@ -21,7 +21,7 @@ public class FamilyRecord : RecordStructureBase
     public ChangeDate ChangeDate => changeDate ??= First<ChangeDate>(Tag.Change);
 
     private List<string>? children = null;
-    public List<string> Children => children ??= [.. List(r => r.Tag.Equals(Tag.Child)).Select(r => r.Value)];
+    public List<string> Children => children ??= GetStringList(Tag.Child);
 
     private string? countOfChildren = null;
     public string CountOfChildren => countOfChildren ??= GetValue(Tag.ChildrenCount);

@@ -21,7 +21,7 @@ public class SubmitterRecord : RecordStructureBase
     public GedcomDate ChangeDate => changeDate ??= First<GedcomDate>(Tag.Change);
 
     private List<string>? languagePreferences = null;
-    public List<string> LanguagePreferences => languagePreferences ??= [.. List(r => r.Tag.Equals(Tag.Language)).Select(r => r.Value)];
+    public List<string> LanguagePreferences => languagePreferences ??= GetStringList(Tag.Language);
 
     private List<MultimediaLink>? multimediaLinks = null;
     public List<MultimediaLink> MultimediaLinks => multimediaLinks ??= List<MultimediaLink>(Tag.Media);

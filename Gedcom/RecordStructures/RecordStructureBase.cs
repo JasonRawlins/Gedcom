@@ -18,6 +18,7 @@ public class RecordStructureBase
     protected Record Single(Func<Record, bool> predicate) => Record.Records.SingleOrDefault(predicate) ?? Record.Empty;
     protected List<Record> List(Func<Record, bool> predicate) => [.. Record.Records.Where(predicate)];
     protected List<string> ListValues(string tag) => [.. Record.Records.Where(r => r.Tag.Equals(tag)).Select(r => r.Value)];
+    protected List<string> GetStringList(string tag) => [.. List(r => r.Tag.Equals(tag)).Select(r => r.Value)];
     protected T First<T>(string tag) where T : RecordStructureBase, new() => CreateRecordStructureList<T>(tag, Record).FirstOrDefault() ?? Empty<T>();
     protected List<T> List<T>(string tag) where T : RecordStructureBase, new() => CreateRecordStructureList<T>(tag, Record);
     public static T Empty<T>() where T : RecordStructureBase, new() => CreateRecordStructure<T>(Record.Empty);
@@ -38,7 +39,8 @@ public class RecordStructureBase
         dynamicRecord.SetRecord(record);
         return (T)dynamicRecord;
     }
-    
+
+
     public override string ToString()
     {
         if (Record.Level == 0)

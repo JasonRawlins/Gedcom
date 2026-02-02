@@ -31,7 +31,7 @@ public class MultimediaRecord : RecordStructureBase
     public FileRecord FileRecord => fileRecord ??= First<FileRecord>(Tag.File);
 
     private List<string>? multimediaFileReferenceNumbers = null;
-    public List<string> MultimediaFileReferenceNumbers => multimediaFileReferenceNumbers ??= [.. List(r => r.Tag.Equals(Tag.File)).Select(r => r.Value)];
+    public List<string> MultimediaFileReferenceNumbers => multimediaFileReferenceNumbers ??= GetStringList(Tag.File);
 
     private MultimediaFormat? multimediaFormat = null;
     public MultimediaFormat MultimediaFormat => multimediaFormat ??= First<MultimediaFormat>(Tag.Format);
