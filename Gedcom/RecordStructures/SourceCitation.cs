@@ -10,23 +10,23 @@ public class SourceCitation : RecordStructureBase
     public SourceCitation() : base() { }
     public SourceCitation(Record record) : base(record) { }
 
-    private string? certaintyAssessment = null;
-    public string CertaintyAssessment => certaintyAssessment ??= GetValue(Tag.QualityOfData);
+    private string? _certaintyAssessment = null;
+    public string CertaintyAssessment => _certaintyAssessment ??= GetValue(Tag.QualityOfData);
 
-    private EventTypeCitedFrom? eventTypeCitedFrom = null;
-    public EventTypeCitedFrom EventTypeCitedFrom => eventTypeCitedFrom ??= First<EventTypeCitedFrom>(Tag.Event);
+    private EventTypeCitedFrom? _eventTypeCitedFrom = null;
+    public EventTypeCitedFrom EventTypeCitedFrom => _eventTypeCitedFrom ??= First<EventTypeCitedFrom>(Tag.Event);
 
-    private List<MultimediaLink>? multimediaLinks = null;
-    public List<MultimediaLink> MultimediaLinks => multimediaLinks ??= List<MultimediaLink>(Tag.Object);
+    private List<MultimediaLink>? _multimediaLinks = null;
+    public List<MultimediaLink> MultimediaLinks => _multimediaLinks ??= List<MultimediaLink>(Tag.Object);
 
-    private List<NoteStructure>? noteStructures = null;
-    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+    private List<NoteStructure>? _noteStructures = null;
+    public List<NoteStructure> NoteStructures => _noteStructures ??= List<NoteStructure>(Tag.Note);
 
-    private SourceCitationData? sourceCitationData = null;
-    public SourceCitationData SourceCitationData => sourceCitationData ??= First<SourceCitationData>(Tag.Data);
+    private SourceCitationData? _sourceCitationData = null;
+    public SourceCitationData SourceCitationData => _sourceCitationData ??= First<SourceCitationData>(Tag.Data);
 
-    private string? whereWithinSource = null;
-    public string WhereWithinSource => whereWithinSource ??= GetValue(Tag.Page);
+    private string? _whereWithinSource = null;
+    public string WhereWithinSource => _whereWithinSource ??= GetValue(Tag.Page);
     
     public string Xref => Record.Value;
 

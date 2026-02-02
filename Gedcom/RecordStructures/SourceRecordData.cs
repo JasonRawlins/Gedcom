@@ -10,14 +10,14 @@ public class SourceRecordData : RecordStructureBase
     public SourceRecordData() : base() { }
     public SourceRecordData(Record record) : base(record) { }
 
-    private List<SourceRecordEvent>? recordEvents = null;
-    public List<SourceRecordEvent> RecordEvents => recordEvents ??= List<SourceRecordEvent>(Tag.Event);
+    private List<SourceRecordEvent>? _recordEvents = null;
+    public List<SourceRecordEvent> RecordEvents => _recordEvents ??= List<SourceRecordEvent>(Tag.Event);
 
-    private List<NoteStructure>? noteStructures = null;
-    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+    private List<NoteStructure>? _noteStructures = null;
+    public List<NoteStructure> NoteStructures => _noteStructures ??= List<NoteStructure>(Tag.Note);
 
-    private string? responsibleAgency = null;
-    public string ResponsibleAgency => responsibleAgency ??= GetValue(Tag.Agency);
+    private string? _responsibleAgency = null;
+    public string ResponsibleAgency => _responsibleAgency ??= GetValue(Tag.Agency);
 
     public override string ToString() => $"{Record.Value}, {ResponsibleAgency}";
 }

@@ -10,14 +10,14 @@ public class FormRecord : RecordStructureBase
     public FormRecord() : base() { }
     public FormRecord(Record record) : base(record) { }
 
-    private string? mediaType = null;
-    public string MediaType => mediaType ??= GetValue(ExtensionTag.MediaType);
+    private string? _mediaType = null;
+    public string MediaType => _mediaType ??= GetValue(ExtensionTag.MediaType);
 
-    private string? sourceType = null;
-    public string SourceType => sourceType ??= GetValue(ExtensionTag.SourceType);
+    private string? _sourceType = null;
+    public string SourceType => _sourceType ??= GetValue(ExtensionTag.SourceType);
 
-    private string? type = null;
-    public string Type => type ??= GetValue(Tag.Type);
+    private string? _type = null;
+    public string Type => _type ??= GetValue(Tag.Type);
 
     public override string ToString() => $"{Type}";
 }

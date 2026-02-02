@@ -10,31 +10,31 @@ public class EventStructure : RecordStructureBase, IComparable<EventStructure>
     public EventStructure() { }
     public EventStructure(Record record) : base(record) { }
 
-    private AddressStructure? addressStructure = null;
-    public AddressStructure AddressStructure => addressStructure ??= First<AddressStructure>(Tag.Address);
+    private AddressStructure? _addressStructure = null;
+    public AddressStructure AddressStructure => _addressStructure ??= First<AddressStructure>(Tag.Address);
 
-    private string? ageAtEvent = null;
-    public string AgeAtEvent => ageAtEvent ??= GetValue(Tag.Age);
+    private string? _ageAtEvent = null;
+    public string AgeAtEvent => _ageAtEvent ??= GetValue(Tag.Age);
 
-    private string? causeOfEvent = null;
-    public string CauseOfEvent => causeOfEvent ??= GetValue(Tag.Cause);
+    private string? _causeOfEvent = null;
+    public string CauseOfEvent => _causeOfEvent ??= GetValue(Tag.Cause);
 
-    private ChildToFamilyLink? childToFamilyLink = null;
-    public ChildToFamilyLink ChildToFamilyLink => childToFamilyLink ??= First<ChildToFamilyLink>(Tag.FamilyChild);
+    private ChildToFamilyLink? _childToFamilyLink = null;
+    public ChildToFamilyLink ChildToFamilyLink => _childToFamilyLink ??= First<ChildToFamilyLink>(Tag.FamilyChild);
 
-    private string? dateValue = null;
-    public string DateValue => dateValue ??= GetValue(Tag.Date);
+    private string? _dateValue = null;
+    public string DateValue => _dateValue ??= GetValue(Tag.Date);
 
-    private string? eventOrFactClassification = null;
-    public string EventOrFactClassification => eventOrFactClassification ??= GetValue(Tag.Type);
+    private string? _eventOrFactClassification = null;
+    public string EventOrFactClassification => _eventOrFactClassification ??= GetValue(Tag.Type);
    
     public virtual EventType EventType { get; set; }
 
-    private GedcomDate? gedcomDate = null;
-    public GedcomDate GedcomDate => gedcomDate ??= GedcomDate.Parse(DateValue);
+    private GedcomDate? _gedcomDate = null;
+    public GedcomDate GedcomDate => _gedcomDate ??= GedcomDate.Parse(DateValue);
 
-    private List<MultimediaLink>? multimediaLinks = null;
-    public List<MultimediaLink> MultimediaLinks => multimediaLinks ??= List<MultimediaLink>(Tag.Object);
+    private List<MultimediaLink>? _multimediaLinks = null;
+    public List<MultimediaLink> MultimediaLinks => _multimediaLinks ??= List<MultimediaLink>(Tag.Object);
     
     public string Name
     {
@@ -87,23 +87,23 @@ public class EventStructure : RecordStructureBase, IComparable<EventStructure>
         }
     }
 
-    private List<NoteStructure>? noteStructures = null;
-    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+    private List<NoteStructure>? _noteStructures = null;
+    public List<NoteStructure> NoteStructures => _noteStructures ??= List<NoteStructure>(Tag.Note);
 
-    private PlaceStructure? placeStructure = null;
-    public PlaceStructure PlaceStructure => placeStructure ??= First<PlaceStructure>(Tag.Place);
+    private PlaceStructure? _placeStructure = null;
+    public PlaceStructure PlaceStructure => _placeStructure ??= First<PlaceStructure>(Tag.Place);
 
-    private string? religiousAffiliation = null;
-    public string ReligiousAffiliation => religiousAffiliation ??= GetValue(Tag.Religion);
+    private string? _religiousAffiliation = null;
+    public string ReligiousAffiliation => _religiousAffiliation ??= GetValue(Tag.Religion);
 
-    private string? responsibleAgency = null;
-    public string ResponsibleAgency => responsibleAgency ??= GetValue(Tag.Agency);
+    private string? _responsibleAgency = null;
+    public string ResponsibleAgency => _responsibleAgency ??= GetValue(Tag.Agency);
 
-    private string? restrictionNotice = null;
-    public string RestrictionNotice => restrictionNotice ??= GetValue(Tag.Restriction);
+    private string? _restrictionNotice = null;
+    public string RestrictionNotice => _restrictionNotice ??= GetValue(Tag.Restriction);
 
-    private List<SourceCitation>? sourceCitations = null;
-    public List<SourceCitation> SourceCitations => sourceCitations ??= List<SourceCitation>(Tag.Source);
+    private List<SourceCitation>? _sourceCitations = null;
+    public List<SourceCitation> SourceCitations => _sourceCitations ??= List<SourceCitation>(Tag.Source);
 
     public int CompareTo(EventStructure? other)
     {

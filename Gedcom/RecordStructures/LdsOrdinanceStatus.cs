@@ -7,11 +7,11 @@ namespace Gedcom.RecordStructures;
 [JsonConverter(typeof(LdsOrdinanceStatusJsonConverter))]
 public class LdsOrdinanceStatus : RecordStructureBase
 {
-    private string? changeDate = null;
-    public string ChangeDate => changeDate ??= GetValue(Tag.Date);
+    private string? _changeDate = null;
+    public string ChangeDate => _changeDate ??= GetValue(Tag.Date);
 
-    private string? status = null;
-    public string Status => status ??= Record.Value;
+    private string? _status = null;
+    public string Status => _status ??= Record.Value;
 
     public override string ToString() => $"{Record.Value}, {Status}, {ChangeDate}";
 }

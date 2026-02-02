@@ -10,8 +10,8 @@ public class UserReferenceNumber : RecordStructureBase
     public UserReferenceNumber() { }
     public UserReferenceNumber(Record record) : base(record) { }
 
-    private string? userReferenceType = null;
-    public string UserReferenceType => userReferenceType ??= GetValue(Tag.Type);
+    private string? _userReferenceType = null;
+    public string UserReferenceType => _userReferenceType ??= GetValue(Tag.Type);
 
     public override string ToString() => $"{Record.Value}, {UserReferenceType}";
 }

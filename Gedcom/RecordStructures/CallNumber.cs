@@ -10,8 +10,8 @@ public class CallNumber : RecordStructureBase
     public CallNumber() : base() { }
     public CallNumber(Record record) : base(record) { }
 
-    private string? sourceMediaType = null;
-    public string SourceMediaType => sourceMediaType ??= GetValue(Tag.Media);
+    private string? _sourceMediaType = null;
+    public string SourceMediaType => _sourceMediaType ??= GetValue(Tag.Media);
 
     public override string ToString() => $"{Record.Value}, {SourceMediaType}";
 }

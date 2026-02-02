@@ -10,29 +10,29 @@ public class SubmitterRecord : RecordStructureBase
     public SubmitterRecord() : base() { }
     public SubmitterRecord(Record record) : base(record) { }
 
-    private AddressStructure? addressStructure = null;
-    public AddressStructure AddressStructure => addressStructure ??= First<AddressStructure>(Tag.Address);
+    private AddressStructure? _addressStructure = null;
+    public AddressStructure AddressStructure => _addressStructure ??= First<AddressStructure>(Tag.Address);
    
-    private string? automatedRecordId = null;
-    public string AutomatedRecordId => automatedRecordId ??= GetValue(Tag.RecordIdNumber);
+    private string? _automatedRecordId = null;
+    public string AutomatedRecordId => _automatedRecordId ??= GetValue(Tag.RecordIdNumber);
 
-    private GedcomDate? changeDate = null;
-    public GedcomDate ChangeDate => changeDate ??= First<GedcomDate>(Tag.Change);
+    private GedcomDate? _changeDate = null;
+    public GedcomDate ChangeDate => _changeDate ??= First<GedcomDate>(Tag.Change);
 
-    private List<string>? languagePreferences = null;
-    public List<string> LanguagePreferences => languagePreferences ??= GetStringList(Tag.Language);
+    private List<string>? _languagePreferences = null;
+    public List<string> LanguagePreferences => _languagePreferences ??= GetStringList(Tag.Language);
 
-    private List<MultimediaLink>? multimediaLinks = null;
-    public List<MultimediaLink> MultimediaLinks => multimediaLinks ??= List<MultimediaLink>(Tag.Media);
+    private List<MultimediaLink>? _multimediaLinks = null;
+    public List<MultimediaLink> MultimediaLinks => _multimediaLinks ??= List<MultimediaLink>(Tag.Media);
 
-    private List<NoteStructure>? noteStructures = null;
-    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+    private List<NoteStructure>? _noteStructures = null;
+    public List<NoteStructure> NoteStructures => _noteStructures ??= List<NoteStructure>(Tag.Note);
 
-    private string? submitterName = null;
-    public string SubmitterName => submitterName ??= GetValue(Tag.Name);
+    private string? _submitterName = null;
+    public string SubmitterName => _submitterName ??= GetValue(Tag.Name);
 
-    private string? submitterRegisteredRfn = null;
-    public string SubmitterRegisteredRfn => submitterRegisteredRfn ??= GetValue(Tag.RecordFileNumber);
+    private string? _submitterRegisteredRfn = null;
+    public string SubmitterRegisteredRfn => _submitterRegisteredRfn ??= GetValue(Tag.RecordFileNumber);
 
     public override string ToString() => $"{Record.Value}, {SubmitterName}";
 }

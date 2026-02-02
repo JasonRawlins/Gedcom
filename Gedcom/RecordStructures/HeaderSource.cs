@@ -10,20 +10,20 @@ public class HeaderSource : RecordStructureBase
     public HeaderSource() : base() { }
     public HeaderSource(Record record) : base(record) { }
 
-    private HeaderCorporation? corporation = null;
-    public HeaderCorporation Corporation => corporation ??= First<HeaderCorporation>(Tag.Corporate);
+    private HeaderCorporation? _corporation = null;
+    public HeaderCorporation Corporation => _corporation ??= First<HeaderCorporation>(Tag.Corporate);
 
-    private HeaderData? data = null;
-    public HeaderData Data => data ??= First<HeaderData>(Tag.Data);
+    private HeaderData? _data = null;
+    public HeaderData Data => _data ??= First<HeaderData>(Tag.Data);
 
-    private string? nameOfProduct = null;
-    public string NameOfProduct => nameOfProduct ??= GetValue(Tag.Name);
+    private string? _nameOfProduct = null;
+    public string NameOfProduct => _nameOfProduct ??= GetValue(Tag.Name);
 
-    private HeaderTree? tree = null;
-    public HeaderTree Tree => tree ??= First<HeaderTree>(ExtensionTag.Tree);
+    private HeaderTree? _tree = null;
+    public HeaderTree Tree => _tree ??= First<HeaderTree>(ExtensionTag.Tree);
 
-    private string? version = null;
-    public string Version => version ??= GetValue(Tag.Version);
+    private string? _version = null;
+    public string Version => _version ??= GetValue(Tag.Version);
     
     public string Xref => Record.Value;
 

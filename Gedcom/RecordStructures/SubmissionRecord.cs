@@ -10,32 +10,32 @@ public class SubmissionRecord : RecordStructureBase
     public SubmissionRecord() : base() { }
     public SubmissionRecord(Record record) : base(record) { }
 
-    private string? automatedRecordId = null;
-    public string AutomatedRecordId => automatedRecordId ??= GetValue(Tag.RecordIdNumber);
+    private string? _automatedRecordId = null;
+    public string AutomatedRecordId => _automatedRecordId ??= GetValue(Tag.RecordIdNumber);
 
-    private ChangeDate? changeDate = null;
-    public ChangeDate ChangeDate => changeDate ??= First<ChangeDate>(Tag.Change);
+    private ChangeDate? _changeDate = null;
+    public ChangeDate ChangeDate => _changeDate ??= First<ChangeDate>(Tag.Change);
 
-    private string? generationsOfAncestors = null;
-    public string GenerationsOfAncestors => generationsOfAncestors ??= GetValue(Tag.Ancestors);
+    private string? _generationsOfAncestors = null;
+    public string GenerationsOfAncestors => _generationsOfAncestors ??= GetValue(Tag.Ancestors);
 
-    private string? generationsOfDescendants = null;
-    public string GenerationsOfDescendants => generationsOfDescendants ??= GetValue(Tag.Descendants);
+    private string? _generationsOfDescendants = null;
+    public string GenerationsOfDescendants => _generationsOfDescendants ??= GetValue(Tag.Descendants);
 
-    private string? nameOfFamilyFile = null;
-    public string NameOfFamilyFile => nameOfFamilyFile ??= GetValue(Tag.FamilyFile);
+    private string? _nameOfFamilyFile = null;
+    public string NameOfFamilyFile => _nameOfFamilyFile ??= GetValue(Tag.FamilyFile);
 
-    private List<NoteStructure>? noteStructures = null;
-    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+    private List<NoteStructure>? _noteStructures = null;
+    public List<NoteStructure> NoteStructures => _noteStructures ??= List<NoteStructure>(Tag.Note);
 
-    private string? ordinanceProcessFlag = null;
-    public string OrdinanceProcessFlag => ordinanceProcessFlag ??= GetValue(Tag.Ordinance);
+    private string? _ordinanceProcessFlag = null;
+    public string OrdinanceProcessFlag => _ordinanceProcessFlag ??= GetValue(Tag.Ordinance);
 
-    private string? submitter = null;
-    public string Submitter => submitter ??= GetValue(Tag.Submitter);
+    private string? _submitter = null;
+    public string Submitter => _submitter ??= GetValue(Tag.Submitter);
 
-    private string? templeCode = null;
-    public string TempleCode => templeCode ??= GetValue(Tag.Temple);
+    private string? _templeCode = null;
+    public string TempleCode => _templeCode ??= GetValue(Tag.Temple);
 
     public string Xref => Record.Value;
 

@@ -10,11 +10,12 @@ public class HeaderData : RecordStructureBase
     public HeaderData() : base() { }
     public HeaderData(Record record) : base(record) { }
 
-    private NoteStructure? copyrightSourceData = null;
-    public NoteStructure CopyrightSourceData => copyrightSourceData ??= First<NoteStructure>(Tag.Copyright);
 
-    private string? publicationDate = null;
-    public string PublicationDate => publicationDate ??= GetValue(Tag.Date);
+    private NoteStructure? _copyrightSourceData = null;
+    public NoteStructure CopyrightSourceData => _copyrightSourceData ??= First<NoteStructure>(Tag.Copyright);
+
+    private string? _publicationDate = null;
+    public string PublicationDate => _publicationDate ??= GetValue(Tag.Date);
 
     public override string ToString() => $"{Record.Value}, {PublicationDate}";
 }

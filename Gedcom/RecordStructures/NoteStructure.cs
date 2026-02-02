@@ -15,12 +15,12 @@ public class NoteStructure : RecordStructureBase
     // 255 characters. If the value is greater than 255 characters, the record may also have
     // the sub records CONC (Concatenate) or CONT (Continue). The Value, CONC, and CONT
     // values must be merged together to get the full text for a NoteStructure.
-    private string? text = null;
+    private string? _text = null;
     public string Text
     {
         get
         {
-            if (string.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(_text))
             {
                 var noteText = new StringBuilder();
                 noteText.Append(Record.Value);
@@ -38,10 +38,10 @@ public class NoteStructure : RecordStructureBase
                     }
                 });
 
-                text = noteText.ToString();
+                _text = noteText.ToString();
             }
 
-            return text;
+            return _text;
         }
     }
 

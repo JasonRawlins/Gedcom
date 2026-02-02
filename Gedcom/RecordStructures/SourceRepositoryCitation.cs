@@ -10,11 +10,11 @@ public class SourceRepositoryCitation : RecordStructureBase
     public SourceRepositoryCitation() : base() { }
     public SourceRepositoryCitation(Record record) : base(record) { }
 
-    private List<CallNumber>? callNumbers = null;
-    public List<CallNumber> CallNumbers => callNumbers ??= List<CallNumber>(Tag.CallNumber);
+    private List<CallNumber>? _callNumbers = null;
+    public List<CallNumber> CallNumbers => _callNumbers ??= List<CallNumber>(Tag.CallNumber);
 
-    private List<NoteStructure>? noteStructures = null;
-    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+    private List<NoteStructure>? _noteStructures = null;
+    public List<NoteStructure> NoteStructures => _noteStructures ??= List<NoteStructure>(Tag.Note);
 
     public override string ToString() => $"{Record.Value}";
 }

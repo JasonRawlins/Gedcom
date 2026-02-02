@@ -10,65 +10,65 @@ public class IndividualRecord : RecordStructureBase
     public IndividualRecord() { }
     public IndividualRecord(Record record) : base(record) { }
 
-    private List<string>? aliases = null;
-    public List<string> Aliases => aliases ??= GetStringList(Tag.Alias);
+    private List<string>? _aliases = null;
+    public List<string> Aliases => _aliases ??= GetStringList(Tag.Alias);
 
-    private List<string>? ancestorInterests = null;
-    public List<string> AncestorInterests => ancestorInterests ??= GetStringList(Tag.AncesInterest);
+    private List<string>? _ancestorInterests = null;
+    public List<string> AncestorInterests => _ancestorInterests ??= GetStringList(Tag.AncesInterest);
 
-    private string? ancestralFileNumber = null;
-    public string AncestralFileNumber => ancestralFileNumber ??= GetValue(Tag.AncestralFileNumber);
+    private string? _ancestralFileNumber = null;
+    public string AncestralFileNumber => _ancestralFileNumber ??= GetValue(Tag.AncestralFileNumber);
 
-    private List<AssociationStructure>? associationStructures = null;
-    public List<AssociationStructure> AssociationStructures => associationStructures ??= List<AssociationStructure>(Tag.Associates);
+    private List<AssociationStructure>? _associationStructures = null;
+    public List<AssociationStructure> AssociationStructures => _associationStructures ??= List<AssociationStructure>(Tag.Associates);
 
-    private string? automatedRecordId = null;
-    public string AutomatedRecordId => automatedRecordId ??= GetValue(Tag.RecordIdNumber);
+    private string? _automatedRecordId = null;
+    public string AutomatedRecordId => _automatedRecordId ??= GetValue(Tag.RecordIdNumber);
 
-    private ChangeDate? changeDate = null;
-    public ChangeDate ChangeDate => changeDate ??= First<ChangeDate>(Tag.Change);
+    private ChangeDate? _changeDate = null;
+    public ChangeDate ChangeDate => _changeDate ??= First<ChangeDate>(Tag.Change);
 
-    private List<ChildToFamilyLink>? childToFamilyLinks = null;
-    public List<ChildToFamilyLink> ChildToFamilyLinks => childToFamilyLinks ??= List<ChildToFamilyLink>(Tag.FamilyChild);
+    private List<ChildToFamilyLink>? _childToFamilyLinks = null;
+    public List<ChildToFamilyLink> ChildToFamilyLinks => _childToFamilyLinks ??= List<ChildToFamilyLink>(Tag.FamilyChild);
 
-    private List<string>? descendantInterests = null;
-    public List<string> DescendantInterests => descendantInterests ??= GetStringList(Tag.DescendantInterest);
+    private List<string>? _descendantInterests = null;
+    public List<string> DescendantInterests => _descendantInterests ??= GetStringList(Tag.DescendantInterest);
 
-    private List<EventStructure>? individualEventStructures = null;
-    public List<EventStructure> IndividualEventStructures => individualEventStructures ??= [.. List(IndividualEventStructure.IsIndividualEventStructure).Select(r => new EventStructure(r))];
+    private List<EventStructure>? _individualEventStructures = null;
+    public List<EventStructure> IndividualEventStructures => _individualEventStructures ??= [.. List(IndividualEventStructure.IsIndividualEventStructure).Select(r => new EventStructure(r))];
 
-    private List<LdsIndividualOrdinance>? ldsIndividualOrdinances = null;
-    public List<LdsIndividualOrdinance> LdsIndividualOrdinances => ldsIndividualOrdinances ??= List<LdsIndividualOrdinance>(Tag.Ordinance);
+    private List<LdsIndividualOrdinance>? _ldsIndividualOrdinances = null;
+    public List<LdsIndividualOrdinance> LdsIndividualOrdinances => _ldsIndividualOrdinances ??= List<LdsIndividualOrdinance>(Tag.Ordinance);
 
-    private List<MultimediaLink>? multimediaLinks = null;
-    public List<MultimediaLink> MultimediaLinks => multimediaLinks ??= List<MultimediaLink>(Tag.Object);
+    private List<MultimediaLink>? _multimediaLinks = null;
+    public List<MultimediaLink> MultimediaLinks => _multimediaLinks ??= List<MultimediaLink>(Tag.Object);
 
-    private List<NoteStructure>? noteStructures = null;
-    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+    private List<NoteStructure>? _noteStructures = null;
+    public List<NoteStructure> NoteStructures => _noteStructures ??= List<NoteStructure>(Tag.Note);
 
-    private string? permanentRecordFileNumber = null;
-    public string PermanentRecordFileNumber => permanentRecordFileNumber ??= GetValue(Tag.RecordFileNumber);
+    private string? _permanentRecordFileNumber = null;
+    public string PermanentRecordFileNumber => _permanentRecordFileNumber ??= GetValue(Tag.RecordFileNumber);
 
-    private List<PersonalNameStructure>? personalNameStructures = null;
-    public List<PersonalNameStructure> PersonalNameStructures => personalNameStructures ??= List<PersonalNameStructure>(Tag.Name);
+    private List<PersonalNameStructure>? _personalNameStructures = null;
+    public List<PersonalNameStructure> PersonalNameStructures => _personalNameStructures ??= List<PersonalNameStructure>(Tag.Name);
 
-    private string? restrictionNotice = null;
-    public string RestrictionNotice => restrictionNotice ??= GetValue(Tag.Restriction);
+    private string? _restrictionNotice = null;
+    public string RestrictionNotice => _restrictionNotice ??= GetValue(Tag.Restriction);
 
-    private string? sexValue = null;
-    public string SexValue => sexValue ??= GetValue(Tag.Sex);
+    private string? _sexValue = null;
+    public string SexValue => _sexValue ??= GetValue(Tag.Sex);
 
-    private List<SourceCitation>? sourceCitations = null;
-    public List<SourceCitation> SourceCitations => sourceCitations ??= List<SourceCitation>(Tag.Source);
+    private List<SourceCitation>? _sourceCitations = null;
+    public List<SourceCitation> SourceCitations => _sourceCitations ??= List<SourceCitation>(Tag.Source);
 
-    private List<SpouseToFamilyLink>? spouseToFamilyLinks = null;
-    public List<SpouseToFamilyLink> SpouseToFamilyLinks => spouseToFamilyLinks ??= List<SpouseToFamilyLink>(Tag.FamilySpouse);
+    private List<SpouseToFamilyLink>? _spouseToFamilyLinks = null;
+    public List<SpouseToFamilyLink> SpouseToFamilyLinks => _spouseToFamilyLinks ??= List<SpouseToFamilyLink>(Tag.FamilySpouse);
 
-    private string? submitter = null;
-    public string Submitter => submitter ??= GetValue(Tag.Submission);
+    private string? _submitter = null;
+    public string Submitter => _submitter ??= GetValue(Tag.Submission);
 
-    private List<UserReferenceNumber>? userReferenceNumbers = null;
-    public List<UserReferenceNumber> UserReferenceNumbers => userReferenceNumbers ??= List<UserReferenceNumber>(Tag.Reference);
+    private List<UserReferenceNumber>? _userReferenceNumbers = null;
+    public List<UserReferenceNumber> UserReferenceNumbers => _userReferenceNumbers ??= List<UserReferenceNumber>(Tag.Reference);
    
     public string Xref => Record.Value;
 
@@ -94,14 +94,14 @@ public class IndividualRecord : RecordStructureBase
 
     #endregion
 
-    private bool IsWeaklyTyped(Record record)
+    private static bool IsWeaklyTyped(Record record)
     {
         // By weakly-typed, I mean there isn't a property that specifically
         // exposes the event. For example, there is a property named "Birth"
         // that exposes only the BIRT IndividualEventStructure.
         return !(new string[]
         {
-            "BIRT", "DEAT"
+            Tag.Birth, Tag.Death
         }.Contains(record.Tag));
     }
 

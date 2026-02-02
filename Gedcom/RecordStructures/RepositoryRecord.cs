@@ -10,38 +10,38 @@ public class RepositoryRecord : RecordStructureBase, IAddressStructure
     public RepositoryRecord() : base() { }
     public RepositoryRecord(Record record) : base(record) { }
 
-    private List<string>? addressEmails = null;
-    public List<string> AddressEmails => addressEmails ??= ListValues(Tag.Email);
+    private List<string>? _addressEmails = null;
+    public List<string> AddressEmails => _addressEmails ??= ListValues(Tag.Email);
 
-    private List<string>? addressFaxNumbers = null;
-    public List<string> AddressFaxNumbers => addressFaxNumbers ??= ListValues(Tag.Facimilie);
+    private List<string>? _addressFaxNumbers = null;
+    public List<string> AddressFaxNumbers => _addressFaxNumbers ??= ListValues(Tag.Facimilie);
 
-    private AddressStructure? addressStructure = null;
-    public AddressStructure AddressStructure => addressStructure ??= First<AddressStructure>(Tag.Address);
+    private AddressStructure? _addressStructure = null;
+    public AddressStructure AddressStructure => _addressStructure ??= First<AddressStructure>(Tag.Address);
 
-    private List<string>? addressWebPages = null;
-    public List<string> AddressWebPages => addressWebPages ??= ListValues(Tag.Web);
+    private List<string>? _addressWebPages = null;
+    public List<string> AddressWebPages => _addressWebPages ??= ListValues(Tag.Web);
 
-    private string? automatedRecordId = null;
-    public string AutomatedRecordId => automatedRecordId ??= GetValue(Tag.RecordIdNumber);
+    private string? _automatedRecordId = null;
+    public string AutomatedRecordId => _automatedRecordId ??= GetValue(Tag.RecordIdNumber);
 
-    private CallNumber? callNumber = null;
-    public CallNumber CallNumber => callNumber ??= First<CallNumber>(Tag.CallNumber);
+    private CallNumber? _callNumber = null;
+    public CallNumber CallNumber => _callNumber ??= First<CallNumber>(Tag.CallNumber);
 
-    private ChangeDate? changeDate = null;
-    public ChangeDate ChangeDate => changeDate ??= First<ChangeDate>(Tag.Change);
+    private ChangeDate? _changeDate = null;
+    public ChangeDate ChangeDate => _changeDate ??= First<ChangeDate>(Tag.Change);
 
-    private string? name = null;
-    public string Name => name ??= GetValue(Tag.Name);
+    private string? _name = null;
+    public string Name => _name ??= GetValue(Tag.Name);
 
-    private List<NoteStructure>? noteStructures = null;
-    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+    private List<NoteStructure>? _noteStructures = null;
+    public List<NoteStructure> NoteStructures => _noteStructures ??= List<NoteStructure>(Tag.Note);
 
-    private List<string>? phoneNumbers = null;
-    public List<string> PhoneNumbers => phoneNumbers ??= ListValues(Tag.Phone);
+    private List<string>? _phoneNumbers = null;
+    public List<string> PhoneNumbers => _phoneNumbers ??= ListValues(Tag.Phone);
 
-    private UserReferenceNumber? userReferenceNumber = null;
-    public UserReferenceNumber UserReferenceNumber => userReferenceNumber ?? First<UserReferenceNumber>(Tag.Reference);
+    private UserReferenceNumber? _userReferenceNumber = null;
+    public UserReferenceNumber UserReferenceNumber => _userReferenceNumber ??= First<UserReferenceNumber>(Tag.Reference);
     
     public string Xref => Record.Value;
 

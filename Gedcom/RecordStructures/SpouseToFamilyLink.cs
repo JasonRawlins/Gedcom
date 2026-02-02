@@ -10,8 +10,8 @@ public class SpouseToFamilyLink : RecordStructureBase
     public SpouseToFamilyLink() : base() { }
     public SpouseToFamilyLink(Record record) : base(record) { }
 
-    private List<NoteStructure>? noteStructures = null;
-    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+    private List<NoteStructure>? _noteStructures = null;
+    public List<NoteStructure> NoteStructures => _noteStructures ??= List<NoteStructure>(Tag.Note);
     
     public string Xref => Record.Value;
 

@@ -10,47 +10,47 @@ public class SourceRecord : RecordStructureBase
     public SourceRecord() : base() { }
     public SourceRecord(Record record) : base(record) { }
 
-    private string? automatedRecordId = null;
-    public string AutomatedRecordId => automatedRecordId ??= GetValue(Tag.RecordIdNumber);
+    private string? _automatedRecordId = null;
+    public string AutomatedRecordId => _automatedRecordId ??= GetValue(Tag.RecordIdNumber);
 
-    private string? callNumber = null;
-    public string CallNumber => callNumber ??= GetValue(Tag.CallNumber);
+    private string? _callNumber = null;
+    public string CallNumber => _callNumber ??= GetValue(Tag.CallNumber);
 
-    private ChangeDate? changeDate = null;
-    public ChangeDate ChangeDate => changeDate ??= First<ChangeDate>(Tag.Change);
+    private ChangeDate? _changeDate = null;
+    public ChangeDate ChangeDate => _changeDate ??= First<ChangeDate>(Tag.Change);
 
-    private List<MultimediaLink>? multimediaLinks = null;
-    public List<MultimediaLink> MultimediaLinks => multimediaLinks ??= List<MultimediaLink>(Tag.Object);
+    private List<MultimediaLink>? _multimediaLinks = null;
+    public List<MultimediaLink> MultimediaLinks => _multimediaLinks ??= List<MultimediaLink>(Tag.Object);
 
-    private List<NoteStructure>? noteStructures = null;
-    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+    private List<NoteStructure>? _noteStructures = null;
+    public List<NoteStructure> NoteStructures => _noteStructures ??= List<NoteStructure>(Tag.Note);
 
-    private string? repositoryXref = null;
-    public string RepositoryXref => repositoryXref ??= GetValue(Tag.Repository);
+    private string? _repositoryXref = null;
+    public string RepositoryXref => _repositoryXref ??= GetValue(Tag.Repository);
 
-    private NoteStructure? sourceDescriptiveTitle = null;
-    public NoteStructure SourceDescriptiveTitle => sourceDescriptiveTitle ??= First<NoteStructure>(Tag.Title);
+    private NoteStructure? _sourceDescriptiveTitle = null;
+    public NoteStructure SourceDescriptiveTitle => _sourceDescriptiveTitle ??= First<NoteStructure>(Tag.Title);
 
-    private NoteStructure? sourceFiledByEntry = null;
-    public NoteStructure SourceFiledByEntry => sourceFiledByEntry ??= First<NoteStructure>(Tag.Abbreviation);
+    private NoteStructure? _sourceFiledByEntry = null;
+    public NoteStructure SourceFiledByEntry => _sourceFiledByEntry ??= First<NoteStructure>(Tag.Abbreviation);
 
-    private NoteStructure? sourceOriginator = null;
-    public NoteStructure SourceOriginator => sourceOriginator ??= First<NoteStructure>(Tag.Author);
+    private NoteStructure? _sourceOriginator = null;
+    public NoteStructure SourceOriginator => _sourceOriginator ??= First<NoteStructure>(Tag.Author);
 
-    private NoteStructure? sourcePublicationFacts = null;
-    public NoteStructure SourcePublicationFacts => sourcePublicationFacts ??= First<NoteStructure>(Tag.Publication);
+    private NoteStructure? _sourcePublicationFacts = null;
+    public NoteStructure SourcePublicationFacts => _sourcePublicationFacts ??= First<NoteStructure>(Tag.Publication);
 
-    private SourceRecordData? sourceRecordData = null;
-    public SourceRecordData SourceRecordData => sourceRecordData ??= First<SourceRecordData>(Tag.Data);
+    private SourceRecordData? _sourceRecordData = null;
+    public SourceRecordData SourceRecordData => _sourceRecordData ??= First<SourceRecordData>(Tag.Data);
 
-    private List<SourceRepositoryCitation>? sourceRepositoryCitations = null;
-    public List<SourceRepositoryCitation> SourceRepositoryCitations => sourceRepositoryCitations ??= List<SourceRepositoryCitation>(Tag.Repository);
+    private List<SourceRepositoryCitation>? _sourceRepositoryCitations = null;
+    public List<SourceRepositoryCitation> SourceRepositoryCitations => _sourceRepositoryCitations ??= List<SourceRepositoryCitation>(Tag.Repository);
 
-    private NoteStructure? textFromSource = null;
-    public NoteStructure TextFromSource => textFromSource ??= First<NoteStructure>(Tag.Text);
+    private NoteStructure? _textFromSource = null;
+    public NoteStructure TextFromSource => _textFromSource ??= First<NoteStructure>(Tag.Text);
 
-    private List<UserReferenceNumber>? userReferenceNumbers = null;
-    public List<UserReferenceNumber> UserReferenceNumbers => userReferenceNumbers ??= List<UserReferenceNumber>(Tag.Reference);
+    private List<UserReferenceNumber>? _userReferenceNumbers = null;
+    public List<UserReferenceNumber> UserReferenceNumbers => _userReferenceNumbers ??= List<UserReferenceNumber>(Tag.Reference);
     
     public string Xref => Record.Value;
 

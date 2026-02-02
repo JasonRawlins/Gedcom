@@ -10,34 +10,34 @@ public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
     public PersonalNameStructure() : base() { }
     public PersonalNameStructure(Record record) : base(record) { }
 
-    private string? given = null;
-    public string Given => given ??= GetValue(Tag.GivenName);
+    private string? _given = null;
+    public string Given => _given ??= GetValue(Tag.GivenName);
     
     public string NamePersonal => Record.Value; // The complete name, (e.g. John /Doe/)
 
-    private NameVariation? namePhoneticVariation = null;
-    public NameVariation NamePhoneticVariation => namePhoneticVariation ??= First<NameVariation>(Tag.Phonetic);
+    private NameVariation? _namePhoneticVariation = null;
+    public NameVariation NamePhoneticVariation => _namePhoneticVariation ??= First<NameVariation>(Tag.Phonetic);
 
-    private string? namePrefix = null;
-    public string NamePrefix => namePrefix ??= GetValue(Tag.NamePrefix);
+    private string? _namePrefix = null;
+    public string NamePrefix => _namePrefix ??= GetValue(Tag.NamePrefix);
 
-    private string? nameSuffix = null;
-    public string NameSuffix => nameSuffix ??= GetValue(Tag.NameSuffix);
+    private string? _nameSuffix = null;
+    public string NameSuffix => _nameSuffix ??= GetValue(Tag.NameSuffix);
 
-    private NameVariation? nameRomanizedVariation = null;
-    public NameVariation NameRomanizedVariation => nameRomanizedVariation ??= First<NameVariation>(Tag.Romanized);
+    private NameVariation? _nameRomanizedVariation = null;
+    public NameVariation NameRomanizedVariation => _nameRomanizedVariation ??= First<NameVariation>(Tag.Romanized);
 
-    private string? nameType = null;
-    public string NameType => nameType ??= GetValue(Tag.Type);
+    private string? _nameType = null;
+    public string NameType => _nameType ??= GetValue(Tag.Type);
 
-    private string? nickname = null;
-    public string Nickname => nickname ??= GetValue(Tag.Nickname);
+    private string? _nickname = null;
+    public string Nickname => _nickname ??= GetValue(Tag.Nickname);
 
-    private string? surname = null;
-    public string Surname => surname ??= GetValue(Tag.Surname);
+    private string? _surname = null;
+    public string Surname => _surname ??= GetValue(Tag.Surname);
 
-    private string? surnamePrefix = null;
-    public string SurnamePrefix => surnamePrefix ??= GetValue(Tag.SurnamePrefix);
+    private string? _surnamePrefix = null;
+    public string SurnamePrefix => _surnamePrefix ??= GetValue(Tag.SurnamePrefix);
 
     public override string ToString() => $"{Record.Value}, {NamePersonal}";
 }

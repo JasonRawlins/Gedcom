@@ -11,11 +11,11 @@ public class Map : RecordStructureBase
     public Map(Record record) : base(record) { }
 
 
-    private string? placeLatitude = null;
-    public string PlaceLatitude => placeLatitude ??= GetValue(Tag.Latitude);
+    private string? _placeLatitude = null;
+    public string PlaceLatitude => _placeLatitude ??= GetValue(Tag.Latitude);
 
-    private string? placeLongitude = null;
-    public string PlaceLongitude => placeLongitude ??= GetValue(Tag.Longitude);
+    private string? _placeLongitude = null;
+    public string PlaceLongitude => _placeLongitude ??= GetValue(Tag.Longitude);
 
     public override string ToString() => $"{Record.Value}, {PlaceLatitude}, {PlaceLongitude}";
 }

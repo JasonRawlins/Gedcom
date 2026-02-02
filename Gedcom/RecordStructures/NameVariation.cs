@@ -10,29 +10,29 @@ public class NameVariation : RecordStructureBase, IPersonalNamePieces
     public NameVariation() { }
     public NameVariation(Record record) : base(record) { }
 
-    private string? fullName = null;
-    public string FullName => fullName ??= $"{Given} {Surname}";
+    private string? _fullName = null;
+    public string FullName => _fullName ??= $"{Given} {Surname}";
 
-    private string? given = null;
-    public string Given => given ??= GetValue(Tag.GivenName);
+    private string? _given = null;
+    public string Given => _given ??= GetValue(Tag.GivenName);
 
-    private string? namePrefix = null;
-    public string NamePrefix => namePrefix ??= GetValue(Tag.NamePrefix);
+    private string? _namePrefix = null;
+    public string NamePrefix => _namePrefix ??= GetValue(Tag.NamePrefix);
 
-    private string? nameSuffix = null;
-    public string NameSuffix => nameSuffix ??= GetValue(Tag.NameSuffix);
+    private string? _nameSuffix = null;
+    public string NameSuffix => _nameSuffix ??= GetValue(Tag.NameSuffix);
 
-    private string? nickname = null;
-    public string Nickname => nickname ??= GetValue(Tag.Nickname);
+    private string? _nickname = null;
+    public string Nickname => _nickname ??= GetValue(Tag.Nickname);
 
-    private string? surname = null;
-    public string Surname => surname ??= GetValue(Tag.Surname);
+    private string? _surname = null;
+    public string Surname => _surname ??= GetValue(Tag.Surname);
 
-    private string? surnamePrefix = null;
-    public string SurnamePrefix => surnamePrefix ??= GetValue(Tag.SurnamePrefix);
+    private string? _surnamePrefix = null;
+    public string SurnamePrefix => _surnamePrefix ??= GetValue(Tag.SurnamePrefix);
 
-    private string? type = null;
-    public string Type => type ??= GetValue(Tag.Type);
+    private string? _type = null;
+    public string Type => _type ??= GetValue(Tag.Type);
 
     public override string ToString() => $"{Record.Value}, {Type}, {FullName}";
 }

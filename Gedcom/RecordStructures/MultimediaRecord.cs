@@ -10,46 +10,46 @@ public class MultimediaRecord : RecordStructureBase
     public MultimediaRecord() : base() { }
     public MultimediaRecord(Record record) : base(record) { }
 
-    private string? automatedRecordId = null;
-    public string AutomatedRecordId => automatedRecordId ??= GetValue(Tag.RecordIdNumber);
+    private string? _automatedRecordId = null;
+    public string AutomatedRecordId => _automatedRecordId ??= GetValue(Tag.RecordIdNumber);
 
-    private ChangeDate? changeDate = null;
-    public ChangeDate ChangeDate => changeDate ??= First<ChangeDate>(Tag.Change);
+    private ChangeDate? _changeDate = null;
+    public ChangeDate ChangeDate => _changeDate ??= First<ChangeDate>(Tag.Change);
 
     // The DATE value is not in the specification, but is in the gedcom exported from Ancestry.
-    private string? date = null;
-    public string Date => date ??= GetValue(Tag.Date);
+    private string? _date = null;
+    public string Date => _date ??= GetValue(Tag.Date);
 
-    private string? description = null;
-    public string Description => description ??= GetValue(ExtensionTag.Description);
+    private string? _description = null;
+    public string Description => _description ??= GetValue(ExtensionTag.Description);
 
-    private string? descriptiveTitle = null;
-    public string DescriptiveTitle => descriptiveTitle ??= GetValue(Tag.Title);
+    private string? _descriptiveTitle = null;
+    public string DescriptiveTitle => _descriptiveTitle ??= GetValue(Tag.Title);
 
-    private FileRecord? fileRecord = null;
-    public FileRecord FileRecord => fileRecord ??= First<FileRecord>(Tag.File);
+    private FileRecord? _fileRecord = null;
+    public FileRecord FileRecord => _fileRecord ??= First<FileRecord>(Tag.File);
 
-    private List<string>? multimediaFileReferenceNumbers = null;
-    public List<string> MultimediaFileReferenceNumbers => multimediaFileReferenceNumbers ??= GetStringList(Tag.File);
+    private List<string>? _multimediaFileReferenceNumbers = null;
+    public List<string> MultimediaFileReferenceNumbers => _multimediaFileReferenceNumbers ??= GetStringList(Tag.File);
 
-    private MultimediaFormat? multimediaFormat = null;
-    public MultimediaFormat MultimediaFormat => multimediaFormat ??= First<MultimediaFormat>(Tag.Format);
+    private MultimediaFormat? _multimediaFormat = null;
+    public MultimediaFormat MultimediaFormat => _multimediaFormat ??= First<MultimediaFormat>(Tag.Format);
 
-    private List<NoteStructure>? _ = null;
-    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+    private List<NoteStructure>? _noteStructures = null;
+    public List<NoteStructure> NoteStructures => _noteStructures ??= List<NoteStructure>(Tag.Note);
 
-    private string? objectId = null;
-    public string ObjectId => objectId ??= GetValue(ExtensionTag.ObjectId);
+    private string? _objectId = null;
+    public string ObjectId => _objectId ??= GetValue(ExtensionTag.ObjectId);
 
     // The PLAC line is not in the specification, but is in the gedcom exported from Ancestry.
-    private PlaceStructure? placeStructure = null;
-    public PlaceStructure PlaceStructure => placeStructure ??= First<PlaceStructure>(Tag.Place);
+    private PlaceStructure? _placeStructure = null;
+    public PlaceStructure PlaceStructure => _placeStructure ??= First<PlaceStructure>(Tag.Place);
 
-    private List<SourceCitation>? sourceCitations = null;
-    public List<SourceCitation> SourceCitations => sourceCitations ??= List<SourceCitation>(Tag.Source);
+    private List<SourceCitation>? _sourceCitations = null;
+    public List<SourceCitation> SourceCitations => _sourceCitations ??= List<SourceCitation>(Tag.Source);
 
-    private UserReferenceNumber? userReferenceNumber = null;
-    public UserReferenceNumber UserReferenceNumber => userReferenceNumber ??= First<UserReferenceNumber>(Tag.Reference);
+    private UserReferenceNumber? _userReferenceNumber = null;
+    public UserReferenceNumber UserReferenceNumber => _userReferenceNumber ??= First<UserReferenceNumber>(Tag.Reference);
 
     public override string ToString() => $"{Record.Value}, {AutomatedRecordId}, {DescriptiveTitle}";
 }

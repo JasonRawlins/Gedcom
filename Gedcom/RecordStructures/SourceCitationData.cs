@@ -10,11 +10,11 @@ public class SourceCitationData : RecordStructureBase
     public SourceCitationData() : base() { }
     public SourceCitationData(Record record) : base(record) { }
 
-    private string? entryRecordingDate = null;
-    public string EntryRecordingDate => entryRecordingDate ??= GetValue(Tag.Date);
+    private string? _entryRecordingDate = null;
+    public string EntryRecordingDate => _entryRecordingDate ??= GetValue(Tag.Date);
 
-    private List<NoteStructure>? textFromSources = null;
-    public List<NoteStructure> TextFromSources => textFromSources ??= List<NoteStructure>(Tag.Text);
+    private List<NoteStructure>? _textFromSources = null;
+    public List<NoteStructure> TextFromSources => _textFromSources ??= List<NoteStructure>(Tag.Text);
 
     public override string ToString() => $"{Record.Value}, {EntryRecordingDate}";
 }

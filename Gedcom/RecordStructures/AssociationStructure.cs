@@ -10,14 +10,14 @@ public class AssociationStructure : RecordStructureBase
     public AssociationStructure() : base() { }
     public AssociationStructure(Record record) : base(record) { }
 
-    private List<NoteStructure>? noteStructures = null;
-    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+    private List<NoteStructure>? _noteStructures = null;
+    public List<NoteStructure> NoteStructures => _noteStructures ??= List<NoteStructure>(Tag.Note);
 
-    private string? relationIsDescriptor = null;
-    public string RelationIsDescriptor => relationIsDescriptor ??= GetValue(Tag.Relationship);
+    private string? _relationIsDescriptor = null;
+    public string RelationIsDescriptor => _relationIsDescriptor ??= GetValue(Tag.Relationship);
 
-    private List<SourceCitation>? sourceCitations = null;
-    public List<SourceCitation> SourceCitations => sourceCitations ??= List<SourceCitation>(Tag.Source);
+    private List<SourceCitation>? _sourceCitations = null;
+    public List<SourceCitation> SourceCitations => _sourceCitations ??= List<SourceCitation>(Tag.Source);
     
     public override string ToString() => $"{Record.Value}, {RelationIsDescriptor}";
 }

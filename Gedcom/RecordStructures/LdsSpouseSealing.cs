@@ -10,23 +10,23 @@ public class LdsSpouseSealing : RecordStructureBase
     public LdsSpouseSealing() : base() { }
     public LdsSpouseSealing(Record record) : base(record) { }
 
-    private string? dateLdsOrdinance = null;
-    public string DateLdsOrdinance => dateLdsOrdinance ??= GetValue(Tag.Date);
+    private string? _dateLdsOrdinance = null;
+    public string DateLdsOrdinance => _dateLdsOrdinance ??= GetValue(Tag.Date);
 
-    private LdsOrdinanceStatus? ldsSpouseSealingDateStatus = null;
-    public LdsOrdinanceStatus LdsSpouseSealingDateStatus => ldsSpouseSealingDateStatus ??= First<LdsOrdinanceStatus>(Tag.Status);
+    private LdsOrdinanceStatus? _ldsSpouseSealingDateStatus = null;
+    public LdsOrdinanceStatus LdsSpouseSealingDateStatus => _ldsSpouseSealingDateStatus ??= First<LdsOrdinanceStatus>(Tag.Status);
 
-    private List<NoteStructure>? noteStructures = null;
-    public List<NoteStructure> NoteStructures => noteStructures ??= List<NoteStructure>(Tag.Note);
+    private List<NoteStructure>? _noteStructures = null;
+    public List<NoteStructure> NoteStructures => _noteStructures ??= List<NoteStructure>(Tag.Note);
 
-    private string? placeLivingOrdinance = null;
-    public string PlaceLivingOrdinance => placeLivingOrdinance ??= GetValue(Tag.Place);
+    private string? _placeLivingOrdinance = null;
+    public string PlaceLivingOrdinance => _placeLivingOrdinance ??= GetValue(Tag.Place);
 
-    private List<SourceCitation>? sourceCitations = null;
-    public List<SourceCitation> SourceCitations => sourceCitations ??= List<SourceCitation>(Tag.Source);
+    private List<SourceCitation>? _sourceCitations = null;
+    public List<SourceCitation> SourceCitations => _sourceCitations ??= List<SourceCitation>(Tag.Source);
 
-    private string? templeCode = null;
-    public string TempleCode => templeCode ??= GetValue(Tag.Temple);
+    private string? _templeCode = null;
+    public string TempleCode => _templeCode ??= GetValue(Tag.Temple);
 
     public override string ToString() => $"{Record.Value}, {TempleCode}, {DateLdsOrdinance}";
 }

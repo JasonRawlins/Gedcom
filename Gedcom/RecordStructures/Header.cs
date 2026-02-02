@@ -10,41 +10,42 @@ public class Header : RecordStructureBase
     public Header() : base() { }
     public Header(Record record) : base(record) { }
 
-    private CharacterSet? characterSet = null;
-    public CharacterSet CharacterSet => characterSet ??= First<CharacterSet>(Tag.Character);
 
-    private string? copyrightGedcomFile = null;
-    public string CopyrightGedcomFile => copyrightGedcomFile ??= GetValue(Tag.Copyright);
+    private CharacterSet? _characterSet = null;
+    public CharacterSet CharacterSet => _characterSet ??= First<CharacterSet>(Tag.Character);
 
-    private string? fileName = null;
-    public string FileName => fileName ??= GetValue(Tag.File);
+    private string? _copyrightGedcomFile = null;
+    public string CopyrightGedcomFile => _copyrightGedcomFile ??= GetValue(Tag.Copyright);
 
-    private HeaderGedcom? gedcom = null;
-    public HeaderGedcom Gedcom => gedcom ??= First<HeaderGedcom>(Tag.Gedcom);
+    private string? _fileName = null;
+    public string FileName => _fileName ??= GetValue(Tag.File);
 
-    private NoteStructure? gedcomContentDescription = null;
-    public NoteStructure GedcomContentDescription => gedcomContentDescription ??= First<NoteStructure>(Tag.Note);
+    private HeaderGedcom? _gedcom = null;
+    public HeaderGedcom Gedcom => _gedcom ??= First<HeaderGedcom>(Tag.Gedcom);
 
-    private string? languageOfText = null;
-    public string LanguageOfText => languageOfText ??= GetValue(Tag.Language);
+    private NoteStructure? _gedcomContentDescription = null;
+    public NoteStructure GedcomContentDescription => _gedcomContentDescription ??= First<NoteStructure>(Tag.Note);
 
-    private string? placeHierarchy = null;
-    public string PlaceHierarchy => placeHierarchy ??= Record.Records.FirstOrDefault(r => r.Tag.Equals(Tag.Place))?.Records.First(r => r.Tag.Equals(Tag.Format)).Value ?? "";
+    private string? _languageOfText = null;
+    public string LanguageOfText => _languageOfText ??= GetValue(Tag.Language);
 
-    private string? receivingSystemName = null;
-    public string ReceivingSystemName => receivingSystemName ??= GetValue(Tag.Destination);
+    private string? _placeHierarchy = null;
+    public string PlaceHierarchy => _placeHierarchy ??= Record.Records.FirstOrDefault(r => r.Tag.Equals(Tag.Place))?.Records.First(r => r.Tag.Equals(Tag.Format)).Value ?? "";
 
-    private HeaderSource? source = null;
-    public HeaderSource Source => source ??= First<HeaderSource>(Tag.Source);
+    private string? _receivingSystemName = null;
+    public string ReceivingSystemName => _receivingSystemName ??= GetValue(Tag.Destination);
 
-    private SubmissionRecord? submissionRecord = null;
-    public SubmissionRecord SubmissionRecord => submissionRecord ??= First<SubmissionRecord>(Tag.Submission);
+    private HeaderSource? _source = null;
+    public HeaderSource Source => _source ??= First<HeaderSource>(Tag.Source);
 
-    private string? submitter = null;
-    public string Submitter => submitter ??= GetValue(Tag.Submitter);
+    private SubmissionRecord? _submissionRecord = null;
+    public SubmissionRecord SubmissionRecord => _submissionRecord ??= First<SubmissionRecord>(Tag.Submission);
 
-    private GedcomDate? transmissionDate = null;
-    public GedcomDate TransmissionDate => transmissionDate ??= First<GedcomDate>(Tag.Date);
+    private string? _submitter = null;
+    public string Submitter => _submitter ??= GetValue(Tag.Submitter);
+
+    private GedcomDate? _transmissionDate = null;
+    public GedcomDate TransmissionDate => _transmissionDate ??= First<GedcomDate>(Tag.Date);
 
     public override string ToString() => $"{Record.Value}, {Submitter}";
 }

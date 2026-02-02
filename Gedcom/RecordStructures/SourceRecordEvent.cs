@@ -10,11 +10,11 @@ public class SourceRecordEvent : RecordStructureBase
     public SourceRecordEvent() : base() { }
     public SourceRecordEvent(Record record) : base(record) { }
 
-    private string? datePeriod = null;
-    public string DatePeriod => datePeriod ??= GetValue(Tag.Date);
+    private string? _datePeriod = null;
+    public string DatePeriod => _datePeriod ??= GetValue(Tag.Date);
 
-    private string? sourceJurisdictionPlace = null;
-    public string SourceJurisdictionPlace => sourceJurisdictionPlace ??= GetValue(Tag.Place);
+    private string? _sourceJurisdictionPlace = null;
+    public string SourceJurisdictionPlace => _sourceJurisdictionPlace ??= GetValue(Tag.Place);
 
     public override string ToString() => $"{Record.Value}, {DatePeriod}";
 }

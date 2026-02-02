@@ -10,13 +10,13 @@ public class HeaderTree : RecordStructureBase
     public HeaderTree() : base() { }
     public HeaderTree(Record record) : base(record) { }
 
-    private string? automatedRecordId = null;
-    public string AutomatedRecordId => automatedRecordId ??= GetValue(Tag.RecordIdNumber);
+    private string? _automatedRecordId = null;
+    public string AutomatedRecordId => _automatedRecordId ??= GetValue(Tag.RecordIdNumber);
     
     public string Name => Record.Value;
 
-    private NoteStructure? note = null;
-    public NoteStructure Note => note ??= First<NoteStructure>(Tag.Note);
+    private NoteStructure? _note = null;
+    public NoteStructure Note => _note ??= First<NoteStructure>(Tag.Note);
 
     public override string ToString() => $"{Record.Value}, {Name}";
 }

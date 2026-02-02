@@ -10,20 +10,20 @@ public class HeaderCorporation : RecordStructureBase, IAddressStructure
     public HeaderCorporation() : base() { }
     public HeaderCorporation(Record record) : base(record) { }
 
-    private List<string>? addressEmails = null;
-    public List<string> AddressEmails => addressEmails ??= ListValues(Tag.Email);
+    private List<string>? _addressEmails = null;
+    public List<string> AddressEmails => _addressEmails ??= ListValues(Tag.Email);
 
-    private List<string>? addressFaxNumbers = null;
-    public List<string> AddressFaxNumbers => addressFaxNumbers ??= ListValues(Tag.Facimilie);
+    private List<string>? _addressFaxNumbers = null;
+    public List<string> AddressFaxNumbers => _addressFaxNumbers ??= ListValues(Tag.Facimilie);
 
-    private AddressStructure? addressStructure = null;
-    public AddressStructure AddressStructure => addressStructure ??= First<AddressStructure>(Tag.Address);
+    private AddressStructure? _addressStructure = null;
+    public AddressStructure AddressStructure => _addressStructure ??= First<AddressStructure>(Tag.Address);
 
-    private List<string>? addressWebPages = null;
-    public List<string> AddressWebPages => addressWebPages ??= ListValues(Tag.Web);
+    private List<string>? _addressWebPages = null;
+    public List<string> AddressWebPages => _addressWebPages ??= ListValues(Tag.Web);
 
-    private List<string>? phoneNumbers = null;
-    public List<string> PhoneNumbers => phoneNumbers ??= ListValues(Tag.Phone);
+    private List<string>? _phoneNumbers = null;
+    public List<string> PhoneNumbers => _phoneNumbers ??= ListValues(Tag.Phone);
 
     public override string ToString() => $"{Record.Value}, {AddressStructure.AddressLine}";
 }

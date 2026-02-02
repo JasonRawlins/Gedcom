@@ -12,9 +12,9 @@ public class Program
             .WithNotParsed(HandleParseError);
     }
 
-    private static async Task<Gedcom.Core.Gedcom> CreateGedcomAsync(string gedFullName)
+    private static Gedcom.Core.Gedcom CreateGedcom(string gedFullName)
     {
-        var gedFileLines = await File.ReadAllLinesAsync(gedFullName);
+        var gedFileLines = File.ReadAllLines(gedFullName);
         var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
         return new Gedcom.Core.Gedcom(gedcomLines);
     }
@@ -35,7 +35,7 @@ public class Program
             return;
         }
         
-        var gedcom = CreateGedcomAsync(options.InputFilePath).Result;
+        var gedcom = CreateGedcom(options.InputFilePath);
         var gedcomWriter = GedcomWriter.Create(gedcom, options.Format);
 
         if (options.RecordType.Equals(Tag.Individual))
