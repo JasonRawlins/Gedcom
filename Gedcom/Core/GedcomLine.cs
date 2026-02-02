@@ -37,14 +37,14 @@ public class GedcomLine
             throw new GedcomLineParseException(line, "The line has leading whitespace.");
         }
 
-        var firstSpaceIndex = line.IndexOf(' ');
+        var lineParts = line.Split(' ', 3);
 
-        if (firstSpaceIndex == -1)
+        if (lineParts.Length == 1)
         {
             throw new GedcomLineParseException(line, "The line is missing information after the level.");
         }
-        
-        var levelText = line.Substring(0, firstSpaceIndex);
+
+        var levelText = lineParts[0];
 
         if (!int.TryParse(levelText, out var level))
         {
@@ -56,59 +56,41 @@ public class GedcomLine
             throw new GedcomLineParseException(line, $"Level must be between 0 and 99. Actual value was {level}.");
         }
 
-        var lineWithoutLevel = line.Substring(firstSpaceIndex + 1);
-        var secondSpaceIndex = lineWithoutLevel.IndexOf(' ');
-
-        string secondSegment = "";
-        string thirdSegment = "";
-
-        if (secondSpaceIndex == -1)
-        {
-            // If there is no second space index, it is probably a line with only a tag and value (e.g. 1 BIRT, 0 HEAD).
-            secondSegment = lineWithoutLevel;
-        }
-        else
-        {
-            // If there is a second space index, it is probably a line with a level, tag, and value/xref (e.g. 0 @I1@ INDI, 1 GIVN Jane).
-            secondSegment = lineWithoutLevel.Substring(0, secondSpaceIndex);
-
-            if (secondSpaceIndex + 1 == lineWithoutLevel.Length) 
-            {
-                throw new GedcomLineParseException(line, "Line has a second space index but does not have a following value.");
-            }
-
-            thirdSegment = lineWithoutLevel.Substring(secondSpaceIndex + 1);
-        }
-
         // The format of the line is correct at this point. We just need to determine which
         // segments of the line represent the tag and value. 
         string value = "";
-        string tag;
+        string tag = "";
 
         if (level == 0)
         {
-            if (secondSegment.Equals(Gedcom.Tag.Header) || secondSegment.Equals(Gedcom.Tag.Trailer))
+            if (lineParts.Length == 2)
             {
-                // The HEAD and TRLR tags do not have a value.
-                tag = secondSegment;
+                // This will be either HEAD or TRLR
+                if (lineParts[1] != Gedcom.Tag.Header || lineParts[1] != Gedcom.Tag.Trailer)
+                {
+                    throw new GedcomLineParseException(line, "A level 0 record with only two parts must be the HEAD or TRLR tag.");
+                }
+
+                tag = lineParts[1];
             }
-            else
+         
+            if (lineParts.Length == 3)
             {
                 // The reamining level 0 tags should have a level, xref, and tag).
                 // Example: "0 @I1234567890@ INDI".
-                if (string.IsNullOrEmpty(thirdSegment))
-                {
-                    throw new GedcomLineParseException(line, "The level 0 record is missing its tag.");
-                }
 
-                tag = thirdSegment;
-                value = secondSegment;
+                value = lineParts[1];
+                tag = lineParts[2];
             }
         }
         else
         {
-            tag = secondSegment;
-            value = thirdSegment;
+            tag = lineParts[1];
+
+            if (lineParts.Length > 2)
+            {
+                value = lineParts[2];
+            }
         }
 
         return new GedcomLine

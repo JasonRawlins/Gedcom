@@ -1,4 +1,5 @@
 ﻿using Gedcom;
+using System.IO;
 
 namespace GedcomTests;
 
@@ -46,6 +47,16 @@ public class GedcomLineTests
     }
 
     [TestMethod]
+    public void ParseValidNonLevel0RecordWithValueThatHasSpacesInIt()
+    {
+        var gedcomLine = GedcomLine.Parse("1 GIVN Jane /Miller/");
+
+        Assert.AreEqual(1, gedcomLine.Level);
+        Assert.AreEqual(Tag.GivenName, gedcomLine.Tag);
+        Assert.AreEqual("Jane", gedcomLine.Value);
+    }
+
+    [TestMethod]
     public void ParseEmptyLine()
     {
         var exception = Assert.ThrowsExactly<GedcomLineParseException>(() =>
@@ -61,10 +72,10 @@ public class GedcomLineTests
     {
         var exception = Assert.ThrowsExactly<GedcomLineParseException>(() =>
         {
-            GedcomLine.Parse("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus non volutpat sem. Vestibulum pulvinar erat ut dolor hendrerit, aliquam pharetra magna pulvinar. Integer in orci volutpat libero elementum lobortis. Etiam ut elit sem. Donec ut eros purus. Vestibulum iaculis velit placerat.");
+            GedcomLine.Parse("1 NOTE Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus non volutpat sem. Vestibulum pulvinar erat ut dolor hendrerit, aliquam pharetra magna pulvinar. Integer in orci volutpat libero elementum lobortis. Etiam ut elit sem. Donec ut eros purus. Vestibulum iaculis velit placerat.");
         });
 
-        Assert.AreEqual("The line is longer than 256 characters. Actual length was 287.", exception.Message);
+        Assert.AreEqual("The line is longer than 256 characters. Actual length was 294.", exception.Message);
     }
 
     [TestMethod]
@@ -123,24 +134,14 @@ public class GedcomLineTests
     }
 
     [TestMethod]
-    public void ParseLineWithASecondSpaceIndexButNoFollowingValue()
-    {
-        var exception = Assert.ThrowsExactly<GedcomLineParseException>(() =>
-        {
-            GedcomLine.Parse("0 GIVN ");
-        });
-
-        Assert.AreEqual("Line has a second space index but does not have a following value.", exception.Message);
-    }
-
-    [TestMethod]
-    public void ParseLineWithALevel0RecordWithoutATag()
+    public void ParseLineWithALevel0RecordWithoutAValueThatIsNotAHeaderOrTrailer()
     {
         var exception = Assert.ThrowsExactly<GedcomLineParseException>(() =>
         {
             GedcomLine.Parse("0 @I1@");
         });
 
-        Assert.AreEqual("The level 0 record is missing its tag.", exception.Message);
+        Assert.AreEqual("A level 0 record with only two parts must be the HEAD or TRLR tag.", exception.Message);
     }
 }
+
