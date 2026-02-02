@@ -27,13 +27,23 @@ public class GedcomLine
             throw new GedcomLineParseException(line, $"The Gedcom line is longer than 256 characters. Actual length was {line.Length}.");
         }
 
+        if (string.IsNullOrEmpty(line))
+        {
+            throw new GedcomLineParseException(line, $"The Gedcom line is empty.");
+        }
+
         if (line.Length > 0 && Char.IsWhiteSpace(line[0]))
         {
             throw new GedcomLineParseException(line, "The Gedcom line has leading whitespace.");
         }
 
-        // Get level
         var firstSpaceIndex = line.IndexOf(' ');
+
+        if (firstSpaceIndex == -1)
+        {
+            throw new GedcomLineParseException(line, "The Gedcom line is missing information after the level.");
+        }
+        
         var levelText = line.Substring(0, firstSpaceIndex);
 
         if (!int.TryParse(levelText, out var level))
@@ -46,7 +56,7 @@ public class GedcomLine
             throw new GedcomLineParseException(line, $"Level must be between 0 and 99. Actual value was {level}.");
         }
 
-        var lineWithoutLevel = line.Substring(firstSpaceIndex + 1);
+        var lineWithoutLevel = line.Substring(firstSpaceIndex);
         var secondSpaceIndex = lineWithoutLevel.IndexOf(' ');
 
         string secondSegment = "";
@@ -64,14 +74,8 @@ public class GedcomLine
             thirdSegment = lineWithoutLevel.Substring(secondSpaceIndex + 1);
         }
 
-        // secondSegment and thirdSegment will be the remaing parts of the line. At this point
-        // we don't know which segment is the tag or which one is the value/xref (if any).
-
-        if (string.IsNullOrEmpty(secondSegment))
-        {
-            throw new GedcomLineParseException(line, "The Gedcom line is missing information after the level.");
-        }
-
+        // The format of the line is correct at this point. We just need to determine which
+        // segments of the line represent the tag and value. 
         string value = "";
         string tag;
 
