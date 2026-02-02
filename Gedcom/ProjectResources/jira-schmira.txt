@@ -17,7 +17,6 @@ Documentation
 Backlog
 -------
 
-Fix the Core.Gedcom Gedcom namespace issue.
 Make a Visual Studio addon that formats .ged files. There might already be one.
 Configure GitHub CI, test runner, and GitHub releases. 
 Testing

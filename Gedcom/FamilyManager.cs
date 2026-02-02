@@ -3,9 +3,9 @@ using Gedcom.RecordStructures;
 
 namespace Gedcom;
 
-public class FamilyManager(Core.GedcomDocument gedcom)
+public class FamilyManager(GedcomDocument gedcom)
 {
-    private readonly Core.GedcomDocument Gedcom = gedcom;
+    private readonly GedcomDocument Gedcom = gedcom;
     private readonly Dictionary<string, Individual> IndividualsCache = [];
     private readonly Dictionary<string, Family> FamilyCache = [];
 

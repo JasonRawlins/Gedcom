@@ -21,7 +21,7 @@ public class Record
 
         if (gedcomLines.Count > 1)
         {
-            var nextLevelGedcomLines = Core.GedcomDocument.GetGedcomLinesForLevel(Level + 1, [.. gedcomLines.Skip(1)]);
+            var nextLevelGedcomLines = GedcomDocument.GetGedcomLinesForLevel(Level + 1, [.. gedcomLines.Skip(1)]);
             foreach (var nextLevelGedcomLine in nextLevelGedcomLines)
             {
                 Records.Add(new Record(nextLevelGedcomLine));
