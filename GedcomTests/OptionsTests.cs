@@ -1,13 +1,12 @@
 ﻿using Gedcom;
 using Gedcom.CLI;
-using Gedcom.Core;
 
 namespace GedcomTests;
 
 [TestClass]
 public sealed class OptionsTests
 {
-    private static Gedcom.Core.Gedcom Gedcom { get; set; }
+    private static GedcomDocument Gedcom { get; set; }
 
     static OptionsTests()
     {

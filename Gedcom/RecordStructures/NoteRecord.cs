@@ -1,6 +1,5 @@
 ﻿// TODO: 2025-02-02 This code is probably redundant with NoteStructure. I cannot determine this right now.
 
-//using Gedcom.Core;
 //using System.Text.Json;
 //using System.Text.Json.Serialization;
 

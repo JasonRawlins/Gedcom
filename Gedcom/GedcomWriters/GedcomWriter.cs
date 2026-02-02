@@ -1,10 +1,8 @@
-﻿using Gedcom.Core;
-
-namespace Gedcom.GedcomWriters;
+﻿namespace Gedcom.GedcomWriters;
 
 public class GedcomWriter
 {
-    public static IGedcomWriter Create(Core.Gedcom gedcom, string format)
+    public static IGedcomWriter Create(GedcomDocument gedcom, string format)
     {
         return format switch
         {

@@ -3,9 +3,9 @@ using System.Text;
 
 namespace Gedcom.GedcomWriters;
 
-public class HtmlGedcomWriter(Core.Gedcom gedcom) : IGedcomWriter
+public class HtmlGedcomWriter(Core.GedcomDocument gedcom) : IGedcomWriter
 {
-    private Core.Gedcom Gedcom { get; set; } = gedcom;
+    private Core.GedcomDocument Gedcom { get; set; } = gedcom;
 
     public string GetIndividual(string xref)
     {

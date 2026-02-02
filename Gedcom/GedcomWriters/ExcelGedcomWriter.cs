@@ -4,9 +4,9 @@ namespace Gedcom.GedcomWriters;
 
 public class ExcelGedcomWriter : IGedcomWriter
 {
-    private Core.Gedcom Gedcom { get; set; }
+    private GedcomDocument Gedcom { get; set; }
 
-    public ExcelGedcomWriter(Core.Gedcom gedcom)
+    public ExcelGedcomWriter(GedcomDocument gedcom)
     {
         Gedcom = gedcom;
         ExcelPackage.License.SetNonCommercialOrganization("Gedcom.NET");

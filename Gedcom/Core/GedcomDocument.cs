@@ -2,13 +2,13 @@
 using System.Text.Json.Serialization;
 using Gedcom.RecordStructures;
 
-namespace Gedcom.Core;
+namespace Gedcom;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
 [JsonConverter(typeof(GedcomJsonConverter))]
-public class Gedcom : RecordStructureBase
+public class GedcomDocument : RecordStructureBase
 {
-    public Gedcom(List<GedcomLine> gedcomLines)
+    public GedcomDocument(List<GedcomLine> gedcomLines)
     {
         ArgumentNullException.ThrowIfNull(gedcomLines);
 
@@ -146,11 +146,11 @@ public class Gedcom : RecordStructureBase
     public override string ToString() => $"{Header.Source.Tree.Name} ({Header.Source.Tree.AutomatedRecordId})";
 }
 
-internal class GedcomJsonConverter : JsonConverter<Gedcom>
+internal class GedcomJsonConverter : JsonConverter<GedcomDocument>
 {
-    public override Gedcom? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
+    public override GedcomDocument? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 
-    public override void Write(Utf8JsonWriter writer, Gedcom gedcom, JsonSerializerOptions options)
+    public override void Write(Utf8JsonWriter writer, GedcomDocument gedcom, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(gedcom);
 

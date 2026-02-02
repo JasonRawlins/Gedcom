@@ -17,7 +17,7 @@ public class GedcomFormatTests
 
         var exception = Assert.ThrowsExactly<GedcomFormatException>(() =>
         {
-            var gedcom = new Gedcom.Core.Gedcom(gedcomLines);
+            var gedcom = new GedcomDocument(gedcomLines);
         });
 
         Assert.AreEqual($"The first tag in a GEDCOM file must be HEAD. The actual tag was {exception.GedcomLine.Tag}.", exception.Message);
@@ -35,7 +35,7 @@ public class GedcomFormatTests
 
         var exception = Assert.ThrowsExactly<GedcomFormatException>(() =>
         {
-            var gedcom = new Gedcom.Core.Gedcom(gedcomLines);
+            var gedcom = new GedcomDocument(gedcomLines);
         });
 
         Assert.AreEqual($"The last tag in a GEDCOM file must be TRLR. The actual tag was {exception.GedcomLine.Tag}.", exception.Message);
@@ -52,7 +52,7 @@ public class GedcomFormatTests
 
         var exception = Assert.ThrowsExactly<GedcomFormatException>(() =>
         {
-            var gedcom = new Gedcom.Core.Gedcom(gedcomLines);
+            var gedcom = new GedcomDocument(gedcomLines);
         });
 
         Assert.AreEqual("A valid GEDCOM file must have at least three tags: HEAD, any other tags, and a TRLR.", exception.Message);

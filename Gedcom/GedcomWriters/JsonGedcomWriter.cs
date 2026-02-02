@@ -1,13 +1,12 @@
-﻿using Gedcom.Core;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Gedcom.GedcomWriters;
 
-public class JsonGedcomWriter(Core.Gedcom gedcom) : IGedcomWriter
+public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 {
-    private Core.Gedcom Gedcom { get; set; } = gedcom;
+    private GedcomDocument Gedcom { get; set; } = gedcom;
 
     public string GetIndividual(string xref)
     {

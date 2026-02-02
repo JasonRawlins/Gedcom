@@ -12,11 +12,11 @@ public class Program
             .WithNotParsed(HandleParseError);
     }
 
-    private static Gedcom.Core.Gedcom CreateGedcom(string gedFullName)
+    private static GedcomDocument CreateGedcom(string gedFullName)
     {
         var gedFileLines = File.ReadAllLines(gedFullName);
         var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
-        return new Gedcom.Core.Gedcom(gedcomLines);
+        return new GedcomDocument(gedcomLines);
     }
 
     private static void HandleParseError(IEnumerable<Error> errors)

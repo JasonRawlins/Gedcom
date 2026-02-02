@@ -11,11 +11,11 @@ public class TestUtilities
     public static readonly string JsonFullName = Path.Combine(BaseDirectory, "TestOutput", "GedcomNET.json");
     public static readonly string TextFullName = Path.Combine(BaseDirectory, "TestOutput", "GedcomNET.txt");
 
-    public static Gedcom.Core.Gedcom CreateGedcom()
+    public static GedcomDocument CreateGedcom()
     {
         var gedFileLines = Encoding.UTF8.GetString(Properties.Resources.GedcomNetTestTree).Split('\n');
         var gedcomLines = gedFileLines.Where(l => !string.IsNullOrEmpty(l)).Select(GedcomLine.Parse).ToList();
-        return new Gedcom.Core.Gedcom(gedcomLines);
+        return new GedcomDocument(gedcomLines);
     }
 
     public static string GetImageBase64String()

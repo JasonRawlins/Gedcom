@@ -18,9 +18,9 @@ public class TestFamily(string xref, TestIndividual husband, TestIndividual wife
     public string Xref { get; set; } = xref;
 }
 
-public class TestFamilies(Gedcom.Core.Gedcom gedcom)
+public class TestFamilies(GedcomDocument gedcom)
 {
-    private readonly Gedcom.Core.Gedcom Gedcom = gedcom;
+    private readonly GedcomDocument Gedcom = gedcom;
 
     // Unfortunately, family records exported from Ancestry.com do not have deterministic xrefs.
     // They will have to be retrieved at runtime. This may create concurrency issues when 
