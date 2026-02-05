@@ -113,11 +113,10 @@ public class GedcomDocument : RecordStructureBase
 
     private static T CreateRecord<T>(Record record) where T : RecordStructureBase, new()
     {
-        var dynamic = new T();
-        dynamic.SetRecord(record);
-        return dynamic;
+        var instance = new T();
+        instance.SetRecord(record);
+        return instance;
     }
-
 
     // The explanation of this function is at the end of the file. 
     public static List<List<GedcomLine>> GetGedcomLinesForLevel(int level, List<GedcomLine> gedcomLines)

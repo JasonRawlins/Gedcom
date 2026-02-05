@@ -37,8 +37,8 @@ public class FamilyManager(GedcomDocument gedcom)
     {
         var individualRecord = Gedcom.GetIndividualRecord(individualXref);
 
-        if (IndividualsCache.TryGetValue(individualXref, out var exisitingIndividual))
-            return exisitingIndividual;
+        if (IndividualsCache.TryGetValue(individualXref, out var existingIndividual))
+            return existingIndividual;
 
         var newIndividual = new Individual(individualRecord);
 
