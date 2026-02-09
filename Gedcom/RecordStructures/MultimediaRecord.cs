@@ -61,7 +61,7 @@ internal sealed class MultimediaRecordJsonConverter : JsonConverter<MultimediaRe
     public override void Write(Utf8JsonWriter writer, MultimediaRecord value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new MultimediaJson(value), options);
+        JsonSerializer.Serialize(writer, new MultimediaJson(value), GedcomJson.SerializationOptions);
     }
 }
 

@@ -29,7 +29,7 @@ internal sealed class AssociationStructureJsonConverter : JsonConverter<Associat
     public override void Write(Utf8JsonWriter writer, AssociationStructure value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new AssociationJson(value), options);
+        JsonSerializer.Serialize(writer, new AssociationJson(value), GedcomJson.SerializationOptions);
     }
 }
 

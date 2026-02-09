@@ -37,7 +37,7 @@ internal sealed class PlaceStructureJsonConverter : JsonConverter<PlaceStructure
     public override void Write(Utf8JsonWriter writer, PlaceStructure value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new PlaceJson(value), options);
+        JsonSerializer.Serialize(writer, new PlaceJson(value), GedcomJson.SerializationOptions);
     }
 }
 
@@ -46,7 +46,7 @@ public class PlaceJson(PlaceStructure placeStructure) : GedcomJson
     public string? Hierarchy { get; set; } = JsonString(placeStructure.PlaceHierarchy);
     public MapJson? Map { get; set; } = JsonRecord(new MapJson(placeStructure.Map));
     public string? Name { get; set; } = JsonString(placeStructure.PlaceName);
-    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(placeStructure.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public List<NoteJson>? Notes { get; set; } = JsonList<NoteJson>(placeStructure.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
     public List<NameVariationJson>? PhoneticVariations { get; set; } = JsonList(placeStructure.PlacePhoneticVariations.Select(ppv => new NameVariationJson(ppv)).ToList());
     public List<NameVariationJson>? RomanizedVariations { get; set; } = JsonList(placeStructure.PlaceRomanizedVariations.Select(prv => new NameVariationJson(prv)).ToList());
 

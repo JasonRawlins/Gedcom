@@ -129,7 +129,7 @@ internal sealed class EventStructureJsonConverter : JsonConverter<EventStructure
     public override void Write(Utf8JsonWriter writer, EventStructure value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new EventJson(value), options);
+        JsonSerializer.Serialize(writer, new EventJson(value), GedcomJson.SerializationOptions);
     }
 }
 

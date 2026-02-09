@@ -23,7 +23,7 @@ internal sealed class MultimediaFileReferenceNumberJsonConverter : JsonConverter
     public override void Write(Utf8JsonWriter writer, MultimediaFileReferenceNumber value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new MultimediaFileReferenceNumberJson(value), options);
+        JsonSerializer.Serialize(writer, new MultimediaFileReferenceNumberJson(value), GedcomJson.SerializationOptions);
     }
 }
 

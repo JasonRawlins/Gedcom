@@ -43,7 +43,7 @@ internal sealed class AddressStructureJsonConverter : JsonConverter<AddressStruc
     public override void Write(Utf8JsonWriter writer, AddressStructure value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new AddressJson(value), options);
+        JsonSerializer.Serialize(writer, new AddressJson(value), GedcomJson.SerializationOptions);
     }
 }
 

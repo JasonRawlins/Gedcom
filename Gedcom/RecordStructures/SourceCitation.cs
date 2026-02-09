@@ -40,7 +40,7 @@ internal sealed class SourceCitationJsonConverter : JsonConverter<SourceCitation
     public override void Write(Utf8JsonWriter writer, SourceCitation value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new SourceCitationJson(value), options);
+        JsonSerializer.Serialize(writer, new SourceCitationJson(value), GedcomJson.SerializationOptions);
     }
 }
 

@@ -19,7 +19,6 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
     public string GetIndividuals(string query = "")
     {
         var individualRecords = GedcomDocument.GetIndividualRecords(query);
-        var filteredIndividualRecords = individualRecords.Where(r => GedcomWriter.IsQueryMatch(r.Record, query));
 
         return SerializeObject(individualRecords);
     }

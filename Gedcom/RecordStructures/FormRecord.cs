@@ -29,7 +29,7 @@ internal sealed class FormRecordJsonConverter : JsonConverter<FormRecord>
     public override void Write(Utf8JsonWriter writer, FormRecord value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new FormJson(value), options);
+        JsonSerializer.Serialize(writer, new FormJson(value), GedcomJson.SerializationOptions);
     }
 }
 

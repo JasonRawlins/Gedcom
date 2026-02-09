@@ -77,7 +77,7 @@ internal sealed class FamilyRecordJsonConverter : JsonConverter<FamilyRecord>
     public override void Write(Utf8JsonWriter writer, FamilyRecord value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new FamilyJson(value), options);
+        JsonSerializer.Serialize(writer, new FamilyJson(value), GedcomJson.SerializationOptions);
     }
 }
 

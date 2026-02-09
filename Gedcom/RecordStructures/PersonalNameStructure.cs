@@ -49,7 +49,7 @@ internal sealed class PersonalNameStructureJsonConverter : JsonConverter<Persona
     public override void Write(Utf8JsonWriter writer, PersonalNameStructure value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new PersonalNameJson(value), options);
+        JsonSerializer.Serialize(writer, new PersonalNameJson(value), GedcomJson.SerializationOptions);
     }
 }
 

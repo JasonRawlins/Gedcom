@@ -25,7 +25,7 @@ internal sealed class FamilyPartnerJsonConverter : JsonConverter<FamilyPartner>
     public override void Write(Utf8JsonWriter writer, FamilyPartner value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new FamilyPartnerJson(value), options);
+        JsonSerializer.Serialize(writer, new FamilyPartnerJson(value), GedcomJson.SerializationOptions);
     }
 }
 

@@ -23,7 +23,7 @@ internal sealed class CallNumberJsonConverter : JsonConverter<CallNumber>
     public override void Write(Utf8JsonWriter writer, CallNumber value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new CallNumberJson(value), options);
+        JsonSerializer.Serialize(writer, new CallNumberJson(value), GedcomJson.SerializationOptions);
     }
 }
 

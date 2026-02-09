@@ -38,7 +38,7 @@ internal sealed class LdsSpouseSealingJsonConverter : JsonConverter<LdsSpouseSea
     public override void Write(Utf8JsonWriter writer, LdsSpouseSealing value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new LdsSpouseSealingJson(value), options);
+        JsonSerializer.Serialize(writer, new LdsSpouseSealingJson(value), GedcomJson.SerializationOptions);
     }
 }
 

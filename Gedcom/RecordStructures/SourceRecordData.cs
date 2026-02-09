@@ -29,7 +29,7 @@ internal sealed class SourceRecordDataJsonConverter : JsonConverter<SourceRecord
     public override void Write(Utf8JsonWriter writer, SourceRecordData value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new SourceDataJson(value), options);
+        JsonSerializer.Serialize(writer, new SourceDataJson(value), GedcomJson.SerializationOptions);
     }
 }
 

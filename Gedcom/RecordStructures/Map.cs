@@ -27,7 +27,7 @@ internal sealed class MapJsonConverter : JsonConverter<Map>
     public override void Write(Utf8JsonWriter writer, Map value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new MapJson(value), options);
+        JsonSerializer.Serialize(writer, new MapJson(value), GedcomJson.SerializationOptions);
     }
 }
 

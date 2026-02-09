@@ -25,7 +25,7 @@ internal sealed class SpouseToFamilyLinkJsonConverter : JsonConverter<SpouseToFa
     public override void Write(Utf8JsonWriter writer, SpouseToFamilyLink value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new SpouseToFamilyLinkJson(value), options);
+        JsonSerializer.Serialize(writer, new SpouseToFamilyLinkJson(value), GedcomJson.SerializationOptions);
     }
 }
 

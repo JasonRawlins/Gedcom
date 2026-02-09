@@ -44,7 +44,7 @@ internal sealed class NameVariationJsonConverter : JsonConverter<NameVariation>
     public override void Write(Utf8JsonWriter writer, NameVariation value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new NameVariationJson(value), options);
+        JsonSerializer.Serialize(writer, new NameVariationJson(value), GedcomJson.SerializationOptions);
     }
 }
 

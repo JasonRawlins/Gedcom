@@ -27,7 +27,7 @@ internal sealed class ChangeDateJsonConverter : JsonConverter<ChangeDate>
     public override void Write(Utf8JsonWriter writer, ChangeDate value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new ChangeDateJson(value), options);
+        JsonSerializer.Serialize(writer, new ChangeDateJson(value), GedcomJson.SerializationOptions);
     }
 }
 

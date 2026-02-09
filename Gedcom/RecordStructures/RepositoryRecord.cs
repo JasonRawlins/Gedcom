@@ -55,7 +55,7 @@ internal sealed class RepositoryRecordJsonConverter : JsonConverter<RepositoryRe
     public override void Write(Utf8JsonWriter writer, RepositoryRecord value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new RepositoryJson(value), options);
+        JsonSerializer.Serialize(writer, new RepositoryJson(value), GedcomJson.SerializationOptions);
     }
 }
 

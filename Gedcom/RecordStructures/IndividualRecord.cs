@@ -35,7 +35,7 @@ public class IndividualRecord : RecordStructureBase
     public List<string> DescendantInterests => _descendantInterests ??= GetStringList(Tag.DescendantInterest);
 
     private List<EventStructure>? _individualEventStructures = null;
-    public List<EventStructure> IndividualEventStructures => _individualEventStructures ??= [.. List(IndividualEventStructure.IsIndividualEventStructure).Select(r => new EventStructure(r))];
+    public List<EventStructure> IndividualEventStructures => _individualEventStructures ??= List(IndividualEventStructure.IsIndividualEventStructure).Select(r => new EventStructure(r)).ToList();
 
     private List<LdsIndividualOrdinance>? _ldsIndividualOrdinances = null;
     public List<LdsIndividualOrdinance> LdsIndividualOrdinances => _ldsIndividualOrdinances ??= List<LdsIndividualOrdinance>(Tag.Ordinance);
@@ -114,16 +114,8 @@ internal sealed class IndividualJsonConverter : JsonConverter<IndividualRecord>
 
     public override void Write(Utf8JsonWriter writer, IndividualRecord value, JsonSerializerOptions options)
     {
-        // TODO: Get JsonSerializerOptions from a project-level source.
-        var jsonSerializeOptions = new JsonSerializerOptions()
-        {
-            PropertyNameCaseInsensitive = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-        };
-
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new IndividualJson(value), jsonSerializeOptions); // options);
+        JsonSerializer.Serialize(writer, new IndividualJson(value), GedcomJson.SerializationOptions);
     }
 }
 
@@ -141,7 +133,7 @@ public class IndividualJson : GedcomJson
         ChildToFamilyLinks = JsonList(individualRecord.ChildToFamilyLinks.Select(ctfl => new ChildToFamilyLinkJson(ctfl)).ToList());
         Death = JsonRecord(new EventJson(individualRecord.Death));
         DescendantInterests = JsonList(individualRecord.DescendantInterests);
-        Events = [.. individualRecord.IndividualEventStructures.Select(ies => new EventJson(ies))];
+        Events = individualRecord.IndividualEventStructures.Select(ies => new EventJson(ies)).ToList();
         Given = JsonString(individualRecord.Given);
         IsEmpty = individualRecord.IsEmpty;
         LdsIndividualOrdinances = JsonList(individualRecord.LdsIndividualOrdinances.Select(lio => new LdsIndividualOrdinanceJson(lio)).ToList());

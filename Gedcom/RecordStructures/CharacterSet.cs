@@ -23,7 +23,7 @@ internal sealed class CharacterSetJsonConverter : JsonConverter<CharacterSet>
     public override void Write(Utf8JsonWriter writer, CharacterSet value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new CharacterSetJson(value), options);
+        JsonSerializer.Serialize(writer, new CharacterSetJson(value), GedcomJson.SerializationOptions);
     }
 }
 

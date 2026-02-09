@@ -38,7 +38,7 @@ internal sealed class LdsIndividualOrdinanceJsonConverter : JsonConverter<LdsInd
     public override void Write(Utf8JsonWriter writer, LdsIndividualOrdinance value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new LdsIndividualOrdinanceJson(value), options);
+        JsonSerializer.Serialize(writer, new LdsIndividualOrdinanceJson(value), GedcomJson.SerializationOptions);
     }
 }
 

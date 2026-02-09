@@ -1,4 +1,4 @@
-﻿using Gedcom.RecordStructures;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Gedcom;
@@ -30,4 +30,17 @@ public class GedcomJson
     protected static List<T>? JsonList<T>(List<T>? gedcomBaseList) where T : GedcomJson => 
         (gedcomBaseList == null || (gedcomBaseList != null && gedcomBaseList.Count == 0)) 
         ? null : gedcomBaseList;
+
+    public static JsonSerializerOptions SerializationOptions
+    {
+        get
+        {
+            return new JsonSerializerOptions()
+            {
+                PropertyNameCaseInsensitive = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            };
+        }
+    }    
 }

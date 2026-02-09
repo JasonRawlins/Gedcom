@@ -57,7 +57,7 @@ internal sealed class HeaderJsonConverter : JsonConverter<Header>
     public override void Write(Utf8JsonWriter writer, Header value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new HeaderJson(value), options);
+        JsonSerializer.Serialize(writer, new HeaderJson(value), GedcomJson.SerializationOptions);
     }
 }
 

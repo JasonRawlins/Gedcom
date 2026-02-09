@@ -58,14 +58,8 @@ public class Options
                     return argumentErrors;
                 }
 
-                var jsonSerializeOptions = new JsonSerializerOptions()
-                {
-                    PropertyNameCaseInsensitive = true,
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                };
-
                 var paramsFileText = File.ReadAllText(ParamsFilePath);
-                var gedcomNetParams = JsonSerializer.Deserialize<GedcomNetParams>(paramsFileText, jsonSerializeOptions)!;
+                var gedcomNetParams = JsonSerializer.Deserialize<GedcomNetParams>(paramsFileText, GedcomJson.SerializationOptions)!;
 
                 if (gedcomNetParams == null)
                 {

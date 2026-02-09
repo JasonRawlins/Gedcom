@@ -49,7 +49,7 @@ internal sealed class SubmissionJsonConverter : JsonConverter<SubmissionRecord>
     public override void Write(Utf8JsonWriter writer, SubmissionRecord value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new SubmissionJson(value), options);
+        JsonSerializer.Serialize(writer, new SubmissionJson(value), GedcomJson.SerializationOptions);
     }
 }
 

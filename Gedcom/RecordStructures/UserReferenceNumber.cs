@@ -23,7 +23,7 @@ internal sealed class UserReferenceNumberJsonConverter : JsonConverter<UserRefer
     public override void Write(Utf8JsonWriter writer, UserReferenceNumber value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new UserReferenceNumberJson(value), options);
+        JsonSerializer.Serialize(writer, new UserReferenceNumberJson(value), GedcomJson.SerializationOptions);
     }
 }
 

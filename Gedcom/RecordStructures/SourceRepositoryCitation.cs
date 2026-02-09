@@ -26,7 +26,7 @@ internal sealed class SourceRepositoryCitationJsonConverter : JsonConverter<Sour
     public override void Write(Utf8JsonWriter writer, SourceRepositoryCitation value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new SourceRepositoryCitationJson(value), options);
+        JsonSerializer.Serialize(writer, new SourceRepositoryCitationJson(value), GedcomJson.SerializationOptions);
     }
 }
 

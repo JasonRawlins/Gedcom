@@ -59,7 +59,7 @@ internal sealed class NoteStructureJsonConverter : JsonConverter<NoteStructure>
     public override void Write(Utf8JsonWriter writer, NoteStructure value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new NoteJson(value), options);
+        JsonSerializer.Serialize(writer, new NoteJson(value), GedcomJson.SerializationOptions);
     }
 }
 

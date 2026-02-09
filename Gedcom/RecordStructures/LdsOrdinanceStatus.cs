@@ -23,7 +23,7 @@ internal sealed class LdsOrdinanceStatusJsonConverter : JsonConverter<LdsOrdinan
     public override void Write(Utf8JsonWriter writer, LdsOrdinanceStatus value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new LdsOrdinanceStatusJson(value), options);
+        JsonSerializer.Serialize(writer, new LdsOrdinanceStatusJson(value), GedcomJson.SerializationOptions);
     }
 }
 

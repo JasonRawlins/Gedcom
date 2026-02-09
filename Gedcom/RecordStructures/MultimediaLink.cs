@@ -31,7 +31,7 @@ internal sealed class MultimediaLinkJsonConverter : JsonConverter<MultimediaLink
     public override void Write(Utf8JsonWriter writer, MultimediaLink value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new MultimediaLinkJson(value), options);
+        JsonSerializer.Serialize(writer, new MultimediaLinkJson(value), GedcomJson.SerializationOptions);
     }
 }
 

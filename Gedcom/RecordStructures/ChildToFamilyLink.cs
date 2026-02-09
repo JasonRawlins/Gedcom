@@ -34,7 +34,7 @@ internal sealed class ChildToFamilyLinkJsonConverter : JsonConverter<ChildToFami
     public override void Write(Utf8JsonWriter writer, ChildToFamilyLink value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new ChildToFamilyLinkJson(value), options);
+        JsonSerializer.Serialize(writer, new ChildToFamilyLinkJson(value), GedcomJson.SerializationOptions);
     }
 }
 

@@ -27,7 +27,7 @@ internal sealed class FileRecordJsonConverter : JsonConverter<FileRecord>
     public override void Write(Utf8JsonWriter writer, FileRecord value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new FileJson(value), options);
+        JsonSerializer.Serialize(writer, new FileJson(value), GedcomJson.SerializationOptions);
     }
 }
 
