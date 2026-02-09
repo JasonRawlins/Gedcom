@@ -56,17 +56,18 @@ public class ExcelGedcomWriter : IGedcomWriter
     {
         var individualRecords = Gedcom.GetIndividualRecords(query);
         var individualListItems = individualRecords.Select(ir => new IndividualListItem(ir)).ToList();
+        var orderedIndividualListItems = individualListItems.OrderBy(ir => ir.Surname).ThenBy(ir => ir.Given).ToList();
 
-        using var userTemplatePackage = new ExcelPackage(new MemoryStream(Properties.Resources.GedcomXlsxTemplate));
+        using var userTemplatePackage = new ExcelPackage(new MemoryStream(Properties.Resources.GedcomNetXlsxTemplate));
         var templateSheet = userTemplatePackage.Workbook.Worksheets["Template"];
         using var excelPackage = new ExcelPackage();
         var targetSheet = excelPackage.Workbook.Worksheets.Add($"{Gedcom.Header.Source.Tree.Name} individuals", templateSheet);
 
         var templateRow = 2; // The row containing the template values
 
-        for (int i = 0; i < individualListItems.Count; i++)
+        for (int i = 0; i < orderedIndividualListItems.Count; i++)
         {
-            var individualListItem = individualListItems[i];
+            var individualListItem = orderedIndividualListItems[i];
 
             var targetRow = templateRow + i + 1; // The row where the copied template should go
 
@@ -91,9 +92,9 @@ public class ExcelGedcomWriter : IGedcomWriter
             cell.Value = cell.Value switch
             {
                 ContentTag.AncestryProfileLink => Gedcom.Header.Source.Tree.Name,
-                ContentTag.BirthDate => individualListItem.Birth.DayMonthYear,
+                ContentTag.BirthDate => individualListItem.Birthdate,
                 ContentTag.BirthPlace => individualListItem.BirthPlace,
-                ContentTag.DeathDate => individualListItem.Death.DayMonthYear,
+                ContentTag.DeathDate => individualListItem.DeathDate,
                 ContentTag.DeathPlace => individualListItem.DeathPlace,
                 ContentTag.FullName => individualListItem.FullName,
                 ContentTag.Given => individualListItem.Given,
@@ -106,14 +107,14 @@ public class ExcelGedcomWriter : IGedcomWriter
 
     private static class ContentTag
     {
-        public const string AncestryProfileLink = "_ANCESTRY_PROFILE_LINK_";
-        public const string BirthDate = "_BIRTH_DATE_";
-        public const string BirthPlace = "_BIRTH_PLACE_";
-        public const string DeathDate = "_DEATH_DATE_";
-        public const string DeathPlace = "_DEATH_PLACE_";
-        public const string FullName = "_FULL_NAME_";
-        public const string Given = "_GIVEN_";
-        public const string Surname = "_SURNAME_";
-        public const string TreeName = "_TREE_NAME_";
+        public const string AncestryProfileLink = "{{ANCESTRY_PROFILE_LINK}}";
+        public const string BirthDate = "{{BIRTH_DATE}}";
+        public const string BirthPlace = "{{BIRTH_PLACE}}";
+        public const string DeathDate = "{{DEATH_DATE}}";
+        public const string DeathPlace = "{{DEATH_PLACE}}";
+        public const string FullName = "{{FULL_NAME}}";
+        public const string Given = "{{GIVEN}}";
+        public const string Surname = "{{SURNAME}}";
+        public const string TreeName = "{{TREE_NAME}}";
     }
 }

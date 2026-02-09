@@ -2,24 +2,38 @@
 
 namespace Gedcom.GedcomWriters;
 
-public class IndividualListItem(IndividualRecord individualRecord) : IComparable<IndividualListItem>
+public class IndividualListItem : IComparable<IndividualListItem>
 {
-    public GedcomDate Birth { get; } = individualRecord.Birth.GedcomDate;
-    public string BirthPlace { get; } = individualRecord.Birth.PlaceStructure.PlaceName;
-    public GedcomDate Death { get; } = individualRecord.Death.GedcomDate;
-    public string DeathPlace { get; } = individualRecord.Death.PlaceStructure.PlaceName;
-    public string FullName { get; } = individualRecord.FullName;
-    public string Given { get; } = individualRecord.Given;
-    public string Surname { get; } = individualRecord.Surname;
-    public string Xref { get; } = individualRecord.Xref;
+    public string Birthdate { get; }
+    public string BirthPlace { get; }
+    public string DeathDate { get; }
+    public string DeathPlace { get; }
+    public string FullName { get; }
+    public string Given { get; }
+    public string Surname { get; }
+    public string Xref { get; }
     public string XrefId => Xref.Replace("@", "").Replace("I", "");
+
+    public IndividualListItem(IndividualRecord individualRecord)
+    {
+        var individualDto = new IndividualDto(individualRecord);
+
+        Birthdate = individualDto.Birth?.Date.DayMonthYear ?? "Unknown birthdate";
+        BirthPlace = individualDto.Birth?.Place?.Name ?? "Unknown birth place";
+        DeathDate = individualDto.Death?.Date.DayMonthYear ?? "Unknown death date";
+        DeathPlace = individualDto.Death?.Place?.Name ?? "Unknown death place";
+        FullName = individualDto.FullName;
+        Given = individualDto?.Given ?? "";
+        Surname = individualDto?.Surname ?? "";
+        Xref = individualDto?.Xref ?? "";
+    }
 
     public int CompareTo(IndividualListItem? other)
     {
         if (other == null) return 1;
 
         // Sort by BirthDate first
-        int birthComparison = Birth.CompareTo(other.Birth);
+        int birthComparison = Birthdate.CompareTo(other.Birthdate);
         if (birthComparison != 0) return birthComparison;
 
         // Then by Surname
@@ -32,6 +46,6 @@ public class IndividualListItem(IndividualRecord individualRecord) : IComparable
 
     public override string ToString()
     {
-        return $"{Surname}, {Given} ({Birth.DayMonthYear} — {Death.DayMonthYear}). {Xref}";
+        return $"{Surname}, {Given} ({Birthdate} — {DeathDate}). {Xref}";
     }
 }

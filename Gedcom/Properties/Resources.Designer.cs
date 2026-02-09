@@ -63,9 +63,9 @@ namespace Gedcom.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] GedcomXlsxTemplate {
+        internal static byte[] GedcomNetIndividualsHtmlTemplate {
             get {
-                object obj = ResourceManager.GetObject("GedcomXlsxTemplate", resourceCulture);
+                object obj = ResourceManager.GetObject("GedcomNetIndividualsHtmlTemplate", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace Gedcom.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] IndividualsHtmlTemplate {
+        internal static byte[] GedcomNetXlsxTemplate {
             get {
-                object obj = ResourceManager.GetObject("IndividualsHtmlTemplate", resourceCulture);
+                object obj = ResourceManager.GetObject("GedcomNetXlsxTemplate", resourceCulture);
                 return ((byte[])(obj));
             }
         }

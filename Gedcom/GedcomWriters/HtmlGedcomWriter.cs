@@ -134,10 +134,10 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
                             {individualListItem.Surname}, {individualListItem.Given}
                         </h3>
                         <div class='vitals'>
-                            BIRTH {individualListItem.Birth.DayMonthYear} • {individualListItem.BirthPlace}
+                            BIRTH {individualListItem.Birthdate} • {individualListItem.BirthPlace}
                         </div>
                         <div class='vitals'>
-                            DEATH {individualListItem.Death.DayMonthYear} • {individualListItem.DeathPlace}
+                            DEATH {individualListItem.DeathDate} • {individualListItem.DeathPlace}
                         </div>
                     </a>
                 </li>";
@@ -162,7 +162,7 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public byte[] GetAsByteArray(string query = "")
     {
-        var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.IndividualsHtmlTemplate);
+        var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.GedcomNetIndividualsHtmlTemplate);
         var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", GetIndividuals());
 
         return Encoding.UTF8.GetBytes(finalHtml);

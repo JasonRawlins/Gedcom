@@ -191,7 +191,7 @@ public class IndividualDto : GedcomDto
     public string? Surname { get; set; }
     public string? TreeId { get; set; }
     public List<UserReferenceNumberDto>? UserReferenceNumbers { get; set; } = [];
-    public string? Xref { get; set; }
+    public string Xref { get; set; }
 
     public override string ToString() => $"{Given} {Surname}";
 }

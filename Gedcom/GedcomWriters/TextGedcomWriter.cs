@@ -21,13 +21,10 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
     public string GetIndividuals(string query = "")
     {
         var individualRecords = GedcomDocument.GetIndividualRecords(query);
-        var orderedIndividualRecords = individualRecords
-            .OrderBy(ir => ir.Surname)
-            .ThenBy(ir => ir.Given);
 
         var individualsStringBuilder = new StringBuilder();
 
-        foreach (var individualRecord in orderedIndividualRecords)
+        foreach (var individualRecord in individualRecords)
         {
             var individualDto = new IndividualDto(individualRecord);
             individualsStringBuilder.AppendLine(GetIndividualLineItem(individualDto));

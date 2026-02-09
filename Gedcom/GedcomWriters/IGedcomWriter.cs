@@ -14,5 +14,7 @@ public interface IGedcomWriter
     public string GetSource(string xref);
     public string GetSources(string query = "");
 
+    // HACK: Exporting as Excel does not cleanly map to IGedcomWriter. 
+    // This is for temporary demonstration purposes.
     byte[] GetAsByteArray(string query = "");
 }

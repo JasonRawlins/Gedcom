@@ -78,7 +78,7 @@ public class GedcomDocument : RecordStructureBase
 
     // Individual (INDI)
     public IndividualRecord GetIndividualRecord(string xref) => GetRecord<IndividualRecord>(xref);
-    public List<IndividualRecord> GetIndividualRecords(string query = "") => GetRecords<IndividualRecord>(Tag.Individual, query);
+    public List<IndividualRecord> GetIndividualRecords(string query = "") => GetRecords<IndividualRecord>(Tag.Individual, query).OrderBy(ir => ir.Surname).ThenBy(ir => ir.Given).ToList();
 
     // Multimedia (OBJE)
     public MultimediaRecord GetObjectRecord(string xref) => GetRecord<MultimediaRecord>(xref);
