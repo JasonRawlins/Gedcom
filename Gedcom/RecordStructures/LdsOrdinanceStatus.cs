@@ -29,8 +29,8 @@ internal sealed class LdsOrdinanceStatusJsonConverter : JsonConverter<LdsOrdinan
 
 public class LdsOrdinanceStatusDto(LdsOrdinanceStatus ldsOrdinanceStatus) : GedcomDto
 {
-    public string? ChangeDate { get; set; } = String(ldsOrdinanceStatus.ChangeDate);
-    public string? Status { get; set; } = String(ldsOrdinanceStatus.Status);
+    public string? ChangeDate { get; set; } = GetString(ldsOrdinanceStatus.ChangeDate);
+    public string? Status { get; set; } = GetString(ldsOrdinanceStatus.Status);
     public override string ToString() => $"{Status}";
 }
 

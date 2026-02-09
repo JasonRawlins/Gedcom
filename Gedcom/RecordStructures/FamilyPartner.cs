@@ -31,7 +31,7 @@ internal sealed class FamilyPartnerJsonConverter : JsonConverter<FamilyPartner>
 
 public class FamilyPartnerDto(FamilyPartner familyPartner) : GedcomDto
 {
-    public string? AgeAtEvent { get; set; } = String(familyPartner.AgeAtEvent);
-    public string? Name { get; set; } = String(familyPartner.Name);
+    public string? AgeAtEvent { get; set; } = GetString(familyPartner.AgeAtEvent);
+    public string? Name { get; set; } = GetString(familyPartner.Name);
     public override string ToString() => $"{Name}";
 }

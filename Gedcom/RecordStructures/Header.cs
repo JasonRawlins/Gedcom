@@ -63,18 +63,18 @@ internal sealed class HeaderJsonConverter : JsonConverter<Header>
 
 public class HeaderDto(Header header) : GedcomDto
 {
-    public CharacterSetDto? CharacterSet { get; set; } = Record(new CharacterSetDto(header.CharacterSet));
-    public string? CopyrightGedcomFile { get; set; } = String(header.CopyrightGedcomFile);
-    public string? FileName { get; set; } = String(header.FileName);
-    public HeaderGedcomDto? Gedcom { get; set; } = Record(new HeaderGedcomDto(header.Gedcom));
-    public NoteDto? GedcomContentDescription { get; set; } = Record(new NoteDto(header.GedcomContentDescription));
-    public string? LanguageOfText { get; set; } = String(header.LanguageOfText);
-    public string? PlaceHierarchy { get; set; } = String(header.PlaceHierarchy);
-    public string? ReceivingSystemName { get; set; } = String(header.ReceivingSystemName);
-    public HeaderSourceDto? Source { get; set; } = Record(new HeaderSourceDto(header.Source));
-    public SubmissionDto? SubmissionRecord { get; set; } = Record(new SubmissionDto(header.SubmissionRecord));
-    public string? Submitter { get; set; } = String(header.Submitter);
-    public GedcomDateDto? TransmissionDate { get; set; } = Record(new GedcomDateDto(header.TransmissionDate));
+    public CharacterSetDto? CharacterSet { get; set; } = GetRecord(new CharacterSetDto(header.CharacterSet));
+    public string? CopyrightGedcomFile { get; set; } = GetString(header.CopyrightGedcomFile);
+    public string? FileName { get; set; } = GetString(header.FileName);
+    public HeaderGedcomDto? Gedcom { get; set; } = GetRecord(new HeaderGedcomDto(header.Gedcom));
+    public NoteDto? GedcomContentDescription { get; set; } = GetRecord(new NoteDto(header.GedcomContentDescription));
+    public string? LanguageOfText { get; set; } = GetString(header.LanguageOfText);
+    public string? PlaceHierarchy { get; set; } = GetString(header.PlaceHierarchy);
+    public string? ReceivingSystemName { get; set; } = GetString(header.ReceivingSystemName);
+    public HeaderSourceDto? Source { get; set; } = GetRecord(new HeaderSourceDto(header.Source));
+    public SubmissionDto? SubmissionRecord { get; set; } = GetRecord(new SubmissionDto(header.SubmissionRecord));
+    public string? Submitter { get; set; } = GetString(header.Submitter);
+    public GedcomDateDto? TransmissionDate { get; set; } = GetRecord(new GedcomDateDto(header.TransmissionDate));
     public override string ToString() => $"{Submitter}";
 }
 

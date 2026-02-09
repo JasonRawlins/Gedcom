@@ -16,7 +16,7 @@ public class GedcomDto
 {
     [JsonIgnore]
     public bool IsEmpty { get; set; }
-    protected static T? Record<T>(T gedcomJson) where T : GedcomDto
+    protected static T? GetRecord<T>(T gedcomJson) where T : GedcomDto
     {
         if (gedcomJson.IsEmpty) 
             return null;
@@ -24,10 +24,10 @@ public class GedcomDto
         return gedcomJson;
     }
 
-    protected static string? String(string value) => string.IsNullOrEmpty(value) ? null : value;    
-    protected static List<string>? List(List<string> stringList) => stringList.Count == 0 ? null : stringList;
-    protected static List<GedcomDto>? List(List<GedcomDto> gedcomJson) => gedcomJson.Count == 0 ? null : gedcomJson;
-    protected static List<T>? List<T>(List<T>? gedcomBaseList) where T : GedcomDto => 
+    protected static string? GetString(string value) => string.IsNullOrEmpty(value) ? null : value;    
+    protected static List<string>? GetList(List<string> stringList) => stringList.Count == 0 ? null : stringList;
+    protected static List<GedcomDto>? GetList(List<GedcomDto> gedcomJson) => gedcomJson.Count == 0 ? null : gedcomJson;
+    protected static List<T>? GetList<T>(List<T>? gedcomBaseList) where T : GedcomDto => 
         (gedcomBaseList == null || (gedcomBaseList != null && gedcomBaseList.Count == 0)) 
         ? null : gedcomBaseList;
 

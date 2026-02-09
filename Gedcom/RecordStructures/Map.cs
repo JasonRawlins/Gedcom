@@ -33,8 +33,8 @@ internal sealed class MapJsonConverter : JsonConverter<Map>
 
 public class MapDto(Map map) : GedcomDto
 {
-    public string? Latitude { get; set; } = String(map.PlaceLatitude);
-    public string? Longitude { get; set; } = String(map.PlaceLongitude);
+    public string? Latitude { get; set; } = GetString(map.PlaceLatitude);
+    public string? Longitude { get; set; } = GetString(map.PlaceLongitude);
     public override string ToString() => $"({Latitude}, {Longitude})";
 }
 

@@ -33,8 +33,8 @@ internal sealed class FileRecordJsonConverter : JsonConverter<FileRecord>
 
 public class FileDto(FileRecord fileRecord) : GedcomDto
 {
-    public FormDto? Form { get; set; } = Record(new FormDto(fileRecord.FormRecord));
-    public string? Title { get; set; } = String(fileRecord.Title);
+    public FormDto? Form { get; set; } = GetRecord(new FormDto(fileRecord.FormRecord));
+    public string? Title { get; set; } = GetString(fileRecord.Title);
     public override string ToString() => $"{Title}";
 }
 

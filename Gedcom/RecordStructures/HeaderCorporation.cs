@@ -41,11 +41,11 @@ internal sealed class HeaderCorporationJsonConverter : JsonConverter<HeaderCorpo
 
 public class HeaderCorporationDto(HeaderCorporation headerCorporation) : GedcomDto
 {
-    public AddressDto? Address { get; set; } = Record(new AddressDto(headerCorporation.AddressStructure));
-    public List<string>? Emails { get; set; } = List(headerCorporation.AddressEmails);
-    public List<string>? FaxNumbers { get; set; } = List(headerCorporation.AddressFaxNumbers);
-    public List<string>? PhoneNumbers { get; set; } = List(headerCorporation.PhoneNumbers);
-    public List<string>? WebPages { get; set; } = List(headerCorporation.AddressWebPages);
+    public AddressDto? Address { get; set; } = GetRecord(new AddressDto(headerCorporation.AddressStructure));
+    public List<string>? Emails { get; set; } = GetList(headerCorporation.AddressEmails);
+    public List<string>? FaxNumbers { get; set; } = GetList(headerCorporation.AddressFaxNumbers);
+    public List<string>? PhoneNumbers { get; set; } = GetList(headerCorporation.PhoneNumbers);
+    public List<string>? WebPages { get; set; } = GetList(headerCorporation.AddressWebPages);
     public override string ToString() => $"{Emails?.FirstOrDefault()}";
 }
 

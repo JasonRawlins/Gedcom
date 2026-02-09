@@ -29,7 +29,7 @@ internal sealed class MultimediaFormatJsonConverter : JsonConverter<MultimediaFo
 
 public class MultimediaFormatDto(MultimediaFormat multimediaFormat) : GedcomDto
 {
-    public string? SourceMediaType { get; set; } = String(multimediaFormat.SourceMediaType);
+    public string? SourceMediaType { get; set; } = GetString(multimediaFormat.SourceMediaType);
     public override string ToString() => $"{SourceMediaType}";
 }
 

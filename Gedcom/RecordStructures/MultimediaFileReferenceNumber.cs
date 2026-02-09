@@ -29,7 +29,7 @@ internal sealed class MultimediaFileReferenceNumberJsonConverter : JsonConverter
 
 public class MultimediaFileReferenceNumberDto(MultimediaFileReferenceNumber multimediaFileReferenceNumber) : GedcomDto
 {
-    public MultimediaFormatDto? MultimediaFormat { get; set; } = Record(new MultimediaFormatDto(multimediaFileReferenceNumber.MultimediaFormat));
+    public MultimediaFormatDto? MultimediaFormat { get; set; } = GetRecord(new MultimediaFormatDto(multimediaFileReferenceNumber.MultimediaFormat));
     public override string ToString() => $"{MultimediaFormat?.SourceMediaType}";
 }
 

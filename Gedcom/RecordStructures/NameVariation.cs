@@ -50,13 +50,13 @@ internal sealed class NameVariationJsonConverter : JsonConverter<NameVariation>
 
 public class NameVariationDto(NameVariation nameVariation) : GedcomDto
 {
-    public string? Given { get; set; } = String(nameVariation.Type);
-    public string? Nickname { get; set; } = String(nameVariation.Type);
-    public string? Prefix { get; set; } = String(nameVariation.Type);
-    public string? Suffix { get; set; } = String(nameVariation.Type);
-    public string? Surname { get; set; } = String(nameVariation.Type);
-    public string? SurnamePrefix { get; set; } = String(nameVariation.Type);
-    public string? Type { get; set; } = String(nameVariation.Type);
+    public string? Given { get; set; } = GetString(nameVariation.Type);
+    public string? Nickname { get; set; } = GetString(nameVariation.Type);
+    public string? Prefix { get; set; } = GetString(nameVariation.Type);
+    public string? Suffix { get; set; } = GetString(nameVariation.Type);
+    public string? Surname { get; set; } = GetString(nameVariation.Type);
+    public string? SurnamePrefix { get; set; } = GetString(nameVariation.Type);
+    public string? Type { get; set; } = GetString(nameVariation.Type);
 
     public override string ToString() => $"{Given} {Surname}";
 }

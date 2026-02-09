@@ -29,7 +29,7 @@ internal sealed class EventTypeCitedFromJsonConverter : JsonConverter<EventTypeC
 
 public class EventTypeCitedFromDto(EventTypeCitedFrom eventTypeCitedFrom) : GedcomDto
 {
-    public string? RoleInEvent { get; set; } = String(eventTypeCitedFrom.RoleInEvent);
+    public string? RoleInEvent { get; set; } = GetString(eventTypeCitedFrom.RoleInEvent);
     public override string ToString() => $"{RoleInEvent}";
 }
 

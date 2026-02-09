@@ -63,18 +63,18 @@ public class RepositoryDto : GedcomDto
 {
     public RepositoryDto(RepositoryRecord repositoryRecord)
     {
-        Address = Record(new AddressDto(repositoryRecord.AddressStructure));
-        AutomatedRecordId = String(repositoryRecord.AutomatedRecordId);
-        CallNumber = Record(new CallNumberDto(repositoryRecord.CallNumber));
-        ChangeDate = Record(new ChangeDateDto(repositoryRecord.ChangeDate));
-        Emails = List(repositoryRecord.AddressEmails);
-        FaxNumbers = List(repositoryRecord.AddressFaxNumbers);
+        Address = GetRecord(new AddressDto(repositoryRecord.AddressStructure));
+        AutomatedRecordId = GetString(repositoryRecord.AutomatedRecordId);
+        CallNumber = GetRecord(new CallNumberDto(repositoryRecord.CallNumber));
+        ChangeDate = GetRecord(new ChangeDateDto(repositoryRecord.ChangeDate));
+        Emails = GetList(repositoryRecord.AddressEmails);
+        FaxNumbers = GetList(repositoryRecord.AddressFaxNumbers);
         IsEmpty = repositoryRecord.IsEmpty;
-        Name = String(repositoryRecord.Name);
-        Note = String(repositoryRecord.NoteStructures.FirstOrDefault()?.Text ?? "");
-        PhoneNumbers = List(repositoryRecord.PhoneNumbers);
-        UserReferenceNumber = Record(new UserReferenceNumberDto(repositoryRecord.UserReferenceNumber));
-        WebPages = List(repositoryRecord.AddressWebPages);
+        Name = GetString(repositoryRecord.Name);
+        Note = GetString(repositoryRecord.NoteStructures.FirstOrDefault()?.Text ?? "");
+        PhoneNumbers = GetList(repositoryRecord.PhoneNumbers);
+        UserReferenceNumber = GetRecord(new UserReferenceNumberDto(repositoryRecord.UserReferenceNumber));
+        WebPages = GetList(repositoryRecord.AddressWebPages);
         Xref = repositoryRecord.Xref;
     }
 

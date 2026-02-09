@@ -123,31 +123,31 @@ public class IndividualDto : GedcomDto
 {
     public IndividualDto(IndividualRecord individualRecord)
     {
-        Aliases = List(individualRecord.Aliases);
-        AncestorInterests = List(individualRecord.AncestorInterests);
-        AncestralFileNumber = String(individualRecord.AncestralFileNumber);
-        Associations = List(individualRecord.AssociationStructures.Select(_as => new AssociationDto(_as)).ToList());
-        AutomatedRecordId = String(individualRecord.AutomatedRecordId);
-        Birth = Record(new EventDto(individualRecord.Birth));
-        ChangeDate = Record(new ChangeDateDto(individualRecord.ChangeDate));
-        ChildToFamilyLinks = List(individualRecord.ChildToFamilyLinks.Select(ctfl => new ChildToFamilyLinkDto(ctfl)).ToList());
-        Death = Record(new EventDto(individualRecord.Death));
-        DescendantInterests = List(individualRecord.DescendantInterests);
+        Aliases = GetList(individualRecord.Aliases);
+        AncestorInterests = GetList(individualRecord.AncestorInterests);
+        AncestralFileNumber = GetString(individualRecord.AncestralFileNumber);
+        Associations = GetList(individualRecord.AssociationStructures.Select(_as => new AssociationDto(_as)).ToList());
+        AutomatedRecordId = GetString(individualRecord.AutomatedRecordId);
+        Birth = GetRecord(new EventDto(individualRecord.Birth));
+        ChangeDate = GetRecord(new ChangeDateDto(individualRecord.ChangeDate));
+        ChildToFamilyLinks = GetList(individualRecord.ChildToFamilyLinks.Select(ctfl => new ChildToFamilyLinkDto(ctfl)).ToList());
+        Death = GetRecord(new EventDto(individualRecord.Death));
+        DescendantInterests = GetList(individualRecord.DescendantInterests);
         Events = individualRecord.IndividualEventStructures.Select(ies => new EventDto(ies)).ToList();
-        Given = String(individualRecord.Given);
+        Given = GetString(individualRecord.Given);
         IsEmpty = individualRecord.IsEmpty;
-        LdsIndividualOrdinances = List(individualRecord.LdsIndividualOrdinances.Select(lio => new LdsIndividualOrdinanceDto(lio)).ToList());
-        MultimediaLinks = List(individualRecord.MultimediaLinks.Select(ml => new MultimediaLinkDto(ml)).ToList());
-        Notes = List(individualRecord.NoteStructures.Select(ns => ns.Text).ToList());
-        PermanentRecordFileNumber = String(individualRecord.PermanentRecordFileNumber);
-        RestrictionNotice = String(individualRecord.RestrictionNotice);
-        Sex = String(individualRecord.SexValue);
-        SourceCitations = List(individualRecord.SourceCitations.Select(sc => new SourceCitationDto(sc)).ToList());
-        SpouseToFamilyLinks = List(individualRecord.SpouseToFamilyLinks.Select(stfl => new SpouseToFamilyLinkDto(stfl)).ToList());
-        Submitter = String(individualRecord.Submitter);
-        Surname = String(individualRecord.Surname);
+        LdsIndividualOrdinances = GetList(individualRecord.LdsIndividualOrdinances.Select(lio => new LdsIndividualOrdinanceDto(lio)).ToList());
+        MultimediaLinks = GetList(individualRecord.MultimediaLinks.Select(ml => new MultimediaLinkDto(ml)).ToList());
+        Notes = GetList(individualRecord.NoteStructures.Select(ns => ns.Text).ToList());
+        PermanentRecordFileNumber = GetString(individualRecord.PermanentRecordFileNumber);
+        RestrictionNotice = GetString(individualRecord.RestrictionNotice);
+        Sex = GetString(individualRecord.SexValue);
+        SourceCitations = GetList(individualRecord.SourceCitations.Select(sc => new SourceCitationDto(sc)).ToList());
+        SpouseToFamilyLinks = GetList(individualRecord.SpouseToFamilyLinks.Select(stfl => new SpouseToFamilyLinkDto(stfl)).ToList());
+        Submitter = GetString(individualRecord.Submitter);
+        Surname = GetString(individualRecord.Surname);
         TreeId = "";
-        UserReferenceNumbers = List(individualRecord.UserReferenceNumbers.Select(urn => new UserReferenceNumberDto(urn)).ToList());
+        UserReferenceNumbers = GetList(individualRecord.UserReferenceNumbers.Select(urn => new UserReferenceNumberDto(urn)).ToList());
         Xref = individualRecord.Xref;
     }
 

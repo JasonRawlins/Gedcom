@@ -32,8 +32,8 @@ internal sealed class HeaderGedcomJsonConverter : JsonConverter<HeaderGedcom>
 
 public class HeaderGedcomDto(HeaderGedcom gedc) : GedcomDto
 {
-    public string? GedcomForm { get; set; } = String(gedc.GedcomForm);
-    public string? VersionNumber { get; set; } = String(gedc.VersionNumber);
+    public string? GedcomForm { get; set; } = GetString(gedc.GedcomForm);
+    public string? VersionNumber { get; set; } = GetString(gedc.VersionNumber);
     public override string ToString() => $"{VersionNumber}";
 }
 

@@ -29,7 +29,7 @@ internal sealed class CharacterSetJsonConverter : JsonConverter<CharacterSet>
 
 public class CharacterSetDto(CharacterSet characterSet) : GedcomDto
 {
-    public string? VersionNumber { get; set; } = String(characterSet.VersionNumber);
+    public string? VersionNumber { get; set; } = GetString(characterSet.VersionNumber);
     public override string ToString() => $"{VersionNumber}";
 }
 

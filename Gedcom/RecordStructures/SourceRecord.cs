@@ -72,21 +72,21 @@ public class SourceDto : GedcomDto, IComparable<SourceDto>
 {
     public SourceDto(SourceRecord sourceRecord)
     {
-        AutomatedRecordId = String(sourceRecord.AutomatedRecordId);
-        CallNumber = String(sourceRecord.CallNumber);
-        ChangeDate = Record(new ChangeDateDto(sourceRecord.ChangeDate));
-        DescriptiveTitle = String(sourceRecord.SourceDescriptiveTitle.Text);
-        FiledByEntry = Record(new NoteDto(sourceRecord.SourceFiledByEntry));
+        AutomatedRecordId = GetString(sourceRecord.AutomatedRecordId);
+        CallNumber = GetString(sourceRecord.CallNumber);
+        ChangeDate = GetRecord(new ChangeDateDto(sourceRecord.ChangeDate));
+        DescriptiveTitle = GetString(sourceRecord.SourceDescriptiveTitle.Text);
+        FiledByEntry = GetRecord(new NoteDto(sourceRecord.SourceFiledByEntry));
         IsEmpty = sourceRecord.IsEmpty;
-        MultimediaLinks = List(sourceRecord.MultimediaLinks.Select(ml => new MultimediaLinkDto(ml)).ToList());
-        Note = String(sourceRecord.NoteStructures.FirstOrDefault()?.Text ?? "");
-        Originator = String(sourceRecord.SourceOriginator.Text);
-        PublicationFacts = String(sourceRecord.SourcePublicationFacts.Text);
-        RecordData = Record(new SourceDataDto(sourceRecord.SourceRecordData));
-        RepositoryCitations = List(sourceRecord.SourceRepositoryCitations.Select(src => new SourceRepositoryCitationDto(src)).ToList());
-        RepositoryXref = String(sourceRecord.RepositoryXref);
-        TextFromSource = Record(new NoteDto(sourceRecord.TextFromSource));
-        UserReferenceNumbers = List(sourceRecord.UserReferenceNumbers.Select(urn => new UserReferenceNumberDto(urn)).ToList());
+        MultimediaLinks = GetList(sourceRecord.MultimediaLinks.Select(ml => new MultimediaLinkDto(ml)).ToList());
+        Note = GetString(sourceRecord.NoteStructures.FirstOrDefault()?.Text ?? "");
+        Originator = GetString(sourceRecord.SourceOriginator.Text);
+        PublicationFacts = GetString(sourceRecord.SourcePublicationFacts.Text);
+        RecordData = GetRecord(new SourceDataDto(sourceRecord.SourceRecordData));
+        RepositoryCitations = GetList(sourceRecord.SourceRepositoryCitations.Select(src => new SourceRepositoryCitationDto(src)).ToList());
+        RepositoryXref = GetString(sourceRecord.RepositoryXref);
+        TextFromSource = GetRecord(new NoteDto(sourceRecord.TextFromSource));
+        UserReferenceNumbers = GetList(sourceRecord.UserReferenceNumbers.Select(urn => new UserReferenceNumberDto(urn)).ToList());
         Xref = sourceRecord.Xref;
     }
 

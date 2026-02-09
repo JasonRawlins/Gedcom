@@ -35,9 +35,9 @@ internal sealed class AssociationStructureJsonConverter : JsonConverter<Associat
 
 public class AssociationDto(AssociationStructure associationStructure) : GedcomDto
 {
-    public List<NoteDto>? Notes { get; set; } = GedcomDto.List<NoteDto>(associationStructure.NoteStructures.Select(ns => new NoteDto(ns)).ToList());
-    public string? RelationIsDescriptor { get; set; } = String(associationStructure.RelationIsDescriptor);
-    public List<SourceCitationDto>? SourceCitations { get; set; } = List(associationStructure.SourceCitations.Select(sc => new SourceCitationDto(sc)).ToList());
+    public List<NoteDto>? Notes { get; set; } = GedcomDto.GetList<NoteDto>(associationStructure.NoteStructures.Select(ns => new NoteDto(ns)).ToList());
+    public string? RelationIsDescriptor { get; set; } = GetString(associationStructure.RelationIsDescriptor);
+    public List<SourceCitationDto>? SourceCitations { get; set; } = GetList(associationStructure.SourceCitations.Select(sc => new SourceCitationDto(sc)).ToList());
     public override string ToString() => $"{RelationIsDescriptor}";
 }
 

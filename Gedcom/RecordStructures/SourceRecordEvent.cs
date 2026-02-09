@@ -32,8 +32,8 @@ internal sealed class SourceRecordEventJsonConverter : JsonConverter<SourceRecor
 
 public class SourceRecordEventDto(SourceRecordEvent sourceRecordEvent) : GedcomDto
 {
-    public string? DatePeriod { get; set; } = String(sourceRecordEvent.DatePeriod);
-    public string? SourceJurisdictionPlace { get; set; } = String(sourceRecordEvent.SourceJurisdictionPlace);
+    public string? DatePeriod { get; set; } = GetString(sourceRecordEvent.DatePeriod);
+    public string? SourceJurisdictionPlace { get; set; } = GetString(sourceRecordEvent.SourceJurisdictionPlace);
 
     public override string ToString() => $"{SourceJurisdictionPlace} {DatePeriod}";
 }

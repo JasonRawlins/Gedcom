@@ -29,7 +29,7 @@ internal sealed class UserReferenceNumberJsonConverter : JsonConverter<UserRefer
 
 public class UserReferenceNumberDto(UserReferenceNumber userReferenceNumber) : GedcomDto
 {
-    public string? UserReferenceType { get; set; } = String(userReferenceNumber.UserReferenceType);
+    public string? UserReferenceType { get; set; } = GetString(userReferenceNumber.UserReferenceType);
 
     public override string ToString() => $"{UserReferenceType}";
 }
