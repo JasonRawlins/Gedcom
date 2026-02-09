@@ -28,11 +28,11 @@ internal sealed class HeaderTreeJsonConverter : JsonConverter<HeaderTree>
     public override void Write(Utf8JsonWriter writer, HeaderTree value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new HeaderTreeJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new HeaderTreeDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class HeaderTreeJson(HeaderTree headerTree) : GedcomJson
+public class HeaderTreeDto(HeaderTree headerTree) : GedcomDto
 {
     public string AutomatedRecordId { get; set; } = headerTree.AutomatedRecordId;
     public string Name { get; set; } = headerTree.Name;

@@ -23,13 +23,13 @@ internal sealed class MultimediaFileReferenceNumberJsonConverter : JsonConverter
     public override void Write(Utf8JsonWriter writer, MultimediaFileReferenceNumber value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new MultimediaFileReferenceNumberJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new MultimediaFileReferenceNumberDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class MultimediaFileReferenceNumberJson(MultimediaFileReferenceNumber multimediaFileReferenceNumber) : GedcomJson
+public class MultimediaFileReferenceNumberDto(MultimediaFileReferenceNumber multimediaFileReferenceNumber) : GedcomDto
 {
-    public MultimediaFormatJson? MultimediaFormat { get; set; } = JsonRecord(new MultimediaFormatJson(multimediaFileReferenceNumber.MultimediaFormat));
+    public MultimediaFormatDto? MultimediaFormat { get; set; } = Record(new MultimediaFormatDto(multimediaFileReferenceNumber.MultimediaFormat));
     public override string ToString() => $"{MultimediaFormat?.SourceMediaType}";
 }
 

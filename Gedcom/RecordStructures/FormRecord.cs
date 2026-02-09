@@ -29,15 +29,15 @@ internal sealed class FormRecordJsonConverter : JsonConverter<FormRecord>
     public override void Write(Utf8JsonWriter writer, FormRecord value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new FormJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new FormDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class FormJson(FormRecord formRecord) : GedcomJson
+public class FormDto(FormRecord formRecord) : GedcomDto
 {
-    public string? MediaType { get; set; } = JsonString(formRecord.MediaType);
-    public string? SourceType { get; set; } = JsonString(formRecord.SourceType);
-    public string? Type { get; set; } = JsonString(formRecord.Type);
+    public string? MediaType { get; set; } = String(formRecord.MediaType);
+    public string? SourceType { get; set; } = String(formRecord.SourceType);
+    public string? Type { get; set; } = String(formRecord.Type);
     public override string ToString() => $"{Type}";
 }
 

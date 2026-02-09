@@ -38,18 +38,18 @@ internal sealed class LdsSpouseSealingJsonConverter : JsonConverter<LdsSpouseSea
     public override void Write(Utf8JsonWriter writer, LdsSpouseSealing value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new LdsSpouseSealingJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new LdsSpouseSealingDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class LdsSpouseSealingJson(LdsSpouseSealing ldsSpouseSealing) : GedcomJson
+public class LdsSpouseSealingDto(LdsSpouseSealing ldsSpouseSealing) : GedcomDto
 {
-    public string? DateLdsOrdinance { get; set; } = JsonString(ldsSpouseSealing.DateLdsOrdinance);
-    public LdsOrdinanceStatusJson? LdsSpouseSealingDateStatus { get; set; } = JsonRecord(new LdsOrdinanceStatusJson(ldsSpouseSealing.LdsSpouseSealingDateStatus));
-    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(ldsSpouseSealing.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
-    public string? PlaceLivingOrdinance { get; set; } = JsonString(ldsSpouseSealing.PlaceLivingOrdinance);
-    public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(ldsSpouseSealing.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
-    public string? TempleCode { get; set; } = JsonString(ldsSpouseSealing.TempleCode);
+    public string? DateLdsOrdinance { get; set; } = String(ldsSpouseSealing.DateLdsOrdinance);
+    public LdsOrdinanceStatusDto? LdsSpouseSealingDateStatus { get; set; } = Record(new LdsOrdinanceStatusDto(ldsSpouseSealing.LdsSpouseSealingDateStatus));
+    public List<NoteDto>? Notes { get; set; } = GedcomDto.List<NoteDto>(ldsSpouseSealing.NoteStructures.Select(ns => new NoteDto(ns)).ToList());
+    public string? PlaceLivingOrdinance { get; set; } = String(ldsSpouseSealing.PlaceLivingOrdinance);
+    public List<SourceCitationDto>? SourceCitations { get; set; } = List(ldsSpouseSealing.SourceCitations.Select(sc => new SourceCitationDto(sc)).ToList());
+    public string? TempleCode { get; set; } = String(ldsSpouseSealing.TempleCode);
     public override string ToString() => $"{TempleCode}";
 }
 

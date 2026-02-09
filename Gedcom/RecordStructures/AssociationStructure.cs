@@ -29,15 +29,15 @@ internal sealed class AssociationStructureJsonConverter : JsonConverter<Associat
     public override void Write(Utf8JsonWriter writer, AssociationStructure value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new AssociationJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new AssociationDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class AssociationJson(AssociationStructure associationStructure) : GedcomJson
+public class AssociationDto(AssociationStructure associationStructure) : GedcomDto
 {
-    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(associationStructure.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
-    public string? RelationIsDescriptor { get; set; } = JsonString(associationStructure.RelationIsDescriptor);
-    public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(associationStructure.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
+    public List<NoteDto>? Notes { get; set; } = GedcomDto.List<NoteDto>(associationStructure.NoteStructures.Select(ns => new NoteDto(ns)).ToList());
+    public string? RelationIsDescriptor { get; set; } = String(associationStructure.RelationIsDescriptor);
+    public List<SourceCitationDto>? SourceCitations { get; set; } = List(associationStructure.SourceCitations.Select(sc => new SourceCitationDto(sc)).ToList());
     public override string ToString() => $"{RelationIsDescriptor}";
 }
 

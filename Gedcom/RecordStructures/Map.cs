@@ -27,14 +27,14 @@ internal sealed class MapJsonConverter : JsonConverter<Map>
     public override void Write(Utf8JsonWriter writer, Map value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new MapJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new MapDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class MapJson(Map map) : GedcomJson
+public class MapDto(Map map) : GedcomDto
 {
-    public string? Latitude { get; set; } = JsonString(map.PlaceLatitude);
-    public string? Longitude { get; set; } = JsonString(map.PlaceLongitude);
+    public string? Latitude { get; set; } = String(map.PlaceLatitude);
+    public string? Longitude { get; set; } = String(map.PlaceLongitude);
     public override string ToString() => $"({Latitude}, {Longitude})";
 }
 

@@ -59,11 +59,11 @@ internal sealed class NoteStructureJsonConverter : JsonConverter<NoteStructure>
     public override void Write(Utf8JsonWriter writer, NoteStructure value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new NoteJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new NoteDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class NoteJson(NoteStructure noteStructure) : GedcomJson
+public class NoteDto(NoteStructure noteStructure) : GedcomDto
 {
     public string Text { get; set; } = noteStructure.Text;
     private const int TextLengthLimit = 32;

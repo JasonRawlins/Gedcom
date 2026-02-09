@@ -49,21 +49,21 @@ internal sealed class SubmissionJsonConverter : JsonConverter<SubmissionRecord>
     public override void Write(Utf8JsonWriter writer, SubmissionRecord value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new SubmissionJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new SubmissionDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class SubmissionJson(SubmissionRecord submissionRecord) : GedcomJson
+public class SubmissionDto(SubmissionRecord submissionRecord) : GedcomDto
 {
-    public string? AutomatedRecordId { get; set; } = JsonString(submissionRecord.AutomatedRecordId);
-    public ChangeDateJson? ChangeDate { get; set; } = JsonRecord(new ChangeDateJson(submissionRecord.ChangeDate));
-    public string? GenerationsOfAncestors { get; set; } = JsonString(submissionRecord.GenerationsOfAncestors);
-    public string? GenerationsOfDescendants { get; set; } = JsonString(submissionRecord.GenerationsOfDescendants);
-    public string? NameOfFamilyFile { get; set; } = JsonString(submissionRecord.NameOfFamilyFile);
-    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(submissionRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
-    public string? OrdinanceProcessFlag { get; set; } = JsonString(submissionRecord.OrdinanceProcessFlag);
-    public string? Submitter { get; set; } = JsonString(submissionRecord.Submitter);
-    public string? TempleCode { get; set; } = JsonString(submissionRecord.TempleCode);
+    public string? AutomatedRecordId { get; set; } = String(submissionRecord.AutomatedRecordId);
+    public ChangeDateDto? ChangeDate { get; set; } = Record(new ChangeDateDto(submissionRecord.ChangeDate));
+    public string? GenerationsOfAncestors { get; set; } = String(submissionRecord.GenerationsOfAncestors);
+    public string? GenerationsOfDescendants { get; set; } = String(submissionRecord.GenerationsOfDescendants);
+    public string? NameOfFamilyFile { get; set; } = String(submissionRecord.NameOfFamilyFile);
+    public List<NoteDto>? Notes { get; set; } = GedcomDto.List<NoteDto>(submissionRecord.NoteStructures.Select(ns => new NoteDto(ns)).ToList());
+    public string? OrdinanceProcessFlag { get; set; } = String(submissionRecord.OrdinanceProcessFlag);
+    public string? Submitter { get; set; } = String(submissionRecord.Submitter);
+    public string? TempleCode { get; set; } = String(submissionRecord.TempleCode);
     public string? Xref { get; set; } = submissionRecord.Xref;
 
     public override string ToString() => $"{Submitter}";

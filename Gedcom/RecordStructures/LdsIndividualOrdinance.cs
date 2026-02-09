@@ -38,18 +38,18 @@ internal sealed class LdsIndividualOrdinanceJsonConverter : JsonConverter<LdsInd
     public override void Write(Utf8JsonWriter writer, LdsIndividualOrdinance value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new LdsIndividualOrdinanceJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new LdsIndividualOrdinanceDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class LdsIndividualOrdinanceJson(LdsIndividualOrdinance ldsIndividualOrdinance) : GedcomJson
+public class LdsIndividualOrdinanceDto(LdsIndividualOrdinance ldsIndividualOrdinance) : GedcomDto
 {
-    public string? DateLdsOrdinance { get; set; } = JsonString(ldsIndividualOrdinance.DateLdsOrdinance);
-    public LdsOrdinanceStatusJson? LdsBaptismDateStatus { get; set; } = JsonRecord(new LdsOrdinanceStatusJson(ldsIndividualOrdinance.LdsBaptismDateStatus));
-    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(ldsIndividualOrdinance.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
-    public string? PlaceLivingOrdinance { get; set; } = JsonString(ldsIndividualOrdinance.PlaceLivingOrdinance);
-    public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(ldsIndividualOrdinance.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
-    public string? TempleCode { get; set; } = JsonString(ldsIndividualOrdinance.TempleCode);
+    public string? DateLdsOrdinance { get; set; } = String(ldsIndividualOrdinance.DateLdsOrdinance);
+    public LdsOrdinanceStatusDto? LdsBaptismDateStatus { get; set; } = Record(new LdsOrdinanceStatusDto(ldsIndividualOrdinance.LdsBaptismDateStatus));
+    public List<NoteDto>? Notes { get; set; } = GedcomDto.List<NoteDto>(ldsIndividualOrdinance.NoteStructures.Select(ns => new NoteDto(ns)).ToList());
+    public string? PlaceLivingOrdinance { get; set; } = String(ldsIndividualOrdinance.PlaceLivingOrdinance);
+    public List<SourceCitationDto>? SourceCitations { get; set; } = List(ldsIndividualOrdinance.SourceCitations.Select(sc => new SourceCitationDto(sc)).ToList());
+    public string? TempleCode { get; set; } = String(ldsIndividualOrdinance.TempleCode);
     public override string ToString() => $"{TempleCode} {DateLdsOrdinance}";
 }
 

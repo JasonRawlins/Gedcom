@@ -43,20 +43,20 @@ internal sealed class AddressStructureJsonConverter : JsonConverter<AddressStruc
     public override void Write(Utf8JsonWriter writer, AddressStructure value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new AddressJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new AddressDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class AddressJson(AddressStructure addressStructure) : GedcomJson
+public class AddressDto(AddressStructure addressStructure) : GedcomDto
 {
-    public string? City { get; set; } = JsonString(addressStructure.AddressCity);
-    public string? Country { get; set; } = JsonString(addressStructure.AddressCountry);
-    public string? Line { get; set; } = JsonString(addressStructure.AddressLine);
-    public string? Line1 { get; set; } = JsonString(addressStructure.AddressLine1);
-    public string? Line2 { get; set; } = JsonString(addressStructure.AddressLine2);
-    public string? Line3 { get; set; } = JsonString(addressStructure.AddressLine3);
-    public string? PostalCode { get; set; } = JsonString(addressStructure.AddressPostCode);
-    public string? State { get; set; } = JsonString(addressStructure.AddressState);
+    public string? City { get; set; } = String(addressStructure.AddressCity);
+    public string? Country { get; set; } = String(addressStructure.AddressCountry);
+    public string? Line { get; set; } = String(addressStructure.AddressLine);
+    public string? Line1 { get; set; } = String(addressStructure.AddressLine1);
+    public string? Line2 { get; set; } = String(addressStructure.AddressLine2);
+    public string? Line3 { get; set; } = String(addressStructure.AddressLine3);
+    public string? PostalCode { get; set; } = String(addressStructure.AddressPostCode);
+    public string? State { get; set; } = String(addressStructure.AddressState);
 
     public override string ToString() => $"{Line}, {City}, {State}, {PostalCode}";
 }

@@ -61,25 +61,25 @@ internal sealed class MultimediaRecordJsonConverter : JsonConverter<MultimediaRe
     public override void Write(Utf8JsonWriter writer, MultimediaRecord value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new MultimediaJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new MultimediaDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class MultimediaJson(MultimediaRecord multimediaRecord) : GedcomJson
+public class MultimediaDto(MultimediaRecord multimediaRecord) : GedcomDto
 {
-    public string? AutomatedRecordId { get; set; } = JsonString(multimediaRecord.AutomatedRecordId);
-    public ChangeDateJson? ChangeDate { get; set; } = JsonRecord(new ChangeDateJson(multimediaRecord.ChangeDate));
-    public string? Date { get; set; } = JsonString(multimediaRecord.Date);
-    public string? Description { get; set; } = JsonString(multimediaRecord.Description);
-    public string? DescriptiveTitle { get; set; } = JsonString(multimediaRecord.DescriptiveTitle);
-    public FileJson? File { get; set; } = JsonRecord(new FileJson(multimediaRecord.FileRecord));
-    public List<string>? MultimediaFileReferenceNumbers { get; set; } = JsonList(multimediaRecord.MultimediaFileReferenceNumbers);
-    public MultimediaFormatJson? MultimediaFormat { get; set; } = JsonRecord(new MultimediaFormatJson(multimediaRecord.MultimediaFormat));
-    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(multimediaRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
-    public string? ObjectId { get; set; } = JsonString(multimediaRecord.ObjectId);
-    public PlaceJson? Place { get; set; } = JsonRecord(new PlaceJson(multimediaRecord.PlaceStructure));
-    public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(multimediaRecord.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
-    public UserReferenceNumberJson? UserReferenceNumber { get; set; } = JsonRecord(new UserReferenceNumberJson(multimediaRecord.UserReferenceNumber));
+    public string? AutomatedRecordId { get; set; } = String(multimediaRecord.AutomatedRecordId);
+    public ChangeDateDto? ChangeDate { get; set; } = Record(new ChangeDateDto(multimediaRecord.ChangeDate));
+    public string? Date { get; set; } = String(multimediaRecord.Date);
+    public string? Description { get; set; } = String(multimediaRecord.Description);
+    public string? DescriptiveTitle { get; set; } = String(multimediaRecord.DescriptiveTitle);
+    public FileDto? File { get; set; } = Record(new FileDto(multimediaRecord.FileRecord));
+    public List<string>? MultimediaFileReferenceNumbers { get; set; } = List(multimediaRecord.MultimediaFileReferenceNumbers);
+    public MultimediaFormatDto? MultimediaFormat { get; set; } = Record(new MultimediaFormatDto(multimediaRecord.MultimediaFormat));
+    public List<NoteDto>? Notes { get; set; } = GedcomDto.List<NoteDto>(multimediaRecord.NoteStructures.Select(ns => new NoteDto(ns)).ToList());
+    public string? ObjectId { get; set; } = String(multimediaRecord.ObjectId);
+    public PlaceDto? Place { get; set; } = Record(new PlaceDto(multimediaRecord.PlaceStructure));
+    public List<SourceCitationDto>? SourceCitations { get; set; } = List(multimediaRecord.SourceCitations.Select(sc => new SourceCitationDto(sc)).ToList());
+    public UserReferenceNumberDto? UserReferenceNumber { get; set; } = Record(new UserReferenceNumberDto(multimediaRecord.UserReferenceNumber));
     public override string ToString() => $"{Description}";
 }
 

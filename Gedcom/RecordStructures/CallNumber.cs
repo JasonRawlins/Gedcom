@@ -23,13 +23,13 @@ internal sealed class CallNumberJsonConverter : JsonConverter<CallNumber>
     public override void Write(Utf8JsonWriter writer, CallNumber value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new CallNumberJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new CallNumberDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class CallNumberJson(CallNumber callNumber) : GedcomJson
+public class CallNumberDto(CallNumber callNumber) : GedcomDto
 {
-    public string? SourceMediaType { get; set; } = JsonString(callNumber.SourceMediaType);
+    public string? SourceMediaType { get; set; } = String(callNumber.SourceMediaType);
     public override string ToString() => $"{SourceMediaType}";
 }
 

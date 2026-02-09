@@ -23,14 +23,14 @@ internal sealed class LdsOrdinanceStatusJsonConverter : JsonConverter<LdsOrdinan
     public override void Write(Utf8JsonWriter writer, LdsOrdinanceStatus value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new LdsOrdinanceStatusJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new LdsOrdinanceStatusDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class LdsOrdinanceStatusJson(LdsOrdinanceStatus ldsOrdinanceStatus) : GedcomJson
+public class LdsOrdinanceStatusDto(LdsOrdinanceStatus ldsOrdinanceStatus) : GedcomDto
 {
-    public string? ChangeDate { get; set; } = JsonString(ldsOrdinanceStatus.ChangeDate);
-    public string? Status { get; set; } = JsonString(ldsOrdinanceStatus.Status);
+    public string? ChangeDate { get; set; } = String(ldsOrdinanceStatus.ChangeDate);
+    public string? Status { get; set; } = String(ldsOrdinanceStatus.Status);
     public override string ToString() => $"{Status}";
 }
 

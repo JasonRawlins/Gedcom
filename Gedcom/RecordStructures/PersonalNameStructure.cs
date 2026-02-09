@@ -49,22 +49,22 @@ internal sealed class PersonalNameStructureJsonConverter : JsonConverter<Persona
     public override void Write(Utf8JsonWriter writer, PersonalNameStructure value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new PersonalNameJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new PersonalNameDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class PersonalNameJson(PersonalNameStructure personalNameStructure) : GedcomJson
+public class PersonalNameDto(PersonalNameStructure personalNameStructure) : GedcomDto
 {
-    public string? Given { get; set; } = JsonString(personalNameStructure.Given);
-    public string? Name { get; set; } = JsonString(personalNameStructure.NamePersonal);
-    public string? Nickname { get; set; } = JsonString(personalNameStructure.Nickname);
-    public NameVariationJson? PhoneticVariation { get; set; } = JsonRecord(new NameVariationJson(personalNameStructure.NamePhoneticVariation));
-    public string? Prefix { get; set; } = JsonString(personalNameStructure.NamePrefix);
-    public NameVariationJson? RomanizedVariation { get; set; } = JsonRecord(new NameVariationJson(personalNameStructure.NameRomanizedVariation));
-    public string? Suffix { get; set; } = JsonString(personalNameStructure.NameSuffix);
-    public string? Surname { get; set; } = JsonString(personalNameStructure.Surname);
-    public string? SurnamePrefix { get; set; } = JsonString(personalNameStructure.SurnamePrefix);
-    public string? Type { get; set; } = JsonString(personalNameStructure.NameType);
+    public string? Given { get; set; } = String(personalNameStructure.Given);
+    public string? Name { get; set; } = String(personalNameStructure.NamePersonal);
+    public string? Nickname { get; set; } = String(personalNameStructure.Nickname);
+    public NameVariationDto? PhoneticVariation { get; set; } = Record(new NameVariationDto(personalNameStructure.NamePhoneticVariation));
+    public string? Prefix { get; set; } = String(personalNameStructure.NamePrefix);
+    public NameVariationDto? RomanizedVariation { get; set; } = Record(new NameVariationDto(personalNameStructure.NameRomanizedVariation));
+    public string? Suffix { get; set; } = String(personalNameStructure.NameSuffix);
+    public string? Surname { get; set; } = String(personalNameStructure.Surname);
+    public string? SurnamePrefix { get; set; } = String(personalNameStructure.SurnamePrefix);
+    public string? Type { get; set; } = String(personalNameStructure.NameType);
     public override string ToString() => $"{Given} {Surname}";
 }
 

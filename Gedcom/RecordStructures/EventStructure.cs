@@ -129,27 +129,27 @@ internal sealed class EventStructureJsonConverter : JsonConverter<EventStructure
     public override void Write(Utf8JsonWriter writer, EventStructure value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new EventJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new EventDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class EventJson(EventStructure eventStructure) : GedcomJson, IComparable<EventJson>
+public class EventDto(EventStructure eventStructure) : GedcomDto, IComparable<EventDto>
 {
-    public AddressJson? Address { get; set; } = JsonRecord(new AddressJson(eventStructure.AddressStructure));
-    public string? AgeAtEvent { get; set; } = JsonString(eventStructure.AgeAtEvent);
-    public string? CauseOfEvent { get; set; } = JsonString(eventStructure.CauseOfEvent);
-    public string? EventOrFactClassification { get; set; } = JsonString(eventStructure.EventOrFactClassification);
-    public GedcomDateJson Date { get; set; } = new GedcomDateJson(eventStructure.GedcomDate);
-    public List<MultimediaLinkJson>? MultimediaLinks { get; set; } = JsonList(eventStructure.MultimediaLinks.Select(ml => new MultimediaLinkJson(ml)).ToList());
-    public string? Name { get; set; } = JsonString(eventStructure.Name);
-    public List<string>? Notes { get; set; } = JsonList(eventStructure.NoteStructures.Select(ns => ns.Text).ToList());
-    public PlaceJson? Place { get; set; } = JsonRecord(new PlaceJson(eventStructure.PlaceStructure));
-    public string? ReligiousAffiliation { get; set; } = JsonString(eventStructure.ReligiousAffiliation);
-    public string? ResponsibleAgency { get; set; } = JsonString(eventStructure.ResponsibleAgency);
-    public string? RestrictionNotice { get; set; } = JsonString(eventStructure.RestrictionNotice);
-    public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(eventStructure.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
+    public AddressDto? Address { get; set; } = Record(new AddressDto(eventStructure.AddressStructure));
+    public string? AgeAtEvent { get; set; } = String(eventStructure.AgeAtEvent);
+    public string? CauseOfEvent { get; set; } = String(eventStructure.CauseOfEvent);
+    public string? EventOrFactClassification { get; set; } = String(eventStructure.EventOrFactClassification);
+    public GedcomDateDto Date { get; set; } = new GedcomDateDto(eventStructure.GedcomDate);
+    public List<MultimediaLinkDto>? MultimediaLinks { get; set; } = List(eventStructure.MultimediaLinks.Select(ml => new MultimediaLinkDto(ml)).ToList());
+    public string? Name { get; set; } = String(eventStructure.Name);
+    public List<string>? Notes { get; set; } = List(eventStructure.NoteStructures.Select(ns => ns.Text).ToList());
+    public PlaceDto? Place { get; set; } = Record(new PlaceDto(eventStructure.PlaceStructure));
+    public string? ReligiousAffiliation { get; set; } = String(eventStructure.ReligiousAffiliation);
+    public string? ResponsibleAgency { get; set; } = String(eventStructure.ResponsibleAgency);
+    public string? RestrictionNotice { get; set; } = String(eventStructure.RestrictionNotice);
+    public List<SourceCitationDto>? SourceCitations { get; set; } = List(eventStructure.SourceCitations.Select(sc => new SourceCitationDto(sc)).ToList());
 
-    public int CompareTo(EventJson? other)
+    public int CompareTo(EventDto? other)
     {
         if (other == null) return 1;
 

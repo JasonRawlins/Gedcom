@@ -34,17 +34,17 @@ internal sealed class ChildToFamilyLinkJsonConverter : JsonConverter<ChildToFami
     public override void Write(Utf8JsonWriter writer, ChildToFamilyLink value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new ChildToFamilyLinkJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new ChildToFamilyLinkDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class ChildToFamilyLinkJson(ChildToFamilyLink childToFamilyLink) : GedcomJson
+public class ChildToFamilyLinkDto(ChildToFamilyLink childToFamilyLink) : GedcomDto
 {
-    public string? AdoptedByWhichParent { get; set; } = JsonString(childToFamilyLink.AdoptedByWhichParent);
-    public string? ChildLinkageStatus { get; set; } = JsonString(childToFamilyLink.ChildLinkageStatus);
-    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(childToFamilyLink.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
-    public string? PedigreeLinkageType { get; set; } = JsonString(childToFamilyLink.PedigreeLinkageType);
-    public string? Xref { get; set; } = JsonString(childToFamilyLink.Xref);
+    public string? AdoptedByWhichParent { get; set; } = String(childToFamilyLink.AdoptedByWhichParent);
+    public string? ChildLinkageStatus { get; set; } = String(childToFamilyLink.ChildLinkageStatus);
+    public List<NoteDto>? Notes { get; set; } = GedcomDto.List<NoteDto>(childToFamilyLink.NoteStructures.Select(ns => new NoteDto(ns)).ToList());
+    public string? PedigreeLinkageType { get; set; } = String(childToFamilyLink.PedigreeLinkageType);
+    public string? Xref { get; set; } = String(childToFamilyLink.Xref);
     public override string ToString() => $"{Xref}";
 }
 

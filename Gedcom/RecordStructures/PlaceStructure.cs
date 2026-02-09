@@ -37,18 +37,18 @@ internal sealed class PlaceStructureJsonConverter : JsonConverter<PlaceStructure
     public override void Write(Utf8JsonWriter writer, PlaceStructure value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new PlaceJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new PlaceDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class PlaceJson(PlaceStructure placeStructure) : GedcomJson
+public class PlaceDto(PlaceStructure placeStructure) : GedcomDto
 {
-    public string? Hierarchy { get; set; } = JsonString(placeStructure.PlaceHierarchy);
-    public MapJson? Map { get; set; } = JsonRecord(new MapJson(placeStructure.Map));
-    public string? Name { get; set; } = JsonString(placeStructure.PlaceName);
-    public List<NoteJson>? Notes { get; set; } = JsonList<NoteJson>(placeStructure.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
-    public List<NameVariationJson>? PhoneticVariations { get; set; } = JsonList(placeStructure.PlacePhoneticVariations.Select(ppv => new NameVariationJson(ppv)).ToList());
-    public List<NameVariationJson>? RomanizedVariations { get; set; } = JsonList(placeStructure.PlaceRomanizedVariations.Select(prv => new NameVariationJson(prv)).ToList());
+    public string? Hierarchy { get; set; } = String(placeStructure.PlaceHierarchy);
+    public MapDto? Map { get; set; } = Record(new MapDto(placeStructure.Map));
+    public string? Name { get; set; } = String(placeStructure.PlaceName);
+    public List<NoteDto>? Notes { get; set; } = List<NoteDto>(placeStructure.NoteStructures.Select(ns => new NoteDto(ns)).ToList());
+    public List<NameVariationDto>? PhoneticVariations { get; set; } = List(placeStructure.PlacePhoneticVariations.Select(ppv => new NameVariationDto(ppv)).ToList());
+    public List<NameVariationDto>? RomanizedVariations { get; set; } = List(placeStructure.PlaceRomanizedVariations.Select(prv => new NameVariationDto(prv)).ToList());
 
     public override string ToString() => $"{Name}";
 }

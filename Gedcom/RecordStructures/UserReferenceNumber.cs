@@ -23,13 +23,13 @@ internal sealed class UserReferenceNumberJsonConverter : JsonConverter<UserRefer
     public override void Write(Utf8JsonWriter writer, UserReferenceNumber value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new UserReferenceNumberJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new UserReferenceNumberDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class UserReferenceNumberJson(UserReferenceNumber userReferenceNumber) : GedcomJson
+public class UserReferenceNumberDto(UserReferenceNumber userReferenceNumber) : GedcomDto
 {
-    public string? UserReferenceType { get; set; } = JsonString(userReferenceNumber.UserReferenceType);
+    public string? UserReferenceType { get; set; } = String(userReferenceNumber.UserReferenceType);
 
     public override string ToString() => $"{UserReferenceType}";
 }

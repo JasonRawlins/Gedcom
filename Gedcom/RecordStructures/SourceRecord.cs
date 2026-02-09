@@ -64,49 +64,49 @@ internal sealed class SourceRecordJsonConverter : JsonConverter<SourceRecord>
     public override void Write(Utf8JsonWriter writer, SourceRecord value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new SourceJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new SourceDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class SourceJson : GedcomJson, IComparable<SourceJson>
+public class SourceDto : GedcomDto, IComparable<SourceDto>
 {
-    public SourceJson(SourceRecord sourceRecord)
+    public SourceDto(SourceRecord sourceRecord)
     {
-        AutomatedRecordId = JsonString(sourceRecord.AutomatedRecordId);
-        CallNumber = JsonString(sourceRecord.CallNumber);
-        ChangeDate = JsonRecord(new ChangeDateJson(sourceRecord.ChangeDate));
-        DescriptiveTitle = JsonString(sourceRecord.SourceDescriptiveTitle.Text);
-        FiledByEntry = JsonRecord(new NoteJson(sourceRecord.SourceFiledByEntry));
+        AutomatedRecordId = String(sourceRecord.AutomatedRecordId);
+        CallNumber = String(sourceRecord.CallNumber);
+        ChangeDate = Record(new ChangeDateDto(sourceRecord.ChangeDate));
+        DescriptiveTitle = String(sourceRecord.SourceDescriptiveTitle.Text);
+        FiledByEntry = Record(new NoteDto(sourceRecord.SourceFiledByEntry));
         IsEmpty = sourceRecord.IsEmpty;
-        MultimediaLinks = JsonList(sourceRecord.MultimediaLinks.Select(ml => new MultimediaLinkJson(ml)).ToList());
-        Note = JsonString(sourceRecord.NoteStructures.FirstOrDefault()?.Text ?? "");
-        Originator = JsonString(sourceRecord.SourceOriginator.Text);
-        PublicationFacts = JsonString(sourceRecord.SourcePublicationFacts.Text);
-        RecordData = JsonRecord(new SourceDataJson(sourceRecord.SourceRecordData));
-        RepositoryCitations = JsonList(sourceRecord.SourceRepositoryCitations.Select(src => new SourceRepositoryCitationJson(src)).ToList());
-        RepositoryXref = JsonString(sourceRecord.RepositoryXref);
-        TextFromSource = JsonRecord(new NoteJson(sourceRecord.TextFromSource));
-        UserReferenceNumbers = JsonList(sourceRecord.UserReferenceNumbers.Select(urn => new UserReferenceNumberJson(urn)).ToList());
+        MultimediaLinks = List(sourceRecord.MultimediaLinks.Select(ml => new MultimediaLinkDto(ml)).ToList());
+        Note = String(sourceRecord.NoteStructures.FirstOrDefault()?.Text ?? "");
+        Originator = String(sourceRecord.SourceOriginator.Text);
+        PublicationFacts = String(sourceRecord.SourcePublicationFacts.Text);
+        RecordData = Record(new SourceDataDto(sourceRecord.SourceRecordData));
+        RepositoryCitations = List(sourceRecord.SourceRepositoryCitations.Select(src => new SourceRepositoryCitationDto(src)).ToList());
+        RepositoryXref = String(sourceRecord.RepositoryXref);
+        TextFromSource = Record(new NoteDto(sourceRecord.TextFromSource));
+        UserReferenceNumbers = List(sourceRecord.UserReferenceNumbers.Select(urn => new UserReferenceNumberDto(urn)).ToList());
         Xref = sourceRecord.Xref;
     }
 
     public string? AutomatedRecordId { get; set; }
     public string? CallNumber { get; set; }
-    public ChangeDateJson? ChangeDate { get; set; }
+    public ChangeDateDto? ChangeDate { get; set; }
     public string? DescriptiveTitle { get; set; }
-    public NoteJson? FiledByEntry { get; set; }
-    public List<MultimediaLinkJson>? MultimediaLinks { get; set; }
+    public NoteDto? FiledByEntry { get; set; }
+    public List<MultimediaLinkDto>? MultimediaLinks { get; set; }
     public string? Note { get; set; }
     public string? Originator { get; set; }
     public string? PublicationFacts { get; set; }
-    public SourceDataJson? RecordData { get; set; }
-    public List<SourceRepositoryCitationJson>? RepositoryCitations { get; set; }
+    public SourceDataDto? RecordData { get; set; }
+    public List<SourceRepositoryCitationDto>? RepositoryCitations { get; set; }
     public string? RepositoryXref { get; set; }
-    public NoteJson? TextFromSource { get; set; }
-    public List<UserReferenceNumberJson>? UserReferenceNumbers { get; set; }
+    public NoteDto? TextFromSource { get; set; }
+    public List<UserReferenceNumberDto>? UserReferenceNumbers { get; set; }
     public string Xref { get; set; }
 
-    public int CompareTo(SourceJson? other)
+    public int CompareTo(SourceDto? other)
     {
         if (other == null) return 1;
 

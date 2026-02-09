@@ -115,43 +115,43 @@ internal sealed class IndividualJsonConverter : JsonConverter<IndividualRecord>
     public override void Write(Utf8JsonWriter writer, IndividualRecord value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new IndividualJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new IndividualDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class IndividualJson : GedcomJson
+public class IndividualDto : GedcomDto
 {
-    public IndividualJson(IndividualRecord individualRecord)
+    public IndividualDto(IndividualRecord individualRecord)
     {
-        Aliases = JsonList(individualRecord.Aliases);
-        AncestorInterests = JsonList(individualRecord.AncestorInterests);
-        AncestralFileNumber = JsonString(individualRecord.AncestralFileNumber);
-        Associations = JsonList(individualRecord.AssociationStructures.Select(_as => new AssociationJson(_as)).ToList());
-        AutomatedRecordId = JsonString(individualRecord.AutomatedRecordId);
-        Birth = JsonRecord(new EventJson(individualRecord.Birth));
-        ChangeDate = JsonRecord(new ChangeDateJson(individualRecord.ChangeDate));
-        ChildToFamilyLinks = JsonList(individualRecord.ChildToFamilyLinks.Select(ctfl => new ChildToFamilyLinkJson(ctfl)).ToList());
-        Death = JsonRecord(new EventJson(individualRecord.Death));
-        DescendantInterests = JsonList(individualRecord.DescendantInterests);
-        Events = individualRecord.IndividualEventStructures.Select(ies => new EventJson(ies)).ToList();
-        Given = JsonString(individualRecord.Given);
+        Aliases = List(individualRecord.Aliases);
+        AncestorInterests = List(individualRecord.AncestorInterests);
+        AncestralFileNumber = String(individualRecord.AncestralFileNumber);
+        Associations = List(individualRecord.AssociationStructures.Select(_as => new AssociationDto(_as)).ToList());
+        AutomatedRecordId = String(individualRecord.AutomatedRecordId);
+        Birth = Record(new EventDto(individualRecord.Birth));
+        ChangeDate = Record(new ChangeDateDto(individualRecord.ChangeDate));
+        ChildToFamilyLinks = List(individualRecord.ChildToFamilyLinks.Select(ctfl => new ChildToFamilyLinkDto(ctfl)).ToList());
+        Death = Record(new EventDto(individualRecord.Death));
+        DescendantInterests = List(individualRecord.DescendantInterests);
+        Events = individualRecord.IndividualEventStructures.Select(ies => new EventDto(ies)).ToList();
+        Given = String(individualRecord.Given);
         IsEmpty = individualRecord.IsEmpty;
-        LdsIndividualOrdinances = JsonList(individualRecord.LdsIndividualOrdinances.Select(lio => new LdsIndividualOrdinanceJson(lio)).ToList());
-        MultimediaLinks = JsonList(individualRecord.MultimediaLinks.Select(ml => new MultimediaLinkJson(ml)).ToList());
-        Notes = JsonList(individualRecord.NoteStructures.Select(ns => ns.Text).ToList());
-        PermanentRecordFileNumber = JsonString(individualRecord.PermanentRecordFileNumber);
-        RestrictionNotice = JsonString(individualRecord.RestrictionNotice);
-        Sex = JsonString(individualRecord.SexValue);
-        SourceCitations = JsonList(individualRecord.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
-        SpouseToFamilyLinks = JsonList(individualRecord.SpouseToFamilyLinks.Select(stfl => new SpouseToFamilyLinkJson(stfl)).ToList());
-        Submitter = JsonString(individualRecord.Submitter);
-        Surname = JsonString(individualRecord.Surname);
+        LdsIndividualOrdinances = List(individualRecord.LdsIndividualOrdinances.Select(lio => new LdsIndividualOrdinanceDto(lio)).ToList());
+        MultimediaLinks = List(individualRecord.MultimediaLinks.Select(ml => new MultimediaLinkDto(ml)).ToList());
+        Notes = List(individualRecord.NoteStructures.Select(ns => ns.Text).ToList());
+        PermanentRecordFileNumber = String(individualRecord.PermanentRecordFileNumber);
+        RestrictionNotice = String(individualRecord.RestrictionNotice);
+        Sex = String(individualRecord.SexValue);
+        SourceCitations = List(individualRecord.SourceCitations.Select(sc => new SourceCitationDto(sc)).ToList());
+        SpouseToFamilyLinks = List(individualRecord.SpouseToFamilyLinks.Select(stfl => new SpouseToFamilyLinkDto(stfl)).ToList());
+        Submitter = String(individualRecord.Submitter);
+        Surname = String(individualRecord.Surname);
         TreeId = "";
-        UserReferenceNumbers = JsonList(individualRecord.UserReferenceNumbers.Select(urn => new UserReferenceNumberJson(urn)).ToList());
+        UserReferenceNumbers = List(individualRecord.UserReferenceNumbers.Select(urn => new UserReferenceNumberDto(urn)).ToList());
         Xref = individualRecord.Xref;
     }
 
-    public IndividualJson(IndividualRecord individualRecord, string treeId) : this(individualRecord)
+    public IndividualDto(IndividualRecord individualRecord, string treeId) : this(individualRecord)
     {
         TreeId = treeId;
     }
@@ -169,28 +169,28 @@ public class IndividualJson : GedcomJson
         }
     }
 
-    public List<AssociationJson>? Associations { get; set; } = [];
+    public List<AssociationDto>? Associations { get; set; } = [];
     public string? AutomatedRecordId { get; set; }
-    public EventJson? Birth { get; set; }
-    public ChangeDateJson? ChangeDate { get; set; }
-    public List<ChildToFamilyLinkJson>? ChildToFamilyLinks { get; set; } = [];
-    public EventJson? Death { get; set; }
+    public EventDto? Birth { get; set; }
+    public ChangeDateDto? ChangeDate { get; set; }
+    public List<ChildToFamilyLinkDto>? ChildToFamilyLinks { get; set; } = [];
+    public EventDto? Death { get; set; }
     public List<string>? DescendantInterests { get; set; } = [];
-    public List<EventJson>? Events { get; set; } = [];
+    public List<EventDto>? Events { get; set; } = [];
     public string FullName => $"{Given} {Surname}";
     public string? Given { get; set; }
-    public List<LdsIndividualOrdinanceJson>? LdsIndividualOrdinances { get; set; } = [];
-    public List<MultimediaLinkJson>? MultimediaLinks { get; set; } = [];
+    public List<LdsIndividualOrdinanceDto>? LdsIndividualOrdinances { get; set; } = [];
+    public List<MultimediaLinkDto>? MultimediaLinks { get; set; } = [];
     public List<string>? Notes { get; set; } = [];
     public string? PermanentRecordFileNumber { get; set; }
     public string? RestrictionNotice { get; set; }
     public string? Sex { get; set; }
-    public List<SourceCitationJson>? SourceCitations { get; set; } = [];
-    public List<SpouseToFamilyLinkJson>? SpouseToFamilyLinks { get; set; } = [];
+    public List<SourceCitationDto>? SourceCitations { get; set; } = [];
+    public List<SpouseToFamilyLinkDto>? SpouseToFamilyLinks { get; set; } = [];
     public string? Submitter { get; set; }
     public string? Surname { get; set; }
     public string? TreeId { get; set; }
-    public List<UserReferenceNumberJson>? UserReferenceNumbers { get; set; } = [];
+    public List<UserReferenceNumberDto>? UserReferenceNumbers { get; set; } = [];
     public string? Xref { get; set; }
 
     public override string ToString() => $"{Given} {Surname}";

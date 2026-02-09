@@ -13,7 +13,7 @@ namespace GenesAndGenealogy.Server.Controllers
         private readonly ILogger<GedcomController> _logger;
         private FamilyManager FamilyManager { get; }
         private GedcomDocument Gedcom { get; }
-        private HeaderTreeJson HeaderTree => new(Gedcom.Header.Source.Tree);
+        private HeaderTreeDto HeaderTree => new(Gedcom.Header.Source.Tree);
 
         public GedcomController(ILogger<GedcomController> logger)
         {
@@ -26,9 +26,9 @@ namespace GenesAndGenealogy.Server.Controllers
         }
 
         [HttpGet(Name = "GetGedcom")]
-        public IEnumerable<IndividualJson> Get()
+        public IEnumerable<IndividualDto> Get()
         {
-            return Gedcom.GetIndividualRecords().Select(ir => new IndividualJson(ir, HeaderTree.AutomatedRecordId));
+            return Gedcom.GetIndividualRecords().Select(ir => new IndividualDto(ir, HeaderTree.AutomatedRecordId));
         }
 
         private List<FamilyModel> GetFamilyModels(IndividualRecord individualRecord)
@@ -47,18 +47,18 @@ namespace GenesAndGenealogy.Server.Controllers
             {
                 var family = FamilyManager.CreateFamily(familyRecord.Xref, 1, 1);
 
-                var husband = new IndividualJson(Gedcom.GetIndividualRecord(familyRecord.Husband), HeaderTree.AutomatedRecordId);
-                var wife = new IndividualJson(Gedcom.GetIndividualRecord(familyRecord.Wife), HeaderTree.AutomatedRecordId);
-                var children = new List<IndividualJson>();
+                var husband = new IndividualDto(Gedcom.GetIndividualRecord(familyRecord.Husband), HeaderTree.AutomatedRecordId);
+                var wife = new IndividualDto(Gedcom.GetIndividualRecord(familyRecord.Wife), HeaderTree.AutomatedRecordId);
+                var children = new List<IndividualDto>();
 
                 foreach (var childXref in familyRecord.Children)
                 {
                     var childIndividualRecord = Gedcom.GetIndividualRecord(childXref);
-                    children.Add(new IndividualJson(childIndividualRecord, HeaderTree.AutomatedRecordId));
+                    children.Add(new IndividualDto(childIndividualRecord, HeaderTree.AutomatedRecordId));
                 }
 
-                var events = new List<EventJson>();
-                foreach (var familyEventStructure in familyRecord.FamilyEventStructures.Select(fes => new EventJson(fes)).ToList())
+                var events = new List<EventDto>();
+                foreach (var familyEventStructure in familyRecord.FamilyEventStructures.Select(fes => new EventDto(fes)).ToList())
                 {
                     events.Add(familyEventStructure);
                 }
@@ -76,10 +76,10 @@ namespace GenesAndGenealogy.Server.Controllers
         }
 
         [HttpGet("individual/{individualXref}")]
-        public IndividualJson GetIndividual(string individualXref)
+        public IndividualDto GetIndividual(string individualXref)
         {
             var individualRecord = Gedcom.GetIndividualRecord(individualXref);
-            return new IndividualJson(individualRecord, HeaderTree.AutomatedRecordId);
+            return new IndividualDto(individualRecord, HeaderTree.AutomatedRecordId);
         }
 
         [HttpGet("individual/{individualXref}/families/")]
@@ -89,16 +89,16 @@ namespace GenesAndGenealogy.Server.Controllers
         }
 
         [HttpGet("individuals")]
-        public List<IndividualJson> GetIndividuals()
+        public List<IndividualDto> GetIndividuals()
         {
-            var individuals = Gedcom.GetIndividualRecords().Select(ir => new IndividualJson(ir, HeaderTree.AutomatedRecordId)).ToList();
+            var individuals = Gedcom.GetIndividualRecords().Select(ir => new IndividualDto(ir, HeaderTree.AutomatedRecordId)).ToList();
             return [.. individuals.OrderBy(i => i.Birth).ThenBy(i => i.Surname)];
         }
 
         [HttpGet("multimedia-items")]
-        public List<MultimediaJson> GetMultimediaItems()
+        public List<MultimediaDto> GetMultimediaItems()
         {
-            var multimediaItems = Gedcom.GetObjectRecords().Select(or => new MultimediaJson(or)).ToList();
+            var multimediaItems = Gedcom.GetObjectRecords().Select(or => new MultimediaDto(or)).ToList();
             return multimediaItems;
         }
 
@@ -106,7 +106,7 @@ namespace GenesAndGenealogy.Server.Controllers
         public ProfileModel GetProfile(string individualXref)
         {
             var individualRecord = Gedcom.GetIndividualRecord(individualXref);
-            var individualJson = new IndividualJson(individualRecord, HeaderTree.AutomatedRecordId);
+            var individualJson = new IndividualDto(individualRecord, HeaderTree.AutomatedRecordId);
 
             var familyModels = GetFamilyModels(individualRecord);
 
@@ -121,21 +121,21 @@ namespace GenesAndGenealogy.Server.Controllers
             //    .GroupBy(e => e.Date.Year)
             //    .Select(g => new { Year = g.Key, Events = g.ToList() });
 
-            var repositories = Gedcom.GetRepositoryRecords().Select(r => new RepositoryJson(r)).ToList();
+            var repositories = Gedcom.GetRepositoryRecords().Select(r => new RepositoryDto(r)).ToList();
 
-            var sources = new List<SourceJson>();
+            var sources = new List<SourceDto>();
             foreach (var sourceCitation in individualRecord.SourceCitations)
             {
                 var sourceRecord = Gedcom.GetSourceRecord(sourceCitation.Xref);
-                sources.Add(new SourceJson(sourceRecord));
+                sources.Add(new SourceDto(sourceRecord));
             }
             var sortedSources = sources.OrderBy(s => s.DescriptiveTitle).ToList();
 
-            var multimediaItems = new List<MultimediaJson>();
+            var multimediaItems = new List<MultimediaDto>();
             foreach (var multimediaLink in individualRecord.MultimediaLinks)
             {
                 var multimediaRecord = Gedcom.GetObjectRecord(multimediaLink.Xref);
-                multimediaItems.Add(new MultimediaJson(multimediaRecord));
+                multimediaItems.Add(new MultimediaDto(multimediaRecord));
             }
 
             var profileModel = new ProfileModel(HeaderTree, individualJson, familyModels, repositories, sortedSources, multimediaItems);
@@ -153,17 +153,17 @@ namespace GenesAndGenealogy.Server.Controllers
                 var family = familyManager.CreateFamily(parentsFamilyRecord.Xref, Generation.Current, Generation.Child);
 
                 var fatherIndividualRecord = Gedcom.GetIndividualRecord(parentsFamilyRecord.Husband);
-                IndividualJson? father = null;
+                IndividualDto? father = null;
                 if (!fatherIndividualRecord.IsEmpty)
                 {
-                    father = new IndividualJson(fatherIndividualRecord, HeaderTree.AutomatedRecordId);
+                    father = new IndividualDto(fatherIndividualRecord, HeaderTree.AutomatedRecordId);
                 }
 
                 var motherIndividualRecord = Gedcom.GetIndividualRecord(parentsFamilyRecord.Wife);
-                IndividualJson? mother = null;
+                IndividualDto? mother = null;
                 if (!motherIndividualRecord.IsEmpty)
                 {
-                    mother = new IndividualJson(motherIndividualRecord, HeaderTree.AutomatedRecordId);
+                    mother = new IndividualDto(motherIndividualRecord, HeaderTree.AutomatedRecordId);
                 }
 
                 profileModel.Parents = new FamilyModel(father, mother);
@@ -177,19 +177,19 @@ namespace GenesAndGenealogy.Server.Controllers
         }
 
         [HttpGet("repository/{repositoryXref}")]
-        public RepositoryJson GetRepository(string repositoryXref)
+        public RepositoryDto GetRepository(string repositoryXref)
         {
-            return new RepositoryJson(Gedcom.GetRepositoryRecord(repositoryXref));
+            return new RepositoryDto(Gedcom.GetRepositoryRecord(repositoryXref));
         }
 
         [HttpGet("source/{sourceXref}")]
-        public SourceJson GetSource(string sourceXref)
+        public SourceDto GetSource(string sourceXref)
         {
-            return new SourceJson(Gedcom.GetSourceRecord(sourceXref));
+            return new SourceDto(Gedcom.GetSourceRecord(sourceXref));
         }
 
         [HttpGet("tree")]
-        public HeaderTreeJson GetTree()
+        public HeaderTreeDto GetTree()
         {
             return HeaderTree;
         }

@@ -59,7 +59,7 @@ public class Options
                 }
 
                 var paramsFileText = File.ReadAllText(ParamsFilePath);
-                var gedcomNetParams = JsonSerializer.Deserialize<GedcomNetParams>(paramsFileText, GedcomJson.SerializationOptions)!;
+                var gedcomNetParams = JsonSerializer.Deserialize<GedcomNetParams>(paramsFileText, GedcomDto.SerializationOptions)!;
 
                 if (gedcomNetParams == null)
                 {

@@ -57,24 +57,24 @@ internal sealed class HeaderJsonConverter : JsonConverter<Header>
     public override void Write(Utf8JsonWriter writer, Header value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new HeaderJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new HeaderDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class HeaderJson(Header header) : GedcomJson
+public class HeaderDto(Header header) : GedcomDto
 {
-    public CharacterSetJson? CharacterSet { get; set; } = JsonRecord(new CharacterSetJson(header.CharacterSet));
-    public string? CopyrightGedcomFile { get; set; } = JsonString(header.CopyrightGedcomFile);
-    public string? FileName { get; set; } = JsonString(header.FileName);
-    public HeaderGedcomJson? Gedcom { get; set; } = JsonRecord(new HeaderGedcomJson(header.Gedcom));
-    public NoteJson? GedcomContentDescription { get; set; } = JsonRecord(new NoteJson(header.GedcomContentDescription));
-    public string? LanguageOfText { get; set; } = JsonString(header.LanguageOfText);
-    public string? PlaceHierarchy { get; set; } = JsonString(header.PlaceHierarchy);
-    public string? ReceivingSystemName { get; set; } = JsonString(header.ReceivingSystemName);
-    public HeaderSourceJson? Source { get; set; } = JsonRecord(new HeaderSourceJson(header.Source));
-    public SubmissionJson? SubmissionRecord { get; set; } = JsonRecord(new SubmissionJson(header.SubmissionRecord));
-    public string? Submitter { get; set; } = JsonString(header.Submitter);
-    public GedcomDateJson? TransmissionDate { get; set; } = JsonRecord(new GedcomDateJson(header.TransmissionDate));
+    public CharacterSetDto? CharacterSet { get; set; } = Record(new CharacterSetDto(header.CharacterSet));
+    public string? CopyrightGedcomFile { get; set; } = String(header.CopyrightGedcomFile);
+    public string? FileName { get; set; } = String(header.FileName);
+    public HeaderGedcomDto? Gedcom { get; set; } = Record(new HeaderGedcomDto(header.Gedcom));
+    public NoteDto? GedcomContentDescription { get; set; } = Record(new NoteDto(header.GedcomContentDescription));
+    public string? LanguageOfText { get; set; } = String(header.LanguageOfText);
+    public string? PlaceHierarchy { get; set; } = String(header.PlaceHierarchy);
+    public string? ReceivingSystemName { get; set; } = String(header.ReceivingSystemName);
+    public HeaderSourceDto? Source { get; set; } = Record(new HeaderSourceDto(header.Source));
+    public SubmissionDto? SubmissionRecord { get; set; } = Record(new SubmissionDto(header.SubmissionRecord));
+    public string? Submitter { get; set; } = String(header.Submitter);
+    public GedcomDateDto? TransmissionDate { get; set; } = Record(new GedcomDateDto(header.TransmissionDate));
     public override string ToString() => $"{Submitter}";
 }
 

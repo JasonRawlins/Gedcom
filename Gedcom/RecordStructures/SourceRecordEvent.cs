@@ -26,14 +26,14 @@ internal sealed class SourceRecordEventJsonConverter : JsonConverter<SourceRecor
     public override void Write(Utf8JsonWriter writer, SourceRecordEvent value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new SourceRecordEventJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new SourceRecordEventDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class SourceRecordEventJson(SourceRecordEvent sourceRecordEvent) : GedcomJson
+public class SourceRecordEventDto(SourceRecordEvent sourceRecordEvent) : GedcomDto
 {
-    public string? DatePeriod { get; set; } = JsonString(sourceRecordEvent.DatePeriod);
-    public string? SourceJurisdictionPlace { get; set; } = JsonString(sourceRecordEvent.SourceJurisdictionPlace);
+    public string? DatePeriod { get; set; } = String(sourceRecordEvent.DatePeriod);
+    public string? SourceJurisdictionPlace { get; set; } = String(sourceRecordEvent.SourceJurisdictionPlace);
 
     public override string ToString() => $"{SourceJurisdictionPlace} {DatePeriod}";
 }

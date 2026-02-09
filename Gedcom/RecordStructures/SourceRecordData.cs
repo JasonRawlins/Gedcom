@@ -29,15 +29,15 @@ internal sealed class SourceRecordDataJsonConverter : JsonConverter<SourceRecord
     public override void Write(Utf8JsonWriter writer, SourceRecordData value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new SourceDataJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new SourceDataDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class SourceDataJson(SourceRecordData sourceRecordData) : GedcomJson
+public class SourceDataDto(SourceRecordData sourceRecordData) : GedcomDto
 {
-    public List<SourceRecordEventJson>? EventsRecorded { get; set; } = JsonList(sourceRecordData.RecordEvents.Select(re => new SourceRecordEventJson(re)).ToList());
-    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(sourceRecordData.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
-    public string? ResponsibleAgency { get; set; } = JsonString(sourceRecordData.ResponsibleAgency);
+    public List<SourceRecordEventDto>? EventsRecorded { get; set; } = List(sourceRecordData.RecordEvents.Select(re => new SourceRecordEventDto(re)).ToList());
+    public List<NoteDto>? Notes { get; set; } = GedcomDto.List<NoteDto>(sourceRecordData.NoteStructures.Select(ns => new NoteDto(ns)).ToList());
+    public string? ResponsibleAgency { get; set; } = String(sourceRecordData.ResponsibleAgency);
 
     public override string ToString() => $"{ResponsibleAgency}";
 }

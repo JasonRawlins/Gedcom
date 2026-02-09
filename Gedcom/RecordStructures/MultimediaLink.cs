@@ -31,15 +31,15 @@ internal sealed class MultimediaLinkJsonConverter : JsonConverter<MultimediaLink
     public override void Write(Utf8JsonWriter writer, MultimediaLink value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new MultimediaLinkJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new MultimediaLinkDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class MultimediaLinkJson(MultimediaLink multimediaLink) : GedcomJson
+public class MultimediaLinkDto(MultimediaLink multimediaLink) : GedcomDto
 {
-    public string? DescriptiveTitle { get; set; } = JsonString(multimediaLink.DescriptiveTitle);
-    public List<MultimediaFileReferenceNumberJson>? MultimediaFileReferenceNumbers { get; set; } = JsonList(multimediaLink.MultimediaFileReferenceNumbers.Select(mfrn => new MultimediaFileReferenceNumberJson(mfrn)).ToList());
-    public string? SourceMediaType { get; set; } = JsonString(multimediaLink.SourceMediaType);
+    public string? DescriptiveTitle { get; set; } = String(multimediaLink.DescriptiveTitle);
+    public List<MultimediaFileReferenceNumberDto>? MultimediaFileReferenceNumbers { get; set; } = List(multimediaLink.MultimediaFileReferenceNumbers.Select(mfrn => new MultimediaFileReferenceNumberDto(mfrn)).ToList());
+    public string? SourceMediaType { get; set; } = String(multimediaLink.SourceMediaType);
     public string? Xref { get; set; } = multimediaLink.Xref;
     public override string ToString() => $"{DescriptiveTitle}";
 }

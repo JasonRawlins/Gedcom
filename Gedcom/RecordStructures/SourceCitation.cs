@@ -40,18 +40,18 @@ internal sealed class SourceCitationJsonConverter : JsonConverter<SourceCitation
     public override void Write(Utf8JsonWriter writer, SourceCitation value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new SourceCitationJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new SourceCitationDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class SourceCitationJson(SourceCitation sourceCitation) : GedcomJson
+public class SourceCitationDto(SourceCitation sourceCitation) : GedcomDto
 {
-    public string? CertaintyAssessment { get; set; } = JsonString(sourceCitation.CertaintyAssessment);
-    public SourceCitationDataJson? Data { get; set; } = JsonRecord(new SourceCitationDataJson(sourceCitation.SourceCitationData));
-    public EventTypeCitedFromJson? EventTypeCitedFrom { get; set; } = JsonRecord(new EventTypeCitedFromJson(sourceCitation.EventTypeCitedFrom));
-    public List<MultimediaLinkJson>? MultimediaLinks { get; set; } = JsonList(sourceCitation.MultimediaLinks.Select(ml => new MultimediaLinkJson(ml)).ToList());
-    public List<string>? Notes { get; set; } = JsonList(sourceCitation.NoteStructures.Select(ns => ns.Text).ToList());
-    public string? WhereWithinSource { get; set; } = JsonString(sourceCitation.WhereWithinSource);
+    public string? CertaintyAssessment { get; set; } = String(sourceCitation.CertaintyAssessment);
+    public SourceCitationDataDto? Data { get; set; } = Record(new SourceCitationDataDto(sourceCitation.SourceCitationData));
+    public EventTypeCitedFromDto? EventTypeCitedFrom { get; set; } = Record(new EventTypeCitedFromDto(sourceCitation.EventTypeCitedFrom));
+    public List<MultimediaLinkDto>? MultimediaLinks { get; set; } = List(sourceCitation.MultimediaLinks.Select(ml => new MultimediaLinkDto(ml)).ToList());
+    public List<string>? Notes { get; set; } = List(sourceCitation.NoteStructures.Select(ns => ns.Text).ToList());
+    public string? WhereWithinSource { get; set; } = String(sourceCitation.WhereWithinSource);
     public string? Xref { get; set; } = sourceCitation.Xref;
     public override string ToString() => $"{WhereWithinSource}";
 }

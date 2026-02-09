@@ -26,14 +26,14 @@ internal sealed class SourceRepositoryCitationJsonConverter : JsonConverter<Sour
     public override void Write(Utf8JsonWriter writer, SourceRepositoryCitation value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new SourceRepositoryCitationJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new SourceRepositoryCitationDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class SourceRepositoryCitationJson(SourceRepositoryCitation sourceRepositoryCitation) : GedcomJson
+public class SourceRepositoryCitationDto(SourceRepositoryCitation sourceRepositoryCitation) : GedcomDto
 {
-    public List<CallNumberJson>? CallNumbers { get; set; } = JsonList(sourceRepositoryCitation.CallNumbers.Select(cn => new CallNumberJson(cn)).ToList());
-    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(sourceRepositoryCitation.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public List<CallNumberDto>? CallNumbers { get; set; } = List(sourceRepositoryCitation.CallNumbers.Select(cn => new CallNumberDto(cn)).ToList());
+    public List<NoteDto>? Notes { get; set; } = GedcomDto.List<NoteDto>(sourceRepositoryCitation.NoteStructures.Select(ns => new NoteDto(ns)).ToList());
 
     public override string ToString() => string.Join(", ", CallNumbers ?? []);
 }

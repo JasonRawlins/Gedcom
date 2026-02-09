@@ -3,18 +3,18 @@ using Gedcom.RecordStructures;
 namespace GenesAndGenealogy.Server.ViewModels;
 
 public class ProfileModel(
-    HeaderTreeJson treeModel, 
-    IndividualJson individualJson, 
+    HeaderTreeDto treeModel, 
+    IndividualDto individualJson, 
     List<FamilyModel> familyModels, 
-    List<RepositoryJson> repositories, 
-    List<SourceJson> sources, 
-    List<MultimediaJson> multimediaItems)
+    List<RepositoryDto> repositories, 
+    List<SourceDto> sources, 
+    List<MultimediaDto> multimediaItems)
 {
     public List<FamilyModel> Families { get; set; } = familyModels;
-    public IndividualJson Individual { get; set; } = individualJson;
-    public List<MultimediaJson> MultimediaItems { get; set; } = multimediaItems;
+    public IndividualDto Individual { get; set; } = individualJson;
+    public List<MultimediaDto> MultimediaItems { get; set; } = multimediaItems;
     public FamilyModel? Parents { get; set; }
-    public MultimediaJson? PortraitMultiMedia { get; set; }
+    public MultimediaDto? PortraitMultiMedia { get; set; }
     public string PortraitUrl
     {
         get
@@ -35,9 +35,9 @@ public class ProfileModel(
             };
         }
     }
-    public List<RepositoryJson> Repositories { get; set; } = repositories;
-    public List<SourceJson> Sources { get; set; } = sources;
-    public HeaderTreeJson Tree { get; set; } = treeModel;
+    public List<RepositoryDto> Repositories { get; set; } = repositories;
+    public List<SourceDto> Sources { get; set; } = sources;
+    public HeaderTreeDto Tree { get; set; } = treeModel;
 
     public override string ToString() => $"{Individual.Given} {Individual.Surname}";
 }

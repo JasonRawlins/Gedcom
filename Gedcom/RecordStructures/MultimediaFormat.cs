@@ -23,13 +23,13 @@ internal sealed class MultimediaFormatJsonConverter : JsonConverter<MultimediaFo
     public override void Write(Utf8JsonWriter writer, MultimediaFormat value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new MultimediaFormatJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new MultimediaFormatDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class MultimediaFormatJson(MultimediaFormat multimediaFormat) : GedcomJson
+public class MultimediaFormatDto(MultimediaFormat multimediaFormat) : GedcomDto
 {
-    public string? SourceMediaType { get; set; } = JsonString(multimediaFormat.SourceMediaType);
+    public string? SourceMediaType { get; set; } = String(multimediaFormat.SourceMediaType);
     public override string ToString() => $"{SourceMediaType}";
 }
 

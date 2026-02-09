@@ -27,14 +27,14 @@ internal sealed class ChangeDateJsonConverter : JsonConverter<ChangeDate>
     public override void Write(Utf8JsonWriter writer, ChangeDate value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new ChangeDateJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new ChangeDateDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class ChangeDateJson(ChangeDate changeDate) : GedcomJson
+public class ChangeDateDto(ChangeDate changeDate) : GedcomDto
 {
-    public GedcomDateJson? ChangeDate { get; set; } = JsonRecord(new GedcomDateJson(changeDate.GedcomDate));
-    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(changeDate.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public GedcomDateDto? ChangeDate { get; set; } = Record(new GedcomDateDto(changeDate.GedcomDate));
+    public List<NoteDto>? Notes { get; set; } = GedcomDto.List<NoteDto>(changeDate.NoteStructures.Select(ns => new NoteDto(ns)).ToList());
     public override string ToString() => $"{ChangeDate}";
 }
 

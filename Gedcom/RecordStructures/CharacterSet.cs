@@ -23,13 +23,13 @@ internal sealed class CharacterSetJsonConverter : JsonConverter<CharacterSet>
     public override void Write(Utf8JsonWriter writer, CharacterSet value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new CharacterSetJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new CharacterSetDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class CharacterSetJson(CharacterSet characterSet) : GedcomJson
+public class CharacterSetDto(CharacterSet characterSet) : GedcomDto
 {
-    public string? VersionNumber { get; set; } = JsonString(characterSet.VersionNumber);
+    public string? VersionNumber { get; set; } = String(characterSet.VersionNumber);
     public override string ToString() => $"{VersionNumber}";
 }
 

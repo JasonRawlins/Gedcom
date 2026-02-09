@@ -25,13 +25,13 @@ internal sealed class SpouseToFamilyLinkJsonConverter : JsonConverter<SpouseToFa
     public override void Write(Utf8JsonWriter writer, SpouseToFamilyLink value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new SpouseToFamilyLinkJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new SpouseToFamilyLinkDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class SpouseToFamilyLinkJson(SpouseToFamilyLink spouseToFamilyLink) : GedcomJson
+public class SpouseToFamilyLinkDto(SpouseToFamilyLink spouseToFamilyLink) : GedcomDto
 {
-    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(spouseToFamilyLink.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
+    public List<NoteDto>? Notes { get; set; } = GedcomDto.List<NoteDto>(spouseToFamilyLink.NoteStructures.Select(ns => new NoteDto(ns)).ToList());
     public string Xref { get; set; } = spouseToFamilyLink.Xref;
 
     public override string ToString() => Xref;

@@ -35,17 +35,17 @@ internal sealed class HeaderCorporationJsonConverter : JsonConverter<HeaderCorpo
     public override void Write(Utf8JsonWriter writer, HeaderCorporation value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new HeaderCorporationJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new HeaderCorporationDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class HeaderCorporationJson(HeaderCorporation headerCorporation) : GedcomJson
+public class HeaderCorporationDto(HeaderCorporation headerCorporation) : GedcomDto
 {
-    public AddressJson? Address { get; set; } = JsonRecord(new AddressJson(headerCorporation.AddressStructure));
-    public List<string>? Emails { get; set; } = JsonList(headerCorporation.AddressEmails);
-    public List<string>? FaxNumbers { get; set; } = JsonList(headerCorporation.AddressFaxNumbers);
-    public List<string>? PhoneNumbers { get; set; } = JsonList(headerCorporation.PhoneNumbers);
-    public List<string>? WebPages { get; set; } = JsonList(headerCorporation.AddressWebPages);
+    public AddressDto? Address { get; set; } = Record(new AddressDto(headerCorporation.AddressStructure));
+    public List<string>? Emails { get; set; } = List(headerCorporation.AddressEmails);
+    public List<string>? FaxNumbers { get; set; } = List(headerCorporation.AddressFaxNumbers);
+    public List<string>? PhoneNumbers { get; set; } = List(headerCorporation.PhoneNumbers);
+    public List<string>? WebPages { get; set; } = List(headerCorporation.AddressWebPages);
     public override string ToString() => $"{Emails?.FirstOrDefault()}";
 }
 

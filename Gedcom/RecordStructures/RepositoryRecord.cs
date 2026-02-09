@@ -55,39 +55,39 @@ internal sealed class RepositoryRecordJsonConverter : JsonConverter<RepositoryRe
     public override void Write(Utf8JsonWriter writer, RepositoryRecord value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new RepositoryJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new RepositoryDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class RepositoryJson : GedcomJson
+public class RepositoryDto : GedcomDto
 {
-    public RepositoryJson(RepositoryRecord repositoryRecord)
+    public RepositoryDto(RepositoryRecord repositoryRecord)
     {
-        Address = JsonRecord(new AddressJson(repositoryRecord.AddressStructure));
-        AutomatedRecordId = JsonString(repositoryRecord.AutomatedRecordId);
-        CallNumber = JsonRecord(new CallNumberJson(repositoryRecord.CallNumber));
-        ChangeDate = JsonRecord(new ChangeDateJson(repositoryRecord.ChangeDate));
-        Emails = JsonList(repositoryRecord.AddressEmails);
-        FaxNumbers = JsonList(repositoryRecord.AddressFaxNumbers);
+        Address = Record(new AddressDto(repositoryRecord.AddressStructure));
+        AutomatedRecordId = String(repositoryRecord.AutomatedRecordId);
+        CallNumber = Record(new CallNumberDto(repositoryRecord.CallNumber));
+        ChangeDate = Record(new ChangeDateDto(repositoryRecord.ChangeDate));
+        Emails = List(repositoryRecord.AddressEmails);
+        FaxNumbers = List(repositoryRecord.AddressFaxNumbers);
         IsEmpty = repositoryRecord.IsEmpty;
-        Name = JsonString(repositoryRecord.Name);
-        Note = JsonString(repositoryRecord.NoteStructures.FirstOrDefault()?.Text ?? "");
-        PhoneNumbers = JsonList(repositoryRecord.PhoneNumbers);
-        UserReferenceNumber = JsonRecord(new UserReferenceNumberJson(repositoryRecord.UserReferenceNumber));
-        WebPages = JsonList(repositoryRecord.AddressWebPages);
+        Name = String(repositoryRecord.Name);
+        Note = String(repositoryRecord.NoteStructures.FirstOrDefault()?.Text ?? "");
+        PhoneNumbers = List(repositoryRecord.PhoneNumbers);
+        UserReferenceNumber = Record(new UserReferenceNumberDto(repositoryRecord.UserReferenceNumber));
+        WebPages = List(repositoryRecord.AddressWebPages);
         Xref = repositoryRecord.Xref;
     }
 
-    public AddressJson? Address { get; set; }
+    public AddressDto? Address { get; set; }
     public string? AutomatedRecordId { get; set; }
-    public CallNumberJson? CallNumber { get; set; }
-    public ChangeDateJson? ChangeDate { get; set; }
+    public CallNumberDto? CallNumber { get; set; }
+    public ChangeDateDto? ChangeDate { get; set; }
     public List<string>? Emails { get; set; }
     public List<string>? FaxNumbers { get; set; }
     public string? Name { get; set; }
     public string? Note { get; set; }
     public List<string>? PhoneNumbers { get; set; }
-    public UserReferenceNumberJson? UserReferenceNumber { get; set; }
+    public UserReferenceNumberDto? UserReferenceNumber { get; set; }
     public List<string>? WebPages { get; set; }
     public string? Xref { get; set; }
     public override string ToString() => $"{Name}";

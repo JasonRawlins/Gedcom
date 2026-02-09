@@ -23,13 +23,13 @@ internal sealed class EventTypeCitedFromJsonConverter : JsonConverter<EventTypeC
     public override void Write(Utf8JsonWriter writer, EventTypeCitedFrom value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new EventTypeCitedFromJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new EventTypeCitedFromDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class EventTypeCitedFromJson(EventTypeCitedFrom eventTypeCitedFrom) : GedcomJson
+public class EventTypeCitedFromDto(EventTypeCitedFrom eventTypeCitedFrom) : GedcomDto
 {
-    public string? RoleInEvent { get; set; } = JsonString(eventTypeCitedFrom.RoleInEvent);
+    public string? RoleInEvent { get; set; } = String(eventTypeCitedFrom.RoleInEvent);
     public override string ToString() => $"{RoleInEvent}";
 }
 

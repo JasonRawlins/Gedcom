@@ -26,14 +26,14 @@ internal sealed class HeaderGedcomJsonConverter : JsonConverter<HeaderGedcom>
     public override void Write(Utf8JsonWriter writer, HeaderGedcom value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new HeaderGedcomJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new HeaderGedcomDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class HeaderGedcomJson(HeaderGedcom gedc) : GedcomJson
+public class HeaderGedcomDto(HeaderGedcom gedc) : GedcomDto
 {
-    public string? GedcomForm { get; set; } = JsonString(gedc.GedcomForm);
-    public string? VersionNumber { get; set; } = JsonString(gedc.VersionNumber);
+    public string? GedcomForm { get; set; } = String(gedc.GedcomForm);
+    public string? VersionNumber { get; set; } = String(gedc.VersionNumber);
     public override string ToString() => $"{VersionNumber}";
 }
 

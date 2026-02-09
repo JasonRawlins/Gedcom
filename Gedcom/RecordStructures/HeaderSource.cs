@@ -37,18 +37,18 @@ internal sealed class HeaderSourceJsonConverter : JsonConverter<HeaderSource>
     public override void Write(Utf8JsonWriter writer, HeaderSource value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new HeaderSourceJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new HeaderSourceDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class HeaderSourceJson(HeaderSource headerSource) : GedcomJson
+public class HeaderSourceDto(HeaderSource headerSource) : GedcomDto
 {
-    public HeaderCorporationJson? Corporation { get; set; } = JsonRecord(new HeaderCorporationJson(headerSource.Corporation));
-    public HeaderDataJson? Data { get; set; } = JsonRecord(new HeaderDataJson(headerSource.Data));
-    public string? NameOfProduct { get; set; } = JsonString(headerSource.NameOfProduct);
-    public HeaderTreeJson? Tree { get; set; } = JsonRecord(new HeaderTreeJson(headerSource.Tree));
-    public string? Version { get; set; } = JsonString(headerSource.Version);
-    public string? Xref { get; set; } = JsonString(headerSource.Xref);
+    public HeaderCorporationDto? Corporation { get; set; } = Record(new HeaderCorporationDto(headerSource.Corporation));
+    public HeaderDataDto? Data { get; set; } = Record(new HeaderDataDto(headerSource.Data));
+    public string? NameOfProduct { get; set; } = String(headerSource.NameOfProduct);
+    public HeaderTreeDto? Tree { get; set; } = Record(new HeaderTreeDto(headerSource.Tree));
+    public string? Version { get; set; } = String(headerSource.Version);
+    public string? Xref { get; set; } = String(headerSource.Xref);
     public override string ToString() => $"{Tree?.Name}";
 }
 

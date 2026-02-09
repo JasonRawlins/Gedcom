@@ -26,13 +26,13 @@ internal sealed class SourceCitationDataJsonConverter : JsonConverter<SourceCita
     public override void Write(Utf8JsonWriter writer, SourceCitationData value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new SourceCitationDataJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new SourceCitationDataDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class SourceCitationDataJson(SourceCitationData sourceCitationData) : GedcomJson
+public class SourceCitationDataDto(SourceCitationData sourceCitationData) : GedcomDto
 {
-    public string? EntryRecordingDate { get; set; } = JsonString(sourceCitationData.EntryRecordingDate);
+    public string? EntryRecordingDate { get; set; } = String(sourceCitationData.EntryRecordingDate);
     public List<string> TextFromSources { get; set; } = [.. sourceCitationData.TextFromSources.Select(t => t.Text)];
 
     public override string ToString() => $"Count: {TextFromSources.Count}";

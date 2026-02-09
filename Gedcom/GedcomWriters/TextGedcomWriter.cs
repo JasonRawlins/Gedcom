@@ -11,10 +11,11 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
     public string GetIndividual(string xref)
     {
         var individualRecord = GedcomDocument.GetIndividualRecord(xref);
+        var individualDto = new IndividualDto(individualRecord);
 
         if (individualRecord.IsEmpty) return "";
 
-        return GetIndividualLineItem(individualRecord);
+        return GetIndividualLineItem(individualDto);
     }
 
     public string GetIndividuals(string query = "")
@@ -28,25 +29,26 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
         foreach (var individualRecord in orderedIndividualRecords)
         {
-            individualsStringBuilder.AppendLine(GetIndividualLineItem(individualRecord));
+            var individualDto = new IndividualDto(individualRecord);
+            individualsStringBuilder.AppendLine(GetIndividualLineItem(individualDto));
         }
 
         return individualsStringBuilder.ToString();
     }
 
-    private static string GetIndividualLineItem(IndividualRecord individualRecord)
+    private static string GetIndividualLineItem(IndividualDto individualDto)
     {
         var individualLineItemStringBuilder = new StringBuilder();
 
-        individualLineItemStringBuilder.Append($"{individualRecord.Surname}, {individualRecord.Given}");
-        individualLineItemStringBuilder.Append($" ({individualRecord.Xref})");
+        individualLineItemStringBuilder.Append($"{individualDto.Surname}, {individualDto.Given}");
+        individualLineItemStringBuilder.Append($" ({individualDto.Xref})");
 
         var birthAndDeathText =
-            $" BIRTH: {individualRecord.Birth.GedcomDate.DayMonthYear}" +
-            $" {individualRecord.Birth.PlaceStructure.PlaceName}" +
+            $" BIRTH: {individualDto.Birth?.Date.DayMonthYear ?? "Unknown birthdate"}" +
+            $" {individualDto.Birth?.Place?.Name ?? "Unknown birth place"}" +
             $" *" +
-            $" DEATH: {individualRecord.Death.GedcomDate.DayMonthYear}" +
-            $" {individualRecord.Death.PlaceStructure.PlaceName}";
+            $" DEATH: {individualDto.Death?.Date.DayMonthYear ?? "Unknown death date"}" +
+            $" {individualDto.Death?.Place?.Name ?? "Unknown death place"}";
 
         individualLineItemStringBuilder.Append(birthAndDeathText);
 

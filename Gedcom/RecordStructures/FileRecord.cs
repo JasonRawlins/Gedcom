@@ -27,14 +27,14 @@ internal sealed class FileRecordJsonConverter : JsonConverter<FileRecord>
     public override void Write(Utf8JsonWriter writer, FileRecord value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new FileJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new FileDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class FileJson(FileRecord fileRecord) : GedcomJson
+public class FileDto(FileRecord fileRecord) : GedcomDto
 {
-    public FormJson? Form { get; set; } = JsonRecord(new FormJson(fileRecord.FormRecord));
-    public string? Title { get; set; } = JsonString(fileRecord.Title);
+    public FormDto? Form { get; set; } = Record(new FormDto(fileRecord.FormRecord));
+    public string? Title { get; set; } = String(fileRecord.Title);
     public override string ToString() => $"{Title}";
 }
 

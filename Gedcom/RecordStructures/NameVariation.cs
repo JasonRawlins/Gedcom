@@ -44,19 +44,19 @@ internal sealed class NameVariationJsonConverter : JsonConverter<NameVariation>
     public override void Write(Utf8JsonWriter writer, NameVariation value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new NameVariationJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new NameVariationDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class NameVariationJson(NameVariation nameVariation) : GedcomJson
+public class NameVariationDto(NameVariation nameVariation) : GedcomDto
 {
-    public string? Given { get; set; } = JsonString(nameVariation.Type);
-    public string? Nickname { get; set; } = JsonString(nameVariation.Type);
-    public string? Prefix { get; set; } = JsonString(nameVariation.Type);
-    public string? Suffix { get; set; } = JsonString(nameVariation.Type);
-    public string? Surname { get; set; } = JsonString(nameVariation.Type);
-    public string? SurnamePrefix { get; set; } = JsonString(nameVariation.Type);
-    public string? Type { get; set; } = JsonString(nameVariation.Type);
+    public string? Given { get; set; } = String(nameVariation.Type);
+    public string? Nickname { get; set; } = String(nameVariation.Type);
+    public string? Prefix { get; set; } = String(nameVariation.Type);
+    public string? Suffix { get; set; } = String(nameVariation.Type);
+    public string? Surname { get; set; } = String(nameVariation.Type);
+    public string? SurnamePrefix { get; set; } = String(nameVariation.Type);
+    public string? Type { get; set; } = String(nameVariation.Type);
 
     public override string ToString() => $"{Given} {Surname}";
 }

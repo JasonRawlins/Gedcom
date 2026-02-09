@@ -27,14 +27,14 @@ internal sealed class HeaderDataJsonConverter : JsonConverter<HeaderData>
     public override void Write(Utf8JsonWriter writer, HeaderData value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new HeaderDataJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new HeaderDataDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class HeaderDataJson(HeaderData headerData) : GedcomJson
+public class HeaderDataDto(HeaderData headerData) : GedcomDto
 {
-    public NoteJson? CopyrightSourceData { get; set; } = JsonRecord(new NoteJson(headerData.CopyrightSourceData));
-    public string? PublicationDate { get; set; } = JsonString(headerData.PublicationDate);
+    public NoteDto? CopyrightSourceData { get; set; } = Record(new NoteDto(headerData.CopyrightSourceData));
+    public string? PublicationDate { get; set; } = String(headerData.PublicationDate);
     public override string ToString() => $"{PublicationDate}";
 }
 

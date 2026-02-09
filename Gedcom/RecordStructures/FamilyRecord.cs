@@ -77,29 +77,29 @@ internal sealed class FamilyRecordJsonConverter : JsonConverter<FamilyRecord>
     public override void Write(Utf8JsonWriter writer, FamilyRecord value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new FamilyJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new FamilyDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class FamilyJson(FamilyRecord familyRecord) : GedcomJson
+public class FamilyDto(FamilyRecord familyRecord) : GedcomDto
 {
-    public string? AdoptedByWhichParent { get; set; } = JsonString(familyRecord.AdoptedByWhichParent);
-    public string? AutomatedRecordNumber { get; set; } = JsonString(familyRecord.AutomatedRecordNumber);
-    public ChangeDateJson? ChangeDate { get; set; } = JsonRecord(new ChangeDateJson(familyRecord.ChangeDate));
-    public List<string>? Children { get; set; } = JsonList(familyRecord.Children);
-    public string? CountOfChildren { get; set; } = JsonString(familyRecord.CountOfChildren);
-    public EventJson? Divorce { get; set; } = JsonRecord(new EventJson(familyRecord.Divorce));
-    public List<EventJson>? Events { get; set; } = JsonList(familyRecord.FamilyEventStructures.Select(fes => new EventJson(fes)).ToList());
-    public string? Husband { get; set; } = JsonString(familyRecord.Husband);
+    public string? AdoptedByWhichParent { get; set; } = String(familyRecord.AdoptedByWhichParent);
+    public string? AutomatedRecordNumber { get; set; } = String(familyRecord.AutomatedRecordNumber);
+    public ChangeDateDto? ChangeDate { get; set; } = Record(new ChangeDateDto(familyRecord.ChangeDate));
+    public List<string>? Children { get; set; } = List(familyRecord.Children);
+    public string? CountOfChildren { get; set; } = String(familyRecord.CountOfChildren);
+    public EventDto? Divorce { get; set; } = Record(new EventDto(familyRecord.Divorce));
+    public List<EventDto>? Events { get; set; } = List(familyRecord.FamilyEventStructures.Select(fes => new EventDto(fes)).ToList());
+    public string? Husband { get; set; } = String(familyRecord.Husband);
     // +1 <<LDS_SPOUSE_SEALING>> {0:M} p.36
-    public EventJson? Marriage { get; set; } = JsonRecord(new EventJson(familyRecord.Marriage));
-    public List<MultimediaLinkJson>? MultimediaLinks { get; set; } = JsonList(familyRecord.MultimediaLinks.Select(ml => new MultimediaLinkJson(ml)).ToList());
-    public List<NoteJson>? Notes { get; set; } = GedcomJson.JsonList<NoteJson>(familyRecord.NoteStructures.Select(ns => new NoteJson(ns)).ToList());
-    public string? RestrictionNotice { get; set; } = JsonString(familyRecord.RestrictionNotice);
-    public List<SourceCitationJson>? SourceCitations { get; set; } = JsonList(familyRecord.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
-    public string? Submitter { get; set; } = JsonString(familyRecord.Submitter);
-    public List<UserReferenceNumberJson>? UserReferenceNumbers { get; set; } = JsonList(familyRecord.UserReferenceNumbers.Select(urn => new UserReferenceNumberJson(urn)).ToList());
-    public string? Wife { get; set; } = JsonString(familyRecord.Wife);
+    public EventDto? Marriage { get; set; } = Record(new EventDto(familyRecord.Marriage));
+    public List<MultimediaLinkDto>? MultimediaLinks { get; set; } = List(familyRecord.MultimediaLinks.Select(ml => new MultimediaLinkDto(ml)).ToList());
+    public List<NoteDto>? Notes { get; set; } = GedcomDto.List<NoteDto>(familyRecord.NoteStructures.Select(ns => new NoteDto(ns)).ToList());
+    public string? RestrictionNotice { get; set; } = String(familyRecord.RestrictionNotice);
+    public List<SourceCitationDto>? SourceCitations { get; set; } = List(familyRecord.SourceCitations.Select(sc => new SourceCitationDto(sc)).ToList());
+    public string? Submitter { get; set; } = String(familyRecord.Submitter);
+    public List<UserReferenceNumberDto>? UserReferenceNumbers { get; set; } = List(familyRecord.UserReferenceNumbers.Select(urn => new UserReferenceNumberDto(urn)).ToList());
+    public string? Wife { get; set; } = String(familyRecord.Wife);
     public string Xref { get; set; } = familyRecord.Xref;
     public override string ToString()
     {

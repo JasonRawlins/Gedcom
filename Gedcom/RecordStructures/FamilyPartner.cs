@@ -25,13 +25,13 @@ internal sealed class FamilyPartnerJsonConverter : JsonConverter<FamilyPartner>
     public override void Write(Utf8JsonWriter writer, FamilyPartner value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new FamilyPartnerJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new FamilyPartnerDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class FamilyPartnerJson(FamilyPartner familyPartner) : GedcomJson
+public class FamilyPartnerDto(FamilyPartner familyPartner) : GedcomDto
 {
-    public string? AgeAtEvent { get; set; } = JsonString(familyPartner.AgeAtEvent);
-    public string? Name { get; set; } = JsonString(familyPartner.Name);
+    public string? AgeAtEvent { get; set; } = String(familyPartner.AgeAtEvent);
+    public string? Name { get; set; } = String(familyPartner.Name);
     public override string ToString() => $"{Name}";
 }

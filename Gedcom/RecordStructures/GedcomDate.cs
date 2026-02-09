@@ -193,11 +193,11 @@ internal sealed class GedcomDateJsonConverter : JsonConverter<GedcomDate>
     public override void Write(Utf8JsonWriter writer, GedcomDate value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new GedcomDateJson(value), GedcomJson.SerializationOptions);
+        JsonSerializer.Serialize(writer, new GedcomDateDto(value), GedcomDto.SerializationOptions);
     }
 }
 
-public class GedcomDateJson(GedcomDate gedcomDate) : GedcomJson, IComparable<GedcomDateJson>
+public class GedcomDateDto(GedcomDate gedcomDate) : GedcomDto, IComparable<GedcomDateDto>
 {
     public string DateValue { get; set; } = gedcomDate.DateValue;
     public int? Day { get; set; } = gedcomDate.Day;
@@ -207,7 +207,7 @@ public class GedcomDateJson(GedcomDate gedcomDate) : GedcomJson, IComparable<Ged
     public string? Time { get; set; } = gedcomDate.TimeValue;
     public int? Year { get; set; } = gedcomDate.Year;
 
-    public int CompareTo(GedcomDateJson? other)
+    public int CompareTo(GedcomDateDto? other)
     {
         if (other == null) return 1;
 
