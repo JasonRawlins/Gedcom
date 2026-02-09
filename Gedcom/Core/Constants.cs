@@ -1,6 +1,8 @@
-﻿namespace Gedcom;
+﻿using System.Text.RegularExpressions;
 
-public static class Constants // Constants
+namespace Gedcom;
+
+public static partial class Constants // Constants
 {
     public const string Empty = "EMPTY"; // For the empty Record
     public const string Excel = "Excel";
@@ -8,4 +10,7 @@ public static class Constants // Constants
     public const string JSON = "JSON";
     public const string Text = "Text";
     public const string XREF = "Xref";
+
+    [GeneratedRegex("^@[0-9a-zA-Z_]{1,22}@$")]
+    public static partial Regex XrefRegex();
 }

@@ -1,4 +1,5 @@
 ﻿using Gedcom.RecordStructures;
+using System.Text.Json.Serialization;
 
 namespace Gedcom;
 
@@ -13,6 +14,7 @@ namespace Gedcom;
  */
 public class GedcomJson
 {
+    [JsonIgnore]
     public bool IsEmpty { get; set; }
     protected static T? JsonRecord<T>(T gedcomJson) where T : GedcomJson
     {

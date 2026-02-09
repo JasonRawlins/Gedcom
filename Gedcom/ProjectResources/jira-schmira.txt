@@ -1,5 +1,16 @@
 Current
 -------
+
+
+Apply JsonSerializerSettings across all JsonConverters in the project.
+The IndividualRecord needs access to the tree id in the GedcomDocument header. 
+	Do all records need access to the GedcomDocument?
+Move Record.IsQueryMatch to GedcomWriter and update tests.
+Figure out how to return Record.IsEmpty to the GenesAndGenealogy Gedcom controller. 
+	I don't want to return it to the client because it seems like unnecessary data.
+
+
+
 Ensure CLI still works
 	Excel
 	Text
@@ -16,7 +27,6 @@ Documentation
 
 Backlog
 -------
-
 Make a Visual Studio addon that formats .ged files. There might already be one.
 Configure GitHub CI, test runner, and GitHub releases. 
 Testing

@@ -1,7 +1,8 @@
 ﻿using CommandLine;
-using Gedcom;
 using Gedcom.CLI;
 using Gedcom.GedcomWriters;
+
+namespace Gedcom;
 
 public class Program
 {
@@ -12,10 +13,11 @@ public class Program
             .WithNotParsed(HandleParseError);
     }
 
-    private static GedcomDocument CreateGedcom(string gedFullName)
+    private static GedcomDocument CreateGedcomDocument(string gedFullName)
     {
         var gedFileLines = File.ReadAllLines(gedFullName);
         var gedcomLines = gedFileLines.Select(GedcomLine.Parse).ToList();
+
         return new GedcomDocument(gedcomLines);
     }
 
@@ -31,20 +33,30 @@ public class Program
     {
         if (options.Errors.Count > 0)
         {
-            options.Errors.ForEach(Console.WriteLine);           
+            options.Errors.ForEach(Console.WriteLine);
             return;
         }
-        
-        var gedcom = CreateGedcom(options.InputFilePath);
-        var gedcomWriter = GedcomWriter.Create(gedcom, options.Format);
+
+        WriteRecords(options);
+    }
+
+    private static void WriteRecords(Options options)
+    {
+        var gedcomDocument = CreateGedcomDocument(options.InputFilePath);
+        var gedcomWriter = GedcomWriter.Create(gedcomDocument, options.Format);
 
         if (options.RecordType.Equals(Tag.Individual))
         {
-            var gedcomText = string.IsNullOrEmpty(options.Xref)
-                ? gedcomWriter.GetIndividuals()
+            WriteIndividualRecords(gedcomWriter, options);
+        }
+    }
+
+    private static void WriteIndividualRecords(IGedcomWriter gedcomWriter, Options options)
+    {
+        var gedcomText = string.IsNullOrEmpty(options.Xref)
+                ? gedcomWriter.GetIndividuals(options.Query)
                 : gedcomWriter.GetIndividual(options.Xref);
 
-            File.WriteAllText(options.OutputFilePath, gedcomText);
-        }
+        File.WriteAllText(options.OutputFilePath, gedcomText);
     }
 }

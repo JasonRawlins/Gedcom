@@ -1,16 +1,15 @@
 ﻿using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Gedcom.GedcomWriters;
 
 public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 {
-    private GedcomDocument Gedcom { get; set; } = gedcom;
+    private GedcomDocument GedcomDocument { get; set; } = gedcom;
 
     public string GetIndividual(string xref)
     {
-        var individualRecord = Gedcom.GetIndividualRecord(xref);
+        var individualRecord = GedcomDocument.GetIndividualRecord(xref);
 
         if (individualRecord.IsEmpty) return "{}";
 
@@ -19,14 +18,15 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public string GetIndividuals(string query = "")
     {
-        var individualRecords = Gedcom.GetIndividualRecords(query);
+        var individualRecords = GedcomDocument.GetIndividualRecords(query);
+        var filteredIndividualRecords = individualRecords.Where(r => GedcomWriter.IsQueryMatch(r.Record, query));
 
         return SerializeObject(individualRecords);
     }
 
     public string GetFamily(string xref)
     {
-        var familyRecord = Gedcom.GetFamilyRecord(xref);
+        var familyRecord = GedcomDocument.GetFamilyRecord(xref);
 
         if (familyRecord.IsEmpty) return "{}";
 
@@ -35,14 +35,14 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public string GetFamilies(string query = "")
     {
-        var familyRecords = Gedcom.GetFamilyRecords(query);
+        var familyRecords = GedcomDocument.GetFamilyRecords(query);
 
         return SerializeObject(familyRecords);
     }
 
     public string GetRepository(string xref)
     {
-        var repositoryRecord = Gedcom.GetRepositoryRecord(xref);
+        var repositoryRecord = GedcomDocument.GetRepositoryRecord(xref);
 
         if (repositoryRecord.IsEmpty) return "{}";
 
@@ -51,14 +51,14 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public string GetRepositories(string query = "")
     {
-        var repositoryRecords = Gedcom.GetRepositoryRecords(query);
+        var repositoryRecords = GedcomDocument.GetRepositoryRecords(query);
 
         return SerializeObject(repositoryRecords);
     }
 
     public string GetSource(string xref)
     {
-        var sourceRecord = Gedcom.GetSourceRecord(xref);
+        var sourceRecord = GedcomDocument.GetSourceRecord(xref);
 
         if (sourceRecord.IsEmpty) return "{}";
 
@@ -67,7 +67,7 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public string GetSources(string query = "")
     {
-        var sourceRecords = Gedcom.GetSourceRecords(query);
+        var sourceRecords = GedcomDocument.GetSourceRecords(query);
 
         return SerializeObject(sourceRecords);
     }

@@ -1,12 +1,8 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 public class RecordStructureBase
 {
-    [JsonIgnore]
     internal Record Record { get; set; } = Record.Empty;
-    [JsonIgnore]
     public bool IsEmpty => Record.IsEmpty;
 
     internal RecordStructureBase() { }

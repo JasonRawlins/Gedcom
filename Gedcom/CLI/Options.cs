@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-using System.Text.RegularExpressions;
 using CommandLine;
 
 namespace Gedcom.CLI;
@@ -10,7 +9,7 @@ public class Options
     public static string[] OutputFormats => [Constants.JSON, Constants.Text, Constants.HTML, Constants.Excel];
 
     private string format = Constants.JSON;
-    [Option('f', "format", Required = false, HelpText = "Output format (json, text, html, Excel).")]
+    [Option('f', "format", Required = false, HelpText = "Output format (Excel, html, json, text).")]
     public string Format
     {
         get => format.ToUpper();
@@ -59,7 +58,14 @@ public class Options
                     return argumentErrors;
                 }
 
-                var gedcomNetParams = JsonSerializer.Deserialize<GedcomNetParams>(File.ReadAllText(ParamsFilePath))!;
+                var jsonSerializeOptions = new JsonSerializerOptions()
+                {
+                    PropertyNameCaseInsensitive = true,
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                };
+
+                var paramsFileText = File.ReadAllText(ParamsFilePath);
+                var gedcomNetParams = JsonSerializer.Deserialize<GedcomNetParams>(paramsFileText, jsonSerializeOptions)!;
 
                 if (gedcomNetParams == null)
                 {
@@ -113,12 +119,9 @@ public class Options
 
             if (!string.IsNullOrEmpty(Xref))
             {
-                var isValidXref = Regex.IsMatch(Xref, @"@.*@");
-                if (!isValidXref)
+
+                if (!Constants.XrefRegex().IsMatch(Xref))
                 {
-                    // It looks like Ancestry is the one that prepends a letter to the xrefs based on 
-                    // type, like "I" for INDI xrefs ("@I234@"). This is not part of the standard.
-                    // See comment below on xref_ID for more details.
                     argumentErrors.Add($"{Xref} {CliErrorMessages.XrefIsInvalid}");
                 }
             }

@@ -114,8 +114,16 @@ internal sealed class IndividualJsonConverter : JsonConverter<IndividualRecord>
 
     public override void Write(Utf8JsonWriter writer, IndividualRecord value, JsonSerializerOptions options)
     {
+        // TODO: Get JsonSerializerOptions from a project-level source.
+        var jsonSerializeOptions = new JsonSerializerOptions()
+        {
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+        };
+
         ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new IndividualJson(value), options);
+        JsonSerializer.Serialize(writer, new IndividualJson(value), jsonSerializeOptions); // options);
     }
 }
 
@@ -133,18 +141,19 @@ public class IndividualJson : GedcomJson
         ChildToFamilyLinks = JsonList(individualRecord.ChildToFamilyLinks.Select(ctfl => new ChildToFamilyLinkJson(ctfl)).ToList());
         Death = JsonRecord(new EventJson(individualRecord.Death));
         DescendantInterests = JsonList(individualRecord.DescendantInterests);
-        Events = individualRecord.IndividualEventStructures.Select(ies => new EventJson(ies)).ToList();
+        Events = [.. individualRecord.IndividualEventStructures.Select(ies => new EventJson(ies))];
+        Given = JsonString(individualRecord.Given);
         IsEmpty = individualRecord.IsEmpty;
         LdsIndividualOrdinances = JsonList(individualRecord.LdsIndividualOrdinances.Select(lio => new LdsIndividualOrdinanceJson(lio)).ToList());
         MultimediaLinks = JsonList(individualRecord.MultimediaLinks.Select(ml => new MultimediaLinkJson(ml)).ToList());
         Notes = JsonList(individualRecord.NoteStructures.Select(ns => ns.Text).ToList());
         PermanentRecordFileNumber = JsonString(individualRecord.PermanentRecordFileNumber);
-        PersonalNames = JsonList(individualRecord.PersonalNameStructures.Select(pns => new PersonalNameJson(pns)).ToList());
         RestrictionNotice = JsonString(individualRecord.RestrictionNotice);
         Sex = JsonString(individualRecord.SexValue);
         SourceCitations = JsonList(individualRecord.SourceCitations.Select(sc => new SourceCitationJson(sc)).ToList());
         SpouseToFamilyLinks = JsonList(individualRecord.SpouseToFamilyLinks.Select(stfl => new SpouseToFamilyLinkJson(stfl)).ToList());
         Submitter = JsonString(individualRecord.Submitter);
+        Surname = JsonString(individualRecord.Surname);
         TreeId = "";
         UserReferenceNumbers = JsonList(individualRecord.UserReferenceNumbers.Select(urn => new UserReferenceNumberJson(urn)).ToList());
         Xref = individualRecord.Xref;
@@ -177,18 +186,17 @@ public class IndividualJson : GedcomJson
     public List<string>? DescendantInterests { get; set; } = [];
     public List<EventJson>? Events { get; set; } = [];
     public string FullName => $"{Given} {Surname}";
-    public string? Given => PersonalNames?.Count > 0 ? PersonalNames[0].Given : "";
+    public string? Given { get; set; }
     public List<LdsIndividualOrdinanceJson>? LdsIndividualOrdinances { get; set; } = [];
     public List<MultimediaLinkJson>? MultimediaLinks { get; set; } = [];
     public List<string>? Notes { get; set; } = [];
     public string? PermanentRecordFileNumber { get; set; }
-    public List<PersonalNameJson>? PersonalNames { get; set; } = [];
     public string? RestrictionNotice { get; set; }
     public string? Sex { get; set; }
     public List<SourceCitationJson>? SourceCitations { get; set; } = [];
     public List<SpouseToFamilyLinkJson>? SpouseToFamilyLinks { get; set; } = [];
     public string? Submitter { get; set; }
-    public string? Surname => PersonalNames?.Count > 0 ? PersonalNames[0].Surname : "";
+    public string? Surname { get; set; }
     public string? TreeId { get; set; }
     public List<UserReferenceNumberJson>? UserReferenceNumbers { get; set; } = [];
     public string? Xref { get; set; }

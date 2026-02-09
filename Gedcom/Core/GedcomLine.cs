@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 namespace Gedcom;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-public partial class GedcomLine
+public class GedcomLine
 {
     public int Level { get; set; } = -1;
     public string Tag { get; set; } = Constants.Empty;
@@ -15,9 +15,6 @@ public partial class GedcomLine
     // GedcomLine.Xref will simply return GedcomLine.Value
     public string Value { get; set; } = "";
     public string Xref => Value;
-
-    [GeneratedRegex("^@[0-9a-zA-Z_]{1,22}@$")]
-    private static partial Regex XrefRegex();
 
     public GedcomLine()
     {
@@ -98,7 +95,7 @@ public partial class GedcomLine
                 // The reamining level 0 tags should have a level, xref, and tag).
                 // Example: "0 @I1234567890@ INDI".
 
-                if (!XrefRegex().IsMatch(lineParts[1]))
+                if (!Constants.XrefRegex().IsMatch(lineParts[1]))
                 {
                     throw new GedcomLineParseException(line, $"The xref format was invalid. Actual value was '{lineParts[1]}'.");
                 }
