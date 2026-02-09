@@ -14,7 +14,7 @@ public class IndividualHtmlTests
     public void ExportIndividualJsonTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
-        var individualHtml = htmlGedcomWriter.GetIndividual(TestIndividuals.SaraDavis.Xref);
+        var individualHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividual(TestIndividuals.SaraDavis.Xref));
 
         Assert.IsTrue(individualHtml.Contains(TestIndividuals.SaraDavis.XrefId) &&
                 !(individualHtml.Contains(TestIndividuals.DylanDavis.XrefId) ||
@@ -29,7 +29,7 @@ public class IndividualHtmlTests
     public void ExportIndividualsJsonTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
-        var individualsHtml = htmlGedcomWriter.GetIndividuals();
+        var individualsHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividuals());
 
         Assert.IsTrue(individualsHtml.Contains(TestIndividuals.SaraDavis.XrefId) &&
                 individualsHtml.Contains(TestIndividuals.DylanDavis.XrefId) &&
@@ -44,7 +44,7 @@ public class IndividualHtmlTests
     public void NonExistingIndividualJsonTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
-        var individualJson = htmlGedcomWriter.GetIndividual(TestConstants.InvalidXref);
+        var individualJson = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividual(TestConstants.InvalidXref));
 
         Assert.IsTrue(individualJson.Equals(""));
     }
@@ -53,20 +53,10 @@ public class IndividualHtmlTests
     public void QueryIndividualsJsonTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
-        var individualsHtml = htmlGedcomWriter.GetIndividuals("Davis");
+        var individualsHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividuals("Davis"));
 
         Assert.IsTrue(individualsHtml.Contains(TestIndividuals.DylanDavis.XrefId)
             && individualsHtml.Contains(TestIndividuals.OwenDavis.XrefId)
             && individualsHtml.Contains(TestIndividuals.SaraDavis.XrefId));
-    }
-
-    //[TestMethod]
-    public void WriteIndividualsHtmlTest()
-    {
-        // This is an integration test. Figure that out later
-        var gedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
-        var htmlBytes = gedcomWriter.GetAsByteArray();
-
-        File.WriteAllText(TestUtilities.HtmlFullName, Encoding.UTF8.GetString(htmlBytes));
     }
 }

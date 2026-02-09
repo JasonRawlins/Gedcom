@@ -12,14 +12,39 @@ public class ExcelGedcomWriter : IGedcomWriter
         ExcelPackage.License.SetNonCommercialOrganization("Gedcom.NET");
     }
 
-    public string GetIndividual(string xref)
+    public byte[] GetIndividual(string xref)
     {
         throw new NotImplementedException();
     }
 
-    public string GetIndividuals(string query = "")
+    public byte[] GetIndividuals(string query = "")
     {
-        throw new NotImplementedException();
+        var individualRecords = Gedcom.GetIndividualRecords(query);
+        var individualListItems = individualRecords.Select(ir => new IndividualListItem(ir)).ToList();
+        var orderedIndividualListItems = individualListItems.OrderBy(ir => ir.Surname).ThenBy(ir => ir.Given).ToList();
+
+        using var userTemplatePackage = new ExcelPackage(new MemoryStream(Properties.Resources.GedcomNetXlsxTemplate));
+        var templateSheet = userTemplatePackage.Workbook.Worksheets["Template"];
+        using var excelPackage = new ExcelPackage();
+        var targetSheet = excelPackage.Workbook.Worksheets.Add($"{Gedcom.Header.Source.Tree.Name} individuals", templateSheet);
+
+        var templateRow = 2; // The row containing the template values
+
+        for (int i = 0; i < orderedIndividualListItems.Count; i++)
+        {
+            var individualListItem = orderedIndividualListItems[i];
+
+            var targetRow = templateRow + i + 1; // The row where the copied template should go
+
+            // Copy the template row to the next available row
+            targetSheet.Cells[templateRow, 1, templateRow, targetSheet.Dimension.End.Column].Copy(targetSheet.Cells[targetRow, 1]);
+
+            ReplaceTemplateValues(targetSheet, individualListItem, targetRow);
+        }
+
+        targetSheet.DeleteRow(templateRow);
+
+        return excelPackage.GetAsByteArray();
     }
 
     public string GetFamily(string xref)
@@ -50,36 +75,6 @@ public class ExcelGedcomWriter : IGedcomWriter
     public string GetSources(string query = "")
     {
         throw new NotImplementedException();
-    }
-
-    public byte[] GetAsByteArray(string query = "")
-    {
-        var individualRecords = Gedcom.GetIndividualRecords(query);
-        var individualListItems = individualRecords.Select(ir => new IndividualListItem(ir)).ToList();
-        var orderedIndividualListItems = individualListItems.OrderBy(ir => ir.Surname).ThenBy(ir => ir.Given).ToList();
-
-        using var userTemplatePackage = new ExcelPackage(new MemoryStream(Properties.Resources.GedcomNetXlsxTemplate));
-        var templateSheet = userTemplatePackage.Workbook.Worksheets["Template"];
-        using var excelPackage = new ExcelPackage();
-        var targetSheet = excelPackage.Workbook.Worksheets.Add($"{Gedcom.Header.Source.Tree.Name} individuals", templateSheet);
-
-        var templateRow = 2; // The row containing the template values
-
-        for (int i = 0; i < orderedIndividualListItems.Count; i++)
-        {
-            var individualListItem = orderedIndividualListItems[i];
-
-            var targetRow = templateRow + i + 1; // The row where the copied template should go
-
-            // Copy the template row to the next available row
-            targetSheet.Cells[templateRow, 1, templateRow, targetSheet.Dimension.End.Column].Copy(targetSheet.Cells[targetRow, 1]);
-
-            ReplaceTemplateValues(targetSheet, individualListItem, targetRow);
-        }
-
-        targetSheet.DeleteRow(templateRow);
-
-        return excelPackage.GetAsByteArray();
     }
 
     private void ReplaceTemplateValues(ExcelWorksheet worksheet, IndividualListItem individualListItem, int rowNumber)

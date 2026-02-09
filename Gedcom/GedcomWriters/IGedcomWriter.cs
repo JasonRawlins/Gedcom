@@ -2,8 +2,8 @@
 
 public interface IGedcomWriter
 {
-    public string GetIndividual(string xref);
-    public string GetIndividuals(string query = "");
+    public byte[] GetIndividual(string xref);
+    public byte[] GetIndividuals(string query = "");
 
     public string GetFamily(string xref);
     public string GetFamilies(string query = "");
@@ -13,8 +13,4 @@ public interface IGedcomWriter
 
     public string GetSource(string xref);
     public string GetSources(string query = "");
-
-    // HACK: Exporting as Excel does not cleanly map to IGedcomWriter. 
-    // This is for temporary demonstration purposes.
-    byte[] GetAsByteArray(string query = "");
 }

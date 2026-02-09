@@ -7,20 +7,20 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 {
     private GedcomDocument GedcomDocument { get; set; } = gedcom;
 
-    public string GetIndividual(string xref)
+    public byte[] GetIndividual(string xref)
     {
         var individualRecord = GedcomDocument.GetIndividualRecord(xref);
 
-        if (individualRecord.IsEmpty) return "{}";
+        if (individualRecord.IsEmpty) return [];
 
-        return SerializeObject(individualRecord);
+        return Encoding.UTF8.GetBytes(SerializeObject(individualRecord));
     }
 
-    public string GetIndividuals(string query = "")
+    public byte[] GetIndividuals(string query = "")
     {
         var individualRecords = GedcomDocument.GetIndividualRecords(query);
 
-        return SerializeObject(individualRecords);
+        return Encoding.UTF8.GetBytes(SerializeObject(individualRecords));
     }
 
     public string GetFamily(string xref)
@@ -69,11 +69,6 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
         var sourceRecords = GedcomDocument.GetSourceRecords(query);
 
         return SerializeObject(sourceRecords);
-    }
-
-    public byte[] GetAsByteArray(string query = "")
-    {
-        return Encoding.UTF8.GetBytes(GetFamilies());
     }
 
     private static string SerializeObject(object obj)

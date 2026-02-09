@@ -7,33 +7,42 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 {
     private GedcomDocument Gedcom { get; set; } = gedcom;
 
-    public string GetIndividual(string xref)
+    public byte[] GetIndividual(string xref)
     {
-        var individualRecord = Gedcom.GetIndividualRecord(xref);
+        var individualRecords = new List<IndividualRecord> { Gedcom.GetIndividualRecord(xref) };
+        if (individualRecords.Count == 0) return [];
 
-        if (individualRecord.IsEmpty) return "";
+        var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.GedcomNetIndividualsHtmlTemplate);
+        var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", GetIndividualsText(individualRecords));
 
-        return CreateIndividualListItem(individualRecord);
+        return Encoding.UTF8.GetBytes(finalHtml);
     }
 
-    public string GetIndividuals(string query = "")
+    public byte[] GetIndividuals(string query = "")
     {
         var individualRecords = Gedcom.GetIndividualRecords(query);
+        if (individualRecords.Count == 0) return [];
 
-        if (individualRecords.Count == 0) return "";
+        var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.GedcomNetIndividualsHtmlTemplate);
+        var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", GetIndividualsText(individualRecords));
 
-        var ul = new StringBuilder();
-        ul.AppendLine("<ul>");
-       
+        return Encoding.UTF8.GetBytes(finalHtml);
+    }
+
+    private string GetIndividualsText(List<IndividualRecord> individualRecords)
+    {
+        var ulStringBuilder = new StringBuilder();
+        ulStringBuilder.AppendLine("<ul>");
+
         foreach (var individualRecord in individualRecords)
         {
             var individualListItem = CreateIndividualListItem(individualRecord);
-            ul.AppendLine(individualListItem);
+            ulStringBuilder.AppendLine(individualListItem);
         }
 
-        ul.AppendLine("</ul>");
+        ulStringBuilder.AppendLine("</ul>");
 
-        return ul.ToString();
+        return ulStringBuilder.ToString();
     }
 
     public string GetFamily(string xref)
@@ -159,13 +168,5 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
     }
 
     public static string GenerateAncestryProfileLink(string treeId, string xref) => $"https://www.ancestry.com/family-tree/person/tree/{treeId}/person/{xref}/facts";
-
-    public byte[] GetAsByteArray(string query = "")
-    {
-        var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.GedcomNetIndividualsHtmlTemplate);
-        var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", GetIndividuals());
-
-        return Encoding.UTF8.GetBytes(finalHtml);
-    }
 }
 

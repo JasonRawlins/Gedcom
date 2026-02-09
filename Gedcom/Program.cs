@@ -53,19 +53,10 @@ public class Program
 
     private static void WriteIndividualRecords(IGedcomWriter gedcomWriter, Options options)
     {
-        if (options.Format.Equals(Constants.Excel) || options.Format.Equals(Constants.HTML))
-        {
-            // HACK: Exporting as Excel does not cleanly map to IGedcomWriter. 
-            // This is for temporary demonstration purposes.
-            File.WriteAllBytes(options.OutputFilePath, gedcomWriter.GetAsByteArray());
-        }
-        else
-        {
-            var gedcomText = string.IsNullOrEmpty(options.Xref)
-                ? gedcomWriter.GetIndividuals(options.Query)
-                : gedcomWriter.GetIndividual(options.Xref);
+        var individualBytes = string.IsNullOrEmpty(options.Xref)
+            ? gedcomWriter.GetIndividuals(options.Query)
+            : gedcomWriter.GetIndividual(options.Xref);
 
-            File.WriteAllText(options.OutputFilePath, gedcomText);
-        }
+        File.WriteAllBytes(options.OutputFilePath, individualBytes);
     }
 }

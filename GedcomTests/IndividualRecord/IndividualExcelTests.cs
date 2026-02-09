@@ -7,13 +7,5 @@ namespace GedcomTests.Individual;
 [TestClass]
 public class IndividualExcelTests
 {
-    //[TestMethod]
-    //public void WriteIndividualExcelTest()
-    //{
-    //    // This is an integration test. Figure that out later
-    //    var gedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.C.Excel);
-    //    var excelSheetBytes = gedcomWriter.GetAsByteArray();
 
-    //    File.WriteAllBytes(TestUtilities.ExcelFullName, excelSheetBytes);
-    //}
 }

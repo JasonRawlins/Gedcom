@@ -8,17 +8,17 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 {
     private GedcomDocument GedcomDocument { get; set; } = gedcom;
 
-    public string GetIndividual(string xref)
+    public byte[] GetIndividual(string xref)
     {
         var individualRecord = GedcomDocument.GetIndividualRecord(xref);
         var individualDto = new IndividualDto(individualRecord);
 
-        if (individualRecord.IsEmpty) return "";
+        if (individualRecord.IsEmpty) return [];
 
-        return GetIndividualLineItem(individualDto);
+        return Encoding.UTF8.GetBytes(GetIndividualLineItem(individualDto));
     }
 
-    public string GetIndividuals(string query = "")
+    public byte[] GetIndividuals(string query = "")
     {
         var individualRecords = GedcomDocument.GetIndividualRecords(query);
 
@@ -30,7 +30,7 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
             individualsStringBuilder.AppendLine(GetIndividualLineItem(individualDto));
         }
 
-        return individualsStringBuilder.ToString();
+        return Encoding.UTF8.GetBytes(individualsStringBuilder.ToString());
     }
 
     private static string GetIndividualLineItem(IndividualDto individualDto)
@@ -98,11 +98,6 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
         var sourceRecords = GedcomDocument.GetSourceRecords(query);
 
         return WriteRecords(sourceRecords);
-    }
-
-    public byte[] GetAsByteArray(string query = "")
-    {
-        return Encoding.UTF8.GetBytes(GetFamilies());
     }
 
     private static string WriteRecords(object obj)
