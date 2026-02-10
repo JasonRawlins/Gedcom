@@ -11,9 +11,9 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
     public byte[] GetIndividual(string xref)
     {
         var individualRecord = GedcomDocument.GetIndividualRecord(xref);
-        var individualDto = new IndividualDto(individualRecord);
-
         if (individualRecord.IsEmpty) return [];
+
+        var individualDto = new IndividualDto(individualRecord);
 
         return Encoding.UTF8.GetBytes(GetIndividualLineItem(individualDto));
     }
@@ -21,9 +21,9 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
     public byte[] GetIndividuals(string query = "")
     {
         var individualRecords = GedcomDocument.GetIndividualRecords(query);
+        if (individualRecords.Count.Equals(0)) return [];
 
         var individualsStringBuilder = new StringBuilder();
-
         foreach (var individualRecord in individualRecords)
         {
             var individualDto = new IndividualDto(individualRecord);
@@ -58,14 +58,14 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
         if (familyRecord.IsEmpty) return "{}";
 
-        return WriteRecords(familyRecord);
+        return ""; // WriteRecords(familyRecord);
     }
 
     public string GetFamilies(string query = "")
     {
         var familyRecords = GedcomDocument.GetFamilyRecords(query);
 
-        return WriteRecords(familyRecords);
+        return ""; // WriteRecords(familyRecords);
     }
 
     public string GetRepository(string xref)
@@ -74,14 +74,14 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
         if (repositoryRecord.IsEmpty) return "{}";
 
-        return WriteRecords(repositoryRecord);
+        return ""; // WriteRecords(repositoryRecord);
     }
 
     public string GetRepositories(string query = "")
     {
         var repositoryRecords = GedcomDocument.GetRepositoryRecords(query);
 
-        return WriteRecords(repositoryRecords);
+        return ""; // WriteRecords(repositoryRecords);
     }
 
     public string GetSource(string xref)
@@ -90,14 +90,14 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
         if (sourceRecord.IsEmpty) return "{}";
 
-        return WriteRecords(sourceRecord);
+        return ""; // WriteRecords(sourceRecord);
     }
 
     public string GetSources(string query = "")
     {
         var sourceRecords = GedcomDocument.GetSourceRecords(query);
 
-        return WriteRecords(sourceRecords);
+        return ""; // WriteRecords(sourceRecords);
     }
 
     private static string WriteRecords(object obj)
