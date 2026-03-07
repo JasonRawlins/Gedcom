@@ -49,6 +49,11 @@ public class Program
         {
             WriteIndividualRecords(gedcomWriter, options);
         }
+
+        if (options.RecordType.Equals(Tag.Family))
+        {
+            WriteFamilyRecords(gedcomWriter, options);
+        }
     }
 
     private static void WriteIndividualRecords(IGedcomWriter gedcomWriter, Options options)
@@ -58,5 +63,14 @@ public class Program
             : gedcomWriter.GetIndividual(options.Xref);
 
         File.WriteAllBytes(options.OutputFilePath, individualBytes);
+    }
+
+    private static void WriteFamilyRecords(IGedcomWriter gedcomWriter, Options options)
+    {
+        var familyBytes = string.IsNullOrEmpty(options.Xref)
+            ? gedcomWriter.GetFamily(options.Xref)
+            : gedcomWriter.GetFamily(options.Xref);
+
+        File.WriteAllBytes(options.OutputFilePath, familyBytes);
     }
 }

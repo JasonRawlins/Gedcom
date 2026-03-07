@@ -58,7 +58,7 @@ public class EventStructure : RecordStructureBase, IComparable<EventStructure>
                 Tag.Death => "Death",
                 Tag.Divorce => "Divorce",
                 Tag.DivorceFiled => "Divorce Filed",
-                ExtensionTag.Election => "Election",
+                ExtensionTag.Ancestry.Election => "Election",
                 Tag.Emigration => "Emigration",
                 Tag.Endowment => "Endowment",
                 Tag.Engagement => "Engagement",

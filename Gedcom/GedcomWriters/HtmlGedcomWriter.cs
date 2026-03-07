@@ -45,20 +45,20 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
         return ulStringBuilder.ToString();
     }
 
-    public string GetFamily(string xref)
+    public byte[] GetFamily(string xref)
     {
         var familyRecord = Gedcom.GetFamilyRecord(xref);
 
-        if (familyRecord.IsEmpty) return "";
+        if (familyRecord.IsEmpty) return [];
 
-        return CreateFamilyListItem(familyRecord);
+        return Encoding.UTF8.GetBytes(CreateFamilyListItem(familyRecord));
     }
 
-    public string GetFamilies(string query = "")
+    public byte[] GetFamilies(string query = "")
     {
         var familyRecords = Gedcom.GetFamilyRecords(query);
 
-        if (familyRecords.Count == 0) return "";
+        if (familyRecords.Count == 0) return [];
 
         var ul = new StringBuilder();
         ul.AppendLine("<ul>");
@@ -71,7 +71,7 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
         ul.AppendLine("</ul>");
 
-        return ul.ToString();
+        return Encoding.UTF8.GetBytes(ul.ToString());
     }
 
     public string GetRepository(string xref)
@@ -152,17 +152,17 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
                 </li>";
     }
 
-    private string CreateFamilyListItem(FamilyRecord familyRecord)
+    private static string CreateFamilyListItem(FamilyRecord familyRecord)
     {
         return $"<li>{familyRecord.Xref}</li>";
     }
 
-    private string CreateRepositoryListItem(RepositoryRecord repositoryRecord)
+    private static string CreateRepositoryListItem(RepositoryRecord repositoryRecord)
     {
         return $"<li>({repositoryRecord.Xref}) {repositoryRecord.Name}</li>";
     }
 
-    private string CreateSourceListItem(SourceRecord sourceRecord)
+    private static string CreateSourceListItem(SourceRecord sourceRecord)
     {
         return $"<li>({sourceRecord.Xref}) {sourceRecord.TextFromSource}</li>";
     }

@@ -30,7 +30,7 @@ public class IndividualEventStructure : EventStructure
             Tag.Death,
             Tag.Divorce,
             Tag.DivorceFiled,
-            ExtensionTag.Election,
+            ExtensionTag.Ancestry.Election,
             Tag.Emigration,
             Tag.Endowment,
             Tag.Engagement,

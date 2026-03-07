@@ -33,20 +33,20 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
         return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(individualDtos));
     }
 
-    public string GetFamily(string xref)
+    public byte[] GetFamily(string xref)
     {
         var familyRecord = GedcomDocument.GetFamilyRecord(xref);
 
-        if (familyRecord.IsEmpty) return "{}";
+        if (familyRecord.IsEmpty) return [];
 
-        return JsonSerializer.Serialize(familyRecord);
+        return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(familyRecord));
     }
 
-    public string GetFamilies(string query = "")
+    public byte[] GetFamilies(string query = "")
     {
         var familyRecords = GedcomDocument.GetFamilyRecords(query);
 
-        return JsonSerializer.Serialize(familyRecords);
+        return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(familyRecords));
     }
 
     public string GetRepository(string xref)

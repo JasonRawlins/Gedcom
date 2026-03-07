@@ -20,7 +20,7 @@ public class HeaderSource : RecordStructureBase
     public string NameOfProduct => _nameOfProduct ??= GetValue(Tag.Name);
 
     private HeaderTree? _tree = null;
-    public HeaderTree Tree => _tree ??= First<HeaderTree>(ExtensionTag.Tree);
+    public HeaderTree Tree => _tree ??= First<HeaderTree>(ExtensionTag.Ancestry.Tree);
 
     private string? _version = null;
     public string Version => _version ??= GetValue(Tag.Version);

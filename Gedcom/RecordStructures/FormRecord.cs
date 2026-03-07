@@ -11,10 +11,10 @@ public class FormRecord : RecordStructureBase
     public FormRecord(Record record) : base(record) { }
 
     private string? _mediaType = null;
-    public string MediaType => _mediaType ??= GetValue(ExtensionTag.MediaType);
+    public string MediaType => _mediaType ??= GetValue(ExtensionTag.Ancestry.MediaType);
 
     private string? _sourceType = null;
-    public string SourceType => _sourceType ??= GetValue(ExtensionTag.SourceType);
+    public string SourceType => _sourceType ??= GetValue(ExtensionTag.Ancestry.SourceType);
 
     private string? _type = null;
     public string Type => _type ??= GetValue(Tag.Type);

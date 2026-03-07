@@ -37,7 +37,8 @@ public class GedcomDto
         {
             return new JsonSerializerOptions()
             {
-                PropertyNameCaseInsensitive = true,
+                
+                WriteIndented = true,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             };

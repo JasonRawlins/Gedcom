@@ -1,13 +1,20 @@
 Current
 -------
+Change Sara Davis to Sarah Davis in all test files. 
 
+This program is using Ancestry specific tags like _TREE. Is that appropriate for a 
+generic program? Do other programs have similar tags? This might be a problem
+because it is hard-coding values that other systems may not have. Each new system
+would require code changes to handle proprietary formats.
 
-Apply JsonSerializerSettings across all JsonConverters in the project.
 The IndividualRecord needs access to the tree id in the GedcomDocument header. 
 	Do all records need access to the GedcomDocument?
 Move Record.IsQueryMatch to GedcomWriter and update tests.
 Figure out how to return Record.IsEmpty to the GenesAndGenealogy Gedcom controller. 
 	I don't want to return it to the client because it seems like unnecessary data.
+
+Consider using nullable reference types instead of IsEmpty in scenarios where returning
+an null object would be appropriate like in FamilyManager.cs
 
 
 

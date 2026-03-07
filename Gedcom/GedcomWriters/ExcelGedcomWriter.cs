@@ -47,12 +47,12 @@ public class ExcelGedcomWriter : IGedcomWriter
         return excelPackage.GetAsByteArray();
     }
 
-    public string GetFamily(string xref)
+    public byte[] GetFamily(string xref)
     {
         throw new NotImplementedException();
     }
 
-    public string GetFamilies(string query = "")
+    public byte[] GetFamilies(string query = "")
     {
         throw new NotImplementedException();
     }

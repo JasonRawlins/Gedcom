@@ -21,7 +21,7 @@ public class MultimediaRecord : RecordStructureBase
     public string Date => _date ??= GetValue(Tag.Date);
 
     private string? _description = null;
-    public string Description => _description ??= GetValue(ExtensionTag.Description);
+    public string Description => _description ??= GetValue(ExtensionTag.Ancestry.Description);
 
     private string? _descriptiveTitle = null;
     public string DescriptiveTitle => _descriptiveTitle ??= GetValue(Tag.Title);
@@ -39,7 +39,7 @@ public class MultimediaRecord : RecordStructureBase
     public List<NoteStructure> NoteStructures => _noteStructures ??= List<NoteStructure>(Tag.Note);
 
     private string? _objectId = null;
-    public string ObjectId => _objectId ??= GetValue(ExtensionTag.ObjectId);
+    public string ObjectId => _objectId ??= GetValue(ExtensionTag.Ancestry.ObjectId);
 
     // The PLAC line is not in the specification, but is in the gedcom exported from Ancestry.
     private PlaceStructure? _placeStructure = null;

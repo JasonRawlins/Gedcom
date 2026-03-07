@@ -31,11 +31,10 @@ public class RecordStructureBase
 
     private static T CreateRecordStructure<T>(Record record) where T : RecordStructureBase, new()
     {
-        dynamic dynamicRecord = new T();
-        dynamicRecord.SetRecord(record);
-        return (T)dynamicRecord;
+        var newRecord = new T();
+        newRecord.SetRecord(record);
+        return newRecord;
     }
-
 
     public override string ToString()
     {
