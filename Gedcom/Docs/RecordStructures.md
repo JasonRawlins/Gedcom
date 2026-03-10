@@ -1,4 +1,4 @@
-﻿Record structures
+﻿# Record structures
 
 The record structure classes are the fundamental features of the project. They have a specific structure.
 All of these classes inherit from a RecordStructureBase class. This class has helper methods that are
@@ -39,5 +39,5 @@ and enumerated in the Tag.cs file. Each property in this class has the following
 1. A list of all records that use that tag (e.g. NAME is used in <NAME_PERSONAL>, <SUBMITTER_NAME>, <NAME_OF_REPOSITORY>, <NAME_OF_PRODUCT>)
 
 Vendors can define custom tags used only by their system. These custom tags are prepended with an
-underscore. They are defined in ExtensionTag.cs. Some of these are well-know, such as the custom
+underscore. They are defined in ExtensionTag.cs. Some of these are well-known, such as the custom
 tags used by Ancestry (e.g. _DSCR, _ELEC, _OID)

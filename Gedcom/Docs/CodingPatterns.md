@@ -1,4 +1,4 @@
-﻿Coding patterns
+﻿# Coding patterns
 
 This project uses several very recent C# features. In hindsight, I probably should have
 used more familiar features but I'm not going back now. Here are a few patterns you 

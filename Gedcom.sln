@@ -7,10 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gedcom", "Gedcom\Gedcom.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GedcomTests", "GedcomTests\GedcomTests.csproj", "{FA8ED77A-7AE7-42DB-862F-7DC1AFFCFAF8}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "genesandgenealogy.client", "GenesAndGenealogy\genesandgenealogy.client\genesandgenealogy.client.esproj", "{A44814E6-C586-A2F9-9446-356F95A421F8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenesAndGenealogy.Server", "GenesAndGenealogy\GenesAndGenealogy.Server\GenesAndGenealogy.Server.csproj", "{B458A6F1-4AD8-46F0-BCB1-1C87C616FB15}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,16 +21,6 @@ Global
 		{FA8ED77A-7AE7-42DB-862F-7DC1AFFCFAF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA8ED77A-7AE7-42DB-862F-7DC1AFFCFAF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA8ED77A-7AE7-42DB-862F-7DC1AFFCFAF8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A44814E6-C586-A2F9-9446-356F95A421F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A44814E6-C586-A2F9-9446-356F95A421F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A44814E6-C586-A2F9-9446-356F95A421F8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{A44814E6-C586-A2F9-9446-356F95A421F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A44814E6-C586-A2F9-9446-356F95A421F8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A44814E6-C586-A2F9-9446-356F95A421F8}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{B458A6F1-4AD8-46F0-BCB1-1C87C616FB15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B458A6F1-4AD8-46F0-BCB1-1C87C616FB15}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B458A6F1-4AD8-46F0-BCB1-1C87C616FB15}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B458A6F1-4AD8-46F0-BCB1-1C87C616FB15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
