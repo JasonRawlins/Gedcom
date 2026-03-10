@@ -28,14 +28,14 @@ public class FamilyManager(GedcomDocument gedcom)
         return family;
     }
 
-    public Family CreateNullFamily()
+    public static Family CreateNullFamily()
     {
         return new Family(RecordStructureBase.Empty<FamilyRecord>());
     }
 
     private Individual GetOrCreateIndividual(string individualXref)
     {
-        var individualRecord = Gedcom.GetIndividualRecord(individualXref);
+        var individualRecord = Gedcom.GetIndividualRecords().Single(r => r.Xref.Equals(individualXref));
 
         if (IndividualsCache.TryGetValue(individualXref, out var existingIndividual))
             return existingIndividual;
@@ -61,13 +61,13 @@ public class FamilyManager(GedcomDocument gedcom)
         var newFamilyRecord = Gedcom.GetFamilyRecord(familyXref);
         var newFamily = new Family(newFamilyRecord);
 
-        var husbandIndividualRecord = Gedcom.GetIndividualRecord(newFamilyRecord.Husband);
+        var husbandIndividualRecord = Gedcom.GetIndividualRecords().Single(r => r.Xref.Equals(newFamilyRecord.Husband));
         if (!husbandIndividualRecord.IsEmpty)
         {
             newFamily.Husband = GetOrCreateIndividual(husbandIndividualRecord.Xref);
         }
 
-        var wifeIndividualRecord = Gedcom.GetIndividualRecord(newFamilyRecord.Wife);
+        var wifeIndividualRecord = Gedcom.GetIndividualRecords().Single(r => r.Xref.Equals(newFamilyRecord.Wife));
         if (!wifeIndividualRecord.IsEmpty)
         {
             newFamily.Wife = GetOrCreateIndividual(wifeIndividualRecord.Xref);

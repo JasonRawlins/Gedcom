@@ -1,8 +1,9 @@
 ﻿using Gedcom;
 using Gedcom.GedcomWriters;
 using GedcomTests.TestEntities;
+using System.Text;
 
-namespace GedcomTests.Source;
+namespace GedcomTests.Sources;
 
 [TestClass]
 public class SourceJsonTests
@@ -11,7 +12,7 @@ public class SourceJsonTests
     public void ExportSourceJsonTest()
     {
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
-        var sourceJson = jsonGedcomWriter.GetSource(TestSources.VitalRecords.Xref);
+        var sourceJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetSources(TestSources.VitalRecords.Xref));
 
         Assert.IsTrue(sourceJson.Contains(TestSources.VitalRecords.Xref));
     }
@@ -20,7 +21,7 @@ public class SourceJsonTests
     public void ExportSourcesJsonTest()
     {
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
-        var sourcesJson = jsonGedcomWriter.GetSources();
+        var sourcesJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetSources());
 
         Assert.IsTrue(sourcesJson.Contains(TestSources.VitalRecords.Xref));
     }
@@ -29,7 +30,7 @@ public class SourceJsonTests
     public void ExportNonExistingSourceJsonTest()
     {
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
-        var sourcesJson = jsonGedcomWriter.GetSource(TestConstants.InvalidXref);
+        var sourcesJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetSources(TestConstants.InvalidXref));
 
         Assert.IsTrue(sourcesJson.Equals("{}"));
     }
@@ -39,8 +40,9 @@ public class SourceJsonTests
     {
         // This is an integration test. Figure that out later
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
+        var sourcesJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetSources());
 
-        File.WriteAllText(TestUtilities.JsonFullName, jsonGedcomWriter.GetSources());
+        File.WriteAllText(Path.Combine(TestUtilities.OutputFilesDirectory, "Sources.json"), sourcesJson);
     }
 }
 

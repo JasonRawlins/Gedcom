@@ -1,6 +1,5 @@
 ﻿using Gedcom.RecordStructures;
 using System.Text;
-using System.Text.Json;
 
 namespace Gedcom.GedcomWriters;
 
@@ -8,20 +7,21 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 {
     public GedcomDocument GedcomDocument { get; set; } = gedcom;
 
-    public byte[] GetIndividual(string xref)
-    {
-        var individualRecord = GedcomDocument.GetIndividualRecord(xref);
-        if (individualRecord.IsEmpty) return [];
-
-        var individualDto = new IndividualDto(individualRecord);
-
-        return Encoding.UTF8.GetBytes(GetIndividualLineItem(individualDto));
-    }
-
-    public byte[] GetIndividuals(string query = "")
+    public byte[] GetIndividuals(string xref = "")
     {
         var individualRecords = GedcomDocument.GetIndividualRecords();
         if (individualRecords.Count.Equals(0)) return [];
+
+        if (!string.IsNullOrEmpty(xref))
+        {
+            var individualRecord = individualRecords.SingleOrDefault(ir => ir.Xref == xref);
+            if (individualRecord == null)
+            {
+                return Encoding.UTF8.GetBytes($"Unknown xref: {xref}.");
+            }
+
+            individualRecords = [individualRecord];
+        }
 
         var individualsStringBuilder = new StringBuilder();
         foreach (var individualRecord in individualRecords)
@@ -52,8 +52,11 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
         return individualLineItemStringBuilder.ToString();
     }
 
-    public byte[] GetFamily(string xref)
+    public byte[] GetFamilies(string xref = "")
     {
+        // TODO: Filter by xref after retrieving, if necessary.
+        var familyRecords = GedcomDocument.GetFamilyRecords();
+
         var familyRecord = GedcomDocument.GetFamilyRecord(xref);
 
         if (familyRecord.IsEmpty) return [];
@@ -61,18 +64,11 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
         return Encoding.UTF8.GetBytes(GetFamilyLineItem(familyRecord));
     }
 
-    public byte[] GetFamilies(string query = "")
-    {
-        var familyRecords = GedcomDocument.GetFamilyRecords();
-
-        return []; // WriteRecords(familyRecords);
-    }
-
     public string GetFamilyLineItem(FamilyRecord familyRecord)
     {
         var familyLineItemStringBuilder = new StringBuilder();
 
-        var husbandIndividualRecord = GedcomDocument.GetIndividualRecord(familyRecord.Husband);
+        var husbandIndividualRecord = GedcomDocument.GetIndividualRecords().Single(r => r.Xref.Equals(familyRecord.Husband));
         if (husbandIndividualRecord.IsEmpty)
         {
             familyLineItemStringBuilder.Append("Husband: Unknown.");
@@ -83,7 +79,7 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
             familyLineItemStringBuilder.Append($"Husband: {husbandDto.FullName} ({husbandDto.Xref}).");
         }
 
-        var wifeIndividualRecord = GedcomDocument.GetIndividualRecord(familyRecord.Wife);
+        var wifeIndividualRecord = GedcomDocument.GetIndividualRecords().Single(r => r.Xref.Equals(familyRecord.Wife));
         if (wifeIndividualRecord.IsEmpty)
         {
             familyLineItemStringBuilder.Append(" Wife: Unknown.");
@@ -105,7 +101,7 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
             var childNames = new List<string>();
             foreach (var childXref in familyRecord.Children)
             {
-                var childIndividualRecord = GedcomDocument.GetIndividualRecord(childXref);
+                var childIndividualRecord = GedcomDocument.GetIndividualRecords().Single(r => r.Xref.Equals(childXref));
                 if (!childIndividualRecord.IsEmpty)
                 {
                     var childDto = new IndividualDto(childIndividualRecord);
@@ -120,41 +116,18 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
         return familyLineItemStringBuilder.ToString();
     }
 
-    public string GetRepository(string xref)
-    {
-        var repositoryRecord = GedcomDocument.GetRepositoryRecord(xref);
-
-        if (repositoryRecord.IsEmpty) return "{}";
-
-        return ""; // WriteRecords(repositoryRecord);
-    }
-
-    public string GetRepositories(string query = "")
+    public byte[] GetRepositories(string xref = "")
     {
         var repositoryRecords = GedcomDocument.GetRepositoryRecords();
 
-        return ""; // WriteRecords(repositoryRecords);
+        return []; // WriteRecords(repositoryRecords);
     }
 
-    public string GetSource(string xref)
-    {
-        var sourceRecord = GedcomDocument.GetSourceRecord(xref);
-
-        if (sourceRecord.IsEmpty) return "{}";
-
-        return ""; // WriteRecords(sourceRecord);
-    }
-
-    public string GetSources(string query = "")
+    public byte[] GetSources(string xref = "")
     {
         var sourceRecords = GedcomDocument.GetSourceRecords();
 
-        return ""; // WriteRecords(sourceRecords);
-    }
-
-    private static string WriteRecords(object obj)
-    {
-        return JsonSerializer.Serialize(obj);
+        return []; // WriteRecords(sourceRecords);
     }
 }
 

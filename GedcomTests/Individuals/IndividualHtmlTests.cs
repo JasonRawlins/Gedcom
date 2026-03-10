@@ -3,7 +3,7 @@ using Gedcom.GedcomWriters;
 using GedcomTests.TestEntities;
 using System.Text;
 
-namespace GedcomTests.Individual;
+namespace GedcomTests.Individuals;
 
 // The use of the word "Individual" in this class refers to a Gedcom "Individual" (INDI) record,
 // not its normal meaning of "singular," "each," "one," etc. 
@@ -14,7 +14,7 @@ public class IndividualHtmlTests
     public void ExportIndividualJsonTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
-        var individualHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividual(TestIndividuals.SarahDavis.Xref));
+        var individualHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividuals(TestIndividuals.SarahDavis.Xref));
 
         Assert.IsTrue(individualHtml.Contains(TestIndividuals.SarahDavis.XrefId) &&
                 !(individualHtml.Contains(TestIndividuals.DylanDavis.XrefId) ||
@@ -44,19 +44,8 @@ public class IndividualHtmlTests
     public void NonExistingIndividualJsonTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
-        var individualHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividual(TestConstants.InvalidXref));
+        var individualHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividuals(TestConstants.InvalidXref));
 
         Assert.IsFalse(individualHtml.Contains("<ul>"));
-    }
-
-    [TestMethod]
-    public void QueryIndividualsJsonTest()
-    {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
-        var individualsHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividuals("Davis"));
-
-        Assert.IsTrue(individualsHtml.Contains(TestIndividuals.DylanDavis.XrefId)
-            && individualsHtml.Contains(TestIndividuals.OwenDavis.XrefId)
-            && individualsHtml.Contains(TestIndividuals.SarahDavis.XrefId));
     }
 }

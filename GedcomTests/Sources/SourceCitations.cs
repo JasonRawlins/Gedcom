@@ -1,7 +1,6 @@
 ﻿using GedcomTests.TestEntities;
-using System.Linq;
 
-namespace GedcomTests.Family;
+namespace GedcomTests.Sources;
 
 [TestClass]
 public class SourceCitationsTests
@@ -10,7 +9,7 @@ public class SourceCitationsTests
     public void MarriageAndDivorceTest()
     {
         var gedcom = TestUtilities.CreateGedcom();
-        var dylanDavis = gedcom.GetIndividualRecord(TestIndividuals.DylanDavis.Xref);
+        var dylanDavis = gedcom.GetIndividualRecords().Single(r => r.Xref.Equals(TestIndividuals.DylanDavis.Xref));
 
         var fionaDouglasMarriageCertificate = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref.Equals("@S976697667@"));
         var eithneLynchMarriageCertificate = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref.Equals("@S977046020@"));

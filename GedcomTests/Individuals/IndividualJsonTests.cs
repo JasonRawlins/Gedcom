@@ -3,7 +3,7 @@ using Gedcom.GedcomWriters;
 using GedcomTests.TestEntities;
 using System.Text;
 
-namespace GedcomTests.IndividualRecord;
+namespace GedcomTests.Individuals;
 
 // The use of the word "Individual" in this class refers to a Gedcom "Individual" (INDI) record,
 // not its normal meaning of "singular," "each," "one," etc. 
@@ -14,7 +14,7 @@ public class IndividualJsonTests
     public void ExportIndividualJsonTest()
     {
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
-        var individualJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetIndividual(TestIndividuals.SarahDavis.Xref));
+        var individualJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetIndividuals(TestIndividuals.SarahDavis.Xref));
 
         Assert.IsTrue(individualJson.Contains(TestIndividuals.SarahDavis.Xref) &&
                 !(individualJson.Contains(TestIndividuals.DylanDavis.Xref) ||
@@ -44,7 +44,7 @@ public class IndividualJsonTests
     public void NonExistingIndividualJsonTest()
     {
         var jsonGedcomWriter =  GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
-        var individualJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetIndividual(TestConstants.InvalidXref));
+        var individualJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetIndividuals(TestConstants.InvalidXref));
 
         Assert.IsTrue(individualJson.Equals(""));
     }
@@ -67,6 +67,6 @@ public class IndividualJsonTests
         // This is an integration test. Figure that out later
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
 
-        File.WriteAllText(TestUtilities.JsonFullName, Encoding.UTF8.GetString(jsonGedcomWriter.GetIndividuals()));
+        File.WriteAllText(Path.Combine(TestUtilities.OutputFilesDirectory, "Individuals.json"), Encoding.UTF8.GetString(jsonGedcomWriter.GetIndividuals()));
     }
 }

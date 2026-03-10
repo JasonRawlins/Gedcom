@@ -58,18 +58,14 @@ public class Program
 
     private static void WriteIndividualRecords(IGedcomWriter gedcomWriter, Options options)
     {
-        var individualBytes = string.IsNullOrEmpty(options.Xref)
-            ? gedcomWriter.GetIndividuals(options.Query)
-            : gedcomWriter.GetIndividual(options.Xref);
+        var individualBytes = gedcomWriter.GetIndividuals(options.Xref);
 
         File.WriteAllBytes(options.OutputFilePath, individualBytes);
     }
 
     private static void WriteFamilyRecords(IGedcomWriter gedcomWriter, Options options)
     {
-        var familyBytes = string.IsNullOrEmpty(options.Xref)
-            ? gedcomWriter.GetFamily(options.Xref)
-            : gedcomWriter.GetFamily(options.Xref);
+        var familyBytes = gedcomWriter.GetFamilies(options.Xref);
 
         File.WriteAllBytes(options.OutputFilePath, familyBytes);
     }

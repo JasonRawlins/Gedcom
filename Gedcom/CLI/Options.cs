@@ -25,14 +25,6 @@ public class Options
     [Option('p', "params", Required = false, HelpText = "Path of the params file. A params file will override other all other cli arguments.")]
     public string ParamsFilePath { get; set; } = "";
 
-    private string query = "";
-    [Option('q', "query", Required = false, HelpText = "A query value to filter records.")]
-    public string Query
-    {
-        get => query.ToUpper();
-        set => query = value;
-    }
-
     private string recordType = "";
     [Option('t', "record-type", Required = false, HelpText = "Record type to export. (gedc, fam, indi, note, obje, repo, sour, subm)")]
     public string RecordType
@@ -70,7 +62,6 @@ public class Options
                 Format = gedcomNetParams.Format;
                 InputFilePath = gedcomNetParams.Input;
                 OutputFilePath = gedcomNetParams.Output;
-                Query = gedcomNetParams.Query;
                 RecordType = gedcomNetParams.RecordType;
                 Xref = gedcomNetParams.Xref;
             }

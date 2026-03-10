@@ -4,15 +4,11 @@ public interface IGedcomWriter
 {
     public GedcomDocument GedcomDocument { get; set; }
 
-    public byte[] GetIndividual(string xref);
-    public byte[] GetIndividuals(string query = "");
+    public byte[] GetIndividuals(string xref = "");
 
-    public byte[] GetFamily(string xref);
-    public byte[] GetFamilies(string query = "");
+    public byte[] GetFamilies(string xref = "");
 
-    public string GetRepository(string xref);
-    public string GetRepositories(string query = "");
+    public byte[] GetRepositories(string xref = "");
 
-    public string GetSource(string xref);
-    public string GetSources(string query = "");
+    public byte[] GetSources(string xref = "");
 }

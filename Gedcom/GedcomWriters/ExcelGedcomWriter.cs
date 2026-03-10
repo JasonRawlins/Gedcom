@@ -11,13 +11,10 @@ public class ExcelGedcomWriter : IGedcomWriter
         GedcomDocument = gedcom;
     }
 
-    public byte[] GetIndividual(string xref)
+    public byte[] GetIndividuals(string xref = "")
     {
-        throw new NotImplementedException();
-    }
+        // TODO: Filter by xref after retrieving, if necessary.
 
-    public byte[] GetIndividuals(string query = "")
-    {
         var individualRecords = GedcomDocument.GetIndividualRecords();
         var orderedIndividualListItems = individualRecords
             .Select(ir => new IndividualListItem(ir))
@@ -51,32 +48,17 @@ public class ExcelGedcomWriter : IGedcomWriter
         return outputStream.ToArray();
     }
 
-    public byte[] GetFamily(string xref)
+    public byte[] GetFamilies(string xref = "")
     {
         throw new NotImplementedException();
     }
 
-    public byte[] GetFamilies(string query = "")
+    public byte[] GetRepositories(string xref = "")
     {
         throw new NotImplementedException();
     }
 
-    public string GetRepository(string xref)
-    {
-        throw new NotImplementedException();
-    }
-
-    public string GetRepositories(string query = "")
-    {
-        throw new NotImplementedException();
-    }
-
-    public string GetSource(string xref)
-    {
-        throw new NotImplementedException();
-    }
-
-    public string GetSources(string query = "")
+    public byte[] GetSources(string xref = "")
     {
         throw new NotImplementedException();
     }

@@ -1,8 +1,9 @@
 ﻿using Gedcom;
 using Gedcom.GedcomWriters;
 using GedcomTests.TestEntities;
+using System.Text;
 
-namespace GedcomTests.Repository;
+namespace GedcomTests.Repositories;
 
 // The use of the word "Repository" in this class refers to a Gedcom "Repository" (REPO) record,
 // not its normal meaning related to source control.
@@ -13,7 +14,7 @@ public class RepositoryJsonTests
     public void ExportRepositoryJsonTest()
     {
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
-        var repositoryJson = jsonGedcomWriter.GetRepository(TestRepositories.VitalRecordsRepository.Xref);
+        var repositoryJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetRepositories(TestRepositories.VitalRecordsRepository.Xref));
 
         Assert.IsTrue(repositoryJson.Contains(TestRepositories.VitalRecordsRepository.Xref));
     }
@@ -22,7 +23,7 @@ public class RepositoryJsonTests
     public void ExportRepositoriesJsonTest()
     {
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
-        var repositoriesJson = jsonGedcomWriter.GetRepositories();
+        var repositoriesJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetRepositories());
 
         Assert.IsTrue(repositoriesJson.Contains(TestRepositories.VitalRecordsRepository.Xref));
     }
@@ -31,7 +32,7 @@ public class RepositoryJsonTests
     public void ExportNonExistingRepositoryJsonTest()
     {
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
-        var repositoriesJson = jsonGedcomWriter.GetRepository(TestConstants.InvalidXref);
+        var repositoriesJson = jsonGedcomWriter.GetRepositories(TestConstants.InvalidXref);
 
         Assert.IsTrue(repositoriesJson.Equals("{}"));
     }
@@ -41,8 +42,9 @@ public class RepositoryJsonTests
     {
         // This is an integration test. Figure that out later
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
+        var jsonRepositoriesBytes = Encoding.UTF8.GetString(jsonGedcomWriter.GetRepositories());
 
-        File.WriteAllText(TestUtilities.JsonFullName, jsonGedcomWriter.GetRepositories());
+        File.WriteAllText(Path.Combine(TestUtilities.OutputFilesDirectory, "Repositories.json"), jsonRepositoriesBytes);
     }
 }
 

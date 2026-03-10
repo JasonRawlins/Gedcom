@@ -1,8 +1,9 @@
 ﻿using Gedcom;
 using Gedcom.GedcomWriters;
 using GedcomTests.TestEntities;
+using System.Text;
 
-namespace GedcomTests.Source;
+namespace GedcomTests.Sources;
 
 [TestClass]
 public class SourceHtmlTests
@@ -11,7 +12,7 @@ public class SourceHtmlTests
     public void ExportSourceHtmlTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
-        var sourceHtml = htmlGedcomWriter.GetSource(TestSources.VitalRecords.Xref);
+        var sourceHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetSources(TestSources.VitalRecords.Xref));
 
         Assert.IsTrue(sourceHtml.Contains(TestSources.VitalRecords.Xref));
     }
@@ -20,7 +21,7 @@ public class SourceHtmlTests
     public void ExportSourcesHtmlTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
-        var sourcesHtml = htmlGedcomWriter.GetSources();
+        var sourcesHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetSources());
 
         Assert.IsTrue(sourcesHtml.Contains(TestSources.VitalRecords.Xref));
     }
@@ -29,26 +30,18 @@ public class SourceHtmlTests
     public void NonExistingSourceHtmlTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
-        var sourceHtml = htmlGedcomWriter.GetSource(TestConstants.InvalidXref);
+        var sourceHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetSources(TestConstants.InvalidXref));
 
         Assert.IsTrue(sourceHtml.Equals(""));
-    }
-
-    [TestMethod]
-    public void QuerySourcesHtmlTest()
-    {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
-        var sourcesHtml = htmlGedcomWriter.GetSources(TestSources.VitalRecords.Xref);
-
-        Assert.IsTrue(sourcesHtml.Contains(TestSources.VitalRecords.Xref));
     }
 
     //[TestMethod]
     public void WriteSourcesHtmlTest()
     {
         // This is an integration test. Figure that out later
-        var gedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
+        var sourcesHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetSources(TestSources.VitalRecords.Xref));
 
-        File.WriteAllText(TestUtilities.HtmlFullName, gedcomWriter.GetSources());
+        File.WriteAllText(Path.Combine(TestUtilities.OutputFilesDirectory, "Sources.html"), sourcesHtml);
     }
 }

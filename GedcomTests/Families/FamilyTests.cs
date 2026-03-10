@@ -1,7 +1,7 @@
 ﻿using Gedcom;
 using GedcomTests.TestEntities;
 
-namespace GedcomTests.Family;
+namespace GedcomTests.Families;
 
 // See Gedcom/ProjectResources/NGS-Family-Relationship-Chart.pdf for an explanation of family reltionships.
 [TestClass]

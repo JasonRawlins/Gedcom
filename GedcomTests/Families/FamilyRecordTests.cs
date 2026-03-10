@@ -1,6 +1,6 @@
 ﻿using GedcomTests.TestEntities;
 
-namespace GedcomTests.Family;
+namespace GedcomTests.Families;
 
 [TestClass]
 public class FamilyRecordTests

@@ -1,7 +1,6 @@
 ﻿using Gedcom.GedcomWriters;
-using System.Text;
 
-namespace GedcomTests.Individual;
+namespace GedcomTests.Individuals;
 
 // The use of the word "Individual" in this class refers to a Gedcom "Individual" (INDI) record,
 // not its normal meaning of "singular," "each," "one," etc. 

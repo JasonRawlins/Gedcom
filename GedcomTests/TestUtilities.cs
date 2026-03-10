@@ -5,10 +5,8 @@ namespace GedcomTests;
 
 public class TestUtilities
 {
+    public static readonly string InputFilesDirectory = @"C:\temp\GedcomNet\InputFiles"; //Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNet.json");
     public static readonly string OutputFilesDirectory = @"C:\temp\GedcomNet\OutputFiles"; //Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "GedcomNet.json");
-    public static readonly string HtmlFullName = Path.Combine(OutputFilesDirectory, "GedcomNet.html");
-    public static readonly string JsonFullName = Path.Combine(OutputFilesDirectory, "GedcomNet.json");
-    public static readonly string TextFullName = Path.Combine(OutputFilesDirectory, "GedcomNet.txt");
 
     public static GedcomDocument CreateGedcom()
     {

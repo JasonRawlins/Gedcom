@@ -18,7 +18,7 @@ public sealed class OptionsTests
     {
         var options = new Options
         {
-            OutputFilePath = TestUtilities.JsonFullName,
+            OutputFilePath = TestUtilities.OutputFilesDirectory,
             RecordType = Tag.Individual
         };
         
@@ -30,7 +30,7 @@ public sealed class OptionsTests
     {
         var options = new Options
         {
-            InputFilePath = TestUtilities.JsonFullName,
+            InputFilePath = TestUtilities.OutputFilesDirectory,
             RecordType = Tag.Individual
         };
 

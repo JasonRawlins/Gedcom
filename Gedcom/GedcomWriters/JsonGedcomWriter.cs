@@ -8,18 +8,9 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 {
     public GedcomDocument GedcomDocument { get; set; } = gedcom;
 
-    public byte[] GetIndividual(string xref)
+    public byte[] GetIndividuals(string xref = "")
     {
-        var individualRecord = GedcomDocument.GetIndividualRecord(xref);
-        if (individualRecord.IsEmpty) return [];
-
-        var individualDto = new IndividualDto(individualRecord);
-
-        return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(individualDto));
-    }
-
-    public byte[] GetIndividuals(string query = "")
-    {
+        // TODO: Filter by xref after retrieving, if necessary.
         var individualRecords = GedcomDocument.GetIndividualRecords();
         if (individualRecords.Count.Equals(0)) return [];
 
@@ -33,52 +24,30 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
         return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(individualDtos));
     }
 
-    public byte[] GetFamily(string xref)
+    public byte[] GetFamilies(string xref = "")
     {
-        var familyRecord = GedcomDocument.GetFamilyRecord(xref);
+        // TODO: Filter by xref after retrieving, if necessary.
 
-        if (familyRecord.IsEmpty) return [];
-
-        return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(familyRecord));
-    }
-
-    public byte[] GetFamilies(string query = "")
-    {
         var familyRecords = GedcomDocument.GetFamilyRecords();
 
         return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(familyRecords));
     }
 
-    public string GetRepository(string xref)
+    public byte[] GetRepositories(string xref = "")
     {
-        var repositoryRecord = GedcomDocument.GetRepositoryRecord(xref);
+        // TODO: Filter by xref after retrieving, if necessary.
 
-        if (repositoryRecord.IsEmpty) return "{}";
-
-        return JsonSerializer.Serialize(repositoryRecord);
-    }
-
-    public string GetRepositories(string query = "")
-    {
         var repositoryRecords = GedcomDocument.GetRepositoryRecords();
 
-        return JsonSerializer.Serialize(repositoryRecords);
+        return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(repositoryRecords));
     }
 
-    public string GetSource(string xref)
+    public byte[] GetSources(string xref = "")
     {
-        var sourceRecord = GedcomDocument.GetSourceRecord(xref);
-
-        if (sourceRecord.IsEmpty) return "{}";
-
-        return JsonSerializer.Serialize(sourceRecord);
-    }
-
-    public string GetSources(string query = "")
-    {
+        // TODO: Filter by xref after retrieving, if necessary.
         var sourceRecords = GedcomDocument.GetSourceRecords();
 
-        return JsonSerializer.Serialize(sourceRecords);
+        return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(sourceRecords));
     }
 }
 

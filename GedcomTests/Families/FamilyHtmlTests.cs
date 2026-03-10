@@ -3,7 +3,7 @@ using Gedcom.GedcomWriters;
 using GedcomTests.TestEntities;
 using System.Text;
 
-namespace GedcomTests.Family;
+namespace GedcomTests.Families;
 
 [TestClass]
 public class FamilyHtmlTests
@@ -13,7 +13,7 @@ public class FamilyHtmlTests
     {
         var gedcom = TestUtilities.CreateGedcom();
         var htmlGedcomWriter = GedcomWriter.Create(gedcom, Constants.HTML);
-        var familyHtml = htmlGedcomWriter.GetFamily(TestFamilies.JamesSmithAndSaraDavis.Xref);
+        var familyHtml = htmlGedcomWriter.GetFamilies(TestFamilies.JamesSmithAndSaraDavis.Xref);
 
         //Assert.IsTrue(familyHtml.Contains(TestFamilies.JamesSmithAndSaraDavis.Xref) &&
         //        !(familyHtml.Contains(TestFamilies.DylanDavisAndFionaDouglas.Xref) ||
@@ -35,7 +35,7 @@ public class FamilyHtmlTests
     public void NonExistingFamilyJsonTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
-        var familyJson = Encoding.UTF8.GetString(htmlGedcomWriter.GetFamily(TestConstants.InvalidXref));
+        var familyJson = Encoding.UTF8.GetString(htmlGedcomWriter.GetFamilies(TestConstants.InvalidXref));
 
         Assert.IsTrue(familyJson.Equals(""));
     }

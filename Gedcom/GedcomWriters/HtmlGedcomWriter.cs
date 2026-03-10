@@ -7,21 +7,22 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 {
     public GedcomDocument GedcomDocument { get; set; } = gedcom;
 
-    public byte[] GetIndividual(string xref)
-    {
-        var individualRecord = GedcomDocument.GetIndividualRecord(xref);
+    //public byte[] GetIndividual(string xref)
+    //{
 
-        if (individualRecord.IsEmpty) return [];
+    //    var individualRecord = GedcomDocument.GetIndividualRecord(xref);
 
-        var individualRecords = new List<IndividualRecord> { individualRecord };
+    //    if (individualRecord.IsEmpty) return [];
 
-        var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.GedcomNetIndividualsHtmlTemplate);
-        var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", GetIndividualsText(individualRecords));
+    //    var individualRecords = new List<IndividualRecord> { individualRecord };
 
-        return Encoding.UTF8.GetBytes(finalHtml);
-    }
+    //    var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.GedcomNetIndividualsHtmlTemplate);
+    //    var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", GetIndividualsText(individualRecords));
 
-    public byte[] GetIndividuals(string query = "")
+    //    return Encoding.UTF8.GetBytes(finalHtml);
+    //}
+
+    public byte[] GetIndividuals(string xref = "")
     {
         var individualRecords = GedcomDocument.GetIndividualRecords();
         if (individualRecords.Count == 0) return [];
@@ -55,16 +56,7 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
         return ulStringBuilder.ToString();
     }
 
-    public byte[] GetFamily(string xref)
-    {
-        var familyRecord = GedcomDocument.GetFamilyRecord(xref);
-
-        if (familyRecord.IsEmpty) return [];
-
-        return Encoding.UTF8.GetBytes(CreateFamilyListItem(familyRecord));
-    }
-
-    public byte[] GetFamilies(string query = "")
+    public byte[] GetFamilies(string xref = "")
     {
         var familyRecords = GedcomDocument.GetFamilyRecords();
 
@@ -84,62 +76,48 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
         return Encoding.UTF8.GetBytes(ul.ToString());
     }
 
-    public string GetRepository(string xref)
+    public byte[] GetRepositories(string xref = "")
     {
-        var repositoryRecord = GedcomDocument.GetRepositoryRecord(xref);
+        return [];
+        // TODO: Return a html formatted repositories. 
+        //var repositoryRecords = GedcomDocument.GetRepositoryRecords();
 
-        if (repositoryRecord.IsEmpty) return "";
+        //if (repositoryRecords.Count == 0) return "";
 
-        return CreateRepositoryListItem(repositoryRecord);
+        //var ul = new StringBuilder();
+        //ul.AppendLine("<ul>");
+
+        //foreach (var repositoryRecord in repositoryRecords)
+        //{
+        //    var repositoryListItem = CreateRepositoryListItem(repositoryRecord);
+        //    ul.AppendLine(repositoryListItem);
+        //}
+
+        //ul.AppendLine("</ul>");
+
+        //return Encoding.UTF8.GetBytes(ul.ToString());
     }
 
-    public string GetRepositories(string query = "")
+    public byte[] GetSources(string xref = "")
     {
-        var repositoryRecords = GedcomDocument.GetRepositoryRecords();
+        return [];
+        // TODO: Return a html formatted sources
+        //var sourceRecords = GedcomDocument.GetSourceRecords();
 
-        if (repositoryRecords.Count == 0) return "";
+        //if (sourceRecords.Count == 0) return "";
 
-        var ul = new StringBuilder();
-        ul.AppendLine("<ul>");
+        //var ul = new StringBuilder();
+        //ul.AppendLine("<ul>");
 
-        foreach (var repositoryRecord in repositoryRecords)
-        {
-            var repositoryListItem = CreateRepositoryListItem(repositoryRecord);
-            ul.AppendLine(repositoryListItem);
-        }
+        //foreach (var sourceRecord in sourceRecords)
+        //{
+        //    var sourceListItem = CreateSourceListItem(sourceRecord);
+        //    ul.AppendLine(sourceListItem);
+        //}
 
-        ul.AppendLine("</ul>");
+        //ul.AppendLine("</ul>");
 
-        return ul.ToString();
-    }
-
-    public string GetSource(string xref)
-    {
-        var sourceRecord = GedcomDocument.GetSourceRecord(xref);
-
-        if (sourceRecord.IsEmpty) return "";
-
-        return CreateSourceListItem(sourceRecord);
-    }
-
-    public string GetSources(string query = "")
-    {
-        var sourceRecords = GedcomDocument.GetSourceRecords();
-
-        if (sourceRecords.Count == 0) return "";
-
-        var ul = new StringBuilder();
-        ul.AppendLine("<ul>");
-
-        foreach (var sourceRecord in sourceRecords)
-        {
-            var sourceListItem = CreateSourceListItem(sourceRecord);
-            ul.AppendLine(sourceListItem);
-        }
-
-        ul.AppendLine("</ul>");
-
-        return ul.ToString();
+        //return ul.ToString();
     }
 
     private string CreateIndividualListItem(IndividualRecord individualRecord)
