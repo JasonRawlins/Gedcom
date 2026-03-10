@@ -139,4 +139,16 @@ public class TestFamilies(GedcomDocument gedcom)
             return family;
         }
     }
+
+    public static List<TestFamily> All
+    {
+        get
+        {
+            return [
+                AnxinZhouAndMargaretDavis, CarwynDavisAndElizabethRhys, CelynDavisAndAbigailBrown,
+                DylanDavisAndEithneLynch, DylanDavisAndFionaDouglas, JamesSmithAndSaraDavis,
+                LlewelynVaughnAndAnwenDavis, OwenDavisAndGwenJones
+            ];
+        }
+    }
 }

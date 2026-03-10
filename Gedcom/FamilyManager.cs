@@ -35,7 +35,7 @@ public class FamilyManager(GedcomDocument gedcom)
 
     private Individual GetOrCreateIndividual(string individualXref)
     {
-        var individualRecord = Gedcom.GetIndividualRecords().Single(r => r.Xref.Equals(individualXref));
+        var individualRecord = Gedcom.GetIndividualRecords().Single(r => r.Xref == individualXref);
 
         if (IndividualsCache.TryGetValue(individualXref, out var existingIndividual))
             return existingIndividual;
@@ -61,13 +61,13 @@ public class FamilyManager(GedcomDocument gedcom)
         var newFamilyRecord = Gedcom.GetFamilyRecord(familyXref);
         var newFamily = new Family(newFamilyRecord);
 
-        var husbandIndividualRecord = Gedcom.GetIndividualRecords().Single(r => r.Xref.Equals(newFamilyRecord.Husband));
+        var husbandIndividualRecord = Gedcom.GetIndividualRecords().Single(r => r.Xref == newFamilyRecord.Husband);
         if (!husbandIndividualRecord.IsEmpty)
         {
             newFamily.Husband = GetOrCreateIndividual(husbandIndividualRecord.Xref);
         }
 
-        var wifeIndividualRecord = Gedcom.GetIndividualRecords().Single(r => r.Xref.Equals(newFamilyRecord.Wife));
+        var wifeIndividualRecord = Gedcom.GetIndividualRecords().Single(r => r.Xref == newFamilyRecord.Wife);
         if (!wifeIndividualRecord.IsEmpty)
         {
             newFamily.Wife = GetOrCreateIndividual(wifeIndividualRecord.Xref);

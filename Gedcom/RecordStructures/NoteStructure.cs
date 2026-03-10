@@ -24,15 +24,15 @@ public class NoteStructure : RecordStructureBase
             {
                 var noteText = new StringBuilder();
                 noteText.Append(Record.Value);
-                var continueOrConcatenate = Record.Records.Where(r => r.Tag.Equals(Tag.Continue) || r.Tag.Equals(Tag.Concatenation)).ToList();
+                var continueOrConcatenate = Record.Records.Where(r => r.Tag == Tag.Continue || r.Tag == Tag.Concatenation).ToList();
                 continueOrConcatenate.ForEach(r =>
                 {
-                    if (r.Tag.Equals(Tag.Continue))
+                    if (r.Tag == Tag.Continue)
                     {
                         noteText.AppendLine(r.Value);
                     }
 
-                    if (r.Tag.Equals(Tag.Concatenation))
+                    if (r.Tag == Tag.Concatenation)
                     {
                         noteText.Append(r.Value);
                     }

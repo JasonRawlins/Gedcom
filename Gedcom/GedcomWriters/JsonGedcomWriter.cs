@@ -12,7 +12,7 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
     {
         // TODO: Filter by xref after retrieving, if necessary.
         var individualRecords = GedcomDocument.GetIndividualRecords();
-        if (individualRecords.Count.Equals(0)) return [];
+        if (individualRecords.Count == 0) return [];
 
         var individualDtos = new List<IndividualDto>();
 

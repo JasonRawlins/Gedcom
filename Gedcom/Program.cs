@@ -45,12 +45,12 @@ public class Program
         var gedcomDocument = CreateGedcomDocument(options.InputFilePath);
         var gedcomWriter = GedcomWriter.Create(gedcomDocument, options.Format);
 
-        if (options.RecordType.Equals(Tag.Individual))
+        if (options.RecordType.Equals(Tag.Individual, StringComparison.OrdinalIgnoreCase))
         {
             WriteIndividualRecords(gedcomWriter, options);
         }
 
-        if (options.RecordType.Equals(Tag.Family))
+        if (options.RecordType.Equals(Tag.Family, StringComparison.OrdinalIgnoreCase))
         {
             WriteFamilyRecords(gedcomWriter, options);
         }

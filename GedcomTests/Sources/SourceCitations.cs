@@ -9,17 +9,17 @@ public class SourceCitationsTests
     public void MarriageAndDivorceTest()
     {
         var gedcom = TestUtilities.CreateGedcom();
-        var dylanDavis = gedcom.GetIndividualRecords().Single(r => r.Xref.Equals(TestIndividuals.DylanDavis.Xref));
+        var dylanDavis = gedcom.GetIndividualRecords().Single(r => r.Xref == TestIndividuals.DylanDavis.Xref);
 
-        var fionaDouglasMarriageCertificate = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref.Equals("@S976697667@"));
-        var eithneLynchMarriageCertificate = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref.Equals("@S977046020@"));
-        var eithneLynchDivorceCertificate = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref.Equals("@S977046024@"));
-        var eithneLynchWeddingAnnouncement = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref.Equals("@S977046068@"));
-        var residenceOnCarolineStreet = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref.Equals("@S977151969@"));
-        var historyDegree = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref.Equals("@S977151981@"));
-        var deathAnnouncement = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref.Equals("@S977151991@"));
-        var residenceAtDeath = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref.Equals("@S977152005@"));
-        var electionResults = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref.Equals("@S977152012@"));
+        var fionaDouglasMarriageCertificate = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref == "@S976697667@");
+        var eithneLynchMarriageCertificate = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref == "@S977046020@");
+        var eithneLynchDivorceCertificate = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref == "@S977046024@");
+        var eithneLynchWeddingAnnouncement = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref == "@S977046068@");
+        var residenceOnCarolineStreet = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref == "@S977151969@");
+        var historyDegree = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref == "@S977151981@");
+        var deathAnnouncement = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref == "@S977151991@");
+        var residenceAtDeath = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref == "@S977152005@");
+        var electionResults = dylanDavis.SourceCitations.SingleOrDefault(sc => sc.Xref == "@S977152012@");
 
         Assert.IsNotNull(fionaDouglasMarriageCertificate);
         Assert.IsNotNull(eithneLynchMarriageCertificate);

@@ -10,17 +10,17 @@ public class RecordStructureBase
     internal void SetRecord(Record record) => Record = record;
 
     protected string GetValue(string tag) => First(tag).Value;
-    protected Record First(string tag) => Record.Records.FirstOrDefault(r => r.Tag.Equals(tag)) ?? Record.Empty;
+    protected Record First(string tag) => Record.Records.FirstOrDefault(r => r.Tag == tag) ?? Record.Empty;
     protected Record Single(Func<Record, bool> predicate) => Record.Records.SingleOrDefault(predicate) ?? Record.Empty;
     protected List<Record> List(Func<Record, bool> predicate) => [.. Record.Records.Where(predicate)];
-    protected List<string> ListValues(string tag) => [.. Record.Records.Where(r => r.Tag.Equals(tag)).Select(r => r.Value)];
-    protected List<string> GetStringList(string tag) => [.. List(r => r.Tag.Equals(tag)).Select(r => r.Value)];
+    protected List<string> ListValues(string tag) => [.. Record.Records.Where(r => r.Tag == tag).Select(r => r.Value)];
+    protected List<string> GetStringList(string tag) => [.. List(r => r.Tag == tag).Select(r => r.Value)];
     protected T First<T>(string tag) where T : RecordStructureBase, new() => CreateRecordStructureList<T>(tag, Record).FirstOrDefault() ?? Empty<T>();
     protected List<T> List<T>(string tag) where T : RecordStructureBase, new() => CreateRecordStructureList<T>(tag, Record);
     public static T Empty<T>() where T : RecordStructureBase, new() => CreateRecordStructure<T>(Record.Empty);
     private static List<T> CreateRecordStructureList<T>(string tag, Record record) where T : RecordStructureBase, new()
     {
-        var records = record.Records.Where(r => r.Tag.Equals(tag));
+        var records = record.Records.Where(r => r.Tag == tag);
         if (records.Any())
         {
             return [.. records.Select(CreateRecordStructure<T>)];

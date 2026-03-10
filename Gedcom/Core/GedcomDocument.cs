@@ -102,14 +102,13 @@ public class GedcomDocument : RecordStructureBase
     private T GetLevel0Record<T>(string xref) where T : RecordStructureBase, new()
     {
 
-        //var singleRecord = Single(r => r.Value.Equals(xref) && r.Level == 0 && r.Tag != Tag.Header && r.Tag != Tag.Trailer);
-        var singleRecord = Record.Records.SingleOrDefault(r => r.Value.Equals(xref) && r.Level == 0 && r.Tag != Tag.Header && r.Tag != Tag.Trailer) ?? Record.Empty;
+        var singleRecord = Record.Records.SingleOrDefault(r => r.Value == xref && r.Level == 0 && r.Tag != Tag.Header && r.Tag != Tag.Trailer) ?? Record.Empty;
         return CreateRecord<T>(singleRecord);
     }     
 
     private List<T> GetRecords<T>(string tag) where T : RecordStructureBase, new()
     {
-        var records = Record.Records.Where(r => r.Tag.Equals(tag));
+        var records = Record.Records.Where(r => r.Tag == tag);
 
         return [.. records.Select(CreateRecord<T>)];
     }

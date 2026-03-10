@@ -11,7 +11,7 @@ public class FamilyPartner : RecordStructureBase
     public FamilyPartner(Record record) { }
 
     private string? _ageAtEvent = null;
-    public string AgeAtEvent => _ageAtEvent ??= Record.Records.FirstOrDefault(r => r.Tag.Equals(Tag.Age))?.Value ?? "";
+    public string AgeAtEvent => _ageAtEvent ??= Record.Records.FirstOrDefault(r => r.Tag == Tag.Age)?.Value ?? "";
    
     public string Name => Record.Value;
 

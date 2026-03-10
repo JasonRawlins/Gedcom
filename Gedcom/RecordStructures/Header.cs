@@ -30,7 +30,7 @@ public class Header : RecordStructureBase
     public string LanguageOfText => _languageOfText ??= GetValue(Tag.Language);
 
     private string? _placeHierarchy = null;
-    public string PlaceHierarchy => _placeHierarchy ??= Record.Records.FirstOrDefault(r => r.Tag.Equals(Tag.Place))?.Records.First(r => r.Tag.Equals(Tag.Format)).Value ?? "";
+    public string PlaceHierarchy => _placeHierarchy ??= Record.Records.FirstOrDefault(r => r.Tag == Tag.Place)?.Records.First(r => r.Tag == Tag.Format).Value ?? "";
 
     private string? _receivingSystemName = null;
     public string ReceivingSystemName => _receivingSystemName ??= GetValue(Tag.Destination);

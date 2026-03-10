@@ -10,6 +10,13 @@ Ensure CLI export still works
 In the CLI, it's possible the xref is invalid. Account for that.
 Remove query from options
 
+Handle the xrefs from different programs
+	Ancestry
+	RootsMagic
+	+ One other popular one
+	Can you export gedcom from FamilySearch?
+		If I sync RootsMagic and FamilySearch, can I export the gedcom in that way?
+
 This program is using Ancestry specific tags like _TREE. Is that appropriate for a 
 generic program? Do other programs have similar tags? This might be a problem
 because it is hard-coding values that other systems may not have. Each new system

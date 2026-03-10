@@ -10,7 +10,7 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
     public byte[] GetIndividuals(string xref = "")
     {
         var individualRecords = GedcomDocument.GetIndividualRecords();
-        if (individualRecords.Count.Equals(0)) return [];
+        if (individualRecords.Count == 0) return [];
 
         if (!string.IsNullOrEmpty(xref))
         {
@@ -68,7 +68,7 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
     {
         var familyLineItemStringBuilder = new StringBuilder();
 
-        var husbandIndividualRecord = GedcomDocument.GetIndividualRecords().Single(r => r.Xref.Equals(familyRecord.Husband));
+        var husbandIndividualRecord = GedcomDocument.GetIndividualRecords().Single(r => r.Xref == familyRecord.Husband);
         if (husbandIndividualRecord.IsEmpty)
         {
             familyLineItemStringBuilder.Append("Husband: Unknown.");
@@ -79,7 +79,7 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
             familyLineItemStringBuilder.Append($"Husband: {husbandDto.FullName} ({husbandDto.Xref}).");
         }
 
-        var wifeIndividualRecord = GedcomDocument.GetIndividualRecords().Single(r => r.Xref.Equals(familyRecord.Wife));
+        var wifeIndividualRecord = GedcomDocument.GetIndividualRecords().Single(r => r.Xref == familyRecord.Wife);
         if (wifeIndividualRecord.IsEmpty)
         {
             familyLineItemStringBuilder.Append(" Wife: Unknown.");
@@ -101,7 +101,7 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
             var childNames = new List<string>();
             foreach (var childXref in familyRecord.Children)
             {
-                var childIndividualRecord = GedcomDocument.GetIndividualRecords().Single(r => r.Xref.Equals(childXref));
+                var childIndividualRecord = GedcomDocument.GetIndividualRecords().Single(r => r.Xref == childXref);
                 if (!childIndividualRecord.IsEmpty)
                 {
                     var childDto = new IndividualDto(childIndividualRecord);
