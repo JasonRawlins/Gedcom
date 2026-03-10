@@ -1,4 +1,5 @@
 ﻿using Gedcom.GedcomWriters;
+using System.Text;
 
 namespace GedcomTests.Individual;
 
@@ -8,4 +9,13 @@ namespace GedcomTests.Individual;
 public class IndividualExcelTests
 {
 
+    //[TestMethod]
+    public void WriteIndividualsJsonTest()
+    {
+        var excelGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.Constants.Excel);
+
+        string excelIndividualsFullName = Path.Combine(TestUtilities.OutputFilesDirectory, "Individuals.xlsx");
+
+        File.WriteAllBytes(excelIndividualsFullName, excelGedcomWriter.GetIndividuals());
+    }
 }

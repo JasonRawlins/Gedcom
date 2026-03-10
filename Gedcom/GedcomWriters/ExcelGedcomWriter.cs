@@ -1,4 +1,4 @@
-﻿using OfficeOpenXml;
+﻿using ClosedXML.Excel;
 
 namespace Gedcom.GedcomWriters;
 
@@ -9,7 +9,6 @@ public class ExcelGedcomWriter : IGedcomWriter
     public ExcelGedcomWriter(GedcomDocument gedcom)
     {
         GedcomDocument = gedcom;
-        ExcelPackage.License.SetNonCommercialOrganization("Gedcom.NET");
     }
 
     public byte[] GetIndividual(string xref)
@@ -20,31 +19,36 @@ public class ExcelGedcomWriter : IGedcomWriter
     public byte[] GetIndividuals(string query = "")
     {
         var individualRecords = GedcomDocument.GetIndividualRecords();
-        var individualListItems = individualRecords.Select(ir => new IndividualListItem(ir)).ToList();
-        var orderedIndividualListItems = individualListItems.OrderBy(ir => ir.Surname).ThenBy(ir => ir.Given).ToList();
+        var orderedIndividualListItems = individualRecords
+            .Select(ir => new IndividualListItem(ir))
+            .OrderBy(ir => ir.Surname)
+            .ThenBy(ir => ir.Given)
+            .ToList();
 
-        using var userTemplatePackage = new ExcelPackage(new MemoryStream(Properties.Resources.GedcomNetXlsxTemplate));
-        var templateSheet = userTemplatePackage.Workbook.Worksheets["Template"];
-        using var excelPackage = new ExcelPackage();
-        var targetSheet = excelPackage.Workbook.Worksheets.Add($"{GedcomDocument.Header.Source.Tree.Name} individuals", templateSheet);
+        using var templateStream = new MemoryStream(Properties.Resources.GedcomNetXlsxTemplate);
+        using var templateWorkbook = new XLWorkbook(templateStream);
+        using var workbook = new XLWorkbook();
 
-        var templateRow = 2; // The row containing the template values
+        var templateSheet = templateWorkbook.Worksheet("Template");
+        var targetSheet = templateSheet.CopyTo(workbook, $"{GedcomDocument.Header.Source.Tree.Name} individuals");
+
+        var templateRow = 2;
+        var lastUsedColumn = targetSheet.LastColumnUsed()!.ColumnNumber();
 
         for (int i = 0; i < orderedIndividualListItems.Count; i++)
         {
             var individualListItem = orderedIndividualListItems[i];
+            var targetRow = templateRow + i + 1;
 
-            var targetRow = templateRow + i + 1; // The row where the copied template should go
-
-            // Copy the template row to the next available row
-            targetSheet.Cells[templateRow, 1, templateRow, targetSheet.Dimension.End.Column].Copy(targetSheet.Cells[targetRow, 1]);
-
-            ReplaceTemplateValues(targetSheet, individualListItem, targetRow);
+            targetSheet.Row(templateRow).CopyTo(targetSheet.Row(targetRow));
+            ReplaceTemplateValues(targetSheet, individualListItem, targetRow, lastUsedColumn);
         }
 
-        targetSheet.DeleteRow(templateRow);
+        targetSheet.Row(templateRow).Delete();
 
-        return excelPackage.GetAsByteArray();
+        using var outputStream = new MemoryStream();
+        workbook.SaveAs(outputStream);
+        return outputStream.ToArray();
     }
 
     public byte[] GetFamily(string xref)
@@ -77,14 +81,14 @@ public class ExcelGedcomWriter : IGedcomWriter
         throw new NotImplementedException();
     }
 
-    private void ReplaceTemplateValues(ExcelWorksheet worksheet, IndividualListItem individualListItem, int rowNumber)
+    private void ReplaceTemplateValues(IXLWorksheet worksheet, IndividualListItem individualListItem, int rowNumber, int lastUsedColumn)
     {
-        // Loop through the cells in the row
-        for (int column = worksheet.Dimension.Start.Column; column <= worksheet.Dimension.End.Column; column++)
+        for (int column = 1; column <= lastUsedColumn; column++)
         {
-            var cell = worksheet.Cells[rowNumber, column];
+            var cell = worksheet.Cell(rowNumber, column);
+            var value = cell.GetString();
 
-            cell.Value = cell.Value switch
+            cell.Value = value switch
             {
                 ContentTag.AncestryProfileLink => GedcomDocument.Header.Source.Tree.Name,
                 ContentTag.BirthDate => individualListItem.Birthdate,
@@ -95,7 +99,7 @@ public class ExcelGedcomWriter : IGedcomWriter
                 ContentTag.Given => individualListItem.Given,
                 ContentTag.Surname => individualListItem.Surname,
                 ContentTag.TreeName => GedcomDocument.Header.Source.Tree.Name,
-                _ => cell.Value,
+                _ => value,
             };
         }
     }
