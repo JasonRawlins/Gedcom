@@ -10,18 +10,23 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public byte[] GetIndividuals(string xref = "")
     {
-        // TODO: Filter by xref after retrieving, if necessary.
         var individualRecords = GedcomDocument.GetIndividualRecords();
         if (individualRecords.Count == 0) return [];
 
-        var individualDtos = new List<IndividualDto>();
-
-        foreach (var individualRecord in individualRecords)
+        if (!string.IsNullOrEmpty(xref))
         {
-            individualDtos.Add(new IndividualDto(individualRecord));
+            var individualRecord = individualRecords.SingleOrDefault(ir => ir.Xref == xref);
+            if (individualRecord == null)
+            {
+                return Encoding.UTF8.GetBytes("{}");
+            }
+
+            individualRecords = [individualRecord];
         }
 
-        return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(individualDtos));
+        var individualDtos = individualRecords.Select(ir => new IndividualDto(ir));
+
+        return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(individualDtos, GedcomDto.SerializationOptions));
     }
 
     public byte[] GetFamilies(string xref = "")
@@ -39,7 +44,7 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
         var repositoryRecords = GedcomDocument.GetRepositoryRecords();
 
-        return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(repositoryRecords));
+        return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(repositoryRecords, GedcomDto.SerializationOptions));
     }
 
     public byte[] GetSources(string xref = "")
@@ -47,7 +52,7 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
         // TODO: Filter by xref after retrieving, if necessary.
         var sourceRecords = GedcomDocument.GetSourceRecords();
 
-        return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(sourceRecords));
+        return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(sourceRecords, GedcomDto.SerializationOptions));
     }
 }
 

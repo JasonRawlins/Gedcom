@@ -12,7 +12,7 @@ public class FamilyHtmlTests
     public void ExportFamilyJsonTest()
     {
         var gedcom = TestUtilities.CreateGedcom();
-        var htmlGedcomWriter = GedcomWriter.Create(gedcom, Constants.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(gedcom, Constants.Html);
         var familyHtml = htmlGedcomWriter.GetFamilies(TestFamilies.JamesSmithAndSaraDavis.Xref);
 
         //Assert.IsTrue(familyHtml.Contains(TestFamilies.JamesSmithAndSaraDavis.Xref) &&
@@ -23,7 +23,7 @@ public class FamilyHtmlTests
     [TestMethod]
     public void ExportFamiliesJsonTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Html);
         var familiesHtml = htmlGedcomWriter.GetFamilies();
 
         //Assert.IsTrue(familiesHtml.Contains(TestFamilies.JamesSmithAndSaraDavis.Xref) &&
@@ -34,7 +34,7 @@ public class FamilyHtmlTests
     [TestMethod]
     public void NonExistingFamilyJsonTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Html);
         var familyJson = Encoding.UTF8.GetString(htmlGedcomWriter.GetFamilies(TestConstants.InvalidXref));
 
         //Assert.IsTrue(familyJson.Equals(""));
@@ -43,7 +43,7 @@ public class FamilyHtmlTests
     [TestMethod]
     public void QueryFamiliesJsonTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Html);
         var familesHtml = htmlGedcomWriter.GetFamilies(TestFamilies.JamesSmithAndSaraDavis.Xref);
 
         //Assert.IsTrue(familesHtml.Contains(TestFamilies.JamesSmithAndSaraDavis.Xref));
@@ -53,7 +53,7 @@ public class FamilyHtmlTests
     public static void WriteFamiliesHtmlTest()
     {
         // This is an integration test. Figure that out later
-        var gedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
+        var gedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Html);
 
         //File.WriteAllText(TestUtilities.HtmlFullName, gedcomWriter.GetFamilies());
     }

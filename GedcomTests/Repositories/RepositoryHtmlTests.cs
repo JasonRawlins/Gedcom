@@ -13,7 +13,7 @@ public class RepositoryHtmlTests
     [TestMethod]
     public void ExportRepositoryHtmlTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Html);
         var repositoryHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetRepositories(TestRepositories.VitalRecordsRepository.Xref));
 
         //Assert.IsTrue(repositoryHtml.Contains(TestRepositories.VitalRecordsRepository.Xref));
@@ -22,7 +22,7 @@ public class RepositoryHtmlTests
     [TestMethod]
     public void ExportRepositoriesHtmlTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Html);
         var repositoriesHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetRepositories());
 
         //Assert.IsTrue(repositoriesHtml.Contains(TestRepositories.VitalRecordsRepository.Xref));
@@ -31,7 +31,7 @@ public class RepositoryHtmlTests
     [TestMethod]
     public void NonExistingRepositoryHtmlTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Html);
         var repositoryHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetRepositories(TestConstants.InvalidXref));
 
         //Assert.IsTrue(repositoryHtml.Equals(""));
@@ -41,7 +41,7 @@ public class RepositoryHtmlTests
     public void WriteRepositoriesHtmlTest()
     {
         // This is an integration test. Figure that out later
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Html);
         var repositoriesHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetRepositories(TestRepositories.VitalRecordsRepository.Xref));
 
         File.WriteAllText(Path.Combine(TestUtilities.OutputFilesDirectory, "Repositories.html"), repositoriesHtml);

@@ -53,6 +53,6 @@ public sealed class OptionsTests
     {
         var options = new Options();
 
-        Assert.AreEqual(Constants.JSON, options.Format, $"The default format should be {Constants.JSON}.");
+        Assert.AreEqual(Constants.Json, options.Format, $"The default format should be {Constants.Json}.");
     }
 }

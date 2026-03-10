@@ -11,7 +11,7 @@ public class SourceJsonTests
     [TestMethod]
     public void ExportSourceJsonTest()
     {
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
+        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Json);
         var sourceJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetSources(TestSources.VitalRecords.Xref));
 
         //Assert.IsTrue(sourceJson.Contains(TestSources.VitalRecords.Xref));
@@ -20,7 +20,7 @@ public class SourceJsonTests
     [TestMethod]
     public void ExportSourcesJsonTest()
     {
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
+        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Json);
         var sourcesJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetSources());
 
         //Assert.IsTrue(sourcesJson.Contains(TestSources.VitalRecords.Xref));
@@ -29,7 +29,7 @@ public class SourceJsonTests
     [TestMethod]
     public void ExportNonExistingSourceJsonTest()
     {
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
+        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Json);
         var sourcesJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetSources(TestConstants.InvalidXref));
 
         //Assert.AreEqual("", sourcesJson);
@@ -39,7 +39,7 @@ public class SourceJsonTests
     public void WriteSourcesJsonTest()
     {
         // This is an integration test. Figure that out later
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
+        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Json);
         var sourcesJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetSources());
 
         File.WriteAllText(Path.Combine(TestUtilities.OutputFilesDirectory, "Sources.json"), sourcesJson);

@@ -23,10 +23,11 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
             individualRecords = [individualRecord];
         }
 
+        var individualDtos = individualRecords.Select(ir => new IndividualDto(ir));
+
         var individualsStringBuilder = new StringBuilder();
-        foreach (var individualRecord in individualRecords)
+        foreach (var individualDto in individualDtos)
         {
-            var individualDto = new IndividualDto(individualRecord);
             individualsStringBuilder.AppendLine(GetIndividualLineItem(individualDto));
         }
 

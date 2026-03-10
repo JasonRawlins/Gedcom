@@ -6,9 +6,9 @@ namespace Gedcom.CLI;
 public class Options
 {
     public static string[] RecordTypes => [Tag.Family, Tag.Individual, Tag.Object, Tag.Note, Tag.Repository, Tag.Source, Tag.Submitter, Tag.Gedcom /* GEDC is not a real top-level record type. It's used when the whole gedcom is exported. */];
-    public static string[] OutputFormats => [Constants.Excel, Constants.HTML, Constants.JSON, Constants.Text];
+    public static string[] OutputFormats => [Constants.Excel, Constants.Html, Constants.Json, Constants.Text];
 
-    private string format = Constants.JSON;
+    private string format = Constants.Json;
     [Option('f', "format", Required = false, HelpText = "Output format (Excel, html, json, text).")]
     public string Format
     {

@@ -13,7 +13,7 @@ public class IndividualHtmlTests
     [TestMethod]
     public void ExportIndividualJsonTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Html);
         var individualHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividuals(TestIndividuals.SarahDavis.Xref));
 
         //Assert.IsTrue(individualHtml.Contains(TestIndividuals.SarahDavis.XrefId) &&
@@ -28,7 +28,7 @@ public class IndividualHtmlTests
     [TestMethod]
     public void ExportIndividualsJsonTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Html);
         var individualsHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividuals());
 
         //Assert.IsTrue(individualsHtml.Contains(TestIndividuals.SarahDavis.XrefId) &&
@@ -43,7 +43,7 @@ public class IndividualHtmlTests
     [TestMethod]
     public void NonExistingIndividualJsonTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Html);
         var individualHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividuals(TestConstants.InvalidXref));
 
         //Assert.IsFalse(individualHtml.Contains("<ul>"));

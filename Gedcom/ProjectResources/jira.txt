@@ -1,6 +1,6 @@
 Current
 -------
-Change .Equals to == where its culture agnostic.
+Do I need to remove all JsonConverters for RecordStructures? I'm never returning them explicitly. I only return the dtos.
 
 Ensure CLI export still works
 	Text
@@ -42,6 +42,7 @@ Ensure tests still work
 		But, it is also checking that other individuals are not. That isn't scalable as I add
 		more individuals.
 	Double check Output.cs tests. Especially the ones testing valid input and output directories.
+	Figure out what to do with integration tests. How would these be handled in the GitHub test runners?
 Documentation
 	CLI
 	Gedcom.NET

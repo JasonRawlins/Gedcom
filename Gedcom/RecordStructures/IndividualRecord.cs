@@ -108,7 +108,7 @@ public class IndividualRecord : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {PersonalNameStructures.First().NamePersonal}, {SexValue}";
 }
 
-internal sealed class IndividualJsonConverter : JsonConverter<IndividualRecord>
+public sealed class IndividualJsonConverter : JsonConverter<IndividualRecord>
 {
     public override IndividualRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
 

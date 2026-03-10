@@ -8,8 +8,8 @@ public class GedcomWriter
         return format switch
         {
             Constants.Excel => new ExcelGedcomWriter(gedcom),
-            Constants.HTML => new HtmlGedcomWriter(gedcom),
-            Constants.JSON => new JsonGedcomWriter(gedcom),
+            Constants.Html => new HtmlGedcomWriter(gedcom),
+            Constants.Json => new JsonGedcomWriter(gedcom),
             Constants.Text => new TextGedcomWriter(gedcom),
             _ => throw new NotSupportedException($"The format '{format}' is not supported."),
         };
