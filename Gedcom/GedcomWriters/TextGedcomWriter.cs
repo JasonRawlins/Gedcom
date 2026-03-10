@@ -6,7 +6,7 @@ namespace Gedcom.GedcomWriters;
 
 public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 {
-    private GedcomDocument GedcomDocument { get; set; } = gedcom;
+    public GedcomDocument GedcomDocument { get; set; } = gedcom;
 
     public byte[] GetIndividual(string xref)
     {
@@ -20,7 +20,7 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public byte[] GetIndividuals(string query = "")
     {
-        var individualRecords = GedcomDocument.GetIndividualRecords(query);
+        var individualRecords = GedcomDocument.GetIndividualRecords();
         if (individualRecords.Count.Equals(0)) return [];
 
         var individualsStringBuilder = new StringBuilder();
@@ -63,7 +63,7 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public byte[] GetFamilies(string query = "")
     {
-        var familyRecords = GedcomDocument.GetFamilyRecords(query);
+        var familyRecords = GedcomDocument.GetFamilyRecords();
 
         return []; // WriteRecords(familyRecords);
     }
@@ -114,7 +114,7 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
             }
 
             familyLineItemStringBuilder.Append(string.Join(", ", childNames));
-            familyLineItemStringBuilder.Append("]");
+            familyLineItemStringBuilder.Append(']');
         }
 
         return familyLineItemStringBuilder.ToString();
@@ -131,7 +131,7 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public string GetRepositories(string query = "")
     {
-        var repositoryRecords = GedcomDocument.GetRepositoryRecords(query);
+        var repositoryRecords = GedcomDocument.GetRepositoryRecords();
 
         return ""; // WriteRecords(repositoryRecords);
     }
@@ -147,7 +147,7 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public string GetSources(string query = "")
     {
-        var sourceRecords = GedcomDocument.GetSourceRecords(query);
+        var sourceRecords = GedcomDocument.GetSourceRecords();
 
         return ""; // WriteRecords(sourceRecords);
     }

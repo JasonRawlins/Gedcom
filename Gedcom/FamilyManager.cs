@@ -90,6 +90,8 @@ public class FamilyManager(GedcomDocument gedcom)
 
         var parentsFamily = GetOrCreateFamily(parentsFamilyRecord.Xref);
 
+        individual.Parents = parentsFamily;
+
         if (parentsFamily.Husband != null)
         {
             LoadAncestors(parentsFamily.Husband, generationsOfAncestors - 1);

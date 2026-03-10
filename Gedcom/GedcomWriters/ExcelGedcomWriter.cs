@@ -4,11 +4,11 @@ namespace Gedcom.GedcomWriters;
 
 public class ExcelGedcomWriter : IGedcomWriter
 {
-    private GedcomDocument Gedcom { get; set; }
+    public GedcomDocument GedcomDocument { get; set; }
 
     public ExcelGedcomWriter(GedcomDocument gedcom)
     {
-        Gedcom = gedcom;
+        GedcomDocument = gedcom;
         ExcelPackage.License.SetNonCommercialOrganization("Gedcom.NET");
     }
 
@@ -19,14 +19,14 @@ public class ExcelGedcomWriter : IGedcomWriter
 
     public byte[] GetIndividuals(string query = "")
     {
-        var individualRecords = Gedcom.GetIndividualRecords(query);
+        var individualRecords = GedcomDocument.GetIndividualRecords();
         var individualListItems = individualRecords.Select(ir => new IndividualListItem(ir)).ToList();
         var orderedIndividualListItems = individualListItems.OrderBy(ir => ir.Surname).ThenBy(ir => ir.Given).ToList();
 
         using var userTemplatePackage = new ExcelPackage(new MemoryStream(Properties.Resources.GedcomNetXlsxTemplate));
         var templateSheet = userTemplatePackage.Workbook.Worksheets["Template"];
         using var excelPackage = new ExcelPackage();
-        var targetSheet = excelPackage.Workbook.Worksheets.Add($"{Gedcom.Header.Source.Tree.Name} individuals", templateSheet);
+        var targetSheet = excelPackage.Workbook.Worksheets.Add($"{GedcomDocument.Header.Source.Tree.Name} individuals", templateSheet);
 
         var templateRow = 2; // The row containing the template values
 
@@ -86,7 +86,7 @@ public class ExcelGedcomWriter : IGedcomWriter
 
             cell.Value = cell.Value switch
             {
-                ContentTag.AncestryProfileLink => Gedcom.Header.Source.Tree.Name,
+                ContentTag.AncestryProfileLink => GedcomDocument.Header.Source.Tree.Name,
                 ContentTag.BirthDate => individualListItem.Birthdate,
                 ContentTag.BirthPlace => individualListItem.BirthPlace,
                 ContentTag.DeathDate => individualListItem.DeathDate,
@@ -94,7 +94,7 @@ public class ExcelGedcomWriter : IGedcomWriter
                 ContentTag.FullName => individualListItem.FullName,
                 ContentTag.Given => individualListItem.Given,
                 ContentTag.Surname => individualListItem.Surname,
-                ContentTag.TreeName => Gedcom.Header.Source.Tree.Name,
+                ContentTag.TreeName => GedcomDocument.Header.Source.Tree.Name,
                 _ => cell.Value,
             };
         }

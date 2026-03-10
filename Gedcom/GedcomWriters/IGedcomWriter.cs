@@ -2,6 +2,8 @@
 
 public interface IGedcomWriter
 {
+    public GedcomDocument GedcomDocument { get; set; }
+
     public byte[] GetIndividual(string xref);
     public byte[] GetIndividuals(string query = "");
 

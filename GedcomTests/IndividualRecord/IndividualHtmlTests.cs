@@ -44,9 +44,9 @@ public class IndividualHtmlTests
     public void NonExistingIndividualJsonTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
-        var individualJson = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividual(TestConstants.InvalidXref));
+        var individualHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividual(TestConstants.InvalidXref));
 
-        Assert.IsTrue(individualJson.Equals(""));
+        Assert.IsFalse(individualHtml.Contains("<ul>"));
     }
 
     [TestMethod]

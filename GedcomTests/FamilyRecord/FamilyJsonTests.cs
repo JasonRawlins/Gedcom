@@ -1,6 +1,7 @@
 ﻿using Gedcom;
 using Gedcom.GedcomWriters;
 using GedcomTests.TestEntities;
+using System.Text;
 
 namespace GedcomTests.Family;
 
@@ -33,9 +34,9 @@ public class FamilyJsonTests
     public void ExportNonExistingFamilyJsonTest()
     {
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
-        var familiesJson = jsonGedcomWriter.GetFamily(TestConstants.InvalidXref);
+        var familiesJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetFamily(TestConstants.InvalidXref));
 
-        Assert.IsTrue(familiesJson.Equals("{}"));
+        Assert.IsTrue(familiesJson.Equals(""));
     }
 
     //[TestMethod]

@@ -46,7 +46,7 @@ public class IndividualJsonTests
         var jsonGedcomWriter =  GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
         var individualJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetIndividual(TestConstants.InvalidXref));
 
-        Assert.IsTrue(individualJson.Equals("{}"));
+        Assert.IsTrue(individualJson.Equals(""));
     }
 
     [TestMethod]

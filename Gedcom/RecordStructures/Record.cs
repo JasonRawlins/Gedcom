@@ -29,30 +29,8 @@ public class Record
         }
     }
 
-    public bool IsQueryMatch(string query)
-    {
-        if (string.IsNullOrEmpty(query))
-        {
-            return true;
-        }
-
-        if (Value.Contains(query, StringComparison.CurrentCultureIgnoreCase))
-        {
-            return true;
-        }
-
-        foreach (var record in Records)
-        {
-            if (record.IsQueryMatch(query))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    // Gedcom.NET does not deal with null records. Instead, it uses an empty record.  
+    // Gedcom.NET does not deal with null records. Instead, it uses an empty record.
+    //private static Record? empty = null; // Should I be using a static variable for this?
     public static Record Empty
     {
         get
@@ -66,7 +44,7 @@ public class Record
                 }
             };
 
-           return new Record(gedcomLines);
+            return new Record(gedcomLines);
         }
     }
 

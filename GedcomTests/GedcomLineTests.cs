@@ -52,7 +52,7 @@ public class GedcomLineTests
 
         Assert.AreEqual(1, gedcomLine.Level);
         Assert.AreEqual(Tag.GivenName, gedcomLine.Tag);
-        Assert.AreEqual("Jane", gedcomLine.Value);
+        Assert.AreEqual("Jane /Miller/", gedcomLine.Value);
     }
 
     [TestMethod]

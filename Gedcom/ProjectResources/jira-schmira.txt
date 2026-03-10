@@ -2,6 +2,11 @@ Current
 -------
 Change Sara Davis to Sarah Davis in all test files. 
 
+Should I be returning byte[] from IGedcomWriters? I only did it for ExcelGedcomWriter.
+	It's causing me to get a string from the byte[] returned.
+
+Several tests are using lame assertions like searching for a magic string. Fix them.
+
 This program is using Ancestry specific tags like _TREE. Is that appropriate for a 
 generic program? Do other programs have similar tags? This might be a problem
 because it is hard-coding values that other systems may not have. Each new system

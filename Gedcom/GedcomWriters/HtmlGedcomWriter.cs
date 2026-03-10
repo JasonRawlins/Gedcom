@@ -5,12 +5,15 @@ namespace Gedcom.GedcomWriters;
 
 public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 {
-    private GedcomDocument Gedcom { get; set; } = gedcom;
+    public GedcomDocument GedcomDocument { get; set; } = gedcom;
 
     public byte[] GetIndividual(string xref)
     {
-        var individualRecords = new List<IndividualRecord> { Gedcom.GetIndividualRecord(xref) };
-        if (individualRecords.Count == 0) return [];
+        var individualRecord = GedcomDocument.GetIndividualRecord(xref);
+
+        if (individualRecord.IsEmpty) return [];
+
+        var individualRecords = new List<IndividualRecord> { individualRecord };
 
         var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.GedcomNetIndividualsHtmlTemplate);
         var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", GetIndividualsText(individualRecords));
@@ -20,7 +23,7 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public byte[] GetIndividuals(string query = "")
     {
-        var individualRecords = Gedcom.GetIndividualRecords(query);
+        var individualRecords = GedcomDocument.GetIndividualRecords();
         if (individualRecords.Count == 0) return [];
 
         var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.GedcomNetIndividualsHtmlTemplate);
@@ -31,11 +34,18 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     private string GetIndividualsText(List<IndividualRecord> individualRecords)
     {
+        if (individualRecords.Count == 0)
+        {
+            return "";
+        }
+
         var ulStringBuilder = new StringBuilder();
         ulStringBuilder.AppendLine("<ul>");
 
         foreach (var individualRecord in individualRecords)
         {
+            if (individualRecord.IsEmpty) continue;
+
             var individualListItem = CreateIndividualListItem(individualRecord);
             ulStringBuilder.AppendLine(individualListItem);
         }
@@ -47,7 +57,7 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public byte[] GetFamily(string xref)
     {
-        var familyRecord = Gedcom.GetFamilyRecord(xref);
+        var familyRecord = GedcomDocument.GetFamilyRecord(xref);
 
         if (familyRecord.IsEmpty) return [];
 
@@ -56,7 +66,7 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public byte[] GetFamilies(string query = "")
     {
-        var familyRecords = Gedcom.GetFamilyRecords(query);
+        var familyRecords = GedcomDocument.GetFamilyRecords();
 
         if (familyRecords.Count == 0) return [];
 
@@ -76,7 +86,7 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public string GetRepository(string xref)
     {
-        var repositoryRecord = Gedcom.GetRepositoryRecord(xref);
+        var repositoryRecord = GedcomDocument.GetRepositoryRecord(xref);
 
         if (repositoryRecord.IsEmpty) return "";
 
@@ -85,7 +95,7 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public string GetRepositories(string query = "")
     {
-        var repositoryRecords = Gedcom.GetRepositoryRecords(query);
+        var repositoryRecords = GedcomDocument.GetRepositoryRecords();
 
         if (repositoryRecords.Count == 0) return "";
 
@@ -105,7 +115,7 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public string GetSource(string xref)
     {
-        var sourceRecord = Gedcom.GetSourceRecord(xref);
+        var sourceRecord = GedcomDocument.GetSourceRecord(xref);
 
         if (sourceRecord.IsEmpty) return "";
 
@@ -114,7 +124,7 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public string GetSources(string query = "")
     {
-        var sourceRecords = Gedcom.GetSourceRecords(query);
+        var sourceRecords = GedcomDocument.GetSourceRecords();
 
         if (sourceRecords.Count == 0) return "";
 
@@ -135,7 +145,7 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
     private string CreateIndividualListItem(IndividualRecord individualRecord)
     {
         var individualListItem = new IndividualListItem(individualRecord);
-        var ancestryLink = GenerateAncestryProfileLink(Gedcom.Header.Source.Tree.AutomatedRecordId, individualListItem.XrefId);
+        var ancestryLink = GenerateAncestryProfileLink(GedcomDocument.Header.Source.Tree.AutomatedRecordId, individualListItem.XrefId);
 
         return $@"<li class='individual-card'>
                     <a href='{ancestryLink}' target='_blank'>

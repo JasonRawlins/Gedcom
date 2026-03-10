@@ -114,7 +114,7 @@ public class FamilyTests
     public void FamilyWithAuntsAndUnclesTest()
     {
         var gedcom = TestUtilities.CreateGedcom();
-        var familyManager = new Gedcom.FamilyManager(gedcom);
+        var familyManager = new FamilyManager(gedcom);
         var saraFamily = familyManager.CreateFamily(TestFamilies.JamesSmithAndSaraDavis.Xref, Generation.Parent, Generation.Current);
 
         // Couple should be present.

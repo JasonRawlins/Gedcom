@@ -6,7 +6,7 @@ namespace Gedcom.GedcomWriters;
 
 public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 {
-    private GedcomDocument GedcomDocument { get; set; } = gedcom;
+    public GedcomDocument GedcomDocument { get; set; } = gedcom;
 
     public byte[] GetIndividual(string xref)
     {
@@ -20,7 +20,7 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public byte[] GetIndividuals(string query = "")
     {
-        var individualRecords = GedcomDocument.GetIndividualRecords(query);
+        var individualRecords = GedcomDocument.GetIndividualRecords();
         if (individualRecords.Count.Equals(0)) return [];
 
         var individualDtos = new List<IndividualDto>();
@@ -44,7 +44,7 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public byte[] GetFamilies(string query = "")
     {
-        var familyRecords = GedcomDocument.GetFamilyRecords(query);
+        var familyRecords = GedcomDocument.GetFamilyRecords();
 
         return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(familyRecords));
     }
@@ -60,7 +60,7 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public string GetRepositories(string query = "")
     {
-        var repositoryRecords = GedcomDocument.GetRepositoryRecords(query);
+        var repositoryRecords = GedcomDocument.GetRepositoryRecords();
 
         return JsonSerializer.Serialize(repositoryRecords);
     }
@@ -76,7 +76,7 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 
     public string GetSources(string query = "")
     {
-        var sourceRecords = GedcomDocument.GetSourceRecords(query);
+        var sourceRecords = GedcomDocument.GetSourceRecords();
 
         return JsonSerializer.Serialize(sourceRecords);
     }

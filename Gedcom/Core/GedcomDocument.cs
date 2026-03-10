@@ -48,7 +48,7 @@ public class GedcomDocument : RecordStructureBase
     public Header Header => First<Header>(Tag.Header);
 
     // Family (FAM)
-    public FamilyRecord GetFamilyRecord(string xref) => GetRecord<FamilyRecord>(xref);
+    public FamilyRecord GetFamilyRecord(string xref) => GetLevel0Record<FamilyRecord>(xref);
 
     // Given a child, find his or her parents.
     public FamilyRecord GetFamilyRecordOfParents(string childXref)
@@ -74,14 +74,14 @@ public class GedcomDocument : RecordStructureBase
         return family;
     }
 
-    public List<FamilyRecord> GetFamilyRecords(string query = "") => GetRecords<FamilyRecord>(Tag.Family, query);
+    public List<FamilyRecord> GetFamilyRecords() => GetRecords<FamilyRecord>(Tag.Family);
 
     // Individual (INDI)
-    public IndividualRecord GetIndividualRecord(string xref) => GetRecord<IndividualRecord>(xref);
-    public List<IndividualRecord> GetIndividualRecords(string query = "") => GetRecords<IndividualRecord>(Tag.Individual, query).OrderBy(ir => ir.Surname).ThenBy(ir => ir.Given).ToList();
+    public IndividualRecord GetIndividualRecord(string xref) => GetLevel0Record<IndividualRecord>(xref);
+    public List<IndividualRecord> GetIndividualRecords() => [.. GetRecords<IndividualRecord>(Tag.Individual).OrderBy(ir => ir.Surname).ThenBy(ir => ir.Given)];
 
     // Multimedia (OBJE)
-    public MultimediaRecord GetObjectRecord(string xref) => GetRecord<MultimediaRecord>(xref);
+    public MultimediaRecord GetObjectRecord(string xref) => GetLevel0Record<MultimediaRecord>(xref);
     public List<MultimediaRecord> GetObjectRecords() => GetRecords<MultimediaRecord>(Tag.Object);
 
     // Note (NOTE)
@@ -89,24 +89,27 @@ public class GedcomDocument : RecordStructureBase
     //public List<NoteRecord> GetNoteRecords() => GetRecords<NoteRecord>(Tag.Note);
 
     // Repository (REPO)
-    public RepositoryRecord GetRepositoryRecord(string xref) => GetRecord<RepositoryRecord>(xref);
-    public List<RepositoryRecord> GetRepositoryRecords(string query = "") => GetRecords<RepositoryRecord>(Tag.Repository, query);
+    public RepositoryRecord GetRepositoryRecord(string xref) => GetLevel0Record<RepositoryRecord>(xref);
+    public List<RepositoryRecord> GetRepositoryRecords() => GetRecords<RepositoryRecord>(Tag.Repository);
 
     // Source (SOUR)
-    public SourceRecord GetSourceRecord(string xref) => GetRecord<SourceRecord>(xref);
-    public List<SourceRecord> GetSourceRecords(string query = "") => GetRecords<SourceRecord>(Tag.Source, query);
+    public SourceRecord GetSourceRecord(string xref) => GetLevel0Record<SourceRecord>(xref);
+    public List<SourceRecord> GetSourceRecords() => GetRecords<SourceRecord>(Tag.Source);
 
     // Submitter (SUBM) TODO:
-    public SubmitterRecord GetSubmitterRecord(string xref) => GetRecord<SubmitterRecord>(xref);
+    public SubmitterRecord GetSubmitterRecord(string xref) => GetLevel0Record<SubmitterRecord>(xref);
 
-    private T GetRecord<T>(string xref) where T : RecordStructureBase, new() =>
-        CreateRecord<T>(Single(r => r.Value.Equals(xref) && r.Level == 0 && r.Tag != Tag.Header && r.Tag != Tag.Trailer));
-
-    private List<T> GetRecords<T>(string tag, string query = "") where T : RecordStructureBase, new()
+    private T GetLevel0Record<T>(string xref) where T : RecordStructureBase, new()
     {
-        var records = Record.Records.Where(r =>
-            r.Tag.Equals(tag)
-            && r.IsQueryMatch(query));
+
+        //var singleRecord = Single(r => r.Value.Equals(xref) && r.Level == 0 && r.Tag != Tag.Header && r.Tag != Tag.Trailer);
+        var singleRecord = Record.Records.SingleOrDefault(r => r.Value.Equals(xref) && r.Level == 0 && r.Tag != Tag.Header && r.Tag != Tag.Trailer) ?? Record.Empty;
+        return CreateRecord<T>(singleRecord);
+    }     
+
+    private List<T> GetRecords<T>(string tag) where T : RecordStructureBase, new()
+    {
+        var records = Record.Records.Where(r => r.Tag.Equals(tag));
 
         return [.. records.Select(CreateRecord<T>)];
     }
