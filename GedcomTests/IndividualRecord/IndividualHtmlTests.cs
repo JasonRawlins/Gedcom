@@ -14,9 +14,9 @@ public class IndividualHtmlTests
     public void ExportIndividualJsonTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
-        var individualHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividual(TestIndividuals.SaraDavis.Xref));
+        var individualHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividual(TestIndividuals.SarahDavis.Xref));
 
-        Assert.IsTrue(individualHtml.Contains(TestIndividuals.SaraDavis.XrefId) &&
+        Assert.IsTrue(individualHtml.Contains(TestIndividuals.SarahDavis.XrefId) &&
                 !(individualHtml.Contains(TestIndividuals.DylanDavis.XrefId) ||
                 individualHtml.Contains(TestIndividuals.FionaDouglas.XrefId) ||
                 individualHtml.Contains(TestIndividuals.GwenJones.XrefId) ||
@@ -31,7 +31,7 @@ public class IndividualHtmlTests
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.HTML);
         var individualsHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividuals());
 
-        Assert.IsTrue(individualsHtml.Contains(TestIndividuals.SaraDavis.XrefId) &&
+        Assert.IsTrue(individualsHtml.Contains(TestIndividuals.SarahDavis.XrefId) &&
                 individualsHtml.Contains(TestIndividuals.DylanDavis.XrefId) &&
                 individualsHtml.Contains(TestIndividuals.FionaDouglas.XrefId) &&
                 individualsHtml.Contains(TestIndividuals.GwenJones.XrefId) &&
@@ -57,6 +57,6 @@ public class IndividualHtmlTests
 
         Assert.IsTrue(individualsHtml.Contains(TestIndividuals.DylanDavis.XrefId)
             && individualsHtml.Contains(TestIndividuals.OwenDavis.XrefId)
-            && individualsHtml.Contains(TestIndividuals.SaraDavis.XrefId));
+            && individualsHtml.Contains(TestIndividuals.SarahDavis.XrefId));
     }
 }

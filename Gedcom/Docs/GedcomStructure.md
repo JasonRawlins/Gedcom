@@ -122,7 +122,7 @@ dates to focus on properties that matter:
 ```
 0 HEAD
 0 @I1@ INDI
-    1 NAME Sara /Davis/
+    1 NAME Sarah /Davis/
     1 SEX F
     1 FAMC @F1@
 0 @I2@ INDI

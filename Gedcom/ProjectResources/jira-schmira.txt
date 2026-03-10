@@ -5,6 +5,8 @@ Change Sara Davis to Sarah Davis in all test files.
 Should I be returning byte[] from IGedcomWriters? I only did it for ExcelGedcomWriter.
 	It's causing me to get a string from the byte[] returned.
 
+Move GenesAndGenealogy site to another project and remove it from Gedcom.
+
 Several tests are using lame assertions like searching for a magic string. Fix them.
 
 This program is using Ancestry specific tags like _TREE. Is that appropriate for a 

@@ -204,11 +204,11 @@ public class TestIndividuals
         }
     }
 
-    public static TestIndividual SaraDavis
+    public static TestIndividual SarahDavis
     {
         get
         {
-            var individual = new TestIndividual("@I272718947187@", "Sara", "Davis");
+            var individual = new TestIndividual("@I272718947187@", "Sarah", "Davis");
             individual.Events.Add(new(Tag.Birth, "8 Aug 1960", "Salt Lake City, Salt Lake, Utah, USA"));
             individual.Events.Add(new(Tag.Death, "8 Aug 2020", "Salt Lake City, Salt Lake, Utah, USA"));
             return individual;

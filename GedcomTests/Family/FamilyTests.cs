@@ -16,7 +16,7 @@ public class FamilyTests
 
         // Husband and wife should be present.
         Assert.AreEqual(TestIndividuals.JamesSmith.Xref, jamesAndSaraFamily.Husband!.Xref);
-        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, jamesAndSaraFamily.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.SarahDavis.Xref, jamesAndSaraFamily.Wife!.Xref);
 
         // Children should not be present.
         Assert.AreEqual(0, jamesAndSaraFamily.Children.Count);
@@ -31,7 +31,7 @@ public class FamilyTests
 
         // Couple should be present.
         Assert.AreEqual(TestIndividuals.JamesSmith.Xref, saraFamily.Husband!.Xref);
-        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, saraFamily.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.SarahDavis.Xref, saraFamily.Wife!.Xref);
 
         var fatherDylan = saraFamily.Wife!.Parents!.Husband!;
         var motherFiona = saraFamily.Wife!.Parents!.Wife!;
@@ -53,7 +53,7 @@ public class FamilyTests
 
         // Couple should be present.
         Assert.AreEqual(TestIndividuals.JamesSmith.Xref, saraFamily.Husband!.Xref);
-        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, saraFamily.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.SarahDavis.Xref, saraFamily.Wife!.Xref);
 
         var fatherDylan = saraFamily.Wife.Parents!.Husband!;
         var grandfatherOwen = fatherDylan.Parents!.Husband!;
@@ -104,7 +104,7 @@ public class FamilyTests
         Assert.IsNull(owenAndGwenFamily.Wife!.Parents);
 
         var sonDylan = owenAndGwenFamily.Children.Single(c => c.Xref == TestIndividuals.DylanDavis.Xref);
-        var granddaughterSara = sonDylan.Children.Single(c => c.Xref == TestIndividuals.SaraDavis.Xref);
+        var granddaughterSara = sonDylan.Children.Single(c => c.Xref == TestIndividuals.SarahDavis.Xref);
         
         // Grandchild should be present.
         Assert.IsNotNull(granddaughterSara);
@@ -119,7 +119,7 @@ public class FamilyTests
 
         // Couple should be present.
         Assert.AreEqual(TestIndividuals.JamesSmith.Xref, saraFamily.Husband!.Xref);
-        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, saraFamily.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.SarahDavis.Xref, saraFamily.Wife!.Xref);
 
         var fatherDylan = saraFamily.Wife!.Parents!.Husband!;
         var motherFiona = saraFamily.Wife!.Parents!.Wife!;
@@ -147,7 +147,7 @@ public class FamilyTests
 
         // Couple should be present.
         Assert.AreEqual(TestIndividuals.JamesSmith.Xref, saraFamily.Husband!.Xref);
-        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, saraFamily.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.SarahDavis.Xref, saraFamily.Wife!.Xref);
 
         // Father should be present.
         var fatherDylan = saraFamily.Wife!.Parents!.Husband!;
@@ -172,7 +172,7 @@ public class FamilyTests
 
         // Couple should be present.
         Assert.AreEqual(TestIndividuals.JamesSmith.Xref, saraFamily.Husband!.Xref);
-        Assert.AreEqual(TestIndividuals.SaraDavis.Xref, saraFamily.Wife!.Xref);
+        Assert.AreEqual(TestIndividuals.SarahDavis.Xref, saraFamily.Wife!.Xref);
 
         var sara = saraFamily.Wife!;
         var fatherDylan = sara.Parents!.Husband!;

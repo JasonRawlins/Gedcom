@@ -90,7 +90,7 @@ public class TestFamilies(GedcomDocument gedcom)
         {
             var testFamilies = new TestFamilies(TestUtilities.CreateGedcom());
             var familyRecord = testFamilies.GetFamilyRecord(TestIndividuals.DylanDavis, TestIndividuals.FionaDouglas);
-            var family = new TestFamily(familyRecord.Xref, TestIndividuals.DylanDavis, TestIndividuals.FionaDouglas, [TestIndividuals.SaraDavis])
+            var family = new TestFamily(familyRecord.Xref, TestIndividuals.DylanDavis, TestIndividuals.FionaDouglas, [TestIndividuals.SarahDavis])
             {
                 Marriage = new(Tag.Marriage, "7 Jul 1955", "")
             };
@@ -103,8 +103,8 @@ public class TestFamilies(GedcomDocument gedcom)
         get
         {
             var testFamilies = new TestFamilies(TestUtilities.CreateGedcom());
-            var familyRecord = testFamilies.GetFamilyRecord(TestIndividuals.JamesSmith, TestIndividuals.SaraDavis);
-            var family = new TestFamily(familyRecord.Xref, TestIndividuals.JamesSmith, TestIndividuals.SaraDavis, [TestIndividuals.MarySmith])
+            var familyRecord = testFamilies.GetFamilyRecord(TestIndividuals.JamesSmith, TestIndividuals.SarahDavis);
+            var family = new TestFamily(familyRecord.Xref, TestIndividuals.JamesSmith, TestIndividuals.SarahDavis, [TestIndividuals.MarySmith])
             {
                 Marriage = new(Tag.Marriage, "8 Aug 1985", "")
             };

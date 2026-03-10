@@ -14,9 +14,9 @@ public class IndividualJsonTests
     public void ExportIndividualJsonTest()
     {
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
-        var individualJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetIndividual(TestIndividuals.SaraDavis.Xref));
+        var individualJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetIndividual(TestIndividuals.SarahDavis.Xref));
 
-        Assert.IsTrue(individualJson.Contains(TestIndividuals.SaraDavis.Xref) &&
+        Assert.IsTrue(individualJson.Contains(TestIndividuals.SarahDavis.Xref) &&
                 !(individualJson.Contains(TestIndividuals.DylanDavis.Xref) ||
                 individualJson.Contains(TestIndividuals.FionaDouglas.Xref) ||
                 individualJson.Contains(TestIndividuals.GwenJones.Xref) ||
@@ -31,7 +31,7 @@ public class IndividualJsonTests
         var jsonGedcomWriter =  GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.JSON);
         var individualsJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetIndividuals());
 
-        Assert.IsTrue(individualsJson.Contains(TestIndividuals.SaraDavis.Xref) &&
+        Assert.IsTrue(individualsJson.Contains(TestIndividuals.SarahDavis.Xref) &&
                 individualsJson.Contains(TestIndividuals.DylanDavis.Xref) &&
                 individualsJson.Contains(TestIndividuals.FionaDouglas.Xref) &&
                 individualsJson.Contains(TestIndividuals.GwenJones.Xref) &&
@@ -58,7 +58,7 @@ public class IndividualJsonTests
 
         Assert.IsTrue(individualsJson.Contains(TestIndividuals.DylanDavis.Xref)
             && individualsJson.Contains(TestIndividuals.OwenDavis.Xref)
-            && individualsJson.Contains(TestIndividuals.SaraDavis.Xref));
+            && individualsJson.Contains(TestIndividuals.SarahDavis.Xref));
     }
 
     //[TestMethod]

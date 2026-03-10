@@ -13,42 +13,14 @@
 3 ADDR 1300 West Traverse Parkway
 4 CONT Lehi, UT  84043
 4 CONT USA
-1 DATE 22 Jan 2026
-2 TIME 19:31:58
+1 DATE 10 Mar 2026
+2 TIME 16:12:23
 1 GEDC
 2 VERS 5.5.1
 2 FORM LINEAGE-LINKED
 1 CHAR UTF-8
 0 @SUBM1@ SUBM
 1 NAME Ancestry.com Member Trees Submitter
-0 @I272718947187@ INDI
-1 NAME Sara /Davis/
-2 GIVN Sara
-2 SURN Davis
-1 SEX F
-1 FAMC @F1@
-1 FAMS @F7@
-1 BIRT
-2 DATE 8 Aug 1960
-2 PLAC Cardiff, Glamorgan, Wales
-1 DEAT
-2 DATE 8 Aug 2020
-2 PLAC Salt Lake City, Salt Lake, Utah, USA
-1 SOUR @S976697667@
-2 PAGE Marriage
-0 @I272718947188@ INDI
-1 NAME Fiona /Douglas/
-2 GIVN Fiona
-2 SURN Douglas
-1 SEX F
-1 FAMC @F9@
-1 FAMS @F1@
-1 BIRT
-2 DATE 7 Jul 1930
-2 PLAC Scotland
-1 DEAT
-2 DATE 7 Jul 1990
-2 PLAC Salt Lake City, Salt Lake, Utah, USA
 0 @I272718948910@ INDI
 1 NAME Dylan /Davis/
 2 GIVN Dylan
@@ -313,6 +285,34 @@
 1 OBJE @O1@
 1 OBJE @O2@
 1 OBJE @O3@
+0 @I272718947187@ INDI
+1 NAME Sarah /Davis/
+2 GIVN Sarah
+2 SURN Davis
+1 SEX F
+1 FAMC @F1@
+1 FAMS @F7@
+1 BIRT
+2 DATE 8 Aug 1960
+2 PLAC Cardiff, Glamorgan, Wales
+1 DEAT
+2 DATE 8 Aug 2020
+2 PLAC Salt Lake City, Salt Lake, Utah, USA
+1 SOUR @S976697667@
+2 PAGE Marriage
+0 @I272718947188@ INDI
+1 NAME Fiona /Douglas/
+2 GIVN Fiona
+2 SURN Douglas
+1 SEX F
+1 FAMC @F9@
+1 FAMS @F1@
+1 BIRT
+2 DATE 7 Jul 1930
+2 PLAC Scotland
+1 DEAT
+2 DATE 7 Jul 1990
+2 PLAC Salt Lake City, Salt Lake, Utah, USA
 0 @I272718949767@ INDI
 1 NAME Gwen /Jones/
 2 GIVN Gwen
@@ -511,6 +511,30 @@
 2 SURN Douglas
 1 SEX M
 1 FAMS @F9@
+0 @I272731095411@ INDI
+1 NAME Every /Event/
+2 GIVN Every
+2 SURN Event
+1 SEX M
+1 FAMC @F5@
+1 BIRT
+2 DATE 7 Jul 1936
+2 PLAC Wales
+1 ADDR
+2 DATE 8 Jul 1936
+2 PLAC Wales
+2 NOTE Address description
+1 ADOP
+2 DATE 9 Jul 1936
+2 PLAC Wales
+2 NOTE Adoption description
+1 CHRA
+2 DATE 10 Jul 1936
+2 PLAC Wales
+2 NOTE Adult christening description
+1 DEAT
+2 DATE 7 Jul 1996
+2 PLAC Wales
 0 @F1@ FAM
 1 HUSB @I272718948910@
 1 WIFE @I272718947188@
@@ -600,6 +624,7 @@
 1 CHIL @I272718948910@
 1 CHIL @I272721726882@
 1 CHIL @I272721732639@
+1 CHIL @I272731095411@
 1 MARR
 2 DATE 6 Jun 1925
 2 SOUR @S976697667@
@@ -648,7 +673,7 @@
 1 _META <metadataxml><acountry></acountry><branch></branch><cemetery></cemetery><country></country><directions></directions><ingredients></ingredients><institution></institution><job></job><ocountry></ocountry><school></school><transcription></transcriptio
 2 CONC n><personas><persona><pname></pname><bdate></bdate><bplace></bplace><ddate></ddate><dplace></dplace></persona></personas></metadataxml>
 1 _CREA 2026-01-22 19:12:00.407
-1 _USER 8NfZD43UIsVkhA6YqQJE3GZrGid0Z2isLUNcZWzQWF3OBMn9QAu8GjVwCy2NQUdJycOmWKfiFUCjjhS5/0/EpA==
+1 _USER QixXDc6beOI/csSm7ylIrofE0YCRu9OpidbrAGCnO9XiGbRY20Z3i6wkKw9LzmqoFYyje1QjPpgQ1Ezq1fXApQ==
 2 _ENCR 1
 1 _ORIG acom
 1 _ATL N
@@ -669,7 +694,7 @@
 1 _META <metadataxml><acountry></acountry><branch></branch><cemetery></cemetery><country></country><directions></directions><ingredients></ingredients><institution></institution><job></job><ocountry></ocountry><school></school><transcription></transcriptio
 2 CONC n><personas><persona><pname></pname><bdate></bdate><bplace></bplace><ddate></ddate><dplace></dplace></persona></personas></metadataxml>
 1 _CREA 2026-01-22 19:11:59.990
-1 _USER yK6AP1OyNR38v0EHE85wamNKyKxI/KPJPvBGRupVr9aEeXkIzqdXd5IeUGVS/oxrBtWSqH03Qjc3U5Venje+sg==
+1 _USER dSdLbvVX4bvVvQp4QolZaIxMEWAdFuWYfjp8UeXqDBXYhXFvwqKzBVRMLIg7waB+kIL0aCULKCzTI9uPRqLDjQ==
 2 _ENCR 1
 1 _ORIG acom
 1 _ATL N
@@ -688,7 +713,7 @@
 1 _META <metadataxml><acountry></acountry><branch></branch><cemetery></cemetery><country></country><directions></directions><ingredients></ingredients><institution></institution><job></job><ocountry></ocountry><school></school><transcription></transcriptio
 2 CONC n></metadataxml>
 1 _CREA 2026-01-22 19:11:59.420
-1 _USER BYEgcv5lttEYuIDdG5gIlj2pmdOagWE2C2cT2McYmFw5dgx6X+j8Tba5jmUnOhRgfjJHbqZ/POLbqtHf6TC6RA==
+1 _USER 2umAJgot6hzWZkDSGBMuxlOlM5lGNrsYpoH0DrCSFfzOoReQSr3Z5votLPR0EAv4JxdaBPAeyfpOOhZK6eQcIw==
 2 _ENCR 1
 1 _ORIG acom
 1 _ATL N
