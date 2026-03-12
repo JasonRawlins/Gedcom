@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(LdsIndividualOrdinanceJsonConverter))]
 public class LdsIndividualOrdinance : RecordStructureBase
 {
     public LdsIndividualOrdinance() : base() { }
@@ -29,17 +25,6 @@ public class LdsIndividualOrdinance : RecordStructureBase
     public string TempleCode => _templeCode ??= GetValue(Tag.Temple);
 
     public override string ToString() => $"{Record.Value}, {TempleCode}, {PlaceLivingOrdinance}";
-}
-
-internal sealed class LdsIndividualOrdinanceJsonConverter : JsonConverter<LdsIndividualOrdinance>
-{
-    public override LdsIndividualOrdinance? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, LdsIndividualOrdinance value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new LdsIndividualOrdinanceDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class LdsIndividualOrdinanceDto(LdsIndividualOrdinance ldsIndividualOrdinance) : GedcomDto

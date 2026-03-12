@@ -1,11 +1,8 @@
 ﻿using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(NoteStructureJsonConverter))]
 public class NoteStructure : RecordStructureBase
 {
     public NoteStructure() : base() { }
@@ -49,17 +46,6 @@ public class NoteStructure : RecordStructureBase
     {
         var lengthOfSubstring = Text.Length < 64 ? Text.Length : 64;
         return Text.Substring(0, lengthOfSubstring);
-    }
-}
-
-internal sealed class NoteStructureJsonConverter : JsonConverter<NoteStructure>
-{
-    public override NoteStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, NoteStructure value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new NoteDto(value), GedcomDto.SerializationOptions);
     }
 }
 

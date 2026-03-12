@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(PlaceStructureJsonConverter))]
 public class PlaceStructure : RecordStructureBase
 {
     public PlaceStructure() : base() { }
@@ -28,17 +24,6 @@ public class PlaceStructure : RecordStructureBase
     public List<NameVariation> PlaceRomanizedVariations => _placeRomanizedVariations ??= List<NameVariation>(Tag.Romanized);
 
     public override string ToString() => $"{Record.Value}, {PlaceName}";
-}
-
-internal sealed class PlaceStructureJsonConverter : JsonConverter<PlaceStructure>
-{
-    public override PlaceStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, PlaceStructure value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new PlaceDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class PlaceDto(PlaceStructure placeStructure) : GedcomDto

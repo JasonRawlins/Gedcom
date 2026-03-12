@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(ChangeDateJsonConverter))]
 public class ChangeDate : RecordStructureBase
 {
     public ChangeDate() { }
@@ -18,17 +14,6 @@ public class ChangeDate : RecordStructureBase
     public List<NoteStructure> NoteStructures => _noteStructures ??= List<NoteStructure>(Tag.Note);
 
     public override string ToString() => $"{Record.Value}, {GedcomDate.DayMonthYear}";
-}
-
-internal sealed class ChangeDateJsonConverter : JsonConverter<ChangeDate>
-{
-    public override ChangeDate? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, ChangeDate value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new ChangeDateDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class ChangeDateDto(ChangeDate changeDate) : GedcomDto

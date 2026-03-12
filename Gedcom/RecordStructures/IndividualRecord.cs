@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(IndividualJsonConverter))]
 public class IndividualRecord : RecordStructureBase
 {
     public IndividualRecord() { }
@@ -106,17 +102,6 @@ public class IndividualRecord : RecordStructureBase
     }
 
     public override string ToString() => $"{Record.Value}, {PersonalNameStructures.First().NamePersonal}, {SexValue}";
-}
-
-public sealed class IndividualJsonConverter : JsonConverter<IndividualRecord>
-{
-    public override IndividualRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, IndividualRecord value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new IndividualDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class IndividualDto : GedcomDto

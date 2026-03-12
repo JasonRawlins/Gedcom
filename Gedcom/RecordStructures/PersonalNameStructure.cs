@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(PersonalNameStructureJsonConverter))]
 public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
 {
     public PersonalNameStructure() : base() { }
@@ -40,17 +36,6 @@ public class PersonalNameStructure : RecordStructureBase, IPersonalNamePieces
     public string SurnamePrefix => _surnamePrefix ??= GetValue(Tag.SurnamePrefix);
 
     public override string ToString() => $"{Record.Value}, {NamePersonal}";
-}
-
-internal sealed class PersonalNameStructureJsonConverter : JsonConverter<PersonalNameStructure>
-{
-    public override PersonalNameStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, PersonalNameStructure value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new PersonalNameDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class PersonalNameDto(PersonalNameStructure personalNameStructure) : GedcomDto

@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(SourceCitationDataJsonConverter))]
 public class SourceCitationData : RecordStructureBase
 {
     public SourceCitationData() : base() { }
@@ -17,17 +13,6 @@ public class SourceCitationData : RecordStructureBase
     public List<NoteStructure> TextFromSources => _textFromSources ??= List<NoteStructure>(Tag.Text);
 
     public override string ToString() => $"{Record.Value}, {EntryRecordingDate}";
-}
-
-internal sealed class SourceCitationDataJsonConverter : JsonConverter<SourceCitationData>
-{
-    public override SourceCitationData? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, SourceCitationData value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new SourceCitationDataDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class SourceCitationDataDto(SourceCitationData sourceCitationData) : GedcomDto

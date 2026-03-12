@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(SubmitterRecordJsonConverter))]
 public class SubmitterRecord : RecordStructureBase
 {
     public SubmitterRecord() : base() { }
@@ -35,17 +31,6 @@ public class SubmitterRecord : RecordStructureBase
     public string SubmitterRegisteredRfn => _submitterRegisteredRfn ??= GetValue(Tag.RecordFileNumber);
 
     public override string ToString() => $"{Record.Value}, {SubmitterName}";
-}
-
-internal sealed class SubmitterRecordJsonConverter : JsonConverter<SubmitterRecord>
-{
-    public override SubmitterRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, SubmitterRecord value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new SubmitterDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class SubmitterDto(SubmitterRecord submitterRecord) : GedcomDto

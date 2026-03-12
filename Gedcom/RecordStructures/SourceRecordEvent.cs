@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(SourceRecordEventJsonConverter))]
 public class SourceRecordEvent : RecordStructureBase
 {
     public SourceRecordEvent() : base() { }
@@ -17,17 +13,6 @@ public class SourceRecordEvent : RecordStructureBase
     public string SourceJurisdictionPlace => _sourceJurisdictionPlace ??= GetValue(Tag.Place);
 
     public override string ToString() => $"{Record.Value}, {DatePeriod}";
-}
-
-internal sealed class SourceRecordEventJsonConverter : JsonConverter<SourceRecordEvent>
-{
-    public override SourceRecordEvent? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, SourceRecordEvent value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new SourceRecordEventDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class SourceRecordEventDto(SourceRecordEvent sourceRecordEvent) : GedcomDto

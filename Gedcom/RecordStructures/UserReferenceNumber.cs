@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(UserReferenceNumberJsonConverter))]
 public class UserReferenceNumber : RecordStructureBase
 {
     public UserReferenceNumber() { }
@@ -15,18 +11,6 @@ public class UserReferenceNumber : RecordStructureBase
 
     public override string ToString() => $"{Record.Value}, {UserReferenceType}";
 }
-
-internal sealed class UserReferenceNumberJsonConverter : JsonConverter<UserReferenceNumber>
-{
-    public override UserReferenceNumber? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, UserReferenceNumber value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new UserReferenceNumberDto(value), GedcomDto.SerializationOptions);
-    }
-}
-
 public class UserReferenceNumberDto(UserReferenceNumber userReferenceNumber) : GedcomDto
 {
     public string? UserReferenceType { get; set; } = GetString(userReferenceNumber.UserReferenceType);

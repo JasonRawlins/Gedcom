@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(FileRecordJsonConverter))]
 public class FileRecord : RecordStructureBase
 {
     public FileRecord() : base() { }
@@ -18,17 +14,6 @@ public class FileRecord : RecordStructureBase
     public string Title => _title ??= GetValue(Tag.Title);
 
     public override string ToString() => $"{Title}";
-}
-
-internal sealed class FileRecordJsonConverter : JsonConverter<FileRecord>
-{
-    public override FileRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, FileRecord value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new FileDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class FileDto(FileRecord fileRecord) : GedcomDto

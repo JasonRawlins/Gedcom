@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(HeaderCorporationJsonConverter))]
 public class HeaderCorporation : RecordStructureBase, IAddressStructure
 {
     public HeaderCorporation() : base() { }
@@ -26,17 +22,6 @@ public class HeaderCorporation : RecordStructureBase, IAddressStructure
     public List<string> PhoneNumbers => _phoneNumbers ??= ListValues(Tag.Phone);
 
     public override string ToString() => $"{Record.Value}, {AddressStructure.AddressLine}";
-}
-
-internal sealed class HeaderCorporationJsonConverter : JsonConverter<HeaderCorporation>
-{
-    public override HeaderCorporation? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, HeaderCorporation value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new HeaderCorporationDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class HeaderCorporationDto(HeaderCorporation headerCorporation) : GedcomDto

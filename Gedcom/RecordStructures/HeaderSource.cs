@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(HeaderSourceJsonConverter))]
 public class HeaderSource : RecordStructureBase
 {
     public HeaderSource() : base() { }
@@ -28,17 +24,6 @@ public class HeaderSource : RecordStructureBase
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {NameOfProduct}, {Version}";
-}
-
-internal sealed class HeaderSourceJsonConverter : JsonConverter<HeaderSource>
-{
-    public override HeaderSource? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, HeaderSource value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new HeaderSourceDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class HeaderSourceDto(HeaderSource headerSource) : GedcomDto

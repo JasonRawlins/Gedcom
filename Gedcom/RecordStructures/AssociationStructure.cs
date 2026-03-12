@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(AssociationStructureJsonConverter))]
 public class AssociationStructure : RecordStructureBase
 {
     public AssociationStructure() : base() { }
@@ -20,17 +16,6 @@ public class AssociationStructure : RecordStructureBase
     public List<SourceCitation> SourceCitations => _sourceCitations ??= List<SourceCitation>(Tag.Source);
     
     public override string ToString() => $"{Record.Value}, {RelationIsDescriptor}";
-}
-
-internal sealed class AssociationStructureJsonConverter : JsonConverter<AssociationStructure>
-{
-    public override AssociationStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, AssociationStructure value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new AssociationDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class AssociationDto(AssociationStructure associationStructure) : GedcomDto

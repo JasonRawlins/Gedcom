@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(LdsSpouseSealingJsonConverter))]
 public class LdsSpouseSealing : RecordStructureBase
 {
     public LdsSpouseSealing() : base() { }
@@ -29,17 +25,6 @@ public class LdsSpouseSealing : RecordStructureBase
     public string TempleCode => _templeCode ??= GetValue(Tag.Temple);
 
     public override string ToString() => $"{Record.Value}, {TempleCode}, {DateLdsOrdinance}";
-}
-
-internal sealed class LdsSpouseSealingJsonConverter : JsonConverter<LdsSpouseSealing>
-{
-    public override LdsSpouseSealing? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, LdsSpouseSealing value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new LdsSpouseSealingDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class LdsSpouseSealingDto(LdsSpouseSealing ldsSpouseSealing) : GedcomDto

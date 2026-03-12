@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(ChildToFamilyLinkJsonConverter))]
 public class ChildToFamilyLink : RecordStructureBase
 {
     public ChildToFamilyLink() : base() { }
@@ -25,17 +21,6 @@ public class ChildToFamilyLink : RecordStructureBase
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {PedigreeLinkageType}";
-}
-
-internal sealed class ChildToFamilyLinkJsonConverter : JsonConverter<ChildToFamilyLink>
-{
-    public override ChildToFamilyLink? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, ChildToFamilyLink value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new ChildToFamilyLinkDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class ChildToFamilyLinkDto(ChildToFamilyLink childToFamilyLink) : GedcomDto

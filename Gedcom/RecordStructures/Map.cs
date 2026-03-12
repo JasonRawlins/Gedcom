@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(MapJsonConverter))]
 public class Map : RecordStructureBase
 {
     public Map() : base() { }
@@ -18,17 +14,6 @@ public class Map : RecordStructureBase
     public string PlaceLongitude => _placeLongitude ??= GetValue(Tag.Longitude);
 
     public override string ToString() => $"{Record.Value}, {PlaceLatitude}, {PlaceLongitude}";
-}
-
-internal sealed class MapJsonConverter : JsonConverter<Map>
-{
-    public override Map? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, Map value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new MapDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class MapDto(Map map) : GedcomDto

@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(RepositoryRecordJsonConverter))]
 public class RepositoryRecord : RecordStructureBase, IAddressStructure
 {
     public RepositoryRecord() : base() { }
@@ -46,17 +42,6 @@ public class RepositoryRecord : RecordStructureBase, IAddressStructure
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {Name}";
-}
-
-internal sealed class RepositoryRecordJsonConverter : JsonConverter<RepositoryRecord>
-{
-    public override RepositoryRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, RepositoryRecord value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new RepositoryDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class RepositoryDto : GedcomDto

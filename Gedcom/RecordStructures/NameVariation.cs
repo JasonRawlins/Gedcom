@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(NameVariationJsonConverter))]
 public class NameVariation : RecordStructureBase, IPersonalNamePieces
 {
     public NameVariation() { }
@@ -35,17 +31,6 @@ public class NameVariation : RecordStructureBase, IPersonalNamePieces
     public string Type => _type ??= GetValue(Tag.Type);
 
     public override string ToString() => $"{Record.Value}, {Type}, {FullName}";
-}
-
-internal sealed class NameVariationJsonConverter : JsonConverter<NameVariation>
-{
-    public override NameVariation? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, NameVariation value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new NameVariationDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class NameVariationDto(NameVariation nameVariation) : GedcomDto

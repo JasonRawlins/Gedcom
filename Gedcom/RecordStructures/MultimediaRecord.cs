@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(MultimediaRecordJsonConverter))]
 public class MultimediaRecord : RecordStructureBase
 {
     public MultimediaRecord() : base() { }
@@ -52,17 +48,6 @@ public class MultimediaRecord : RecordStructureBase
     public UserReferenceNumber UserReferenceNumber => _userReferenceNumber ??= First<UserReferenceNumber>(Tag.Reference);
 
     public override string ToString() => $"{Record.Value}, {AutomatedRecordId}, {DescriptiveTitle}";
-}
-
-internal sealed class MultimediaRecordJsonConverter : JsonConverter<MultimediaRecord>
-{
-    public override MultimediaRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, MultimediaRecord value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new MultimediaDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class MultimediaDto(MultimediaRecord multimediaRecord) : GedcomDto

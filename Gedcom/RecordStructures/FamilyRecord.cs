@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(FamilyRecordJsonConverter))]
 public class FamilyRecord : RecordStructureBase
 {
     public FamilyRecord() : base() { }
@@ -67,17 +63,6 @@ public class FamilyRecord : RecordStructureBase
         var childrenCountText = Children.Count == 1 ? "child" : "children";
 
         return $"{Record.Value}, {Husband} and {Wife} with {Children.Count} {childrenCountText}";
-    }
-}
-
-internal sealed class FamilyRecordJsonConverter : JsonConverter<FamilyRecord>
-{
-    public override FamilyRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, FamilyRecord value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new FamilyDto(value), GedcomDto.SerializationOptions);
     }
 }
 

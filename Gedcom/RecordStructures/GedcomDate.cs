@@ -1,6 +1,4 @@
 ﻿using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Gedcom.RecordStructures;
 
@@ -10,7 +8,6 @@ namespace Gedcom.RecordStructures;
 // part of the date e.g. "Mar 1889" (only month and year), "1943" (only year)
 // It may also have arbitrary text in it such as "Spring 1980". The problem of
 // parsing dates isn't simple so this is a naive implementation so far.
-[JsonConverter(typeof(GedcomDateJsonConverter))]
 public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
 {
     public GedcomDate() : base() { }
@@ -184,17 +181,6 @@ public class GedcomDate : RecordStructureBase, IComparable<GedcomDate>
     }
 
     public override string ToString() => $"{Record.Value}, {DayMonthYear}, (Raw: {DateValue})";
-}
-
-internal sealed class GedcomDateJsonConverter : JsonConverter<GedcomDate>
-{
-    public override GedcomDate? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, GedcomDate value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new GedcomDateDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class GedcomDateDto(GedcomDate gedcomDate) : GedcomDto, IComparable<GedcomDateDto>

@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(SourceCitationJsonConverter))]
 public class SourceCitation : RecordStructureBase
 {
     public SourceCitation() : base() { }
@@ -31,17 +27,6 @@ public class SourceCitation : RecordStructureBase
     public string Xref => Record.Value;
 
     public override string ToString() => $"{Record.Value}, {WhereWithinSource}";
-}
-
-internal sealed class SourceCitationJsonConverter : JsonConverter<SourceCitation>
-{
-    public override SourceCitation? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, SourceCitation value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new SourceCitationDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class SourceCitationDto(SourceCitation sourceCitation) : GedcomDto

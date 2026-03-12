@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(CharacterSetJsonConverter))]
 public class CharacterSet : RecordStructureBase
 {
     public CharacterSet() : base() { }
@@ -14,17 +10,6 @@ public class CharacterSet : RecordStructureBase
     public string VersionNumber => _versionNumber ??= GetValue(Tag.Version);
 
     public override string ToString() => $"{Record.Value}, {VersionNumber}";
-}
-
-internal sealed class CharacterSetJsonConverter : JsonConverter<CharacterSet>
-{
-    public override CharacterSet? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, CharacterSet value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new CharacterSetDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class CharacterSetDto(CharacterSet characterSet) : GedcomDto

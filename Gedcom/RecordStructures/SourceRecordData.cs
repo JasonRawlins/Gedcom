@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(SourceRecordDataJsonConverter))]
 public class SourceRecordData : RecordStructureBase
 {
     public SourceRecordData() : base() { }
@@ -20,17 +16,6 @@ public class SourceRecordData : RecordStructureBase
     public string ResponsibleAgency => _responsibleAgency ??= GetValue(Tag.Agency);
 
     public override string ToString() => $"{Record.Value}, {ResponsibleAgency}";
-}
-
-internal sealed class SourceRecordDataJsonConverter : JsonConverter<SourceRecordData>
-{
-    public override SourceRecordData? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, SourceRecordData value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new SourceDataDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class SourceDataDto(SourceRecordData sourceRecordData) : GedcomDto

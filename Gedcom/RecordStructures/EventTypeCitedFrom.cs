@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(EventTypeCitedFromJsonConverter))]
 public class EventTypeCitedFrom : RecordStructureBase
 {
     public EventTypeCitedFrom() : base() { }
@@ -14,17 +10,6 @@ public class EventTypeCitedFrom : RecordStructureBase
     public string RoleInEvent => _roleInEvent ??= GetValue(Tag.Role);
 
     public override string ToString() => $"{Record.Value}, {RoleInEvent}";
-}
-
-internal sealed class EventTypeCitedFromJsonConverter : JsonConverter<EventTypeCitedFrom>
-{
-    public override EventTypeCitedFrom? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, EventTypeCitedFrom value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new EventTypeCitedFromDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class EventTypeCitedFromDto(EventTypeCitedFrom eventTypeCitedFrom) : GedcomDto

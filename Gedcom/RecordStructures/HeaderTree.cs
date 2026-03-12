@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(HeaderTreeJsonConverter))]
 public class HeaderTree : RecordStructureBase
 {
     public HeaderTree() : base() { }
@@ -19,17 +15,6 @@ public class HeaderTree : RecordStructureBase
     public NoteStructure Note => _note ??= First<NoteStructure>(Tag.Note);
 
     public override string ToString() => $"{Record.Value}, {Name}";
-}
-
-internal sealed class HeaderTreeJsonConverter : JsonConverter<HeaderTree>
-{
-    public override HeaderTree? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, HeaderTree value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new HeaderTreeDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class HeaderTreeDto(HeaderTree headerTree) : GedcomDto

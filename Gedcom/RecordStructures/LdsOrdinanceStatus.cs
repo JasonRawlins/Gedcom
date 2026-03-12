@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(LdsOrdinanceStatusJsonConverter))]
 public class LdsOrdinanceStatus : RecordStructureBase
 {
     private string? _changeDate = null;
@@ -14,17 +10,6 @@ public class LdsOrdinanceStatus : RecordStructureBase
     public string Status => _status ??= Record.Value;
 
     public override string ToString() => $"{Record.Value}, {Status}, {ChangeDate}";
-}
-
-internal sealed class LdsOrdinanceStatusJsonConverter : JsonConverter<LdsOrdinanceStatus>
-{
-    public override LdsOrdinanceStatus? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, LdsOrdinanceStatus value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new LdsOrdinanceStatusDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class LdsOrdinanceStatusDto(LdsOrdinanceStatus ldsOrdinanceStatus) : GedcomDto

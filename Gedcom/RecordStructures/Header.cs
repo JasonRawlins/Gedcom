@@ -1,10 +1,6 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-
-namespace Gedcom.RecordStructures;
+﻿namespace Gedcom.RecordStructures;
 
 // The Gedcom Standard 5.5.1 documentation is at the end of this file.
-[JsonConverter(typeof(HeaderJsonConverter))]
 public class Header : RecordStructureBase
 {
     public Header() : base() { }
@@ -48,17 +44,6 @@ public class Header : RecordStructureBase
     public GedcomDate TransmissionDate => _transmissionDate ??= First<GedcomDate>(Tag.Date);
 
     public override string ToString() => $"{Record.Value}, {Submitter}";
-}
-
-internal sealed class HeaderJsonConverter : JsonConverter<Header>
-{
-    public override Header? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, Header value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new HeaderDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class HeaderDto(Header header) : GedcomDto

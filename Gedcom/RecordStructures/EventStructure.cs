@@ -1,10 +1,7 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-using Gedcom.Entities;
+﻿using Gedcom.Entities;
 
 namespace Gedcom.RecordStructures;
 
-[JsonConverter(typeof(EventStructureJsonConverter))]
 public class EventStructure : RecordStructureBase, IComparable<EventStructure>
 {
     public EventStructure() { }
@@ -120,17 +117,6 @@ public class EventStructure : RecordStructureBase, IComparable<EventStructure>
     }
 
     public override string ToString() => $"{Name}, {DateValue}";
-}
-
-internal sealed class EventStructureJsonConverter : JsonConverter<EventStructure>
-{
-    public override EventStructure? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-    public override void Write(Utf8JsonWriter writer, EventStructure value, JsonSerializerOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(value);
-        JsonSerializer.Serialize(writer, new EventDto(value), GedcomDto.SerializationOptions);
-    }
 }
 
 public class EventDto(EventStructure eventStructure) : GedcomDto, IComparable<EventDto>

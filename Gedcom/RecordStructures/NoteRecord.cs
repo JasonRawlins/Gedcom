@@ -1,12 +1,10 @@
-﻿// TODO: 2025-02-02 This code is probably redundant with NoteStructure. I cannot determine this right now.
-
-//using System.Text.Json;
-//using System.Text.Json.Serialization;
+﻿// TODO: 2025-03-12 This code is probably redundant with NoteStructure. I cannot determine this right now.
+// But there is a vary strong likelihood that it will be used in the future. I'm leaving it in so that
+// I don't forget about it.
 
 //namespace Gedcom.RecordStructures;
 
 //// The Gedcom Standard 5.5.1 documentation is at the end of this file.
-//[JsonConverter(typeof(NoteRecordJsonConverter))]
 //public class NoteRecord : RecordStructureBase
 //{
 //    public NoteRecord() : base() { }
@@ -17,17 +15,6 @@
 //    public UserReferenceNumber UserReferenceNumber => First<UserReferenceNumber>(Tag.Reference);
 
 //    public override string ToString() => $"{Record.Value}, {AutomatedRecordId}";
-//}
-
-//internal sealed class NoteRecordJsonConverter : JsonConverter<NoteRecord>
-//{
-//    public override NoteRecord? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => throw new NotImplementedException();
-
-//    public override void Write(Utf8JsonWriter writer, NoteRecord value, JsonSerializerOptions options)
-//    {
-//        ArgumentNullException.ThrowIfNull(value);
-//        JsonSerializer.Serialize(writer, new NoteJson(value), GedcomJson.SerializationOptions);
-//    }
 //}
 
 //public class NoteJson(NoteRecord noteRecord) : GedcomJson
