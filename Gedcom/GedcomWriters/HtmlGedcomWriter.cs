@@ -1,4 +1,5 @@
-﻿using Gedcom.RecordStructures;
+﻿using Gedcom.DTOs;
+using Gedcom.RecordStructures;
 using System.Text;
 
 namespace Gedcom.GedcomWriters;
@@ -7,20 +8,30 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 {
     public GedcomDocument GedcomDocument { get; set; } = gedcom;
 
-    //public byte[] GetIndividual(string xref)
-    //{
+    public byte[] GetIndividual(string xref)
+    {
+        var individualRecords = GedcomDocument.GetIndividualRecords();
 
-    //    var individualRecord = GedcomDocument.GetIndividualRecord(xref);
+        if (!string.IsNullOrEmpty(xref))
+        {
+            var individualRecord = individualRecords.SingleOrDefault(ir => ir.Xref == xref);
+            if (individualRecord != null)
+            {
+                individualRecords = [individualRecord];
+            }
+            else
+            {
+                individualRecords = [];
+            }
+        }
 
-    //    if (individualRecord.IsEmpty) return [];
+        var individualDtos = individualRecords.Select(ir => new IndividualDto(ir));
 
-    //    var individualRecords = new List<IndividualRecord> { individualRecord };
+        var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.GedcomNetIndividualsHtmlTemplate);
+        var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", GetIndividualsText(individualRecords));
 
-    //    var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.GedcomNetIndividualsHtmlTemplate);
-    //    var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", GetIndividualsText(individualRecords));
-
-    //    return Encoding.UTF8.GetBytes(finalHtml);
-    //}
+        return Encoding.UTF8.GetBytes(finalHtml);
+    }
 
     public byte[] GetIndividuals(string xref = "")
     {

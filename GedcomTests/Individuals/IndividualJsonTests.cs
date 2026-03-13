@@ -1,5 +1,4 @@
-﻿using Gedcom;
-using Gedcom.GedcomWriters;
+﻿using Gedcom.GedcomWriters;
 using GedcomTests.TestEntities;
 using System.Text;
 
@@ -10,14 +9,15 @@ namespace GedcomTests.Individuals;
 [TestClass]
 public class IndividualJsonTests
 {
+    private static IGedcomWriter JsonGedcomWriter => GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.Constants.Json);
+
     [TestMethod]
     public void ExportIndividualJsonTest()
     {
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Json);
-        var individualJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetIndividuals(TestIndividuals.SarahDavis.Xref));
-        var unexpectedIndividuals = TestIndividuals.All.Where(i => i.Xref != TestIndividuals.SarahDavis.Xref);
+        var individualJson = Encoding.UTF8.GetString(JsonGedcomWriter.GetIndividuals(TestIndividuals.DylanDavis.Xref));
+        var unexpectedIndividuals = TestIndividuals.All.Where(i => i.Xref != TestIndividuals.DylanDavis.Xref);
 
-        Assert.IsTrue(individualJson.Contains(TestIndividuals.SarahDavis.Xref));
+        Assert.IsTrue(individualJson.Contains(TestIndividuals.DylanDavis.Xref));
 
         foreach (var unexpectedIndividual in unexpectedIndividuals)
         {
@@ -28,8 +28,7 @@ public class IndividualJsonTests
     [TestMethod]
     public void ExportIndividualsJsonTest()
     {
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Json);
-        var individualsJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetIndividuals());
+        var individualsJson = Encoding.UTF8.GetString(JsonGedcomWriter.GetIndividuals());
 
         foreach (var expectedIndividual in TestIndividuals.All)
         {
@@ -40,29 +39,26 @@ public class IndividualJsonTests
     [TestMethod]
     public void NonExistingIndividualJsonTest()
     {
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Json);
-        var individualJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetIndividuals(TestConstants.InvalidXref));
+        var individualJson = Encoding.UTF8.GetString(JsonGedcomWriter.GetIndividuals(TestConstants.InvalidXref));
 
         Assert.AreEqual("{}", individualJson);
     }
 
     [TestMethod]
-    public void WriteIndividualJsonTest()
+    public void WriteIndividualsJsonTest()
     {
-        // This is an integration test. Figure that out later
-        var textGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Json);
-        var individualsJson = Encoding.UTF8.GetString(textGedcomWriter.GetIndividuals(TestIndividuals.SarahDavis.Xref));
+        var individualsJsonFullName = Path.Combine(TestUtilities.OutputFilesDirectory, "Individuals.json");
+        var individualsJson = Encoding.UTF8.GetString(JsonGedcomWriter.GetIndividuals());
 
-        File.WriteAllText(Path.Combine(TestUtilities.OutputFilesDirectory, "Individual.json"), individualsJson);
+        File.WriteAllText(individualsJsonFullName, individualsJson);
     }
 
     [TestMethod]
-    public void WriteIndividualsJsonTest()
+    public void WriteIndividualJsonTest()
     {
-        // This is an integration test. Figure that out later
-        var textGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Json);
-        var individualsJson = Encoding.UTF8.GetString(textGedcomWriter.GetIndividuals());
+        var individualJsonFullName = Path.Combine(TestUtilities.OutputFilesDirectory, $"{TestIndividuals.DylanDavis.FileName}.json");
+        var individualJson = Encoding.UTF8.GetString(JsonGedcomWriter.GetIndividuals(TestIndividuals.DylanDavis.Xref));
 
-        File.WriteAllText(Path.Combine(TestUtilities.OutputFilesDirectory, "Individuals.json"), individualsJson);
+        File.WriteAllText(individualJsonFullName, individualJson);
     }
 }

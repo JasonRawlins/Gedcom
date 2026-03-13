@@ -11,17 +11,18 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
     public byte[] GetIndividuals(string xref = "")
     {
         var individualRecords = GedcomDocument.GetIndividualRecords();
-        if (individualRecords.Count == 0) return [];
 
         if (!string.IsNullOrEmpty(xref))
         {
             var individualRecord = individualRecords.SingleOrDefault(ir => ir.Xref == xref);
-            if (individualRecord == null)
+            if (individualRecord != null)
             {
-                return Encoding.UTF8.GetBytes("{}");
+                individualRecords = [individualRecord];
             }
-
-            individualRecords = [individualRecord];
+            else
+            {
+                individualRecords = [];
+            }
         }
 
         var individualDtos = individualRecords.Select(ir => new IndividualDto(ir));

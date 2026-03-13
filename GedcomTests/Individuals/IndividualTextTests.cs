@@ -10,14 +10,15 @@ namespace GedcomTests.Individuals;
 [TestClass]
 public class IndividualTextTests
 {
+    private static IGedcomWriter TextGedcomWriter => GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.Constants.Text);
+
     [TestMethod]
     public void ExportIndividualTextTest()
     {
-        var textGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Text);
-        var individualText = Encoding.UTF8.GetString(textGedcomWriter.GetIndividuals(TestIndividuals.SarahDavis.Xref));
-        var unexpectedIndividuals = TestIndividuals.All.Where(i => i.Xref != TestIndividuals.SarahDavis.Xref);
+        var individualText = Encoding.UTF8.GetString(TextGedcomWriter.GetIndividuals(TestIndividuals.DylanDavis.Xref));
+        var unexpectedIndividuals = TestIndividuals.All.Where(i => i.Xref != TestIndividuals.DylanDavis.Xref);
 
-        Assert.IsTrue(individualText.Contains(TestIndividuals.SarahDavis.Xref));
+        Assert.IsTrue(individualText.Contains(TestIndividuals.DylanDavis.Xref));
 
         foreach (var unexpectedIndividual in unexpectedIndividuals)
         {
@@ -28,8 +29,7 @@ public class IndividualTextTests
     [TestMethod]
     public void ExportIndividualsTextTest()
     {
-        var textGedcomWriter =  GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Text);
-        var individualsText = Encoding.UTF8.GetString(textGedcomWriter.GetIndividuals());
+        var individualsText = Encoding.UTF8.GetString(TextGedcomWriter.GetIndividuals());
 
         foreach (var expectedIndividual in TestIndividuals.All)
         {
@@ -40,29 +40,26 @@ public class IndividualTextTests
     [TestMethod]
     public void NonExistingIndividualTextTest()
     {
-        var textGedcomWriter =  GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Text);
-        var individualText = Encoding.UTF8.GetString(textGedcomWriter.GetIndividuals(TestConstants.InvalidXref));
+        var individualText = Encoding.UTF8.GetString(TextGedcomWriter.GetIndividuals(TestConstants.InvalidXref));
 
-        Assert.AreEqual($"Unknown xref: {TestConstants.InvalidXref}.", individualText);
+        Assert.AreEqual($"Unknown Xref: {TestConstants.InvalidXref}", individualText);
     }
 
-    //[TestMethod]
-    public void WriteIndividualTextTest()
-    {
-        // This is an integration test. Figure that out later
-        var textGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Text);
-        var individualsText = Encoding.UTF8.GetString(textGedcomWriter.GetIndividuals(TestIndividuals.SarahDavis.Xref));
-
-        File.WriteAllText(Path.Combine(TestUtilities.OutputFilesDirectory, "Individual.txt"), individualsText);
-    }
-
-    //[TestMethod]
+    [TestMethod]
     public void WriteIndividualsTextTest()
     {
-        // This is an integration test. Figure that out later
-        var textGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Text);
-        var individualsText = Encoding.UTF8.GetString(textGedcomWriter.GetIndividuals());
+        var individualsTextFullName = Path.Combine(TestUtilities.OutputFilesDirectory, "Individuals.txt");
+        var individualsText = Encoding.UTF8.GetString(TextGedcomWriter.GetIndividuals());
 
-        File.WriteAllText(Path.Combine(TestUtilities.OutputFilesDirectory, "Individuals.txt"), individualsText);
+        File.WriteAllText(individualsTextFullName, individualsText);
+    }
+
+    [TestMethod]
+    public void WriteIndividualTextTest()
+    {
+        var individualTextFullName = Path.Combine(TestUtilities.OutputFilesDirectory, $"{TestIndividuals.DylanDavis.FileName}.txt");
+        var individualsText = Encoding.UTF8.GetString(TextGedcomWriter.GetIndividuals(TestIndividuals.DylanDavis.Xref));
+
+        File.WriteAllText(individualTextFullName, individualsText);
     }
 }

@@ -6,9 +6,12 @@ public class TestIndividual(string xref, string given, string surname)
 {
     public List<TestEvent> Events { get; set; } = [];
 
+    public string FileName => $"Individual-{FullName.Replace(" ", "")}-{XrefValue}";
+    public string FullName => $"{Given} {Surname}";
     public string Given { get; set; } = given;
     public string Surname { get; set; } = surname;
     public string Xref { get; set; } = xref;
+    public string XrefValue => Xref.Replace("@", "");
 
     // The xref without the "@" and "I" characters.
     public string XrefId => Xref.Replace("@", "").Replace("I", "");

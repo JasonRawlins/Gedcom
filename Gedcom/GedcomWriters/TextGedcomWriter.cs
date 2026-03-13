@@ -11,17 +11,18 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
     public byte[] GetIndividuals(string xref = "")
     {
         var individualRecords = GedcomDocument.GetIndividualRecords();
-        if (individualRecords.Count == 0) return [];
 
         if (!string.IsNullOrEmpty(xref))
         {
             var individualRecord = individualRecords.SingleOrDefault(ir => ir.Xref == xref);
             if (individualRecord == null)
             {
-                return Encoding.UTF8.GetBytes($"Unknown xref: {xref}.");
+                return Encoding.UTF8.GetBytes($"Unknown Xref: {xref}");
             }
-
-            individualRecords = [individualRecord];
+            else
+            {
+                individualRecords = [individualRecord];
+            }
         }
 
         var individualDtos = individualRecords.Select(ir => new IndividualDto(ir));

@@ -1,4 +1,6 @@
 ﻿using ClosedXML.Excel;
+using Gedcom.DTOs;
+using System.Text;
 
 namespace Gedcom.GedcomWriters;
 
@@ -13,14 +15,22 @@ public class ExcelGedcomWriter : IGedcomWriter
 
     public byte[] GetIndividuals(string xref = "")
     {
-        // TODO: Filter by xref after retrieving, if necessary.
-
         var individualRecords = GedcomDocument.GetIndividualRecords();
-        var orderedIndividualListItems = individualRecords
-            .Select(ir => new IndividualListItem(ir))
-            .OrderBy(ir => ir.Surname)
-            .ThenBy(ir => ir.Given)
-            .ToList();
+
+        if (!string.IsNullOrEmpty(xref))
+        {
+            var individualRecord = individualRecords.SingleOrDefault(ir => ir.Xref == xref);
+            if (individualRecord != null)
+            {
+                individualRecords = [individualRecord];
+            }
+            else
+            {
+                individualRecords = [];
+            }
+        }
+
+        var individualDtos = individualRecords.Select(ir => new IndividualDto(ir)).ToList();
 
         using var templateStream = new MemoryStream(Properties.Resources.GedcomNetXlsxTemplate);
         using var templateWorkbook = new XLWorkbook(templateStream);
@@ -32,13 +42,13 @@ public class ExcelGedcomWriter : IGedcomWriter
         var templateRow = 2;
         var lastUsedColumn = targetSheet.LastColumnUsed()!.ColumnNumber();
 
-        for (int i = 0; i < orderedIndividualListItems.Count; i++)
+        for (int i = 0; i < individualDtos.Count; i++)
         {
-            var individualListItem = orderedIndividualListItems[i];
+            var individualDto = individualDtos[i];
             var targetRow = templateRow + i + 1;
 
             targetSheet.Row(templateRow).CopyTo(targetSheet.Row(targetRow));
-            ReplaceTemplateValues(targetSheet, individualListItem, targetRow, lastUsedColumn);
+            ReplaceTemplateValues(targetSheet, individualDto, targetRow, lastUsedColumn);
         }
 
         targetSheet.Row(templateRow).Delete();
@@ -63,7 +73,7 @@ public class ExcelGedcomWriter : IGedcomWriter
         throw new NotImplementedException();
     }
 
-    private void ReplaceTemplateValues(IXLWorksheet worksheet, IndividualListItem individualListItem, int rowNumber, int lastUsedColumn)
+    private void ReplaceTemplateValues(IXLWorksheet worksheet, IndividualDto individualDto, int rowNumber, int lastUsedColumn)
     {
         for (int column = 1; column <= lastUsedColumn; column++)
         {
@@ -73,14 +83,15 @@ public class ExcelGedcomWriter : IGedcomWriter
             cell.Value = value switch
             {
                 ContentTag.AncestryProfileLink => GedcomDocument.Header.Source.Tree.Name,
-                ContentTag.BirthDate => individualListItem.Birthdate,
-                ContentTag.BirthPlace => individualListItem.BirthPlace,
-                ContentTag.DeathDate => individualListItem.DeathDate,
-                ContentTag.DeathPlace => individualListItem.DeathPlace,
-                ContentTag.FullName => individualListItem.FullName,
-                ContentTag.Given => individualListItem.Given,
-                ContentTag.Surname => individualListItem.Surname,
+                ContentTag.BirthDate => individualDto.Birth?.Date.DayMonthYear,
+                ContentTag.BirthPlace => individualDto.Birth?.Place?.Name,
+                ContentTag.DeathDate => individualDto.Death?.Date.DayMonthYear,
+                ContentTag.DeathPlace => individualDto.Death?.Place?.Name,
+                ContentTag.FullName => individualDto.FullName,
+                ContentTag.Given => individualDto.Given,
+                ContentTag.Surname => individualDto.Surname,
                 ContentTag.TreeName => GedcomDocument.Header.Source.Tree.Name,
+                ContentTag.Xref => individualDto.Xref,
                 _ => value,
             };
         }
@@ -97,5 +108,6 @@ public class ExcelGedcomWriter : IGedcomWriter
         public const string Given = "{{GIVEN}}";
         public const string Surname = "{{SURNAME}}";
         public const string TreeName = "{{TREE_NAME}}";
+        public const string Xref = "{{XREF}}";
     }
 }

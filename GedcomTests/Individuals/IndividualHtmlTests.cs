@@ -48,4 +48,14 @@ public class IndividualHtmlTests
 
         //Assert.IsFalse(individualHtml.Contains("<ul>"));
     }
+
+
+    [TestMethod]
+    public void WriteIndividualsHtmlTest()
+    {
+        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Html);
+        var individualsHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividuals());
+
+        File.WriteAllText(Path.Combine(TestUtilities.OutputFilesDirectory, "Individuals.html"), individualsHtml);
+    }
 }
