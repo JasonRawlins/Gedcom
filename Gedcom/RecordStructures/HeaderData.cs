@@ -16,13 +16,6 @@ public class HeaderData : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {PublicationDate}";
 }
 
-public class HeaderDataDto(HeaderData headerData) : GedcomDto
-{
-    public NoteDto? CopyrightSourceData { get; set; } = GetRecord(new NoteDto(headerData.CopyrightSourceData));
-    public string? PublicationDate { get; set; } = GetString(headerData.PublicationDate);
-    public override string ToString() => $"{PublicationDate}";
-}
-
 #region HeaderSOUR p. 23
 /* 
 

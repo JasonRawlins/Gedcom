@@ -12,12 +12,6 @@ public class CallNumber : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {SourceMediaType}";
 }
 
-public class CallNumberDto(CallNumber callNumber) : GedcomDto
-{
-    public string? SourceMediaType { get; set; } = GetString(callNumber.SourceMediaType);
-    public override string ToString() => $"{SourceMediaType}";
-}
-
 #region CALL_NUMBER p. 40
 /* 
 

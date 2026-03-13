@@ -12,12 +12,6 @@ public class MultimediaFileReferenceNumber : RecordStructureBase
     public override string ToString() => $"{Record.Value}";
 }
 
-public class MultimediaFileReferenceNumberDto(MultimediaFileReferenceNumber multimediaFileReferenceNumber) : GedcomDto
-{
-    public MultimediaFormatDto? MultimediaFormat { get; set; } = GetRecord(new MultimediaFormatDto(multimediaFileReferenceNumber.MultimediaFormat));
-    public override string ToString() => $"{MultimediaFormat?.SourceMediaType}";
-}
-
 #region STRUCTURE_NAME p. 37
 /* 
 

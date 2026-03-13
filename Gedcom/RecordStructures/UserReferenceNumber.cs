@@ -11,12 +11,6 @@ public class UserReferenceNumber : RecordStructureBase
 
     public override string ToString() => $"{Record.Value}, {UserReferenceType}";
 }
-public class UserReferenceNumberDto(UserReferenceNumber userReferenceNumber) : GedcomDto
-{
-    public string? UserReferenceType { get; set; } = GetString(userReferenceNumber.UserReferenceType);
-
-    public override string ToString() => $"{UserReferenceType}";
-}
 
 #region USER_REFERENCE_TYPE (REFN) p. 27
 /* 

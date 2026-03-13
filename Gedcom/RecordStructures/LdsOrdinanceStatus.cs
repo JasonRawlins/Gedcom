@@ -12,13 +12,6 @@ public class LdsOrdinanceStatus : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {Status}, {ChangeDate}";
 }
 
-public class LdsOrdinanceStatusDto(LdsOrdinanceStatus ldsOrdinanceStatus) : GedcomDto
-{
-    public string? ChangeDate { get; set; } = GetString(ldsOrdinanceStatus.ChangeDate);
-    public string? Status { get; set; } = GetString(ldsOrdinanceStatus.Status);
-    public override string ToString() => $"{Status}";
-}
-
 #region STRUCTURE_NAME p. 
 /* 
 

@@ -12,12 +12,6 @@ public class EventTypeCitedFrom : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {RoleInEvent}";
 }
 
-public class EventTypeCitedFromDto(EventTypeCitedFrom eventTypeCitedFrom) : GedcomDto
-{
-    public string? RoleInEvent { get; set; } = GetString(eventTypeCitedFrom.RoleInEvent);
-    public override string ToString() => $"{RoleInEvent}";
-}
-
 #region EVENT_TYPE_CITED_FROM p. 49
 /* 
 

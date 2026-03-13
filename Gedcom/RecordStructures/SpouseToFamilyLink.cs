@@ -14,13 +14,6 @@ public class SpouseToFamilyLink : RecordStructureBase
     public override string ToString() => $"{Record.Value}";
 }
 
-public class SpouseToFamilyLinkDto(SpouseToFamilyLink spouseToFamilyLink) : GedcomDto
-{
-    public List<NoteDto>? Notes { get; set; } = GedcomDto.GetList<NoteDto>(spouseToFamilyLink.NoteStructures.Select(ns => new NoteDto(ns)).ToList());
-    public string Xref { get; set; } = spouseToFamilyLink.Xref;
-
-    public override string ToString() => Xref;
-}
 
 #region SPOUSE_TO_FAMILY_LINK p. 40
 /* 

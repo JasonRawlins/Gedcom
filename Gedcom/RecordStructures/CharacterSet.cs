@@ -12,12 +12,6 @@ public class CharacterSet : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {VersionNumber}";
 }
 
-public class CharacterSetDto(CharacterSet characterSet) : GedcomDto
-{
-    public string? VersionNumber { get; set; } = GetString(characterSet.VersionNumber);
-    public override string ToString() => $"{VersionNumber}";
-}
-
 #region CHARACTER_SET p. 23
 /* 
 

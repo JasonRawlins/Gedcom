@@ -16,13 +16,6 @@ public class FileRecord : RecordStructureBase
     public override string ToString() => $"{Title}";
 }
 
-public class FileDto(FileRecord fileRecord) : GedcomDto
-{
-    public FormDto? Form { get; set; } = GetRecord(new FormDto(fileRecord.FormRecord));
-    public string? Title { get; set; } = GetString(fileRecord.Title);
-    public override string ToString() => $"{Title}";
-}
-
 #region MULTIMEDIA_FILE_REFN p. 26
 /* 
 

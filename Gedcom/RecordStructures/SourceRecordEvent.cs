@@ -15,13 +15,6 @@ public class SourceRecordEvent : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {DatePeriod}";
 }
 
-public class SourceRecordEventDto(SourceRecordEvent sourceRecordEvent) : GedcomDto
-{
-    public string? DatePeriod { get; set; } = GetString(sourceRecordEvent.DatePeriod);
-    public string? SourceJurisdictionPlace { get; set; } = GetString(sourceRecordEvent.SourceJurisdictionPlace);
-
-    public override string ToString() => $"{SourceJurisdictionPlace} {DatePeriod}";
-}
 
 #region SOURCE_RECORD (DATA) p. 27
 /* 

@@ -33,19 +33,6 @@ public class NameVariation : RecordStructureBase, IPersonalNamePieces
     public override string ToString() => $"{Record.Value}, {Type}, {FullName}";
 }
 
-public class NameVariationDto(NameVariation nameVariation) : GedcomDto
-{
-    public string? Given { get; set; } = GetString(nameVariation.Type);
-    public string? Nickname { get; set; } = GetString(nameVariation.Type);
-    public string? Prefix { get; set; } = GetString(nameVariation.Type);
-    public string? Suffix { get; set; } = GetString(nameVariation.Type);
-    public string? Surname { get; set; } = GetString(nameVariation.Type);
-    public string? SurnamePrefix { get; set; } = GetString(nameVariation.Type);
-    public string? Type { get; set; } = GetString(nameVariation.Type);
-
-    public override string ToString() => $"{Given} {Surname}";
-}
-
 #region NAME_PHONETIC_VARIATION (FONE) and NAME_ROMANIZED_VARIATION (ROMN) p. 38
 /* 
 

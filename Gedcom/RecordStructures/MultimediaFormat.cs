@@ -12,12 +12,6 @@ public class MultimediaFormat : RecordStructureBase
     public override string ToString() => $"{Record.Value}, {SourceMediaType}";
 }
 
-public class MultimediaFormatDto(MultimediaFormat multimediaFormat) : GedcomDto
-{
-    public string? SourceMediaType { get; set; } = GetString(multimediaFormat.SourceMediaType);
-    public override string ToString() => $"{SourceMediaType}";
-}
-
 #region MULTIMEDIA_FORMAT p. 54
 /* 
 
