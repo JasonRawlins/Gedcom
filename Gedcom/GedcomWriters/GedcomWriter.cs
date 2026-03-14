@@ -1,10 +1,23 @@
-﻿namespace Gedcom.GedcomWriters;
+﻿using Gedcom.DTOs;
 
-public class GedcomWriter
+namespace Gedcom.GedcomWriters;
+
+public abstract class GedcomWriter : IGedcomWriter
 {
+    public GedcomDocument GedcomDocument { get; set; }
+
+    public GedcomWriter(GedcomDocument gedcomDocument) => GedcomDocument = gedcomDocument;
+
+    public abstract byte[] GetIndividuals(string xref = "");
+
+    public abstract byte[] GetFamilies(string xref = "");
+
+    public abstract byte[] GetRepositories(string xref = "");
+
+    public abstract byte[] GetSources(string xref = "");
+
     public static IGedcomWriter Create(GedcomDocument gedcom, string format)
     {
-        var formatUpperCase = format.ToUpper();
         return format switch
         {
             Constants.Excel => new ExcelGedcomWriter(gedcom),
@@ -13,5 +26,25 @@ public class GedcomWriter
             Constants.Text => new TextGedcomWriter(gedcom),
             _ => throw new NotSupportedException($"The format '{format}' is not supported."),
         };
+    }
+
+    protected List<IndividualDto> GetIndividualDtos(string xref = "")
+    {
+        var individualRecords = GedcomDocument.GetIndividualRecords();
+
+        if (!string.IsNullOrEmpty(xref))
+        {
+            var individualRecord = individualRecords.SingleOrDefault(ir => ir.Xref == xref);
+            if (individualRecord == null)
+            {
+                individualRecords = [];
+            }
+            else
+            {
+                individualRecords = [individualRecord];
+            }
+        }
+
+        return [.. individualRecords.Select(ir => new IndividualDto(ir))];
     }
 }

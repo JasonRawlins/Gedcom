@@ -4,59 +4,24 @@ using System.Text;
 
 namespace Gedcom.GedcomWriters;
 
-public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
+public class HtmlGedcomWriter : GedcomWriter
 {
-    public GedcomDocument GedcomDocument { get; set; } = gedcom;
-
-    public byte[] GetIndividuals(string xref)
+    public HtmlGedcomWriter(GedcomDocument gedcomDocument) : base(gedcomDocument)
     {
-        var individualRecords = GedcomDocument.GetIndividualRecords();
+        GedcomDocument = gedcomDocument;
+    }
 
-        if (!string.IsNullOrEmpty(xref))
-        {
-            var individualRecord = individualRecords.SingleOrDefault(ir => ir.Xref == xref);
-            if (individualRecord == null)
-            {
-                individualRecords = [];
-            }
-            else
-            {
-                individualRecords = [individualRecord];
-            }
-        }
-
-        var individualDtos = individualRecords.Select(ir => new IndividualDto(ir));
+    public override byte[] GetIndividuals(string xref)
+    {
+        var individualDtos = GetIndividualDtos(xref);
 
         var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.GedcomNetIndividualsHtmlTemplate);
-        var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", GetIndividualsText(individualRecords));
+        var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", GetIndividualsText(individualDtos));
 
         return Encoding.UTF8.GetBytes(finalHtml);
     }
 
-    private string GetIndividualsText(List<IndividualRecord> individualRecords)
-    {
-        if (individualRecords.Count == 0)
-        {
-            return "";
-        }
-
-        var ulStringBuilder = new StringBuilder();
-        ulStringBuilder.AppendLine("<ul class='individuals'>");
-
-        foreach (var individualRecord in individualRecords)
-        {
-            if (individualRecord.IsEmpty) continue;
-
-            var individualListItem = CreateIndividualListItem(individualRecord);
-            ulStringBuilder.AppendLine(individualListItem);
-        }
-
-        ulStringBuilder.AppendLine("</ul>");
-
-        return ulStringBuilder.ToString();
-    }
-
-    public byte[] GetFamilies(string xref = "")
+    public override byte[] GetFamilies(string xref = "")
     {
         var familyRecords = GedcomDocument.GetFamilyRecords();
 
@@ -76,7 +41,7 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
         return Encoding.UTF8.GetBytes(ul.ToString());
     }
 
-    public byte[] GetRepositories(string xref = "")
+    public override byte[] GetRepositories(string xref = "")
     {
         return [];
         // TODO: Return a html formatted repositories. 
@@ -98,7 +63,7 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
         //return Encoding.UTF8.GetBytes(ul.ToString());
     }
 
-    public byte[] GetSources(string xref = "")
+    public override byte[] GetSources(string xref = "")
     {
         return [];
         // TODO: Return a html formatted sources
@@ -120,9 +85,32 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
         //return ul.ToString();
     }
 
-    private string CreateIndividualListItem(IndividualRecord individualRecord)
+    private string GetIndividualsText(List<IndividualDto> individualDtos)
     {
-        var individualListItem = new IndividualListItem(individualRecord);
+        if (individualDtos.Count == 0)
+        {
+            return "";
+        }
+
+        var ulStringBuilder = new StringBuilder();
+        ulStringBuilder.AppendLine("<ul class='individuals'>");
+
+        foreach (var individualDto in individualDtos)
+        {
+            if (individualDto.IsEmpty) continue;
+
+            var individualListItem = CreateIndividualListItem(individualDto);
+            ulStringBuilder.AppendLine(individualListItem);
+        }
+
+        ulStringBuilder.AppendLine("</ul>");
+
+        return ulStringBuilder.ToString();
+    }
+
+    private string CreateIndividualListItem(IndividualDto individualDto)
+    {
+        var individualListItem = new IndividualListItem(individualDto);
         var ancestryLink = GenerateAncestryProfileLink(GedcomDocument.Header.Source.Tree.AutomatedRecordId, individualListItem.XrefId);
 
         return $@"<li class='individual-card'>

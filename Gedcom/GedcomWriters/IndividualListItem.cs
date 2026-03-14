@@ -3,31 +3,17 @@ using Gedcom.RecordStructures;
 
 namespace Gedcom.GedcomWriters;
 
-public class IndividualListItem : IComparable<IndividualListItem>
+public class IndividualListItem(IndividualDto individualDto) : IComparable<IndividualListItem>
 {
-    public string Birthdate { get; }
-    public string BirthPlace { get; }
-    public string DeathDate { get; }
-    public string DeathPlace { get; }
-    public string FullName { get; }
-    public string Given { get; }
-    public string Surname { get; }
-    public string Xref { get; }
+    public string Birthdate { get; } = individualDto.Birth?.Date.DayMonthYear ?? "Unknown birthdate";
+    public string BirthPlace { get; } = individualDto.Birth?.Place?.Name ?? "Unknown birth place";
+    public string DeathDate { get; } = individualDto.Death?.Date.DayMonthYear ?? "Unknown death date";
+    public string DeathPlace { get; } = individualDto.Death?.Place?.Name ?? "Unknown death place";
+    public string FullName { get; } = individualDto.FullName;
+    public string Given { get; } = individualDto?.Given ?? "";
+    public string Surname { get; } = individualDto?.Surname ?? "";
+    public string Xref { get; } = individualDto?.Xref ?? "";
     public string XrefId => Xref.Replace("@", "").Replace("I", "");
-
-    public IndividualListItem(IndividualRecord individualRecord)
-    {
-        var individualDto = new IndividualDto(individualRecord);
-
-        Birthdate = individualDto.Birth?.Date.DayMonthYear ?? "Unknown birthdate";
-        BirthPlace = individualDto.Birth?.Place?.Name ?? "Unknown birth place";
-        DeathDate = individualDto.Death?.Date.DayMonthYear ?? "Unknown death date";
-        DeathPlace = individualDto.Death?.Place?.Name ?? "Unknown death place";
-        FullName = individualDto.FullName;
-        Given = individualDto?.Given ?? "";
-        Surname = individualDto?.Surname ?? "";
-        Xref = individualDto?.Xref ?? "";
-    }
 
     public int CompareTo(IndividualListItem? other)
     {

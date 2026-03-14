@@ -1,19 +1,16 @@
 ﻿using ClosedXML.Excel;
 using Gedcom.DTOs;
-using System.Text;
 
 namespace Gedcom.GedcomWriters;
 
-public class ExcelGedcomWriter : IGedcomWriter
+public class ExcelGedcomWriter : GedcomWriter
 {
-    public GedcomDocument GedcomDocument { get; set; }
-
-    public ExcelGedcomWriter(GedcomDocument gedcom)
+    public ExcelGedcomWriter(GedcomDocument gedcomDocument) : base(gedcomDocument)
     {
-        GedcomDocument = gedcom;
+        GedcomDocument = gedcomDocument;
     }
 
-    public byte[] GetIndividuals(string xref = "")
+    public override byte[] GetIndividuals(string xref = "")
     {
         var individualRecords = GedcomDocument.GetIndividualRecords();
 
@@ -58,17 +55,17 @@ public class ExcelGedcomWriter : IGedcomWriter
         return outputStream.ToArray();
     }
 
-    public byte[] GetFamilies(string xref = "")
+    public override byte[] GetFamilies(string xref = "")
     {
         throw new NotImplementedException();
     }
 
-    public byte[] GetRepositories(string xref = "")
+    public override byte[] GetRepositories(string xref = "")
     {
         throw new NotImplementedException();
     }
 
-    public byte[] GetSources(string xref = "")
+    public override byte[] GetSources(string xref = "")
     {
         throw new NotImplementedException();
     }

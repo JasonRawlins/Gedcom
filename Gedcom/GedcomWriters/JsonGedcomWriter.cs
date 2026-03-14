@@ -1,36 +1,23 @@
-﻿using Gedcom.DTOs;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 
 namespace Gedcom.GedcomWriters;
 
-public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
+public class JsonGedcomWriter : GedcomWriter
 {
-    public GedcomDocument GedcomDocument { get; set; } = gedcom;
-
-    public byte[] GetIndividuals(string xref = "")
+    public JsonGedcomWriter(GedcomDocument gedcomDocument) : base(gedcomDocument)
     {
-        var individualRecords = GedcomDocument.GetIndividualRecords();
+        GedcomDocument = gedcomDocument;
+    }
 
-        if (!string.IsNullOrEmpty(xref))
-        {
-            var individualRecord = individualRecords.SingleOrDefault(ir => ir.Xref == xref);
-            if (individualRecord == null)
-            {
-                individualRecords = [];
-            }
-            else
-            {
-                individualRecords = [individualRecord];
-            }
-        }
-
-        var individualDtos = individualRecords.Select(ir => new IndividualDto(ir));
+    public override byte[] GetIndividuals(string xref = "")
+    {
+        var individualDtos = GetIndividualDtos(xref);
 
         return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(individualDtos, GedcomDto.SerializationOptions));
     }
 
-    public byte[] GetFamilies(string xref = "")
+    public override byte[] GetFamilies(string xref = "")
     {
         // TODO: Filter by xref after retrieving, if necessary.
 
@@ -39,7 +26,7 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
         return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(familyRecords));
     }
 
-    public byte[] GetRepositories(string xref = "")
+    public override byte[] GetRepositories(string xref = "")
     {
         // TODO: Filter by xref after retrieving, if necessary.
 
@@ -48,7 +35,7 @@ public class JsonGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
         return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(repositoryRecords, GedcomDto.SerializationOptions));
     }
 
-    public byte[] GetSources(string xref = "")
+    public override byte[] GetSources(string xref = "")
     {
         // TODO: Filter by xref after retrieving, if necessary.
         var sourceRecords = GedcomDocument.GetSourceRecords();
