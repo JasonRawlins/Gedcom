@@ -17,7 +17,7 @@ public class TextGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
             var individualRecord = individualRecords.SingleOrDefault(ir => ir.Xref == xref);
             if (individualRecord == null)
             {
-                return Encoding.UTF8.GetBytes($"Unknown Xref: {xref}");
+                individualRecords = [];
             }
             else
             {

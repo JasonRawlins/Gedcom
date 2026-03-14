@@ -10,52 +10,56 @@ namespace GedcomTests.Individuals;
 [TestClass]
 public class IndividualHtmlTests
 {
+    private static IGedcomWriter HtmlGedcomWriter => GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.Constants.Html);
+
     [TestMethod]
     public void ExportIndividualJsonTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Html);
-        var individualHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividuals(TestIndividuals.SarahDavis.Xref));
+        var individualHtml = Encoding.UTF8.GetString(HtmlGedcomWriter.GetIndividuals(TestIndividuals.DylanDavis.Xref));
+        var unexpectedIndividuals = TestIndividuals.All.Where(i => i.Xref != TestIndividuals.DylanDavis.Xref);
 
-        //Assert.IsTrue(individualHtml.Contains(TestIndividuals.SarahDavis.XrefId) &&
-        //        !(individualHtml.Contains(TestIndividuals.DylanDavis.XrefId) ||
-        //        individualHtml.Contains(TestIndividuals.FionaDouglas.XrefId) ||
-        //        individualHtml.Contains(TestIndividuals.GwenJones.XrefId) ||
-        //        individualHtml.Contains(TestIndividuals.JamesSmith.XrefId) ||
-        //        individualHtml.Contains(TestIndividuals.MarySmith.XrefId) ||
-        //        individualHtml.Contains(TestIndividuals.OwenDavis.XrefId)));
+        Assert.IsTrue(individualHtml.Contains(TestIndividuals.DylanDavis.Xref));
+
+        foreach (var unexpectedIndividual in unexpectedIndividuals)
+        {
+            Assert.IsFalse(individualHtml.Contains(unexpectedIndividual.Xref));
+        }
     }
 
     [TestMethod]
     public void ExportIndividualsJsonTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Html);
-        var individualsHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividuals());
+        var individualsHtml = Encoding.UTF8.GetString(HtmlGedcomWriter.GetIndividuals());
 
-        //Assert.IsTrue(individualsHtml.Contains(TestIndividuals.SarahDavis.XrefId) &&
-        //        individualsHtml.Contains(TestIndividuals.DylanDavis.XrefId) &&
-        //        individualsHtml.Contains(TestIndividuals.FionaDouglas.XrefId) &&
-        //        individualsHtml.Contains(TestIndividuals.GwenJones.XrefId) &&
-        //        individualsHtml.Contains(TestIndividuals.JamesSmith.XrefId) &&
-        //        individualsHtml.Contains(TestIndividuals.MarySmith.XrefId) &&
-        //        individualsHtml.Contains(TestIndividuals.OwenDavis.XrefId));
+        foreach (var expectedIndividual in TestIndividuals.All)
+        {
+            Assert.IsTrue(individualsHtml.Contains(expectedIndividual.Xref));
+        }
     }
 
     [TestMethod]
-    public void NonExistingIndividualJsonTest()
+    public void NonExistingIndividualHtmlTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Html);
-        var individualHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividuals(TestConstants.InvalidXref));
+        var individualJson = Encoding.UTF8.GetString(HtmlGedcomWriter.GetIndividuals(TestConstants.InvalidXref));
 
-        //Assert.IsFalse(individualHtml.Contains("<ul>"));
+        Assert.IsFalse(individualJson.Contains("<ul class='individuals'>"));
     }
-
 
     [TestMethod]
     public void WriteIndividualsHtmlTest()
     {
-        var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Html);
-        var individualsHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetIndividuals());
+        var individualsHtmlFullName = Path.Combine(TestUtilities.OutputFilesDirectory, "Individuals.html");
+        var individualsHtml = Encoding.UTF8.GetString(HtmlGedcomWriter.GetIndividuals());
 
-        File.WriteAllText(Path.Combine(TestUtilities.OutputFilesDirectory, "Individuals.html"), individualsHtml);
+        File.WriteAllText(individualsHtmlFullName, individualsHtml);
+    }
+
+    [TestMethod]
+    public void WriteIndividualHtmlTest()
+    {
+        var individualHtmlFullName = Path.Combine(TestUtilities.OutputFilesDirectory, $"{TestIndividuals.DylanDavis.FileName}.html");
+        var individualHtml = Encoding.UTF8.GetString(HtmlGedcomWriter.GetIndividuals(TestIndividuals.DylanDavis.Xref));
+
+        File.WriteAllText(individualHtmlFullName, individualHtml);
     }
 }

@@ -41,7 +41,7 @@ public class IndividualJsonTests
     {
         var individualJson = Encoding.UTF8.GetString(JsonGedcomWriter.GetIndividuals(TestConstants.InvalidXref));
 
-        Assert.AreEqual("{}", individualJson);
+        Assert.AreEqual("[]", individualJson);
     }
 
     [TestMethod]

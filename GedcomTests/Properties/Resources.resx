@@ -121,7 +121,4 @@
   <data name="GedcomNetTestTree" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ResourceFiles\GedcomNetTestTree.ged;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="GedcomXlsxTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\TestFiles\GedcomXlsxTemplate.xlsx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
 </root>

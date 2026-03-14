@@ -69,15 +69,5 @@ namespace GedcomTests.Properties {
                 return ((byte[])(obj));
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] GedcomXlsxTemplate {
-            get {
-                object obj = ResourceManager.GetObject("GedcomXlsxTemplate", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }

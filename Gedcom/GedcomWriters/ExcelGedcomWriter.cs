@@ -20,13 +20,13 @@ public class ExcelGedcomWriter : IGedcomWriter
         if (!string.IsNullOrEmpty(xref))
         {
             var individualRecord = individualRecords.SingleOrDefault(ir => ir.Xref == xref);
-            if (individualRecord != null)
+            if (individualRecord == null)
             {
-                individualRecords = [individualRecord];
+                individualRecords = [];
             }
             else
             {
-                individualRecords = [];
+                individualRecords = [individualRecord];
             }
         }
 

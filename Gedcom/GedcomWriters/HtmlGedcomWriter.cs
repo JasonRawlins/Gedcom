@@ -8,35 +8,24 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
 {
     public GedcomDocument GedcomDocument { get; set; } = gedcom;
 
-    public byte[] GetIndividual(string xref)
+    public byte[] GetIndividuals(string xref)
     {
         var individualRecords = GedcomDocument.GetIndividualRecords();
 
         if (!string.IsNullOrEmpty(xref))
         {
             var individualRecord = individualRecords.SingleOrDefault(ir => ir.Xref == xref);
-            if (individualRecord != null)
+            if (individualRecord == null)
             {
-                individualRecords = [individualRecord];
+                individualRecords = [];
             }
             else
             {
-                individualRecords = [];
+                individualRecords = [individualRecord];
             }
         }
 
         var individualDtos = individualRecords.Select(ir => new IndividualDto(ir));
-
-        var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.GedcomNetIndividualsHtmlTemplate);
-        var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", GetIndividualsText(individualRecords));
-
-        return Encoding.UTF8.GetBytes(finalHtml);
-    }
-
-    public byte[] GetIndividuals(string xref = "")
-    {
-        var individualRecords = GedcomDocument.GetIndividualRecords();
-        if (individualRecords.Count == 0) return [];
 
         var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.GedcomNetIndividualsHtmlTemplate);
         var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", GetIndividualsText(individualRecords));
@@ -52,7 +41,7 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
         }
 
         var ulStringBuilder = new StringBuilder();
-        ulStringBuilder.AppendLine("<ul>");
+        ulStringBuilder.AppendLine("<ul class='individuals'>");
 
         foreach (var individualRecord in individualRecords)
         {
@@ -141,6 +130,7 @@ public class HtmlGedcomWriter(GedcomDocument gedcom) : IGedcomWriter
                         <h3>
                             {individualListItem.Surname}, {individualListItem.Given}
                         </h3>
+                        <div>{individualListItem.Xref}</div>
                         <div class='vitals'>
                             BIRTH {individualListItem.Birthdate} • {individualListItem.BirthPlace}
                         </div>

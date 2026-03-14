@@ -1,5 +1,4 @@
-﻿using Gedcom;
-using Gedcom.GedcomWriters;
+﻿using Gedcom.GedcomWriters;
 using GedcomTests.TestEntities;
 using System.Text;
 
@@ -42,7 +41,7 @@ public class IndividualTextTests
     {
         var individualText = Encoding.UTF8.GetString(TextGedcomWriter.GetIndividuals(TestConstants.InvalidXref));
 
-        Assert.AreEqual($"Unknown Xref: {TestConstants.InvalidXref}", individualText);
+        Assert.IsEmpty(individualText);
     }
 
     [TestMethod]
