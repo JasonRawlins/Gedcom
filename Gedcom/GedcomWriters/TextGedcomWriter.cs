@@ -1,5 +1,4 @@
 ﻿using Gedcom.DTOs;
-using Gedcom.RecordStructures;
 using System.Text;
 
 namespace Gedcom.GedcomWriters;
@@ -26,14 +25,15 @@ public class TextGedcomWriter : GedcomWriter
 
     public override byte[] GetFamilies(string xref = "")
     {
-        // TODO: Filter by xref after retrieving, if necessary.
-        var familyRecords = GedcomDocument.GetFamilyRecords();
+        var familyDtos = GetFamilyDtos(xref);
 
-        var familyRecord = GedcomDocument.GetFamilyRecord(xref);
+        var familiesStringBuilder = new StringBuilder();
+        foreach (var familyDto in familyDtos)
+        {
+            familiesStringBuilder.Append(GetFamilyLineItem(familyDto));
+        }
 
-        if (familyRecord.IsEmpty) return [];
-
-        return Encoding.UTF8.GetBytes(GetFamilyLineItem(familyRecord));
+        return Encoding.UTF8.GetBytes(familiesStringBuilder.ToString());
     }
 
 
@@ -70,12 +70,14 @@ public class TextGedcomWriter : GedcomWriter
         return individualLineItemStringBuilder.ToString();
     }
 
-    public string GetFamilyLineItem(FamilyRecord familyRecord)
+    public string GetFamilyLineItem(FamilyDto familyDto)
     {
         var familyLineItemStringBuilder = new StringBuilder();
 
-        var husbandIndividualRecord = GedcomDocument.GetIndividualRecords().Single(r => r.Xref == familyRecord.Husband);
-        if (husbandIndividualRecord.IsEmpty)
+        familyLineItemStringBuilder.Append($"({familyDto.Xref}) ");
+
+        var husbandIndividualRecord = GedcomDocument.GetIndividualRecords().SingleOrDefault(r => r.Xref == familyDto.Husband);
+        if (husbandIndividualRecord == null || husbandIndividualRecord.IsEmpty)
         {
             familyLineItemStringBuilder.Append("Husband: Unknown.");
         }
@@ -85,8 +87,8 @@ public class TextGedcomWriter : GedcomWriter
             familyLineItemStringBuilder.Append($"Husband: {husbandDto.FullName} ({husbandDto.Xref}).");
         }
 
-        var wifeIndividualRecord = GedcomDocument.GetIndividualRecords().Single(r => r.Xref == familyRecord.Wife);
-        if (wifeIndividualRecord.IsEmpty)
+        var wifeIndividualRecord = GedcomDocument.GetIndividualRecords().SingleOrDefault(r => r.Xref == familyDto.Wife);
+        if (wifeIndividualRecord == null || wifeIndividualRecord.IsEmpty)
         {
             familyLineItemStringBuilder.Append(" Wife: Unknown.");
         }
@@ -96,16 +98,16 @@ public class TextGedcomWriter : GedcomWriter
             familyLineItemStringBuilder.Append($" Wife: {wifeDto.FullName} ({wifeDto.Xref}).");
         }
 
-        if (familyRecord.Children.Count == 0)
+        if (familyDto.Children?.Count == 0)
         {
             familyLineItemStringBuilder.Append(" No children.");
         }
-        else
+        else if (familyDto.Children?.Count > 0)
         {
             familyLineItemStringBuilder.Append(" Children: [");
 
             var childNames = new List<string>();
-            foreach (var childXref in familyRecord.Children)
+            foreach (var childXref in familyDto.Children!)
             {
                 var childIndividualRecord = GedcomDocument.GetIndividualRecords().Single(r => r.Xref == childXref);
                 if (!childIndividualRecord.IsEmpty)
@@ -116,11 +118,10 @@ public class TextGedcomWriter : GedcomWriter
             }
 
             familyLineItemStringBuilder.Append(string.Join(", ", childNames));
-            familyLineItemStringBuilder.Append(']');
+            familyLineItemStringBuilder.AppendLine("]");
         }
 
         return familyLineItemStringBuilder.ToString();
     }
 
 }
-

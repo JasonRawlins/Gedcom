@@ -11,6 +11,7 @@ public class TestFamily(string xref, TestIndividual husband, TestIndividual wife
     }
 
     public List<TestIndividual> Children { get; set; } = [];
+    public string FileName => $"Family-{Husband.Given}-{Wife.Given}-{Xref.Replace("@", "")}";
     public TestIndividual Husband { get; set; } = husband;
     public TestEvent? Marriage { get; set; }
     public TestEvent? Divorce { get; set; }

@@ -47,4 +47,24 @@ public abstract class GedcomWriter : IGedcomWriter
 
         return [.. individualRecords.Select(ir => new IndividualDto(ir))];
     }
+
+    protected List<FamilyDto> GetFamilyDtos(string xref = "")
+    {
+        var familyRecords = GedcomDocument.GetFamilyRecords();
+
+        if (!string.IsNullOrEmpty(xref))
+        {
+            var familyRecord = familyRecords.SingleOrDefault(fr => fr.Xref == xref);
+            if (familyRecord == null)
+            {
+                familyRecords = [];
+            }
+            else
+            {
+                familyRecords = [familyRecord];
+            }
+        }
+
+        return [.. familyRecords.Select(fr => new FamilyDto(fr))];
+    }
 }

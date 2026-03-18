@@ -19,11 +19,9 @@ public class JsonGedcomWriter : GedcomWriter
 
     public override byte[] GetFamilies(string xref = "")
     {
-        // TODO: Filter by xref after retrieving, if necessary.
+        var familyDtos = GetFamilyDtos(xref);
 
-        var familyRecords = GedcomDocument.GetFamilyRecords();
-
-        return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(familyRecords));
+        return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(familyDtos));
     }
 
     public override byte[] GetRepositories(string xref = "")

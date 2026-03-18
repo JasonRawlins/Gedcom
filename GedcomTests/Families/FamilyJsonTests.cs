@@ -8,44 +8,48 @@ namespace GedcomTests.Families;
 [TestClass]
 public class FamilyJsonTests
 {
+    private static IGedcomWriter JsonGedcomWriter => GedcomWriter.Create(TestUtilities.CreateGedcom(), Gedcom.Constants.Json);
+
     [TestMethod]
     public void ExportFamilyJsonTest()
     {
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Json);
-        var familyJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetFamilies(TestFamilies.DylanDavisAndFionaDouglas.Xref));
+        var familyJson = Encoding.UTF8.GetString(JsonGedcomWriter.GetFamilies(TestFamilies.DylanDavisAndFionaDouglas.Xref));
+        var unexpectedFamilies = TestFamilies.All.Where(i => i.Xref != TestFamilies.DylanDavisAndFionaDouglas.Xref);
 
-        //Assert.IsTrue(familyJson.Contains(TestFamilies.DylanDavisAndFionaDouglas.Xref)
-        //    && !familyJson.Contains(TestFamilies.JamesSmithAndSaraDavis.Xref)
-        //    && !familyJson.Contains(TestFamilies.OwenDavisAndGwenJones.Xref));
+        Assert.IsTrue(familyJson.Contains(TestFamilies.DylanDavisAndFionaDouglas.Xref));
+
+        foreach (var unexpectedFamily in unexpectedFamilies)
+        {
+            Assert.IsFalse(familyJson.Contains(unexpectedFamily.Xref));
+        }
     }
 
     [TestMethod]
     public void ExportFamiliesJsonTest()
     {
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Json);
-        var familiesJson = jsonGedcomWriter.GetFamilies();
+        var familiesJson = Encoding.UTF8.GetString(JsonGedcomWriter.GetFamilies());
 
-        //Assert.IsTrue(familiesJson.Contains(TestFamilies.DylanDavisAndFionaDouglas.Xref)
-        //    && familiesJson.Contains(TestFamilies.JamesSmithAndSaraDavis.Xref)
-        //    && familiesJson.Contains(TestFamilies.OwenDavisAndGwenJones.Xref));
+        foreach (var expectedFamily in TestFamilies.All)
+        {
+            Assert.IsTrue(familiesJson.Contains(expectedFamily.Xref));
+        }
     }
 
     [TestMethod]
     public void ExportNonExistingFamilyJsonTest()
     {
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Json);
-        var familiesJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetFamilies(TestConstants.InvalidXref));
+        var nonExistentFamilyJson = Encoding.UTF8.GetString(JsonGedcomWriter.GetFamilies(TestConstants.InvalidXref));
 
-        //Assert.IsTrue(familiesJson.Equals(""));
+        Assert.AreEqual("[]", nonExistentFamilyJson);
     }
 
-    //[TestMethod]
-    public static void WriteFamiliesJsonTest()
+    [TestMethod]
+    public void WriteFamiliesJsonTest()
     {
-        // This is an integration test. Figure that out later
-        var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Json);
+        var familiesJsonFullName = Path.Combine(TestUtilities.OutputFilesDirectory, "Families.json");
+        var familiesJson = Encoding.UTF8.GetString(JsonGedcomWriter.GetFamilies());
 
-        //File.WriteAllText(TestUtilities.JsonFullName, jsonGedcomWriter.GetFamilies());
+        File.WriteAllText(familiesJsonFullName, familiesJson);
     }
 }
 
