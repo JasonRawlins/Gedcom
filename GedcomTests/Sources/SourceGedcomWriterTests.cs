@@ -17,10 +17,10 @@ public class SourceGedcomWriterTests
     [TestMethod]
     public void ExportSourceExcelTest()
     {
-        var sourceExcel = ExcelGedcomWriter.GetSources(TestSources.VitalRecords.Xref);
+        var sourceExcel = ExcelGedcomWriter.GetSources(TestSources.DylanDavisBiography.Xref);
         var sharedStrings = TestUtilities.GetSharedStringsFromExcel(sourceExcel);
 
-        Assert.IsTrue(sharedStrings.Contains(TestSources.VitalRecords.Xref));
+        Assert.IsTrue(sharedStrings.Contains(TestSources.DylanDavisBiography.Xref));
 
         AssertUnexpectedSourcesAreAbsent(sharedStrings);
     }
@@ -58,9 +58,9 @@ public class SourceGedcomWriterTests
     [TestMethod]
     public void ExportSourceHtmlTest()
     {
-        var sourceHtml = Encoding.UTF8.GetString(HtmlGedcomWriter.GetSources(TestSources.VitalRecords.Xref));
+        var sourceHtml = Encoding.UTF8.GetString(HtmlGedcomWriter.GetSources(TestSources.DylanDavisBiography.Xref));
 
-        Assert.IsTrue(sourceHtml.Contains(TestSources.VitalRecords.Xref));
+        Assert.IsTrue(sourceHtml.Contains(TestSources.DylanDavisBiography.Xref));
         AssertUnexpectedSourcesAreAbsent(sourceHtml);
     }
 
@@ -96,9 +96,9 @@ public class SourceGedcomWriterTests
     [TestMethod]
     public void ExportSourceJsonTest()
     {
-        var sourceJson = Encoding.UTF8.GetString(JsonGedcomWriter.GetSources(TestSources.VitalRecords.Xref));
+        var sourceJson = Encoding.UTF8.GetString(JsonGedcomWriter.GetSources(TestSources.DylanDavisBiography.Xref));
 
-        Assert.IsTrue(sourceJson.Contains(TestSources.VitalRecords.Xref));
+        Assert.IsTrue(sourceJson.Contains(TestSources.DylanDavisBiography.Xref));
         AssertUnexpectedSourcesAreAbsent(sourceJson);
     }
 
@@ -134,9 +134,9 @@ public class SourceGedcomWriterTests
     [TestMethod]
     public void ExportSourceTextTest()
     {
-        var sourceText = Encoding.UTF8.GetString(TextGedcomWriter.GetSources(TestSources.VitalRecords.Xref));
+        var sourceText = Encoding.UTF8.GetString(TextGedcomWriter.GetSources(TestSources.DylanDavisBiography.Xref));
 
-        Assert.IsTrue(sourceText.Contains(TestSources.VitalRecords.Xref));
+        Assert.IsTrue(sourceText.Contains(TestSources.DylanDavisBiography.Xref));
         AssertUnexpectedSourcesAreAbsent(sourceText);
     }
 
@@ -179,7 +179,7 @@ public class SourceGedcomWriterTests
 
     private static void AssertUnexpectedSourcesAreAbsent(string sourcesContent)
     {
-        var unexpectedSources = TestSources.All.Where(r => r.Xref != TestSources.VitalRecords.Xref);
+        var unexpectedSources = TestSources.All.Where(r => r.Xref != TestSources.DylanDavisBiography.Xref);
 
         foreach (var unexpectedSource in unexpectedSources)
         {

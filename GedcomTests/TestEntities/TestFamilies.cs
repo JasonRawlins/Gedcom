@@ -23,6 +23,18 @@ public class TestFamilies(GedcomDocument gedcom)
 {
     private readonly GedcomDocument Gedcom = gedcom;
 
+    public static List<TestFamily> All
+    {
+        get
+        {
+            return [
+                AnxinZhouAndMargaretDavis, CarwynDavisAndElizabethRhys, CelynDavisAndAbigailBrown,
+                DylanDavisAndEithneLynch, DylanDavisAndFionaDouglas, JamesSmithAndSaraDavis,
+                LlewelynVaughnAndAnwenDavis, OwenDavisAndGwenJones
+            ];
+        }
+    }
+
     // Unfortunately, family records exported from Ancestry.com do not have deterministic xrefs.
     // They will have to be retrieved at runtime. This may create concurrency issues when 
     // running tests. Those issues will have to be resolved when they come up.
@@ -138,18 +150,6 @@ public class TestFamilies(GedcomDocument gedcom)
                 Marriage = new(Tag.Marriage, "6 Jun 1925", "")
             };
             return family;
-        }
-    }
-
-    public static List<TestFamily> All
-    {
-        get
-        {
-            return [
-                AnxinZhouAndMargaretDavis, CarwynDavisAndElizabethRhys, CelynDavisAndAbigailBrown,
-                DylanDavisAndEithneLynch, DylanDavisAndFionaDouglas, JamesSmithAndSaraDavis,
-                LlewelynVaughnAndAnwenDavis, OwenDavisAndGwenJones
-            ];
         }
     }
 }

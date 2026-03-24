@@ -19,6 +19,19 @@ public class TestIndividual(string xref, string given, string surname)
 
 public class TestIndividuals
 {
+    public static TestIndividual[] All
+    {
+        get
+        {
+            return [
+                AbigailBrown, AnwenDavis, AnxinZhou, CarwynDavis, CelynVaughn,
+                DylanDavis, EithneLynch, ElizabethRhys, FionaDouglas, GarethDavis,
+                GwenJones, JaredVaughn, JamesSmith, LlewelynVaughn, MargaretDavis,
+                MarySmith, OwenDavis, SarahDavis, XiaohuiZhou
+            ];
+        }
+    }
+
     public static TestIndividual AbigailBrown
     {
         get
@@ -224,19 +237,6 @@ public class TestIndividuals
             individual.Events.Add(new(Tag.Birth, "8 Aug 1960", "China"));
             individual.Events.Add(new(Tag.Death, "8 Aug 2012", "China"));
             return individual;
-        }
-    }
-
-    public static TestIndividual[] All
-    {
-        get
-        {
-            return [
-                AbigailBrown, AnwenDavis, AnxinZhou, CarwynDavis, CelynVaughn, 
-                DylanDavis, EithneLynch, ElizabethRhys, FionaDouglas, GarethDavis,
-                GwenJones, JaredVaughn, JamesSmith, LlewelynVaughn, MargaretDavis,
-                MarySmith, OwenDavis, SarahDavis, XiaohuiZhou
-            ];
         }
     }
 }
