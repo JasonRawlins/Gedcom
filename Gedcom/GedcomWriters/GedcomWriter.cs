@@ -65,6 +65,16 @@ public abstract class GedcomWriter : IGedcomWriter
             }
         }
 
+        //var familyManager = new FamilyManager(GedcomDocument);
+
+        //var families = new List<Entities.Family>();
+
+        //foreach (var familyRecord in familyRecords)
+        //{
+        //    var family = familyManager.CreateFamily(familyRecord.Xref, Generation.Current, Generation.Child);
+        //    families.Add(family);
+        //}
+
         return [.. familyRecords.Select(fr => new FamilyDto(fr))];
     }
 }

@@ -27,7 +27,7 @@ public class SourceJsonTests
     }
 
     [TestMethod]
-    public void ExportNonExistingSourceJsonTest()
+    public void ExportNonexistentSourceJsonTest()
     {
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Json);
         var sourcesJson = Encoding.UTF8.GetString(jsonGedcomWriter.GetSources(TestConstants.InvalidXref));

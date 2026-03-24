@@ -29,7 +29,7 @@ public class RepositoryJsonTests
     }
 
     [TestMethod]
-    public void ExportNonExistingRepositoryJsonTest()
+    public void ExportNonexistentRepositoryJsonTest()
     {
         var jsonGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Json);
         var repositoriesJson = jsonGedcomWriter.GetRepositories(TestConstants.InvalidXref);

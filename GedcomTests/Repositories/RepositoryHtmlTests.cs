@@ -29,7 +29,7 @@ public class RepositoryHtmlTests
     }
 
     [TestMethod]
-    public void NonExistingRepositoryHtmlTest()
+    public void NonexistentRepositoryHtmlTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Html);
         var repositoryHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetRepositories(TestConstants.InvalidXref));

@@ -27,7 +27,7 @@ public class SourceHtmlTests
     }
 
     [TestMethod]
-    public void NonExistingSourceHtmlTest()
+    public void NonexistentSourceHtmlTest()
     {
         var htmlGedcomWriter = GedcomWriter.Create(TestUtilities.CreateGedcom(), Constants.Html);
         var sourceHtml = Encoding.UTF8.GetString(htmlGedcomWriter.GetSources(TestConstants.InvalidXref));

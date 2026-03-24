@@ -29,7 +29,7 @@ public class ExcelGedcomWriter : GedcomWriter
 
         var individualDtos = individualRecords.Select(ir => new IndividualDto(ir)).ToList();
 
-        using var templateStream = new MemoryStream(Properties.Resources.GedcomNetXlsxTemplate);
+        using var templateStream = new MemoryStream(Properties.Resources.GedcomNetIndividualsXlsxTemplate);
         using var templateWorkbook = new XLWorkbook(templateStream);
         using var workbook = new XLWorkbook();
 
@@ -58,6 +58,48 @@ public class ExcelGedcomWriter : GedcomWriter
     public override byte[] GetFamilies(string xref = "")
     {
         throw new NotImplementedException();
+
+        //var familyRecords = new List<FamilyRecord>(); 
+
+        //if (!string.IsNullOrEmpty(xref))
+        //{
+        //    var familyRecord = familyRecords.SingleOrDefault(ir => ir.Xref == xref);
+        //    if (familyRecord != null)
+        //    {
+        //        familyRecords = [familyRecord];
+        //    }
+        //}
+        //else
+        //{
+        //    familyRecords = GedcomDocument.GetFamilyRecords();
+        //}
+
+        //var familyDtos = familyRecords.Select(fr => new FamilyDto(fr)).ToList();
+
+        //using var templateStream = new MemoryStream(Properties.Resources.GedcomNetFamiliesXlsxTemplate);
+        //using var templateWorkbook = new XLWorkbook(templateStream);
+        //using var workbook = new XLWorkbook();
+
+        //var templateSheet = templateWorkbook.Worksheet("Template");
+        //var targetSheet = templateSheet.CopyTo(workbook, $"{GedcomDocument.Header.Source.Tree.Name} individuals");
+
+        //var templateRow = 2;
+        //var lastUsedColumn = targetSheet.LastColumnUsed()!.ColumnNumber();
+
+        //for (int i = 0; i < familyDtos.Count; i++)
+        //{
+        //    var familyDto = familyDtos[i];
+        //    var targetRow = templateRow + i + 1;
+
+        //    targetSheet.Row(templateRow).CopyTo(targetSheet.Row(targetRow));
+        //    //ReplaceTemplateValues(targetSheet, familyDto, targetRow, lastUsedColumn);
+        //}
+
+        //targetSheet.Row(templateRow).Delete();
+
+        //using var outputStream = new MemoryStream();
+        //workbook.SaveAs(outputStream);
+        //return outputStream.ToArray();
     }
 
     public override byte[] GetRepositories(string xref = "")

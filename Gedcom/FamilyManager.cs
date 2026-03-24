@@ -3,9 +3,9 @@ using Gedcom.RecordStructures;
 
 namespace Gedcom;
 
-public class FamilyManager(GedcomDocument gedcom)
+public class FamilyManager(GedcomDocument gedcomDocument)
 {
-    private readonly GedcomDocument Gedcom = gedcom;
+    private readonly GedcomDocument GedcomDocument = gedcomDocument;
     private readonly Dictionary<string, Individual> IndividualsCache = [];
     private readonly Dictionary<string, Family> FamilyCache = [];
 
@@ -35,7 +35,7 @@ public class FamilyManager(GedcomDocument gedcom)
 
     private Individual GetOrCreateIndividual(string individualXref)
     {
-        var individualRecord = Gedcom.GetIndividualRecords().Single(r => r.Xref == individualXref);
+        var individualRecord = GedcomDocument.GetIndividualRecords().Single(r => r.Xref == individualXref);
 
         if (IndividualsCache.TryGetValue(individualXref, out var existingIndividual))
             return existingIndividual;
@@ -44,7 +44,7 @@ public class FamilyManager(GedcomDocument gedcom)
 
         foreach (var multimediaLink in individualRecord.MultimediaLinks)
         {
-            var objectRecord = Gedcom.GetObjectRecord(multimediaLink.Xref);
+            var objectRecord = GedcomDocument.GetObjectRecord(multimediaLink.Xref);
             newIndividual.MultimediaRecords.Add(objectRecord);
         }
         
@@ -58,16 +58,16 @@ public class FamilyManager(GedcomDocument gedcom)
         if (FamilyCache.TryGetValue(familyXref, out var exisitingFamily))
             return exisitingFamily;
 
-        var newFamilyRecord = Gedcom.GetFamilyRecord(familyXref);
+        var newFamilyRecord = GedcomDocument.GetFamilyRecord(familyXref);
         var newFamily = new Family(newFamilyRecord);
 
-        var husbandIndividualRecord = Gedcom.GetIndividualRecords().Single(r => r.Xref == newFamilyRecord.Husband);
+        var husbandIndividualRecord = GedcomDocument.GetIndividualRecords().Single(r => r.Xref == newFamilyRecord.Husband);
         if (!husbandIndividualRecord.IsEmpty)
         {
             newFamily.Husband = GetOrCreateIndividual(husbandIndividualRecord.Xref);
         }
 
-        var wifeIndividualRecord = Gedcom.GetIndividualRecords().Single(r => r.Xref == newFamilyRecord.Wife);
+        var wifeIndividualRecord = GedcomDocument.GetIndividualRecords().Single(r => r.Xref == newFamilyRecord.Wife);
         if (!wifeIndividualRecord.IsEmpty)
         {
             newFamily.Wife = GetOrCreateIndividual(wifeIndividualRecord.Xref);
@@ -83,7 +83,7 @@ public class FamilyManager(GedcomDocument gedcom)
         if (generationsOfAncestors == 0)
             return;
 
-        var parentsFamilyRecord = Gedcom.GetFamilyRecordOfParents(individual.Xref);
+        var parentsFamilyRecord = GedcomDocument.GetFamilyRecordOfParents(individual.Xref);
 
         if (parentsFamilyRecord.IsEmpty)
             return;
@@ -108,7 +108,7 @@ public class FamilyManager(GedcomDocument gedcom)
         if (generationsOfDescendants == 0)
             return;
 
-        var familyRecord = Gedcom.GetFamilyRecordWhereTheIndividualIsAParent(individual.Xref);
+        var familyRecord = GedcomDocument.GetFamilyRecordWhereTheIndividualIsAParent(individual.Xref);
         var family = GetOrCreateFamily(familyRecord.Xref);
 
         LoadDescendants(family, 1);
@@ -119,7 +119,7 @@ public class FamilyManager(GedcomDocument gedcom)
         if (generationsOfDescendants == 0)
             return;
 
-        var familyChildrenXrefs = Gedcom.GetFamilyRecord(family.Xref).Children;
+        var familyChildrenXrefs = GedcomDocument.GetFamilyRecord(family.Xref).Children;
 
         foreach (var childXref in familyChildrenXrefs)
         {
@@ -133,7 +133,7 @@ public class FamilyManager(GedcomDocument gedcom)
             family.AddChild(child);
             child.Parents = family;
 
-            var childAsParentFamilyRecord = Gedcom.GetFamilyRecordWhereTheIndividualIsAParent(child.Xref);
+            var childAsParentFamilyRecord = GedcomDocument.GetFamilyRecordWhereTheIndividualIsAParent(child.Xref);
             if (!childAsParentFamilyRecord.IsEmpty)
             {
                 var childAsParentFamily = GetOrCreateFamily(childAsParentFamilyRecord.Xref);
@@ -144,7 +144,7 @@ public class FamilyManager(GedcomDocument gedcom)
 
     public void LoadSiblings(Individual individual)
     {
-        var parentsFamilyRecord = Gedcom.GetFamilyRecordOfParents(individual.Xref);
+        var parentsFamilyRecord = GedcomDocument.GetFamilyRecordOfParents(individual.Xref);
 
         if (parentsFamilyRecord.IsEmpty)
             return;

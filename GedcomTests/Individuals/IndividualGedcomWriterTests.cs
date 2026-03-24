@@ -25,7 +25,7 @@ public class IndividualGedcomWriterTests
         
         Assert.IsTrue(sharedStrings.Contains(TestIndividuals.DylanDavis.Xref));
 
-        AssertUnexpectedIndividuals(sharedStrings);
+        AssertUnexpectedIndividualsAreAbsent(sharedStrings);
     }
 
     [TestMethod]
@@ -34,11 +34,11 @@ public class IndividualGedcomWriterTests
         var individualExcel = ExcelGedcomWriter.GetIndividuals();
         var sharedStrings = GetSharedStringsFromExcel(individualExcel);
 
-        AssertExpectedIndividuals(sharedStrings);
+        AssertExpectedIndividualsArePresent(sharedStrings);
     }
 
     [TestMethod]
-    public void NonExistingIndividualExcelTest()
+    public void NonexistentIndividualExcelTest()
     {
         var individualExcel = ExcelGedcomWriter.GetIndividuals(TestConstants.InvalidXref);
         var sharedStrings = GetSharedStringsFromExcel(individualExcel);
@@ -84,7 +84,7 @@ public class IndividualGedcomWriterTests
         var individualHtml = Encoding.UTF8.GetString(HtmlGedcomWriter.GetIndividuals(TestIndividuals.DylanDavis.Xref));
 
         Assert.IsTrue(individualHtml.Contains(TestIndividuals.DylanDavis.Xref));
-        AssertUnexpectedIndividuals(individualHtml);
+        AssertUnexpectedIndividualsAreAbsent(individualHtml);
     }
 
     [TestMethod]
@@ -92,11 +92,11 @@ public class IndividualGedcomWriterTests
     {
         var individualsHtml = Encoding.UTF8.GetString(HtmlGedcomWriter.GetIndividuals());
 
-        AssertExpectedIndividuals(individualsHtml);
+        AssertExpectedIndividualsArePresent(individualsHtml);
     }
 
     [TestMethod]
-    public void NonExistingIndividualHtmlTest()
+    public void NonexistentIndividualHtmlTest()
     {
         var individualJson = Encoding.UTF8.GetString(HtmlGedcomWriter.GetIndividuals(TestConstants.InvalidXref));
 
@@ -122,7 +122,7 @@ public class IndividualGedcomWriterTests
         var individualJson = Encoding.UTF8.GetString(JsonGedcomWriter.GetIndividuals(TestIndividuals.DylanDavis.Xref));
 
         Assert.IsTrue(individualJson.Contains(TestIndividuals.DylanDavis.Xref));
-        AssertUnexpectedIndividuals(individualJson);
+        AssertUnexpectedIndividualsAreAbsent(individualJson);
     }
 
     [TestMethod]
@@ -130,11 +130,11 @@ public class IndividualGedcomWriterTests
     {
         var individualsJson = Encoding.UTF8.GetString(JsonGedcomWriter.GetIndividuals());
 
-        AssertExpectedIndividuals(individualsJson);
+        AssertExpectedIndividualsArePresent(individualsJson);
     }
 
     [TestMethod]
-    public void NonExistingIndividualJsonTest()
+    public void NonexistentIndividualJsonTest()
     {
         var nonExistentIndividualJson = Encoding.UTF8.GetString(JsonGedcomWriter.GetIndividuals(TestConstants.InvalidXref));
 
@@ -160,18 +160,18 @@ public class IndividualGedcomWriterTests
         var individualText = Encoding.UTF8.GetString(TextGedcomWriter.GetIndividuals(TestIndividuals.DylanDavis.Xref));
 
         Assert.IsTrue(individualText.Contains(TestIndividuals.DylanDavis.Xref));
-        AssertUnexpectedIndividuals(individualText);
+        AssertUnexpectedIndividualsAreAbsent(individualText);
     }
 
     [TestMethod]
     public void ExportIndividualsTextTest()
     {
         var individualsText = Encoding.UTF8.GetString(TextGedcomWriter.GetIndividuals());
-        AssertExpectedIndividuals(individualsText);
+        AssertExpectedIndividualsArePresent(individualsText);
     }
 
     [TestMethod]
-    public void NonExistingIndividualTextTest()
+    public void NonexistentIndividualTextTest()
     {
         var individualText = Encoding.UTF8.GetString(TextGedcomWriter.GetIndividuals(TestConstants.InvalidXref));
 
@@ -191,7 +191,7 @@ public class IndividualGedcomWriterTests
 
     #region Assertions
 
-    private static void AssertExpectedIndividuals(string individualsContent)
+    private static void AssertExpectedIndividualsArePresent(string individualsContent)
     {
         foreach (var expectedIndividual in TestIndividuals.All)
         {
@@ -199,7 +199,7 @@ public class IndividualGedcomWriterTests
         }
     }
 
-    private static void AssertUnexpectedIndividuals(string individualsContent)
+    private static void AssertUnexpectedIndividualsAreAbsent(string individualsContent)
     {
         var unexpectedIndividuals = TestIndividuals.All.Where(i => i.Xref != TestIndividuals.DylanDavis.Xref);
 

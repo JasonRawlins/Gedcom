@@ -1,5 +1,4 @@
 ﻿using Gedcom.DTOs;
-using Gedcom.RecordStructures;
 
 namespace Gedcom.GedcomWriters;
 
