@@ -63,9 +63,9 @@ namespace Gedcom.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] GedcomNetFamiliesHtmlTemplate {
+        internal static byte[] GedcomNetHtmlFamiliesTemplate {
             get {
-                object obj = ResourceManager.GetObject("GedcomNetFamiliesHtmlTemplate", resourceCulture);
+                object obj = ResourceManager.GetObject("GedcomNetHtmlFamiliesTemplate", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace Gedcom.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] GedcomNetIndividualsHtmlTemplate {
+        internal static byte[] GedcomNetHtmlIndividualsTemplate {
             get {
-                object obj = ResourceManager.GetObject("GedcomNetIndividualsHtmlTemplate", resourceCulture);
+                object obj = ResourceManager.GetObject("GedcomNetHtmlIndividualsTemplate", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -83,9 +83,49 @@ namespace Gedcom.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] GedcomNetIndividualsXlsxTemplate {
+        internal static byte[] GedcomNetHtmlRepositoriesTemplate {
             get {
-                object obj = ResourceManager.GetObject("GedcomNetIndividualsXlsxTemplate", resourceCulture);
+                object obj = ResourceManager.GetObject("GedcomNetHtmlRepositoriesTemplate", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] GedcomNetHtmlSourcesTemplate {
+            get {
+                object obj = ResourceManager.GetObject("GedcomNetHtmlSourcesTemplate", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] GedcomNetXlsxIndividualsTemplate {
+            get {
+                object obj = ResourceManager.GetObject("GedcomNetXlsxIndividualsTemplate", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] GedcomNetXlsxRepositoriesTemplate {
+            get {
+                object obj = ResourceManager.GetObject("GedcomNetXlsxRepositoriesTemplate", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] GedcomNetXlsxSourcesTemplate {
+            get {
+                object obj = ResourceManager.GetObject("GedcomNetXlsxSourcesTemplate", resourceCulture);
                 return ((byte[])(obj));
             }
         }

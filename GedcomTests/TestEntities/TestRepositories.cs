@@ -15,4 +15,12 @@ public class TestRepositories
             return new TestRepository("@R856097590@", "Vital records repository");
         }
     }
+
+    public static List<TestRepository> All
+    {
+        get
+        {
+            return [VitalRecordsRepository];
+        }
+    }
 }

@@ -1,5 +1,4 @@
 ﻿using Gedcom.DTOs;
-using Gedcom.RecordStructures;
 using System.Text;
 
 namespace Gedcom.GedcomWriters;
@@ -15,7 +14,7 @@ public class HtmlGedcomWriter : GedcomWriter
     {
         var individualDtos = GetIndividualDtos(xref);
 
-        var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.GedcomNetIndividualsHtmlTemplate);
+        var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.GedcomNetHtmlIndividualsTemplate);
         var finalHtml = htmlTemplate.Replace("{{INDIVIDUAL_LIST_ITEMS}}", GetIndividualsText(individualDtos));
 
         return Encoding.UTF8.GetBytes(finalHtml);
@@ -25,7 +24,7 @@ public class HtmlGedcomWriter : GedcomWriter
     {
         var familyDtos = GetFamilyDtos(xref);
 
-        var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.GedcomNetFamiliesHtmlTemplate);
+        var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.GedcomNetHtmlFamiliesTemplate);
         var finalHtml = htmlTemplate.Replace("{{FAMILY_LIST_ITEMS}}", GetFamiliesText(familyDtos));
 
         return Encoding.UTF8.GetBytes(finalHtml);
@@ -33,46 +32,22 @@ public class HtmlGedcomWriter : GedcomWriter
 
     public override byte[] GetRepositories(string xref = "")
     {
-        return [];
-        // TODO: Return a html formatted repositories. 
-        //var repositoryRecords = GedcomDocument.GetRepositoryRecords();
+        var repositoryDtos = GetRepositoryDtos(xref);
 
-        //if (repositoryRecords.Count == 0) return "";
+        var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.GedcomNetHtmlRepositoriesTemplate);
+        var finalHtml = htmlTemplate.Replace("{{REPOSITORY_LIST_ITEMS}}", GetRepositoriesText(repositoryDtos));
 
-        //var ul = new StringBuilder();
-        //ul.AppendLine("<ul>");
-
-        //foreach (var repositoryRecord in repositoryRecords)
-        //{
-        //    var repositoryListItem = CreateRepositoryListItem(repositoryRecord);
-        //    ul.AppendLine(repositoryListItem);
-        //}
-
-        //ul.AppendLine("</ul>");
-
-        //return Encoding.UTF8.GetBytes(ul.ToString());
+        return Encoding.UTF8.GetBytes(finalHtml);
     }
 
     public override byte[] GetSources(string xref = "")
     {
-        return [];
-        // TODO: Return a html formatted sources
-        //var sourceRecords = GedcomDocument.GetSourceRecords();
+        var sourceDtos = GetSourceDtos(xref);
 
-        //if (sourceRecords.Count == 0) return "";
+        var htmlTemplate = Encoding.UTF8.GetString(Properties.Resources.GedcomNetHtmlSourcesTemplate);
+        var finalHtml = htmlTemplate.Replace("{{SOURCE_LIST_ITEMS}}", GetSourcesText(sourceDtos));
 
-        //var ul = new StringBuilder();
-        //ul.AppendLine("<ul>");
-
-        //foreach (var sourceRecord in sourceRecords)
-        //{
-        //    var sourceListItem = CreateSourceListItem(sourceRecord);
-        //    ul.AppendLine(sourceListItem);
-        //}
-
-        //ul.AppendLine("</ul>");
-
-        //return ul.ToString();
+        return Encoding.UTF8.GetBytes(finalHtml);
     }
 
     private string GetIndividualsText(List<IndividualDto> individualDtos)
@@ -177,14 +152,44 @@ public class HtmlGedcomWriter : GedcomWriter
         return familyStringBuilder.ToString();
     }
 
-    private static string CreateRepositoryListItem(RepositoryRecord repositoryRecord)
+    private static string GetRepositoriesText(List<RepositoryDto> repositoryDtos)
     {
-        return $"<li>({repositoryRecord.Xref}) {repositoryRecord.Name}</li>";
+        if (repositoryDtos.Count == 0)
+        {
+            return "";
+        }
+
+        var repositoryStringBuilder = new StringBuilder();
+        repositoryStringBuilder.AppendLine("<ul class='repositories'>");
+
+        foreach (var repositoryDto in repositoryDtos)
+        {
+            repositoryStringBuilder.AppendLine($"<li>({repositoryDto.Xref}) {repositoryDto.Name}</li>");
+        }
+
+        repositoryStringBuilder.AppendLine("</ul>");
+
+        return repositoryStringBuilder.ToString();
     }
 
-    private static string CreateSourceListItem(SourceRecord sourceRecord)
+    private static string GetSourcesText(List<SourceDto> sourceDtos)
     {
-        return $"<li>({sourceRecord.Xref}) {sourceRecord.TextFromSource}</li>";
+        if (sourceDtos.Count == 0)
+        {
+            return "";
+        }
+
+        var sourceStringBuilder = new StringBuilder();
+        sourceStringBuilder.AppendLine("<ul class='sources'>");
+
+        foreach (var sourceDto in sourceDtos)
+        {
+            sourceStringBuilder.AppendLine($"<li>({sourceDto.Xref}) {sourceDto.Title}</li>");
+        }
+
+        sourceStringBuilder.AppendLine("</ul>");
+
+        return sourceStringBuilder.ToString();
     }
 
     public static string GenerateAncestryProfileLink(string treeId, string xref) => $"https://www.ancestry.com/family-tree/person/tree/{treeId}/person/{xref}/facts";

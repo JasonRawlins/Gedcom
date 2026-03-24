@@ -36,27 +36,38 @@ public class TextGedcomWriter : GedcomWriter
         return Encoding.UTF8.GetBytes(familiesStringBuilder.ToString());
     }
 
-
     public override byte[] GetRepositories(string xref = "")
     {
-        var repositoryRecords = GedcomDocument.GetRepositoryRecords();
+        var repositoryDtos = GetRepositoryDtos(xref);
 
-        return []; // WriteRecords(repositoryRecords);
+        var repositoryStringBuilder = new StringBuilder();
+        foreach (var repositoryDto in repositoryDtos)
+        {
+            repositoryStringBuilder.AppendLine(GetRepositoryLineItem(repositoryDto));
+        }
+
+        return Encoding.UTF8.GetBytes(repositoryStringBuilder.ToString());
     }
 
     public override byte[] GetSources(string xref = "")
     {
-        var sourceRecords = GedcomDocument.GetSourceRecords();
+        var sourceDtos = GetSourceDtos(xref);
 
-        return []; // WriteRecords(sourceRecords);
+        var sourceStringBuilder = new StringBuilder();
+        foreach (var sourceDto in sourceDtos)
+        {
+            sourceStringBuilder.AppendLine(GetSourceLineItem(sourceDto));
+        }
+
+        return Encoding.UTF8.GetBytes(sourceStringBuilder.ToString());
     }
 
     private static string GetIndividualLineItem(IndividualDto individualDto)
     {
         var individualLineItemStringBuilder = new StringBuilder();
 
+        individualLineItemStringBuilder.Append($"({individualDto.Xref}) ");
         individualLineItemStringBuilder.Append($"{individualDto.Surname}, {individualDto.Given}");
-        individualLineItemStringBuilder.Append($" ({individualDto.Xref})");
 
         var birthAndDeathText =
             $" BIRTH: {individualDto.Birth?.Date.DayMonthYear ?? "Unknown birthdate"}" +
@@ -84,7 +95,7 @@ public class TextGedcomWriter : GedcomWriter
         else
         {
             var husbandDto = new IndividualDto(husbandIndividualRecord);
-            familyLineItemStringBuilder.Append($"Husband: {husbandDto.FullName} ({husbandDto.Xref}).");
+            familyLineItemStringBuilder.Append($"Husband: ({husbandDto.Xref}) {husbandDto.FullName}.");
         }
 
         var wifeIndividualRecord = GedcomDocument.GetIndividualRecords().SingleOrDefault(r => r.Xref == familyDto.Wife);
@@ -95,7 +106,7 @@ public class TextGedcomWriter : GedcomWriter
         else
         {
             var wifeDto = new IndividualDto(wifeIndividualRecord);
-            familyLineItemStringBuilder.Append($" Wife: {wifeDto.FullName} ({wifeDto.Xref}).");
+            familyLineItemStringBuilder.Append($" Wife: ({wifeDto.Xref}) {wifeDto.FullName}.");
         }
 
         if (familyDto.Children?.Count == 0)
@@ -113,7 +124,7 @@ public class TextGedcomWriter : GedcomWriter
                 if (!childIndividualRecord.IsEmpty)
                 {
                     var childDto = new IndividualDto(childIndividualRecord);
-                    childNames.Add($"{childDto.FullName} ({childDto.Xref})");
+                    childNames.Add($"({childDto.Xref}) {childDto.FullName}");
                 }
             }
 
@@ -124,4 +135,13 @@ public class TextGedcomWriter : GedcomWriter
         return familyLineItemStringBuilder.ToString();
     }
 
+    private static string? GetRepositoryLineItem(RepositoryDto repositoryDto)
+    {
+        return $"({repositoryDto.Xref}) {repositoryDto.Name}: {repositoryDto.Note}";
+    }
+
+    private static string? GetSourceLineItem(SourceDto sourceDto)
+    {
+        return $"({sourceDto.Xref}) {sourceDto.Title}: {sourceDto.Note}";
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using Gedcom;
+using System.IO.Compression;
 using System.Text;
 
 namespace GedcomTests;
@@ -10,9 +11,31 @@ public class TestUtilities
 
     public static GedcomDocument CreateGedcom()
     {
-        var gedFileLines = Encoding.UTF8.GetString(Properties.Resources.GedcomNetTestTree).Split(Environment.NewLine);
+        var gedFileLines = Encoding.UTF8.GetString(Properties.Resources.GedcomNetTestTree)
+            .Split(GedcomDocument.LineEnding, StringSplitOptions.RemoveEmptyEntries);
+
         var gedcomLines = gedFileLines.Where(l => !string.IsNullOrEmpty(l)).Select(GedcomLine.Parse).ToList();
         return new GedcomDocument(gedcomLines);
+    }
+
+    public static string GetSharedStringsFromExcel(byte[] xlsxBytes)
+    {
+        var xmlFiles = new Dictionary<string, string>();
+
+        using var stream = new MemoryStream(xlsxBytes);
+        using var zip = new ZipArchive(stream, ZipArchiveMode.Read);
+
+        foreach (var entry in zip.Entries)
+        {
+            if (entry.Name.EndsWith(".xml") || entry.Name.EndsWith(".rels"))
+            {
+                using var entryStream = entry.Open();
+                using var reader = new StreamReader(entryStream, Encoding.UTF8);
+                xmlFiles[entry.FullName] = reader.ReadToEnd();
+            }
+        }
+
+        return xmlFiles.Single(x => x.Key == "xl/sharedStrings.xml").Value;
     }
 
     public static string GetImageBase64String()

@@ -49,6 +49,6 @@ public class Family(FamilyRecord familyRecord)
             childrenList = $" with children {string.Join(", ", Children)}";
         }
 
-        return $"{husbandName} and {wifeName} ({Xref}){childrenList}";
+        return $"({Xref}) {husbandName} and {wifeName} {childrenList}";
     }
 }

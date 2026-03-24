@@ -9,7 +9,6 @@ public class SourceDto : GedcomDto, IComparable<SourceDto>
         AutomatedRecordId = GetString(sourceRecord.AutomatedRecordId);
         CallNumber = GetString(sourceRecord.CallNumber);
         ChangeDate = GetRecord(new ChangeDateDto(sourceRecord.ChangeDate));
-        DescriptiveTitle = GetString(sourceRecord.SourceDescriptiveTitle.Text);
         FiledByEntry = GetRecord(new NoteDto(sourceRecord.SourceFiledByEntry));
         IsEmpty = sourceRecord.IsEmpty;
         MultimediaLinks = GetList(sourceRecord.MultimediaLinks.Select(ml => new MultimediaLinkDto(ml)).ToList());
@@ -20,6 +19,7 @@ public class SourceDto : GedcomDto, IComparable<SourceDto>
         RepositoryCitations = GetList(sourceRecord.SourceRepositoryCitations.Select(src => new SourceRepositoryCitationDto(src)).ToList());
         RepositoryXref = GetString(sourceRecord.RepositoryXref);
         TextFromSource = GetRecord(new NoteDto(sourceRecord.TextFromSource));
+        Title = GetString(sourceRecord.SourceDescriptiveTitle.Text);
         UserReferenceNumbers = GetList(sourceRecord.UserReferenceNumbers.Select(urn => new UserReferenceNumberDto(urn)).ToList());
         Xref = sourceRecord.Xref;
     }
@@ -27,7 +27,7 @@ public class SourceDto : GedcomDto, IComparable<SourceDto>
     public string? AutomatedRecordId { get; set; }
     public string? CallNumber { get; set; }
     public ChangeDateDto? ChangeDate { get; set; }
-    public string? DescriptiveTitle { get; set; }
+    public string? Title { get; set; }
     public NoteDto? FiledByEntry { get; set; }
     public List<MultimediaLinkDto>? MultimediaLinks { get; set; }
     public string? Note { get; set; }
@@ -44,8 +44,8 @@ public class SourceDto : GedcomDto, IComparable<SourceDto>
     {
         if (other == null) return 1;
 
-        return other.DescriptiveTitle!.CompareTo(other.DescriptiveTitle);
+        return other.Title!.CompareTo(other.Title);
     }
 
-    public override string ToString() => $"{DescriptiveTitle}";
+    public override string ToString() => $"{Title}";
 }

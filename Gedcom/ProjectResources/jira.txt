@@ -19,6 +19,8 @@ Handle the xrefs from different programs
 	Can you export gedcom from FamilySearch?
 		If I sync RootsMagic and FamilySearch, can I export the gedcom in that way?
 
+Remove Ancestry specific code (like the generated url)
+
 This program is using Ancestry specific tags like _TREE. Is that appropriate for a 
 generic program? Do other programs have similar tags? This might be a problem
 because it is hard-coding values that other systems may not have. Each new system

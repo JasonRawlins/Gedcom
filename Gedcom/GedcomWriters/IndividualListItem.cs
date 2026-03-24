@@ -32,6 +32,6 @@ public class IndividualListItem(IndividualDto individualDto) : IComparable<Indiv
 
     public override string ToString()
     {
-        return $"{Surname}, {Given} ({Birthdate} — {DeathDate}). {Xref}";
+        return $"({Xref}) {Surname}, {Given} ({Birthdate} — {DeathDate}).";
     }
 }

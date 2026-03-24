@@ -6,8 +6,22 @@ public class TestSource(string xref, string title)
     public string Title { get; set; } = title;
 }
 
-public static class TestSources
+public class TestSources
 {
-    public static TestSource VitalRecords = new("@S976697667@", "Vital records");
+    public static TestSource VitalRecords
+    {
+        get
+        {
+            return new("@S976697667@", "Vital records");
+        }
+    }
+
+    public static List<TestSource> All
+    {
+        get
+        {
+            return [VitalRecords];
+        }
+    }
 }
 

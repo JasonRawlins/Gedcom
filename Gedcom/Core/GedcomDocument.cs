@@ -8,6 +8,8 @@ namespace Gedcom;
 [JsonConverter(typeof(GedcomJsonConverter))]
 public class GedcomDocument : RecordStructureBase
 {
+    public static readonly string[] LineEnding = ["\r\n", "\r", "\n"];
+
     public GedcomDocument(List<GedcomLine> gedcomLines)
     {
         ArgumentNullException.ThrowIfNull(gedcomLines);

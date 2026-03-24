@@ -26,19 +26,16 @@ public class JsonGedcomWriter : GedcomWriter
 
     public override byte[] GetRepositories(string xref = "")
     {
-        // TODO: Filter by xref after retrieving, if necessary.
+        var repositoryDtos = GetRepositoryDtos(xref);
 
-        var repositoryRecords = GedcomDocument.GetRepositoryRecords();
-
-        return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(repositoryRecords, GedcomDto.SerializationOptions));
+        return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(repositoryDtos, GedcomDto.SerializationOptions));
     }
 
     public override byte[] GetSources(string xref = "")
     {
-        // TODO: Filter by xref after retrieving, if necessary.
-        var sourceRecords = GedcomDocument.GetSourceRecords();
+        var sourceDtos = GetSourceDtos(xref);
 
-        return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(sourceRecords, GedcomDto.SerializationOptions));
+        return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(sourceDtos, GedcomDto.SerializationOptions));
     }
 }
 

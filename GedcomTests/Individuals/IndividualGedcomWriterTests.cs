@@ -1,6 +1,5 @@
 ﻿using Gedcom.GedcomWriters;
 using GedcomTests.TestEntities;
-using System.IO.Compression;
 using System.Text;
 
 namespace GedcomTests.Individuals;
@@ -21,7 +20,7 @@ public class IndividualGedcomWriterTests
     public void ExportIndividualExcelTest()
     {
         var individualExcel = ExcelGedcomWriter.GetIndividuals(TestIndividuals.DylanDavis.Xref);
-        var sharedStrings = GetSharedStringsFromExcel(individualExcel);
+        var sharedStrings = TestUtilities.GetSharedStringsFromExcel(individualExcel);
         
         Assert.IsTrue(sharedStrings.Contains(TestIndividuals.DylanDavis.Xref));
 
@@ -32,7 +31,7 @@ public class IndividualGedcomWriterTests
     public void ExportIndividualsExcelTest()
     {
         var individualExcel = ExcelGedcomWriter.GetIndividuals();
-        var sharedStrings = GetSharedStringsFromExcel(individualExcel);
+        var sharedStrings = TestUtilities.GetSharedStringsFromExcel(individualExcel);
 
         AssertExpectedIndividualsArePresent(sharedStrings);
     }
@@ -41,7 +40,7 @@ public class IndividualGedcomWriterTests
     public void NonexistentIndividualExcelTest()
     {
         var individualExcel = ExcelGedcomWriter.GetIndividuals(TestConstants.InvalidXref);
-        var sharedStrings = GetSharedStringsFromExcel(individualExcel);
+        var sharedStrings = TestUtilities.GetSharedStringsFromExcel(individualExcel);
 
         AssertNoIndividuals(sharedStrings);
     }
@@ -52,26 +51,6 @@ public class IndividualGedcomWriterTests
         string excelIndividualsFullName = Path.Combine(TestUtilities.OutputFilesDirectory, "Individuals.xlsx");
 
         File.WriteAllBytes(excelIndividualsFullName, ExcelGedcomWriter.GetIndividuals());
-    }
-
-    public static string GetSharedStringsFromExcel(byte[] xlsxBytes)
-    {
-        var xmlFiles = new Dictionary<string, string>();
-
-        using var stream = new MemoryStream(xlsxBytes);
-        using var zip = new ZipArchive(stream, ZipArchiveMode.Read);
-
-        foreach (var entry in zip.Entries)
-        {
-            if (entry.Name.EndsWith(".xml") || entry.Name.EndsWith(".rels"))
-            {
-                using var entryStream = entry.Open();
-                using var reader = new StreamReader(entryStream, Encoding.UTF8);
-                xmlFiles[entry.FullName] = reader.ReadToEnd();
-            }
-        }
-
-        return xmlFiles.Single(x => x.Key == "xl/sharedStrings.xml").Value;
     }
 
     #endregion

@@ -12,24 +12,9 @@ public class ExcelGedcomWriter : GedcomWriter
 
     public override byte[] GetIndividuals(string xref = "")
     {
-        var individualRecords = GedcomDocument.GetIndividualRecords();
+        var individualDtos = GetIndividualDtos(xref);
 
-        if (!string.IsNullOrEmpty(xref))
-        {
-            var individualRecord = individualRecords.SingleOrDefault(ir => ir.Xref == xref);
-            if (individualRecord == null)
-            {
-                individualRecords = [];
-            }
-            else
-            {
-                individualRecords = [individualRecord];
-            }
-        }
-
-        var individualDtos = individualRecords.Select(ir => new IndividualDto(ir)).ToList();
-
-        using var templateStream = new MemoryStream(Properties.Resources.GedcomNetIndividualsXlsxTemplate);
+        using var templateStream = new MemoryStream(Properties.Resources.GedcomNetXlsxIndividualsTemplate);
         using var templateWorkbook = new XLWorkbook(templateStream);
         using var workbook = new XLWorkbook();
 
@@ -45,19 +30,21 @@ public class ExcelGedcomWriter : GedcomWriter
             var targetRow = templateRow + i + 1;
 
             targetSheet.Row(templateRow).CopyTo(targetSheet.Row(targetRow));
-            ReplaceTemplateValues(targetSheet, individualDto, targetRow, lastUsedColumn);
+            ReplaceTemplateValuesForIndividual(targetSheet, individualDto, targetRow, lastUsedColumn);
         }
 
         targetSheet.Row(templateRow).Delete();
 
         using var outputStream = new MemoryStream();
         workbook.SaveAs(outputStream);
+
         return outputStream.ToArray();
     }
 
     public override byte[] GetFamilies(string xref = "")
     {
-        throw new NotImplementedException();
+        return [];
+        //throw new NotImplementedException();
 
         //var familyRecords = new List<FamilyRecord>(); 
 
@@ -104,15 +91,67 @@ public class ExcelGedcomWriter : GedcomWriter
 
     public override byte[] GetRepositories(string xref = "")
     {
-        throw new NotImplementedException();
+        var repositoryDtos = GetRepositoryDtos(xref);
+
+        using var templateStream = new MemoryStream(Properties.Resources.GedcomNetXlsxRepositoriesTemplate);
+        using var templateWorkbook = new XLWorkbook(templateStream);
+        using var workbook = new XLWorkbook();
+
+        var templateSheet = templateWorkbook.Worksheet("Template");
+        var targetSheet = templateSheet.CopyTo(workbook, $"{GedcomDocument.Header.Source.Tree.Name} repositories");
+
+        var templateRow = 2;
+        var lastUsedColumn = targetSheet.LastColumnUsed()!.ColumnNumber();
+
+        for (int i = 0; i < repositoryDtos.Count; i++)
+        {
+            var repositoryDto = repositoryDtos[i];
+            var targetRow = templateRow + i + 1;
+
+            targetSheet.Row(templateRow).CopyTo(targetSheet.Row(targetRow));
+            ReplaceTemplateValuesForRepository(targetSheet, repositoryDto, targetRow, lastUsedColumn);
+        }
+
+        targetSheet.Row(templateRow).Delete();
+
+        using var outputStream = new MemoryStream();
+        workbook.SaveAs(outputStream);
+
+        return outputStream.ToArray();
     }
 
     public override byte[] GetSources(string xref = "")
     {
-        throw new NotImplementedException();
+        var sourcesDtos = GetSourceDtos(xref);
+
+        using var templateStream = new MemoryStream(Properties.Resources.GedcomNetXlsxSourcesTemplate);
+        using var templateWorkbook = new XLWorkbook(templateStream);
+        using var workbook = new XLWorkbook();
+
+        var templateSheet = templateWorkbook.Worksheet("Template");
+        var targetSheet = templateSheet.CopyTo(workbook, $"{GedcomDocument.Header.Source.Tree.Name} repositories");
+
+        var templateRow = 2;
+        var lastUsedColumn = targetSheet.LastColumnUsed()!.ColumnNumber();
+
+        for (int i = 0; i < sourcesDtos.Count; i++)
+        {
+            var sourceDto = sourcesDtos[i];
+            var targetRow = templateRow + i + 1;
+
+            targetSheet.Row(templateRow).CopyTo(targetSheet.Row(targetRow));
+            ReplaceTemplateValuesForSource(targetSheet, sourceDto, targetRow, lastUsedColumn);
+        }
+
+        targetSheet.Row(templateRow).Delete();
+
+        using var outputStream = new MemoryStream();
+        workbook.SaveAs(outputStream);
+
+        return outputStream.ToArray();
     }
 
-    private void ReplaceTemplateValues(IXLWorksheet worksheet, IndividualDto individualDto, int rowNumber, int lastUsedColumn)
+    private void ReplaceTemplateValuesForIndividual(IXLWorksheet worksheet, IndividualDto individualDto, int rowNumber, int lastUsedColumn)
     {
         for (int column = 1; column <= lastUsedColumn; column++)
         {
@@ -136,17 +175,35 @@ public class ExcelGedcomWriter : GedcomWriter
         }
     }
 
-    private static class ContentTag
+    private static void ReplaceTemplateValuesForRepository(IXLWorksheet worksheet, RepositoryDto repositoryDto, int rowNumber, int lastUsedColumn)
     {
-        public const string AncestryProfileLink = "{{ANCESTRY_PROFILE_LINK}}";
-        public const string BirthDate = "{{BIRTH_DATE}}";
-        public const string BirthPlace = "{{BIRTH_PLACE}}";
-        public const string DeathDate = "{{DEATH_DATE}}";
-        public const string DeathPlace = "{{DEATH_PLACE}}";
-        public const string FullName = "{{FULL_NAME}}";
-        public const string Given = "{{GIVEN}}";
-        public const string Surname = "{{SURNAME}}";
-        public const string TreeName = "{{TREE_NAME}}";
-        public const string Xref = "{{XREF}}";
+        for (int column = 1; column <= lastUsedColumn; column++)
+        {
+            var cell = worksheet.Cell(rowNumber, column);
+            var value = cell.GetString();
+
+            cell.Value = value switch
+            {
+                ContentTag.Name => repositoryDto.Name,
+                ContentTag.Xref => repositoryDto.Xref,
+                _ => value,
+            };
+        }
+    }
+
+    private static void ReplaceTemplateValuesForSource(IXLWorksheet worksheet, SourceDto sourceDto, int rowNumber, int lastUsedColumn)
+    {
+        for (int column = 1; column <= lastUsedColumn; column++)
+        {
+            var cell = worksheet.Cell(rowNumber, column);
+            var value = cell.GetString();
+
+            cell.Value = value switch
+            {
+                ContentTag.Title => sourceDto.Title,
+                ContentTag.Xref => sourceDto.Xref,
+                _ => value,
+            };
+        }
     }
 }

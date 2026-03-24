@@ -118,13 +118,25 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="GedcomNetFamiliesHtmlTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ResourceFiles\GedcomNetFamiliesHtmlTemplate.html;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="GedcomNetHtmlFamiliesTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ResourceFiles\GedcomNetHtmlFamiliesTemplate.html;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="GedcomNetIndividualsHtmlTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ResourceFiles\GedcomNetIndividualsHtmlTemplate.html;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="GedcomNetHtmlIndividualsTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ResourceFiles\GedcomNetHtmlIndividualsTemplate.html;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="GedcomNetIndividualsXlsxTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ResourceFiles\GedcomNetIndividualsXlsxTemplate.xlsx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="GedcomNetHtmlRepositoriesTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ResourceFiles\GedcomNetHtmlRepositoriesTemplate.html;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GedcomNetHtmlSourcesTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ResourceFiles\GedcomNetHtmlSourcesTemplate.html;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GedcomNetXlsxIndividualsTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ResourceFiles\GedcomNetXlsxIndividualsTemplate.xlsx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GedcomNetXlsxRepositoriesTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ResourceFiles\GedcomNetXlsxRepositoriesTemplate.xlsx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="GedcomNetXlsxSourcesTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ResourceFiles\GedcomNetXlsxSourcesTemplate.xlsx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

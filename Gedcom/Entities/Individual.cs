@@ -23,5 +23,5 @@ public class Individual(IndividualRecord individualRecord)
         }
     }
 
-    public override string ToString() => $"{Given} {Surname} ({Xref})";
+    public override string ToString() => $"({Xref}) {Surname}, {Given}";
 }
