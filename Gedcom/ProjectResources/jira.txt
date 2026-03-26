@@ -1,14 +1,5 @@
 Current
 -------
-Do I need to remove all JsonConverters for RecordStructures? I'm never returning them explicitly. I only return the dtos.
-
-Reconcile ExcelGedcomWriter.ContentTag and FieldManager
-
-Ensure CLI export still works
-	Text
-	Json
-	Html
-	Excel
 In the CLI, it's possible the xref is invalid. Account for that.
 Remove query from options
 

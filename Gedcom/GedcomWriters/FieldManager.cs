@@ -2,6 +2,7 @@
 
 namespace Gedcom.GedcomWriters;
 
+// TODO: 2026-03-24. Is this being used for anything?
 public static class FieldManager
 {
     public static string GetIndividualField(IndividualDto individualDto, string field)
@@ -19,11 +20,11 @@ public static class FieldManager
 
     public static class Individual
     {
-        public const string Birthdate = "{{birthdate}}";
-        public const string BirthPlace = "{{birth-place}}";
-        public const string DeathDate = "{{death-date}}";
-        public const string DeathPlace = "{{death-place}}";
-        public const string Given = "{{given}}";
-        public const string Surname = "{{surname}}";
+        public const string Birthdate = "{{BIRTHDATE}}";
+        public const string BirthPlace = "{{BIRTH_PLACE}}";
+        public const string DeathDate = "{{DEATH_DATE}}";
+        public const string DeathPlace = "{{DEATH_PLACE}}";
+        public const string Given = "{{GIVEN}}";
+        public const string Surname = "{{SURNAME}}";
     }
 }

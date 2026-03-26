@@ -7,7 +7,7 @@ public static class CliErrorMessages
     public const string GedcomNetParamsFileIsInvalid = "The params file is invalid.";
     public const string GedcomNetParamsFileNotFound = "Could not find the params file.";
     public const string InputFilePathIsRequired = "Input file path is required.";
-    public const string InputFilePathNotFound = "Could not find the input file:";
+    public const string InputFileNotFound = "Could not find the input file:";
     public const string OutputFilePathIsRequired = "Output file path is required.";
     public const string RecordTypeIsInvalid = "is not a valid record type. Valid record types: fam, indi, note, obje, repo, sour, subm.";
     public const string RecordTypeIsRequired = "Record type is required.";

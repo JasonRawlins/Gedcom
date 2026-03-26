@@ -8,7 +8,7 @@ public class Program
 {
     private static void Main(string[] args)
     {
-        Parser.Default.ParseArguments<Options>(args)
+        Parser.Default.ParseArguments<CliOptions>(args)
             .WithParsed(RunOptions)
             .WithNotParsed(HandleParseError);
     }
@@ -29,7 +29,7 @@ public class Program
         }
     }
 
-    private static void RunOptions(Options options)
+    private static void RunOptions(CliOptions options)
     {
         if (options.Errors.Count > 0)
         {
@@ -40,33 +40,33 @@ public class Program
         WriteRecords(options);
     }
 
-    private static void WriteRecords(Options options)
+    private static void WriteRecords(CliOptions options)
     {
         var gedcomDocument = CreateGedcomDocument(options.InputFilePath);
         var gedcomWriter = GedcomWriter.Create(gedcomDocument, options.Format);
 
-        if (options.RecordType.Equals(Tag.Individual, StringComparison.OrdinalIgnoreCase))
-        {
-            WriteIndividualRecords(gedcomWriter, options);
-        }
-
         if (options.RecordType.Equals(Tag.Family, StringComparison.OrdinalIgnoreCase))
         {
-            WriteFamilyRecords(gedcomWriter, options);
+            var familiesBytes = gedcomWriter.GetFamilies(options.Xref);
+            File.WriteAllBytes(options.OutputFilePath, familiesBytes);
         }
-    }
 
-    private static void WriteIndividualRecords(IGedcomWriter gedcomWriter, Options options)
-    {
-        var individualBytes = gedcomWriter.GetIndividuals(options.Xref);
+        if (options.RecordType.Equals(Tag.Individual, StringComparison.OrdinalIgnoreCase))
+        {
+            var individualsBytes = gedcomWriter.GetIndividuals(options.Xref);
+            File.WriteAllBytes(options.OutputFilePath, individualsBytes);
+        }
 
-        File.WriteAllBytes(options.OutputFilePath, individualBytes);
-    }
+        if (options.RecordType.Equals(Tag.Repository, StringComparison.OrdinalIgnoreCase))
+        {
+            var repositoriesBytes = gedcomWriter.GetRepositories(options.Xref);
+            File.WriteAllBytes(options.OutputFilePath, repositoriesBytes);
+        }
 
-    private static void WriteFamilyRecords(IGedcomWriter gedcomWriter, Options options)
-    {
-        var familyBytes = gedcomWriter.GetFamilies(options.Xref);
-
-        File.WriteAllBytes(options.OutputFilePath, familyBytes);
+        if (options.RecordType.Equals(Tag.Source, StringComparison.OrdinalIgnoreCase))
+        {
+            var sourcesBytes = gedcomWriter.GetSources(options.Xref);
+            File.WriteAllBytes(options.OutputFilePath, sourcesBytes);
+        }
     }
 }

@@ -3,7 +3,7 @@ using CommandLine;
 
 namespace Gedcom.CLI;
 
-public class Options
+public class CliOptions
 {
     public static string[] RecordTypes => [Tag.Family, Tag.Individual, Tag.Object, Tag.Note, Tag.Repository, Tag.Source, Tag.Submitter, Tag.Gedcom /* GEDC is not a real top-level record type. It's used when the whole gedcom is exported. */];
     public static string[] OutputFormats => [Constants.Excel, Constants.Html, Constants.Json, Constants.Text];
@@ -25,8 +25,9 @@ public class Options
     [Option('p', "params", Required = false, HelpText = "Path of the params file. A params file will override other all other cli arguments.")]
     public string ParamsFilePath { get; set; } = "";
 
+    // The following record types are not supported yet: gedc, note, obje, subm.
     private string recordType = "";
-    [Option('t', "record-type", Required = false, HelpText = "Record type to export. (gedc, fam, indi, note, obje, repo, sour, subm)")]
+    [Option('r', "record-type", Required = false, HelpText = "Record type to export. (fam, indi, repo, sour)")]
     public string RecordType
     {
         get => recordType.ToUpper();
@@ -42,6 +43,7 @@ public class Options
         {
             var argumentErrors = new List<string>();
 
+            // If a params file is specified, it overwrites all other parameter values.
             if (!string.IsNullOrEmpty(ParamsFilePath))
             {
                 if (!File.Exists(ParamsFilePath))
@@ -73,7 +75,7 @@ public class Options
 
             if (!string.IsNullOrEmpty(InputFilePath) && !File.Exists(InputFilePath))
             {
-                argumentErrors.Add($"{CliErrorMessages.InputFilePathIsRequired} '{InputFilePath}'");
+                argumentErrors.Add($"{CliErrorMessages.InputFileNotFound} '{InputFilePath}'");
             }
 
             var directoryPath = Path.GetDirectoryName(OutputFilePath) ?? "";

@@ -2,7 +2,7 @@
   "profiles": {
     "Gedcom": {
       "commandName": "Project",
-      "commandLineArgs": "-p C:\\temp\\GedcomNET\\Resources\\GedcomNetCliParams.json"
+      "commandLineArgs": "gedcom --input C:\\temp\\GedcomNET\\Resources\\GedcomNetTestTree.ged --output C:\\temp\\GedcomNET\\OutputFiles\\cli-individuals.txt --format text --record-type indi"
     }
   }
 }

@@ -16,7 +16,7 @@ public sealed class OptionsTests
     [TestMethod]
     public void InvalidInputFilePathTest()
     {
-        var options = new Options
+        var options = new CliOptions
         {
             OutputFilePath = TestUtilities.OutputFilesDirectory,
             RecordType = Tag.Individual
@@ -28,7 +28,7 @@ public sealed class OptionsTests
     [TestMethod]
     public void InvalidOutputPathFileTest()
     {
-        var options = new Options
+        var options = new CliOptions
         {
             InputFilePath = TestUtilities.OutputFilesDirectory,
             RecordType = Tag.Individual
@@ -40,7 +40,7 @@ public sealed class OptionsTests
     [TestMethod]
     public void InvalidRecordTypeTest()
     {
-        var options = new Options() 
+        var options = new CliOptions() 
         { 
             RecordType = "INVALID_RECORD_TYPE"
         };
@@ -51,7 +51,7 @@ public sealed class OptionsTests
     [TestMethod]
     public void DefaultFormatTest()
     {
-        var options = new Options();
+        var options = new CliOptions();
 
         Assert.AreEqual(Constants.Json, options.Format, $"The default format should be {Constants.Json}.");
     }
