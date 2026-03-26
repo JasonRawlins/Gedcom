@@ -1,6 +1,6 @@
 ﻿namespace Gedcom.CLI;
 
-public class GedcomNetParams
+public class GedcomNetCliParams
 {
     public string Format { get; set; } = "";
     public string Input { get; set; } = "";

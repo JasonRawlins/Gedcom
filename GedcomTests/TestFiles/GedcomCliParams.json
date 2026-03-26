@@ -1,7 +1,0 @@
-{
-  "format": "json",
-  "input": "C:\\temp\\GedcomNET\\Resources\\GedcomTestTree.ged",
-  "output": "C:\\temp\\GedcomNET\\Resources\\GedcomNet.json",
-  "recordType": "indi",
-  "xref": "@I272718948910@"
-}

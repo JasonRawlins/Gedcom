@@ -3,6 +3,9 @@ Current
 In the CLI, it's possible the xref is invalid. Account for that.
 Remove query from options
 
+In the tests, I can use copy - always to bin directory. Can I use this instead of local paths for some of the tests?
+	Like have a test results folder?
+
 Handle the xrefs from different programs
 	Ancestry
 	RootsMagic

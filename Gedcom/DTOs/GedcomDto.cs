@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Gedcom;
+namespace Gedcom.DTOs;
 
 /*
  * All RecordStructure classes are serialized as GedcomDto objects. This allows 

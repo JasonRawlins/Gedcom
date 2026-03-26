@@ -1,0 +1,7 @@
+{
+  "format": "json",
+  "input": "input.ged",
+  "output": "output.txt",
+  "recordType": "indi",
+  "xref": "@I123@"
+}

@@ -31,6 +31,8 @@ public class Program
 
     private static void RunOptions(CliOptions options)
     {
+        options.ApplyParamsFile();
+
         if (options.Errors.Count > 0)
         {
             options.Errors.ForEach(Console.WriteLine);

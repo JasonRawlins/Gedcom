@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using CommandLine;
+using Gedcom.DTOs;
 
 namespace Gedcom.CLI;
 
@@ -37,35 +38,51 @@ public class CliOptions
     [Option('x', "xref", Required = false, HelpText = "Record xref. (@I123@, @R456@, @S894@, etc.")]
     public string Xref { get; set; } = "";
 
+    public void ApplyParamsFile()
+    {
+        // If a params file is specified, it overwrites all other cli arguments.
+        if (!string.IsNullOrEmpty(ParamsFilePath))
+        {
+            if (!File.Exists(ParamsFilePath))
+            {
+                throw new FileNotFoundException($"Could not file the cli params file: {ParamsFilePath}");
+            }
+
+            var gedcomNetCliParamsText = File.ReadAllText(ParamsFilePath);
+            var gedcomNetCliParams = JsonSerializer.Deserialize<GedcomNetCliParams>(gedcomNetCliParamsText, GedcomDto.SerializationOptions);
+
+            if (gedcomNetCliParams == null)
+            {
+                throw new InvalidOperationException($"{CliErrorMessages.ParamsFileDeserializationFailed} '{ParamsFilePath}'");
+            }
+
+            if (!string.IsNullOrEmpty(InputFilePath) && !File.Exists(InputFilePath))
+            {
+                throw new FileNotFoundException($"{CliErrorMessages.InputFileNotFound} '{InputFilePath}'");
+            }
+
+            Format = gedcomNetCliParams.Format;
+            InputFilePath = gedcomNetCliParams.Input;
+            OutputFilePath = gedcomNetCliParams.Output;
+            RecordType = gedcomNetCliParams.RecordType;
+            Xref = gedcomNetCliParams.Xref;
+        }
+    }
+
     public List<string> Errors
     {
         get
         {
             var argumentErrors = new List<string>();
 
-            // If a params file is specified, it overwrites all other parameter values.
-            if (!string.IsNullOrEmpty(ParamsFilePath))
+            if (string.IsNullOrEmpty(Format))
             {
-                if (!File.Exists(ParamsFilePath))
-                {
-                    argumentErrors.Add(CliErrorMessages.GedcomNetParamsFileNotFound);
-                    return argumentErrors;
-                }
+                argumentErrors.Add(CliErrorMessages.FormatIsRequired);
+            }
 
-                var paramsFileText = File.ReadAllText(ParamsFilePath);
-                var gedcomNetParams = JsonSerializer.Deserialize<GedcomNetParams>(paramsFileText, GedcomDto.SerializationOptions)!;
-
-                if (gedcomNetParams == null)
-                {
-                    argumentErrors.Add(CliErrorMessages.GedcomNetParamsFileIsInvalid);
-                    return argumentErrors;
-                }
-
-                Format = gedcomNetParams.Format;
-                InputFilePath = gedcomNetParams.Input;
-                OutputFilePath = gedcomNetParams.Output;
-                RecordType = gedcomNetParams.RecordType;
-                Xref = gedcomNetParams.Xref;
+            if (!string.IsNullOrEmpty(Format) && !OutputFormats.Select(of => of.ToUpper()).Contains(Format.ToUpper()))
+            {
+                argumentErrors.Add($"'{Format}' {CliErrorMessages.FormatIsInvalid}");
             }
 
             if (string.IsNullOrEmpty(InputFilePath))
@@ -73,13 +90,7 @@ public class CliOptions
                 argumentErrors.Add(CliErrorMessages.InputFilePathIsRequired);
             }
 
-            if (!string.IsNullOrEmpty(InputFilePath) && !File.Exists(InputFilePath))
-            {
-                argumentErrors.Add($"{CliErrorMessages.InputFileNotFound} '{InputFilePath}'");
-            }
-
-            var directoryPath = Path.GetDirectoryName(OutputFilePath) ?? "";
-            if (string.IsNullOrEmpty(directoryPath))
+            if (string.IsNullOrEmpty(OutputFilePath))
             {
                 argumentErrors.Add(CliErrorMessages.OutputFilePathIsRequired);
             }
@@ -92,16 +103,6 @@ public class CliOptions
             if (!string.IsNullOrEmpty(RecordType) && !RecordTypes.Contains(RecordType.ToUpper()))
             {
                 argumentErrors.Add($"'{RecordType}' {CliErrorMessages.RecordTypeIsInvalid}");
-            }
-
-            if (string.IsNullOrEmpty(Format))
-            {
-                argumentErrors.Add(CliErrorMessages.FormatIsRequired);
-            }
-
-            if (!string.IsNullOrEmpty(Format) && !OutputFormats.Select(of => of.ToUpper()).Contains(Format.ToUpper()))
-            {
-                argumentErrors.Add($"'{Format}' {CliErrorMessages.FormatIsInvalid}");
             }
 
             if (!string.IsNullOrEmpty(Xref))
