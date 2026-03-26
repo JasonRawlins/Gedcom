@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics;
-using System.Text.Json;
 using CommandLine;
 using Gedcom.CLI;
-using Gedcom.DTOs;
 
 namespace GedcomTests;
 
@@ -144,6 +142,8 @@ public class CliTests
     [TestMethod]
     public void ParamsFileOverridesAllOtherParameters()
     {
+        var testOuputFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"TestOutput\GedcomNetTestTree.ged");
+
         var args = new[] { 
             "--format", "original-text", 
             "--input", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"TestFiles\GedcomNetTestTree.ged"),
@@ -167,13 +167,15 @@ public class CliTests
         });
     }
 
-    // HACK: (terrible one) This runs the cli against all possible record types. Obviously not
-    // a valid test outside of local environment due to different paths to the executable. The
-    // executable path and the input/output argument values assume a local file structure
-    // that won't exist on most machines. Uncomment to use.
-    //[TestMethod]
+    [TestMethod]
     public void WriteGedcomWriterFiles()
     {
+        var gedcomExecutableFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Gedcom.exe");
+        var gedcomNetTestTreeFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"TestFiles\GedcomNetTestTree.ged");
+        var testOutputDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"TestOutput");
+
+        Directory.CreateDirectory(testOutputDirectory);
+
         List<string> allCliTestRecordTypeArguments =
             [.. TestCliArguments.AllIndividualRecordTypes, 
             .. TestCliArguments.AllRepositoryRecordTypes,
@@ -182,8 +184,8 @@ public class CliTests
         foreach (var cliTestArguments in allCliTestRecordTypeArguments)
         {
             var cliTestArgumentsWithLocalPaths = cliTestArguments
-                .Replace(@"input-path\", @"C:\temp\GedcomNET\Resources\\")
-                .Replace(@"output-path\", @"C:\temp\GedcomNET\OutputFiles\\")
+                .Replace(@"input-path", gedcomNetTestTreeFilePath)
+                .Replace(@"output-path", testOutputDirectory)
                 .Replace("@I123@", TestEntities.TestIndividuals.DylanDavis.Xref)
                 .Replace("@R123@", TestEntities.TestRepositories.VitalRecordsRepository.Xref)
                 .Replace("@S123@", TestEntities.TestSources.DylanDavisBiography.Xref);
@@ -192,7 +194,7 @@ public class CliTests
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = "C:\\Users\\amorm\\source\\repos\\GedcomProjects\\Gedcom\\bin\\Debug\\net8.0\\Gedcom.exe",
+                    FileName = gedcomExecutableFilePath,
                     Arguments = cliTestArgumentsWithLocalPaths,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,

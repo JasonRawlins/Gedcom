@@ -5,20 +5,20 @@ public static class TestCliArguments
     #region Excel
 
     // Excel
-    public static readonly string[] ExcelIndividual = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-individual.xlsx", "--format", "excel", "--record-type", "indi", "--xref", "@I123@"];
-    public static readonly string[] ExcelIndividuals = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-individuals.xlsx", "--format", "excel", "--record-type", "indi"];
+    public static readonly string[] ExcelIndividual = ["--input", @"input-path", "--output", @"output-path\cli-individual.xlsx", "--format", "excel", "--record-type", "indi", "--xref", "@I123@"];
+    public static readonly string[] ExcelIndividuals = ["--input", @"input-path", "--output", @"output-path\cli-individuals.xlsx", "--format", "excel", "--record-type", "indi"];
 
     // Html
-    public static readonly string[] HtmlIndividual = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-individual.html", "--format", "html", "--record-type", "indi", "--xref", "@I123@"];
-    public static readonly string[] HtmlIndividuals = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-individuals.html", "--format", "html", "--record-type", "indi"];
+    public static readonly string[] HtmlIndividual = ["--input", @"input-path", "--output", @"output-path\cli-individual.html", "--format", "html", "--record-type", "indi", "--xref", "@I123@"];
+    public static readonly string[] HtmlIndividuals = ["--input", @"input-path", "--output", @"output-path\cli-individuals.html", "--format", "html", "--record-type", "indi"];
 
     // Json
-    public static readonly string[] JsonIndividual = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-individual.json", "--format", "json", "--record-type", "indi", "--xref", "@I123@"];
-    public static readonly string[] JsonIndividuals = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-individuals.json", "--format", "json", "--record-type", "indi"];
+    public static readonly string[] JsonIndividual = ["--input", @"input-path", "--output", @"output-path\cli-individual.json", "--format", "json", "--record-type", "indi", "--xref", "@I123@"];
+    public static readonly string[] JsonIndividuals = ["--input", @"input-path", "--output", @"output-path\cli-individuals.json", "--format", "json", "--record-type", "indi"];
 
     // Text
-    public static readonly string[] TextIndividual = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-individual.txt", "--format", "text", "--record-type", "indi", "--xref", "@I123@"];
-    public static readonly string[] TextIndividuals = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-individuals.txt", "--format", "text", "--record-type", "indi"];
+    public static readonly string[] TextIndividual = ["--input", @"input-path", "--output", @"output-path\cli-individual.txt", "--format", "text", "--record-type", "indi", "--xref", "@I123@"];
+    public static readonly string[] TextIndividuals = ["--input", @"input-path", "--output", @"output-path\cli-individuals.txt", "--format", "text", "--record-type", "indi"];
 
     public static readonly List<string> AllIndividualRecordTypes =
         [
@@ -39,20 +39,20 @@ public static class TestCliArguments
     #region Repositories
 
     // Excel
-    public static readonly string[] ExcelRepository = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-repository.xlsx", "--format", "excel", "--record-type", "repo", "--xref", "@R123@"];
-    public static readonly string[] ExcelRepositories = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-repositories.xlsx", "--format", "excel", "--record-type", "repo"];
+    public static readonly string[] ExcelRepository = ["--input", @"input-path", "--output", @"output-path\cli-repository.xlsx", "--format", "excel", "--record-type", "repo", "--xref", "@R123@"];
+    public static readonly string[] ExcelRepositories = ["--input", @"input-path", "--output", @"output-path\cli-repositories.xlsx", "--format", "excel", "--record-type", "repo"];
 
     // Html
-    public static readonly string[] HtmlRepository = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-repository.html", "--format", "html", "--record-type", "repo", "--xref", "@R123@"];
-    public static readonly string[] HtmlRepositories = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-repositories.html", "--format", "html", "--record-type", "repo"];
+    public static readonly string[] HtmlRepository = ["--input", @"input-path", "--output", @"output-path\cli-repository.html", "--format", "html", "--record-type", "repo", "--xref", "@R123@"];
+    public static readonly string[] HtmlRepositories = ["--input", @"input-path", "--output", @"output-path\cli-repositories.html", "--format", "html", "--record-type", "repo"];
 
     // Json
-    public static readonly string[] JsonRepository = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-repository.json", "--format", "json", "--record-type", "repo", "--xref", "@R123@"];
-    public static readonly string[] JsonRepositories = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-repositories.json", "--format", "json", "--record-type", "repo"];
+    public static readonly string[] JsonRepository = ["--input", @"input-path", "--output", @"output-path\cli-repository.json", "--format", "json", "--record-type", "repo", "--xref", "@R123@"];
+    public static readonly string[] JsonRepositories = ["--input", @"input-path", "--output", @"output-path\cli-repositories.json", "--format", "json", "--record-type", "repo"];
 
     // Text
-    public static readonly string[] TextRepository = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-repository.txt", "--format", "text", "--record-type", "repo", "--xref", "@R123@"];
-    public static readonly string[] TextRepositories = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-repositories.txt", "--format", "text", "--record-type", "repo"];
+    public static readonly string[] TextRepository = ["--input", @"input-path", "--output", @"output-path\cli-repository.txt", "--format", "text", "--record-type", "repo", "--xref", "@R123@"];
+    public static readonly string[] TextRepositories = ["--input", @"input-path", "--output", @"output-path\cli-repositories.txt", "--format", "text", "--record-type", "repo"];
 
     public static readonly List<string> AllRepositoryRecordTypes =
     [
@@ -71,20 +71,20 @@ public static class TestCliArguments
     #region Sources
 
     // Excel
-    public static readonly string[] ExcelSource = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-source.xlsx", "--format", "excel", "--record-type", "sour", "--xref", " @S977470769@"];
-    public static readonly string[] ExcelSources = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-sources.xlsx", "--format", "excel", "--record-type", "sour"];
+    public static readonly string[] ExcelSource = ["--input", @"input-path", "--output", @"output-path\cli-source.xlsx", "--format", "excel", "--record-type", "sour", "--xref", " @S977470769@"];
+    public static readonly string[] ExcelSources = ["--input", @"input-path", "--output", @"output-path\cli-sources.xlsx", "--format", "excel", "--record-type", "sour"];
 
     // Html
-    public static readonly string[] HtmlSource = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-source.html", "--format", "html", "--record-type", "sour", "--xref", " @S977470769@"];
-    public static readonly string[] HtmlSources = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-sources.html", "--format", "html", "--record-type", "sour"];
+    public static readonly string[] HtmlSource = ["--input", @"input-path", "--output", @"output-path\cli-source.html", "--format", "html", "--record-type", "sour", "--xref", " @S977470769@"];
+    public static readonly string[] HtmlSources = ["--input", @"input-path", "--output", @"output-path\cli-sources.html", "--format", "html", "--record-type", "sour"];
 
     // Json
-    public static readonly string[] JsonSource = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-source.json", "--format", "json", "--record-type", "sour", "--xref", " @S977470769@"];
-    public static readonly string[] JsonSources = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-sources.json", "--format", "json", "--record-type", "sour"];
+    public static readonly string[] JsonSource = ["--input", @"input-path", "--output", @"output-path\cli-source.json", "--format", "json", "--record-type", "sour", "--xref", " @S977470769@"];
+    public static readonly string[] JsonSources = ["--input", @"input-path", "--output", @"output-path\cli-sources.json", "--format", "json", "--record-type", "sour"];
 
     // Text
-    public static readonly string[] TextSource = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-source.txt", "--format", "text", "--record-type", "sour", "--xref", " @S977470769@"];
-    public static readonly string[] TextSources = ["--input", @"input-path\GedcomNetTestTree.ged", "--output", @"output-path\cli-sources.txt", "--format", "text", "--record-type", "sour"];
+    public static readonly string[] TextSource = ["--input", @"input-path", "--output", @"output-path\cli-source.txt", "--format", "text", "--record-type", "sour", "--xref", " @S977470769@"];
+    public static readonly string[] TextSources = ["--input", @"input-path", "--output", @"output-path\cli-sources.txt", "--format", "text", "--record-type", "sour"];
 
     public static readonly List<string> AllSourceRecordTypes =
     [
