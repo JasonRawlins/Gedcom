@@ -134,8 +134,44 @@ public class CliTests
             var paramsFilePathIsPresent = !string.IsNullOrEmpty(options.ParamsFilePath);
             if (recordTypeIsMissing && !paramsFilePathIsPresent)
             {
-                Assert.IsTrue(options.Errors.Contains("Record type is required."));
+                Assert.IsTrue(options.Errors.Contains(CliErrorMessages.RecordTypeIsRequired));
             }
+        });
+    }
+
+    [TestMethod]
+    public void RecordTypeIsValid()
+    {
+        var args = new[] {
+            "--format", "text",
+            "--input", @"input-path\input.ged",
+            "--output", @"output-path\output.txt",
+            "--record-type", "FAIL", 
+            "--xref", "@I123@" };
+
+        var result = Parser.Default.ParseArguments<CliOptions>(args);
+
+        result.WithParsed(options =>
+        {
+            Assert.IsTrue(options.Errors.Contains($"'{options.RecordType}' {CliErrorMessages.RecordTypeIsInvalid}"));
+        });
+    }
+
+    [TestMethod]
+    public void FormatIsValid()
+    {
+        var args = new[] {
+            "--format", "FAIL",
+            "--input", @"input-path\input.ged",
+            "--output", @"output-path\output.txt",
+            "--record-type", "indi",
+            "--xref", "@I123@" };
+
+        var result = Parser.Default.ParseArguments<CliOptions>(args);
+
+        result.WithParsed(options =>
+        {
+            Assert.IsTrue(options.Errors.Contains($"'{options.Format}' {CliErrorMessages.FormatIsInvalid}"));
         });
     }
 
@@ -164,6 +200,27 @@ public class CliTests
             Assert.AreEqual("replaced-output.txt", options.OutputFilePath);
             Assert.AreEqual("REPLACED-INDI", options.RecordType);
             Assert.AreEqual("replaced-@I123@", options.Xref);
+        });
+    }
+
+    [TestMethod]
+    public void XrefParameterIsInValidFormat()
+    {
+        var args = new[] {
+            "--format", "text",
+            "--input", @"input-path\input.ged",
+            "--output", @"output-path\output.txt",
+            "--record-type", "indi", 
+            "--xref", "FAIL" };
+
+        var result = Parser.Default.ParseArguments<CliOptions>(args);
+
+        result.WithParsed(options =>
+        {
+            if (!string.IsNullOrEmpty(options.Xref))
+            {
+                Assert.IsTrue(options.Errors.Contains($"'{options.Xref}' {CliErrorMessages.XrefIsInvalid}"));
+            }
         });
     }
 

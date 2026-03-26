@@ -107,10 +107,9 @@ public class CliOptions
 
             if (!string.IsNullOrEmpty(Xref))
             {
-
                 if (!Constants.XrefRegex().IsMatch(Xref))
                 {
-                    argumentErrors.Add($"{Xref} {CliErrorMessages.XrefIsInvalid}");
+                    argumentErrors.Add($"'{Xref}' {CliErrorMessages.XrefIsInvalid}");
                 }
             }
 
